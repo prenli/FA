@@ -2,11 +2,6 @@
   "name": "fa-client-app",
   "version": "0.1.0",
   "private": true,
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -33,7 +28,8 @@
     "check-types": "tsc",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "check-format": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "check-all": "npm run check-types && npm run check-format && npm run lint && npm run test"
+    "check-all": "npm run check-types && npm run check-format && npm run lint && npm run test",
+    "precommit": "lint-staged"
   },
   "browserslist": {
     "production": [
@@ -50,7 +46,7 @@
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
       "eslint",
-      "prettier --check"
+      "prettier --write"
     ]
   },
   "devDependencies": {
