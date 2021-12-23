@@ -1,0 +1,10 @@
+{
+    "realm": "fa",
+    "auth-server-url": "https://fadev.fasolutions.com/auth/",
+    "ssl-required": "external",
+    "resource": "fa-fund-management",
+    "public-client": true,
+    "verify-token-audience": true,
+    "use-resource-role-mappings": true,
+    "confidential-port": 0
+  }
