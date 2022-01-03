@@ -1,5 +1,7 @@
 import React from "react";
+import { ApolloProvider } from "@apollo/client";
 import { KeycloakProvider } from "contexts/keycloakContext";
+import { apolloClient } from "services/apolloClient";
 import { keycloakService } from "services/keycloakService";
 
 function App() {
@@ -9,7 +11,9 @@ function App() {
       InitializingComponent={<div>Initializing...</div>}
       MissingLinkedContactComponent={<div>Missing linked contact...</div>}
     >
-      <div>Page content</div>
+      <ApolloProvider client={apolloClient}>
+        <div>Page content</div>
+      </ApolloProvider>
     </KeycloakProvider>
   );
 }

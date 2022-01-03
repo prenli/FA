@@ -82,7 +82,6 @@ class KeycloakService {
   };
 
   onAuthRefreshSuccess = async () => {
-    await this.updateLinkedContact();
     this.updateState();
   };
 
@@ -108,7 +107,7 @@ class KeycloakService {
     this.updateState();
   };
 
-  updateLinkedContact = async () => {
+  async updateLinkedContact() {
     if (this.state.authenticated) {
       const profile = await this.keycloak.loadUserProfile();
       const linkedContact = this.getLinkedContactFromProfile(profile);
@@ -119,22 +118,20 @@ class KeycloakService {
         };
       }
     }
-  };
+  }
 
   getLinkedContactFromProfile(profile: FAKeycloakProfile) {
     return profile?.attributes?.linked_contact[0];
   }
 
-  updateState = () => {
+  updateState() {
     this.notifyStateChanged();
-  };
+  }
 
-  isRefreshTokenValid = () => {
-    if (!this.keycloak?.refreshTokenParsed?.exp) {
-      return false;
-    }
-    return this.keycloak.refreshTokenParsed.exp > Date.now() / 1000;
-  };
+  async getToken() {
+    await this.keycloak.updateToken(1);
+    return this.keycloak.token;
+  }
 }
 
 export const keycloakService = new KeycloakService(Keycloak());
