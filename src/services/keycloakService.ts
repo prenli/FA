@@ -134,4 +134,4 @@ class KeycloakService {
   }
 }
 
-export const keycloakService = new KeycloakService(Keycloak());
+export const keycloakService = new KeycloakService(Keycloak("/keycloak.json"));

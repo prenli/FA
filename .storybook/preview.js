@@ -8,7 +8,6 @@ export const parameters = {
       date: /Date$/,
     },
   },
-  layout: "centered",
   previewTabs: {
     "storybook/docs/panel": {
       hidden: true,

@@ -3,6 +3,7 @@ import { ApolloProvider } from "@apollo/client";
 import { KeycloakProvider } from "contexts/keycloakContext";
 import { apolloClient } from "services/apolloClient";
 import { keycloakService } from "services/keycloakService";
+import { RootRoutes } from "./pages/routes";
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
       MissingLinkedContactComponent={<div>Missing linked contact...</div>}
     >
       <ApolloProvider client={apolloClient}>
-        <div className="m-3 animate-bounce">Page content</div>
+        <RootRoutes />
       </ApolloProvider>
     </KeycloakProvider>
   );
