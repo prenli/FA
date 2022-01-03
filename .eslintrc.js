@@ -65,5 +65,11 @@ module.exports = {
         "react/prop-types": "off", // Disabled due to a bug. More info: https://github.com/yannickcr/eslint-plugin-react/issues/2353
       },
     },
+    {
+      files: ["**/*.stories.*"],
+      rules: {
+        "import/no-anonymous-default-export": "off",
+      },
+    },
   ],
 };
