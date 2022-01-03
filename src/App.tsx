@@ -12,7 +12,7 @@ function App() {
       MissingLinkedContactComponent={<div>Missing linked contact...</div>}
     >
       <ApolloProvider client={apolloClient}>
-        <div>Page content</div>
+        <div className="m-3 animate-bounce">Page content</div>
       </ApolloProvider>
     </KeycloakProvider>
   );

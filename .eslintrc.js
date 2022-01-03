@@ -9,6 +9,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "react-app",
     "react-app/jest",
+    "plugin:tailwindcss/recommended",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -23,6 +24,7 @@ module.exports = {
     "react-hooks",
     "@typescript-eslint",
     "eslint-plugin-import",
+    "tailwindcss",
   ],
   settings: {
     react: {
