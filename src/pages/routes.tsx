@@ -1,4 +1,5 @@
 import React, { lazy } from "react";
+import { TranslationText } from "components";
 import { AllPortfoliosLayout } from "layouts/AllPortfoliosLayout/AllPortfoliosLayout";
 import { MainLayout } from "layouts/MainLayout/MainLayout";
 import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
@@ -32,37 +33,37 @@ const Documents = lazy(() =>
 export const mainTabRoutes: NavTabPath[] = [
   {
     path: "overview",
-    tabLabel: "Overview",
+    tabLabel: <TranslationText translationKey="navTab.tabs.overview" />,
     tabComponent: <Overview />,
     element: null,
   },
   {
     path: "holdings",
-    tabLabel: "Holdings",
+    tabLabel: <TranslationText translationKey="navTab.tabs.holdings" />,
     tabComponent: <Holdings />,
     element: null,
   },
   {
     path: "transactions",
-    tabLabel: "Transactions",
+    tabLabel: <TranslationText translationKey="navTab.tabs.transactions" />,
     tabComponent: <Transactions />,
     element: null,
   },
   {
     path: "orders",
-    tabLabel: "Trade orders",
+    tabLabel: <TranslationText translationKey="navTab.tabs.orders" />,
     tabComponent: <Orders />,
     element: null,
   },
   {
     path: "trading",
-    tabLabel: "Trading",
+    tabLabel: <TranslationText translationKey="navTab.tabs.trading" />,
     tabComponent: <Trading />,
     element: null,
   },
   {
     path: "documents",
-    tabLabel: "Documents",
+    tabLabel: <TranslationText translationKey="navTab.tabs.documents" />,
     tabComponent: <Documents />,
     element: null,
   },
@@ -93,7 +94,7 @@ const rootRoutes = [
       ...portfolioRoutes,
       {
         path: "*",
-        element: <h1 className="text-2xl">404 - Not Found</h1>,
+        element: <TranslationText translationKey="404Page.title" />,
       },
     ],
   },

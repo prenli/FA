@@ -1,0 +1,36 @@
+{
+  "navTab": {
+    "title": "All portfolios",
+    "tabs": {
+      "overview": "Overview",
+      "holdings": "Holdings",
+      "transactions": "Transactions",
+      "orders": "Trade orders",
+      "trading": "Trading",
+      "documents": "Documents"
+    }
+  },
+  "overviewPage": {
+    "title": "Overview",
+    "button": "Go to portfolio"
+  },
+  "holdingsPage": {
+    "title": "Holdings",
+    "button": "Go to holding"
+  },
+  "transactionsPage": {
+    "title": "All transactions"
+  },
+  "ordersPage": {
+    "title": "All orders"
+  },
+  "tradingPage": {
+    "title": "All trading"
+  },
+  "documentsPage": {
+    "title": "All documents"
+  },
+  "404Page": {
+    "title": "404 - Not found"
+  }
+}

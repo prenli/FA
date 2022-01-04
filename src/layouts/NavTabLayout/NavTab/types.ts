@@ -3,6 +3,6 @@ import { ReactNode } from "react";
 export interface NavTabPath {
   path: string;
   element: ReactNode;
-  tabLabel: string;
+  tabLabel: ReactNode;
   tabComponent: ReactNode;
 }

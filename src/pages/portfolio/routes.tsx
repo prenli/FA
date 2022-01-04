@@ -1,4 +1,5 @@
 import React, { lazy } from "react";
+import { TranslationText } from "components";
 import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
 import { PortfolioLayout } from "layouts/PortfolioLayout/PortfolioLayout";
 import { Navigate } from "react-router-dom";
@@ -30,37 +31,37 @@ const Documents = lazy(() =>
 export const portfolioTabRoutes: NavTabPath[] = [
   {
     path: "overview",
-    tabLabel: "Overview",
+    tabLabel: <TranslationText translationKey="navTab.tabs.overview" />,
     tabComponent: <Overview />,
     element: null,
   },
   {
     path: "holdings",
-    tabLabel: "Holdings",
+    tabLabel: <TranslationText translationKey="navTab.tabs.holdings" />,
     tabComponent: <Holdings />,
     element: null,
   },
   {
     path: "transactions",
-    tabLabel: "Transactions",
+    tabLabel: <TranslationText translationKey="navTab.tabs.transactions" />,
     tabComponent: <Transactions />,
     element: null,
   },
   {
     path: "orders",
-    tabLabel: "Trade orders",
+    tabLabel: <TranslationText translationKey="navTab.tabs.orders" />,
     tabComponent: <Orders />,
     element: null,
   },
   {
     path: "trading",
-    tabLabel: "Trading",
+    tabLabel: <TranslationText translationKey="navTab.tabs.trading" />,
     tabComponent: <Trading />,
     element: null,
   },
   {
     path: "documents",
-    tabLabel: "Documents",
+    tabLabel: <TranslationText translationKey="navTab.tabs.documents" />,
     tabComponent: <Documents />,
     element: null,
   },

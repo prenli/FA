@@ -1,0 +1,36 @@
+{
+  "navTab": {
+    "title": "Kaikki salkut",
+    "tabs": {
+      "overview": "Yleiskatsaus",
+      "holdings": "Tilat",
+      "transactions": "Tapahtumat",
+      "orders": "Kauppatilaukset",
+      "trading": "Kaupankäynti",
+      "documents": "Asiakirjat"
+    }
+  },
+  "overviewPage": {
+    "title": "Yleiskatsaus",
+    "button": "Siirry portfolioon"
+  },
+  "holdingsPage": {
+    "title": "Tilat",
+    "button": "Siirry tilalle"
+  },
+  "transactionsPage": {
+    "title": "Kaikki liiketoimet"
+  },
+  "ordersPage": {
+    "title": "Kaikki tilaukset"
+  },
+  "tradingPage": {
+    "title": "Kaikki kaupankäynti"
+  },
+  "documentsPage": {
+    "title": "Kaikki asiakirjat"
+  },
+  "404Page": {
+    "title": "404 - Ei löydy"
+  }
+}
