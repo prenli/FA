@@ -8,7 +8,7 @@ const Overview = lazy(() =>
   import("./overview").then((module) => ({ default: module.OverviewPage }))
 );
 const Holdings = lazy(() =>
-  import("./holdings").then((module) => ({ default: module.Holdings }))
+  import("./holdings").then((module) => ({ default: module.HoldingsView }))
 );
 const Holding = lazy(() =>
   import("./holdings/[holdingId]").then((module) => ({

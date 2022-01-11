@@ -1,6 +1,44 @@
+import { SECURITY_TYPE } from "./enums";
+
+export const assertUnreachable = (_exhaustiveCheck: never) => {
+  console.error(`Unreachable case: ${_exhaustiveCheck}`);
+};
+
+type SecurityTypeKeys = keyof typeof SECURITY_TYPE;
+export type SecurityType = typeof SECURITY_TYPE[SecurityTypeKeys];
+
 interface Security {
+  id: number;
   securityCode: string;
   name: string;
+  isinCode: string;
+  type: {
+    code: SecurityType;
+  };
+  latestMarketData: {
+    latestPrice: number;
+  };
+}
+
+export interface SecurityPosition {
+  purchaseTradeAmount: number;
+  marketTradeAmount: number;
+  valueChangeAbsolute: number;
+  amount: number;
+  security: Security;
+}
+
+interface BaseReport {
+  marketValue: number;
+  valueChangeAbsolute: number;
+  accountBalance: number;
+  positionMarketValue: number;
+}
+
+interface Summary<TReport extends BaseReport = BaseReport> {
+  id: number;
+  name: string;
+  portfolioReport: TReport;
   isinCode: string;
 }
 
@@ -43,7 +81,7 @@ export interface DetailedPortfolio extends DetailedSummary {
   };
 }
 
-export interface AllPortfolios extends Summary {
+export interface AllPortfolios extends DetailedSummary {
   portfolios: Portfolio[];
 }
 

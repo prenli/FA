@@ -25,6 +25,7 @@ NavTab.List = NavTabList;
 
 const NavTabPanels = (props: ComponentProps<typeof Carousel>) => (
   <Carousel
+    disableEdgeSwiping
     enableKeyboardControls
     heightMode="current"
     className="flex-1 py-4 px-2 !grid"

@@ -10,6 +10,28 @@
       "documents": "Documents"
     }
   },
+  "securities": {
+    "type": {
+      "stock": {
+        "plural": "stocks"
+      },
+      "ETF": {
+        "plural": "ETFs"
+      },
+      "bond": {
+        "plural": "bonds"
+      },
+      "fund": {
+        "plural": "funds"
+      },
+      "cash": {
+        "plural": "cash"
+      },
+      "other": {
+        "plural": "other"
+      }
+    }
+  },
   "portfolioSummary": {
     "currentMarketValue": "Current Market Value",
     "availableCash": "Available Cash",
@@ -21,8 +43,9 @@
     "worst3Holdings": "Worst 3 holdings"
   },
   "holdingsPage": {
-    "title": "Holdings",
-    "button": "Go to holding"
+    "latestMarketPrice": "Latest Market Price",
+    "unrealizedProfits": "Unrealized profits",
+    "marketValue": "Market Value"
   },
   "transactionsPage": {
     "title": "All transactions"

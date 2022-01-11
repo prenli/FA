@@ -16,5 +16,19 @@ const authMiddleware = setContext(async (operation, { headers }) => {
 
 export const apolloClient = new ApolloClient({
   link: from([authMiddleware, httpLink]),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      PortfolioReport: {
+        keyFields: ["portfolioId"],
+        fields: {
+          portfolioReportItems: {
+            merge: false,
+          },
+        },
+      },
+      PortfolioReportItem: {
+        keyFields: ["security", ["id"]],
+      },
+    },
+  }),
 });

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-export const Holdings = () => {
+export const HoldingsView = () => {
   const navigate = useNavigate();
   const { portfolioId } = useParams();
   return (
