@@ -11,6 +11,10 @@
     }
   },
   "overviewPage": {
+    "allPortfoliosSummaryTitle": "All portfolios",
+    "currentMarketValue": "Current Market Value",
+    "availableCash": "Available Cash",
+    "unrealizedProfits": "Unrealized profits",
     "title": "Overview",
     "button": "Go to portfolio"
   },
