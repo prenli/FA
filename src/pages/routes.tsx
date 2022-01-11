@@ -7,7 +7,7 @@ import { useRoutes, Navigate } from "react-router-dom";
 import { portfolioRoutes } from "./portfolio/routes";
 
 const Overview = lazy(() =>
-  import("./overview").then((module) => ({ default: module.Overview }))
+  import("./overview").then((module) => ({ default: module.OverviewPage }))
 );
 const Holdings = lazy(() =>
   import("./holdings").then((module) => ({ default: module.Holdings }))

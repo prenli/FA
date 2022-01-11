@@ -39,15 +39,15 @@ export const PortfolioInfoCard = ({
         </div>
         <div className="flex flex-col gap-2">
           <PortfolioInfoRow
-            label={t("overviewPage.currentMarketValue")}
+            label={t("portfolioSummary.currentMarketValue")}
             value={positionMarketValue}
           />
           <PortfolioInfoRow
-            label={t("overviewPage.availableCash")}
+            label={t("portfolioSummary.availableCash")}
             value={accountBalance}
           />
           <PortfolioInfoRow
-            label={t("overviewPage.unrealizedProfits")}
+            label={t("portfolioSummary.unrealizedProfits")}
             value={valueChangeAbsolute}
           />
         </div>

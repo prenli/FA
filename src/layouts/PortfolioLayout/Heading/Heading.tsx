@@ -1,9 +1,11 @@
 import React from "react";
+import { useGetPortfolio } from "api/useGetPortfolio";
 import { BackNavigationButton, Heading as HeadingComponent } from "components";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 export const Heading = () => {
   const { portfolioId } = useParams();
+  const { data: portfolio } = useGetPortfolio(portfolioId);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -15,7 +17,7 @@ export const Heading = () => {
   return (
     <HeadingComponent>
       <BackNavigationButton onClick={navigateToMainTabRoute} />
-      {`Portfolio #${portfolioId}`}
+      {portfolio?.name ?? "Portfolio"}
     </HeadingComponent>
   );
 };

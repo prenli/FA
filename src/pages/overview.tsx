@@ -1,1 +1,1 @@
-export { Overview } from "views/overview/overview";
+export { OverviewView as OverviewPage } from "views/overview/overview";

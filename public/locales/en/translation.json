@@ -10,13 +10,15 @@
       "documents": "Documents"
     }
   },
-  "overviewPage": {
-    "allPortfoliosSummaryTitle": "All portfolios",
+  "portfolioSummary": {
     "currentMarketValue": "Current Market Value",
     "availableCash": "Available Cash",
-    "unrealizedProfits": "Unrealized profits",
-    "title": "Overview",
-    "button": "Go to portfolio"
+    "unrealizedProfits": "Unrealized profits"
+  },
+  "overviewPage": {
+    "allPortfoliosSummaryTitle": "All portfolios",
+    "top3Holdings": "Top 3 holdings",
+    "worst3Holdings": "Worst 3 holdings"
   },
   "holdingsPage": {
     "title": "Holdings",

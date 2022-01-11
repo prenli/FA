@@ -28,3 +28,37 @@ export const PORTFOLIO_FIELDS = gql`
     }
   }
 `;
+
+const SECURITY_POSITIONS_FIELDS = gql`
+  fragment SecurityPositionsFields on PortfolioReportItem {
+    security {
+      securityCode
+      name
+      isinCode
+    }
+    amount
+    purchaseTradeAmount
+    marketTradeAmount
+    valueChangeAbsolute
+  }
+`;
+
+export const DETAILED_PORTFOLIO_FIELDS = gql`
+  ${SECURITY_POSITIONS_FIELDS}
+  fragment DetailedPortfolioFields on Portfolio {
+    id
+    name
+    currency {
+      securityCode
+    }
+    portfolioReport {
+      marketValue
+      valueChangeAbsolute
+      accountBalance
+      positionMarketValue
+      securityPositions: portfolioReportItems {
+        ...SecurityPositionsFields
+      }
+    }
+  }
+`;

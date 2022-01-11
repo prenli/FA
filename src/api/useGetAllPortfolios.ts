@@ -18,12 +18,12 @@ const CONTACT_QUERY = gql`
 
 export const useGetAllPortfolios = () => {
   const { linkedContact } = useKeycloak();
-  const { loading, error, data } = useQuery<AllPortfoliosQuery>(CONTACT_QUERY, {
+  const { error, data } = useQuery<AllPortfoliosQuery>(CONTACT_QUERY, {
     variables: {
       contactId: linkedContact,
     },
     fetchPolicy: "cache-and-network",
   });
 
-  return { loading, error, summary: data?.contact };
+  return { error, data: data?.contact };
 };
