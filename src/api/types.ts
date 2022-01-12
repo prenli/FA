@@ -20,14 +20,6 @@ interface Security {
   };
 }
 
-export interface SecurityPosition {
-  purchaseTradeAmount: number;
-  marketTradeAmount: number;
-  valueChangeAbsolute: number;
-  amount: number;
-  security: Security;
-}
-
 interface BaseReport {
   marketValue: number;
   valueChangeAbsolute: number;
@@ -48,19 +40,6 @@ export interface SecurityPosition {
   valueChangeAbsolute: number;
   amount: number;
   security: Security;
-}
-
-interface BaseReport {
-  marketValue: number;
-  valueChangeAbsolute: number;
-  accountBalance: number;
-  positionMarketValue: number;
-}
-
-interface Summary<TReport extends BaseReport = BaseReport> {
-  id: number;
-  name: string;
-  portfolioReport: TReport;
 }
 
 interface DetailedReport extends BaseReport {
