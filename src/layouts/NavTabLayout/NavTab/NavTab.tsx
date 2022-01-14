@@ -1,6 +1,9 @@
 import React, { ComponentProps, ReactNode } from "react";
 import { Tab } from "@headlessui/react";
-import Carousel from "nuka-carousel";
+import {
+  PagesCarousel,
+  PagesCarouselProps,
+} from "../PagesCarousel/PagesCarousel";
 
 const NavTab = (props: ComponentProps<typeof Tab>) => (
   <Tab
@@ -23,20 +26,13 @@ const NavTabList = (props: ComponentProps<typeof Tab.List>) => (
 );
 NavTab.List = NavTabList;
 
-const NavTabPanels = (props: ComponentProps<typeof Carousel>) => (
-  <Carousel
-    disableEdgeSwiping
-    enableKeyboardControls
-    heightMode="current"
-    className="flex-1 py-4 px-2 !grid"
-    withoutControls
-    {...props}
-  />
+const NavTabPanels = (props: PagesCarouselProps) => (
+  <PagesCarousel {...props}>{props.children}</PagesCarousel>
 );
 NavTab.Panels = NavTabPanels;
 
 const NavTabPanel = (props: { children: ReactNode }) => (
-  <div className="overflow-x-hidden h-full cursor-default" {...props} />
+  <div className="overflow-x-hidden m-4 h-full" {...props} />
 );
 NavTab.Panel = NavTabPanel;
 

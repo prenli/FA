@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { useNavigate, useLocation } from "react-router";
+import { SwipeDirection } from "../PagesCarousel/PagesCarousel";
 import { NavTabPath } from "./types";
 
 interface useNavTabProps {
@@ -11,8 +11,6 @@ export const useNavTab = ({ navTabPaths }: useNavTabProps) => {
   const location = useLocation();
   const activePath = location.pathname.split("/").at(-1);
   const currentTabIndex = getActiveTabIndex(navTabPaths, activePath);
-  // wasDragged inform us if slide change was initiated by touch swipe/dragging of carousel (not by clicking tab or programmatically)
-  const [wasDragged, setWasDragged] = useState(false);
 
   const navigateToTab = (newIndex: number) => {
     navigate(`../${navTabPaths[newIndex].path}`);
@@ -24,14 +22,16 @@ export const useNavTab = ({ navTabPaths }: useNavTabProps) => {
       onChange: navigateToTab,
     },
     panelsProps: {
-      slideIndex: currentTabIndex,
-      afterSlide: (newIndex: number) => {
-        if (wasDragged) {
-          navigateToTab(newIndex);
-        }
-        setWasDragged(false);
+      currentPageIndex: currentTabIndex,
+      onPageSwipe: (direction: SwipeDirection) => {
+        navigateToTab(
+          getCurrentTabIndexAfterSwipe(
+            currentTabIndex,
+            direction,
+            navTabPaths.length
+          )
+        );
       },
-      onDragStart: () => setWasDragged(true),
     },
   };
 };
@@ -40,3 +40,13 @@ const getActiveTabIndex = (
   routes: NavTabPath[],
   activePath: string | undefined
 ) => routes.findIndex((route) => route.path === activePath);
+
+const getCurrentTabIndexAfterSwipe = (
+  currentTabIndex: number,
+  direction: SwipeDirection,
+  tabsCount: number
+) =>
+  Math.max(
+    0,
+    Math.min(currentTabIndex + (direction === "left" ? 1 : -1), tabsCount - 1)
+  );
