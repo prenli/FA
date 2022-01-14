@@ -32,5 +32,8 @@
   },
   "404Page": {
     "title": "404 - Ei löydy"
+  },
+  "messages": {
+    "noDataAvailable": "Tietoja ei ole saatavilla."
   }
 }

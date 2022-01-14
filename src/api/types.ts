@@ -1,4 +1,4 @@
-import { SECURITY_TYPE } from "./enums";
+import { ORDER_STATUS, SECURITY_TYPE } from "./enums";
 
 export const assertUnreachable = (_exhaustiveCheck: never) => {
   console.error(`Unreachable case: ${_exhaustiveCheck}`);
@@ -70,4 +70,35 @@ export interface AllPortfoliosQuery {
 
 export interface PortfolioQuery {
   portfolio: DetailedPortfolio;
+}
+
+export type OrderStatus = `${ORDER_STATUS}`;
+
+export interface TradeOrder {
+  id: number;
+  orderStatus: OrderStatus;
+  securityName: string;
+  type: {
+    typeName: string;
+    typeNamesAsMap: Record<string, string>;
+  };
+  transactionDate: string;
+  tradeAmountInPortfolioCurrency: number;
+  parentPortfolio: {
+    name: string;
+  };
+}
+
+export interface AllTradeOrdersQuery {
+  contact: {
+    id: number;
+    tradeOrders: TradeOrder[];
+  };
+}
+
+export interface PortfolioTradeOrdersQuery {
+  portfolio: {
+    id: number;
+    tradeOrders: TradeOrder[];
+  };
 }

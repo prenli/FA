@@ -61,5 +61,8 @@
   },
   "404Page": {
     "title": "404 - Not found"
+  },
+  "messages": {
+    "noDataAvailable": "No data available."
   }
 }

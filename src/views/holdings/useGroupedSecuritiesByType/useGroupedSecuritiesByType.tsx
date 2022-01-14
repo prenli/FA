@@ -39,6 +39,7 @@ export const useGroupedSecuritiesByType = (securities: SecurityPosition[]) => {
     return sortSecuritiesGroupByTypeOrder(grouped);
   }, [securities]);
 };
+
 const getSecurityTypeLabel = (securityType: SecurityType) => {
   switch (securityType) {
     case SECURITY_TYPE.STOCK:

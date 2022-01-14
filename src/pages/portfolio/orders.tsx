@@ -1,9 +1,12 @@
 import React from "react";
+import { useGetPortfolioTradeOrders } from "api/useGetPortfolioTradeOrders";
+import { QueryLoadingWrapper } from "components";
 import { useParams } from "react-router-dom";
+import { Orders } from "views/orders/orders";
 
-export const Orders = () => {
+export const OrdersPage = () => {
   const { portfolioId } = useParams();
-  return (
-    <h2 className="text-2xl font-semibold">{`Portfolio #${portfolioId} Orders`}</h2>
-  );
+  const queryData = useGetPortfolioTradeOrders(portfolioId);
+
+  return <QueryLoadingWrapper {...queryData} SuccessComponent={Orders} />;
 };

@@ -1,8 +1,10 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
+import { useGetAllTradeOrders } from "api/useGetAllTradeOrders";
+import { QueryLoadingWrapper } from "components";
+import { Orders } from "views/orders/orders";
 
-export const Orders = () => {
-  const { t } = useTranslation();
+export const OrdersPage = () => {
+  const queryData = useGetAllTradeOrders();
 
-  return <h2 className="text-2xl font-semibold">{t("ordersPage.title")}</h2>;
+  return <QueryLoadingWrapper {...queryData} SuccessComponent={Orders} />;
 };

@@ -19,7 +19,7 @@ const Transactions = lazy(() =>
   import("./transactions").then((module) => ({ default: module.Transactions }))
 );
 const Orders = lazy(() =>
-  import("./orders").then((module) => ({ default: module.Orders }))
+  import("./orders").then((module) => ({ default: module.OrdersPage }))
 );
 const Trading = lazy(() =>
   import("./trading").then((module) => ({ default: module.Trading }))
