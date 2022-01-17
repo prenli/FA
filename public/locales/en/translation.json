@@ -48,7 +48,9 @@
     "marketValue": "Market Value"
   },
   "transactionsPage": {
-    "title": "All transactions"
+    "title": "All transactions",
+    "datePickerFromLabel": "Date from",
+    "datePickerFromTo": "Date to"
   },
   "ordersPage": {
     "title": "All orders"

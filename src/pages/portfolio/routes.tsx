@@ -16,7 +16,9 @@ const Holding = lazy(() =>
   }))
 );
 const Transactions = lazy(() =>
-  import("./transactions").then((module) => ({ default: module.Transactions }))
+  import("./transactions").then((module) => ({
+    default: module.TransactionsPage,
+  }))
 );
 const Orders = lazy(() =>
   import("./orders").then((module) => ({ default: module.OrdersPage }))

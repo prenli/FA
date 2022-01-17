@@ -1,9 +1,9 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
+import { useGetAllPortfoliosTransactions } from "api/useGetAllPortfoliosTransactions";
+import { Transactions } from "views/transactions/transactions";
 
-export const Transactions = () => {
-  const { t } = useTranslation();
-  return (
-    <h2 className="text-2xl font-semibold">{t("transactionsPage.title")}</h2>
-  );
+export const TransactionsPage = () => {
+  const queryData = useGetAllPortfoliosTransactions();
+
+  return <Transactions {...queryData} />;
 };

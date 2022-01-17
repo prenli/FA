@@ -6,3 +6,4 @@ export { LoadingIndicator } from "./LoadingIndicator/LoadingIndicator";
 export { BackNavigationButton } from "./BackNavigationButton/BackNavigationButton";
 export { TranslationText } from "./TranslationText/TranslationText";
 export { QueryLoadingWrapper } from "./QueryLoadingWrapper/QueryLoadingWrapper";
+export { DatePicker } from "./DatePicker/DatePicker";

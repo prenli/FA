@@ -1,9 +1,11 @@
 import React from "react";
+import { useGetPortfolioTransactions } from "api/useGetPortfolioTransactions";
 import { useParams } from "react-router-dom";
+import { Transactions } from "views/transactions/transactions";
 
-export const Transactions = () => {
+export const TransactionsPage = () => {
   const { portfolioId } = useParams();
-  return (
-    <h2 className="text-2xl font-semibold">{`Portfolio #${portfolioId} Transactions`}</h2>
-  );
+  const queryData = useGetPortfolioTransactions(portfolioId);
+
+  return <Transactions {...queryData} />;
 };

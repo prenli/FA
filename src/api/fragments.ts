@@ -52,6 +52,23 @@ const SECURITY_POSITIONS_FIELDS = gql`
   }
 `;
 
+export const TRANSACTIONS_FIELDS = gql`
+  fragment TransactionsFields on Transaction {
+    id
+    transactionDate
+    type {
+      typeName
+      typeNamesAsMap
+      cashFlowEffect
+    }
+    tradeAmountInPortfolioCurrency
+    securityName
+    parentPortfolio {
+      name
+    }
+  }
+`;
+
 // to distinct Contact portfolioReport from Portfolio portfolioReport in Contact version we set portfolioId as portfolio.contact.id
 export const SUMMARY_FIELDS = gql`
   ${PORTFOLIO_REPORT_FIELDS}

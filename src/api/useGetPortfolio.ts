@@ -6,6 +6,7 @@ const PORTFOLIO_QUERY = gql`
   ${DETAILED_PORTFOLIO_FIELDS}
   query GetPortfolio($portfolioId: Long) {
     portfolio(id: $portfolioId) {
+      id
       ...DetailedPortfolioFields
     }
   }

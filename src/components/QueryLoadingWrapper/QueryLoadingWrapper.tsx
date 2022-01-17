@@ -7,7 +7,7 @@ import { QueryError } from "../QueryError/QueryError";
 interface QueryLoadingWrapperProps<T> {
   error: ApolloError | undefined;
   data: T | undefined;
-  SuccessComponent: React.FC<{ data: T }>;
+  SuccessComponent: (props: { data: T }) => JSX.Element;
 }
 
 export const QueryLoadingWrapper = <TData,>({

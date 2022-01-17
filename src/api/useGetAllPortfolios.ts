@@ -8,6 +8,7 @@ const CONTACT_QUERY = gql`
   ${PORTFOLIO_FIELDS}
   query GetContact($contactId: Long) {
     contact(id: $contactId) {
+      id
       ...SummaryFields
       portfolios {
         ...PortfolioFields
