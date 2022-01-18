@@ -83,30 +83,3 @@ export interface PortfolioTradeOrdersQuery {
     tradeOrders: TradeOrder[];
   };
 }
-
-export interface Transaction {
-  id: number;
-  transactionDate: string;
-  type: {
-    typeName: string;
-    typeNamesAsMap: Record<string, string>;
-    cashFlowEffect: number;
-  };
-  tradeAmountInPortfolioCurrency: number;
-  securityName: string;
-  parentPortfolio: {
-    name: string;
-  };
-}
-
-export interface PortfolioTransactionsQuery {
-  portfolio: {
-    transactions: Transaction[];
-  };
-}
-
-export interface AllPortfoliosTransactionsQuery {
-  contact: {
-    transactions: Transaction[];
-  };
-}

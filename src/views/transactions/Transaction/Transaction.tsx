@@ -1,12 +1,14 @@
 import React from "react";
-import { Transaction as TransactionType } from "api/types";
+import { Transaction as TransactionType } from "api/transactions/types";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import { formatToLocalShortDate } from "utils/date";
 import { getTransactionTypeName } from "utils/transactions";
 import { TransactionValue } from "../TransactionValue/TransactionValue";
 
 type TransactionProps = TransactionType;
 export const Transaction = ({
+  id,
   transactionDate,
   type: { typeName, cashFlowEffect, typeNamesAsMap },
   tradeAmountInPortfolioCurrency,
@@ -14,8 +16,12 @@ export const Transaction = ({
   parentPortfolio,
 }: TransactionProps) => {
   const { i18n } = useTranslation();
+  const navigate = useNavigate();
   return (
-    <div className="flex flex-col border-b">
+    <div
+      className="flex flex-col border-b cursor-pointer"
+      onClick={() => navigate(`/transactions/${id}`)}
+    >
       <div className="flex justify-between">
         <div className="">{securityName}</div>
         <TransactionValue

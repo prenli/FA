@@ -5,5 +5,7 @@ export interface HeadingProps {
 }
 
 export const Heading = ({ children }: HeadingProps) => (
-  <div className="flex gap-2 p-2 text-2xl font-bold bg-white">{children}</div>
+  <div className="flex gap-2 p-2 text-2xl font-bold bg-white border-b-2">
+    {children}
+  </div>
 );

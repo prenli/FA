@@ -1,18 +1,17 @@
 import { useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 import { startOfMonth } from "date-fns";
-import { useKeycloak } from "../contexts/keycloakContext";
-import { TRANSACTIONS_FIELDS } from "./fragments";
-import { AllPortfoliosTransactionsQuery } from "./types";
+import { TRANSACTION_FIELDS } from "./fragments";
+import { PortfolioTransactionsQuery } from "./types";
 
 const TRANSACTIONS_QUERY = gql`
-  ${TRANSACTIONS_FIELDS}
+  ${TRANSACTION_FIELDS}
   query GetTransactions(
     $startDate: String
     $endDate: String
-    $contactId: Long
+    $portfolioId: Long
   ) {
-    contact(id: $contactId) {
+    portfolio(id: $portfolioId) {
       id
       transactions(startDate: $startDate, endDate: $endDate) {
         ...TransactionsFields
@@ -21,18 +20,19 @@ const TRANSACTIONS_QUERY = gql`
   }
 `;
 
-export const useGetAllPortfoliosTransactions = () => {
-  const { linkedContact } = useKeycloak();
+export const useGetPortfolioTransactions = (
+  portfolioId: string | undefined
+) => {
   const now = new Date();
   const [startDate, setStartDate] = useState<Date>(startOfMonth(now));
   const [endDate, setEndDate] = useState<Date>(now);
-  const { error, data } = useQuery<AllPortfoliosTransactionsQuery>(
+  const { error, data } = useQuery<PortfolioTransactionsQuery>(
     TRANSACTIONS_QUERY,
     {
       variables: {
         startDate,
         endDate,
-        contactId: linkedContact,
+        portfolioId: portfolioId,
       },
       fetchPolicy: "cache-and-network",
     }
@@ -40,7 +40,7 @@ export const useGetAllPortfoliosTransactions = () => {
 
   return {
     error,
-    data: data?.contact.transactions,
+    data: data?.portfolio.transactions,
     startDate,
     setStartDate,
     endDate,

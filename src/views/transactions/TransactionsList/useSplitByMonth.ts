@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Transaction as TransactionType } from "api/types";
+import { Transaction as TransactionType } from "api/transactions/types";
 import { useTranslation } from "react-i18next";
 import { formatToLocalDate } from "utils/date";
 

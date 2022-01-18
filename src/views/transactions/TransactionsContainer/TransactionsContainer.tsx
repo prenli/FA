@@ -1,5 +1,5 @@
 import React from "react";
-import { Transaction } from "api/types";
+import { Transaction } from "api/transactions/types";
 import { NoTransactions } from "../NoTransactions/NoTransactions";
 import { TransactionsList } from "../TransactionsList/TransactionsList";
 

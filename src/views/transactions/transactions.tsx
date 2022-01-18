@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { ApolloError } from "@apollo/client";
-import { Transaction as TransactionType } from "api/types";
+import { Transaction as TransactionType } from "api/transactions/types";
 import { DatePicker, QueryLoadingWrapper } from "components";
 import { useTranslation } from "react-i18next";
 import { TransactionsContainer } from "./TransactionsContainer/TransactionsContainer";

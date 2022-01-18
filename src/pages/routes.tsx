@@ -22,6 +22,11 @@ const Transactions = lazy(() =>
     default: module.TransactionsPage,
   }))
 );
+const Transaction = lazy(() =>
+  import("./transactions/[transactionId]").then((module) => ({
+    default: module.Transaction,
+  }))
+);
 const Orders = lazy(() =>
   import("./orders").then((module) => ({ default: module.OrdersPage }))
 );
@@ -84,6 +89,10 @@ const mainRoutes = [
   {
     path: "holdings/:holdingId",
     element: <Holding />,
+  },
+  {
+    path: "transactions/:transactionId",
+    element: <Transaction />,
   },
 ];
 

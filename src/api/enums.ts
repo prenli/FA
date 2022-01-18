@@ -1,11 +1,3 @@
-export enum SECURITY_TYPE {
-  STOCK = "STOCK",
-  ETF = "ETFs",
-  BOND = "BOND",
-  FUND = "FUND",
-  CURRENCY = "CURRENCY",
-}
-
 export enum ORDER_STATUS {
   Executable = 1,
   Executed,

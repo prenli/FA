@@ -10,28 +10,6 @@
       "documents": "Documents"
     }
   },
-  "securities": {
-    "type": {
-      "stock": {
-        "plural": "stocks"
-      },
-      "ETF": {
-        "plural": "ETFs"
-      },
-      "bond": {
-        "plural": "bonds"
-      },
-      "fund": {
-        "plural": "funds"
-      },
-      "cash": {
-        "plural": "cash"
-      },
-      "other": {
-        "plural": "other"
-      }
-    }
-  },
   "portfolioSummary": {
     "currentMarketValue": "Current Market Value",
     "availableCash": "Available Cash",
@@ -65,6 +43,7 @@
     "title": "404 - Not found"
   },
   "messages": {
-    "noDataAvailable": "No data available."
+    "noDataAvailable": "No data available.",
+    "notAvailable": "not available"
   }
 }
