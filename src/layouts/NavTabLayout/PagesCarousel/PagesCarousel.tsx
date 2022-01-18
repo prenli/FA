@@ -25,7 +25,7 @@ export const PagesCarousel = ({
 
   return (
     <div className="overflow-auto relative flex-1 w-full" {...handlers}>
-      <div className="flex overflow-hidden ">
+      <div className="flex">
         {React.Children.map(children, (child, index) => {
           const isCurrent = index === currentPageIndex;
           const shouldBeRendered =

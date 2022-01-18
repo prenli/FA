@@ -1,10 +1,10 @@
 import React from "react";
-import { useGetAllPortfolios } from "api/useGetAllPortfolios";
+import { useGetAllPortfoliosHoldings } from "api/holdings/useGetAllPortfoliosHoldings";
+import { QueryLoadingWrapper } from "components";
 import { Holdings } from "views/holdings/holdings";
-import { QueryLoadingWrapper } from "../components";
 
 export const HoldingsPage = () => {
-  const queryData = useGetAllPortfolios();
+  const queryData = useGetAllPortfoliosHoldings();
 
   return <QueryLoadingWrapper {...queryData} SuccessComponent={Holdings} />;
 };

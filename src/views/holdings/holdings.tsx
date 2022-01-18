@@ -1,20 +1,20 @@
 import React from "react";
-import { AllPortfolios, DetailedPortfolio } from "api/types";
-import { SecuritiesGroup } from "./SecuritiesGroup/SecuritiesGroup";
-import { useGroupedSecuritiesByType } from "./useGroupedSecuritiesByType/useGroupedSecuritiesByType";
+import { AllocationByType } from "api/holdings/types";
+import { HoldingsGroupedByType } from "./HoldingsGroupedByType/HoldingsGroupedByType";
+import { NoHoldings } from "./NoHoldings/NoHoldings";
 
-interface HoldingsProps {
-  data: AllPortfolios | DetailedPortfolio;
+export interface HoldingsContainerProps {
+  data: AllocationByType[];
 }
 
-export const Holdings = ({ data }: HoldingsProps) => {
-  const groupedSecurities = useGroupedSecuritiesByType(
-    data.portfolioReport.securityPositions
-  );
+export const Holdings = ({ data }: HoldingsContainerProps) => {
+  if (data.length === 0) {
+    return <NoHoldings />;
+  }
   return (
-    <div className="flex flex-col gap-3 ">
-      {groupedSecurities.map((group) => (
-        <SecuritiesGroup key={group.type} {...group} />
+    <div className="flex flex-col gap-4">
+      {data.map((group) => (
+        <HoldingsGroupedByType key={group.code} {...group} />
       ))}
     </div>
   );

@@ -1,24 +1,4 @@
-import { ORDER_STATUS, SECURITY_TYPE } from "./enums";
-
-export const assertUnreachable = (_exhaustiveCheck: never) => {
-  console.error(`Unreachable case: ${_exhaustiveCheck}`);
-};
-
-type SecurityTypeKeys = keyof typeof SECURITY_TYPE;
-export type SecurityType = typeof SECURITY_TYPE[SecurityTypeKeys];
-
-interface Security {
-  id: number;
-  securityCode: string;
-  name: string;
-  isinCode: string;
-  type: {
-    code: SecurityType;
-  };
-  latestMarketData: {
-    latestPrice: number;
-  };
-}
+import { ORDER_STATUS } from "./enums";
 
 interface BaseReport {
   marketValue: number;
@@ -35,11 +15,12 @@ interface Summary<TReport extends BaseReport = BaseReport> {
 }
 
 export interface SecurityPosition {
-  purchaseTradeAmount: number;
-  marketTradeAmount: number;
   valueChangeAbsolute: number;
   amount: number;
-  security: Security;
+  security: {
+    securityCode: string;
+    name: string;
+  };
 }
 
 interface DetailedReport extends BaseReport {
