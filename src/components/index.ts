@@ -7,3 +7,4 @@ export { BackNavigationButton } from "./BackNavigationButton/BackNavigationButto
 export { TranslationText } from "./TranslationText/TranslationText";
 export { QueryLoadingWrapper } from "./QueryLoadingWrapper/QueryLoadingWrapper";
 export { DatePicker } from "./DatePicker/DatePicker";
+export { Button } from "./Button/Button";
