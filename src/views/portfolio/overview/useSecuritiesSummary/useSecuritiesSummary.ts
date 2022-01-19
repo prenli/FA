@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { SecurityPosition } from "api/types";
+import { SecurityPosition } from "api/overview/types";
 
 export const useSecuritiesSummary = (securities: SecurityPosition[]) => {
   const topSecurities = useMemo(() => {

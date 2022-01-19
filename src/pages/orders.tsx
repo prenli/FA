@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetAllTradeOrders } from "api/useGetAllTradeOrders";
+import { useGetAllTradeOrders } from "api/orders/useGetAllTradeOrders";
 import { QueryLoadingWrapper } from "components";
 import { Orders } from "views/orders/orders";
 

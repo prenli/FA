@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetPortfolioTradeOrders } from "api/useGetPortfolioTradeOrders";
+import { useGetPortfolioTradeOrders } from "api/orders/useGetPortfolioTradeOrders";
 import { QueryLoadingWrapper } from "components";
 import { useParams } from "react-router-dom";
 import { Orders } from "views/orders/orders";

@@ -35,20 +35,23 @@ export const PortfolioInfoCard = ({
     <Card>
       <div className="p-3" onClick={navigateToPortfolioDetails}>
         <div className="pb-1 mb-1 font-bold border-b">
-          <PortfolioInfoRow label={name} value={marketValue} />
+          <PortfolioInfoRow
+            label={name}
+            value={t("number", { value: marketValue })}
+          />
         </div>
         <div className="flex flex-col gap-2">
           <PortfolioInfoRow
             label={t("portfolioSummary.currentMarketValue")}
-            value={positionMarketValue}
+            value={t("number", { value: positionMarketValue })}
           />
           <PortfolioInfoRow
             label={t("portfolioSummary.availableCash")}
-            value={accountBalance}
+            value={t("number", { value: accountBalance })}
           />
           <PortfolioInfoRow
             label={t("portfolioSummary.unrealizedProfits")}
-            value={valueChangeAbsolute}
+            value={t("number", { value: valueChangeAbsolute })}
           />
         </div>
       </div>

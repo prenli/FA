@@ -21,6 +21,7 @@ export const TransactionDetails = ({
     parentPortfolio: { name: portfolioName },
     totalCost,
     tradeAmount,
+    currencyCode: currency,
   },
 }: TransactionDetailsProps) => {
   const { t, i18n } = useTranslation();
@@ -30,10 +31,18 @@ export const TransactionDetails = ({
         <LabeledDiv label="Security name">{securityName}</LabeledDiv>
         <LabeledDiv label="Portfolio name">{portfolioName}</LabeledDiv>
         <LabeledDiv label="Units">{amount}</LabeledDiv>
-        <LabeledDiv label="Unit price">{unitPrice}</LabeledDiv>
-        <LabeledDiv label="Gross trade amount">{grossPrice}</LabeledDiv>
-        <LabeledDiv label="Cost">{totalCost}</LabeledDiv>
-        <LabeledDiv label="Net trade amount">{tradeAmount}</LabeledDiv>
+        <LabeledDiv label="Unit price">
+          {t("numberWithCurrency", { value: unitPrice, currency })}
+        </LabeledDiv>
+        <LabeledDiv label="Gross trade amount">
+          {t("numberWithCurrency", { value: grossPrice, currency })}
+        </LabeledDiv>
+        <LabeledDiv label="Cost">
+          {t("numberWithCurrency", { value: totalCost, currency })}
+        </LabeledDiv>
+        <LabeledDiv label="Net trade amount">
+          {t("numberWithCurrency", { value: tradeAmount, currency })}
+        </LabeledDiv>
         <LabeledDiv label="Type">
           {getTransactionTypeName(typeNamesAsMap, typeName, i18n.language)}
         </LabeledDiv>

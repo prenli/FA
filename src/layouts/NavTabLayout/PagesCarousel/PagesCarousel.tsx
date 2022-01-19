@@ -37,7 +37,7 @@ export const PagesCarousel = ({
                 isCurrent ? "w-full" : "w-0 h-0"
               }`}
             >
-              <div className="w-screen">{shouldBeRendered && child}</div>
+              <div className="w-full">{shouldBeRendered && child}</div>
             </div>
           );
         })}

@@ -1,5 +1,5 @@
 import React from "react";
-import { TradeOrder } from "api/types";
+import { TradeOrder } from "api/orders/types";
 import { TradeOrdersGroup } from "./TradeOrdersGroup/TradeOrdersGroup";
 import { useGroupedTradeOrdersByStatus } from "./useGroupedTradeOrdersByStatus";
 

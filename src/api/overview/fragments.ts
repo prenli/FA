@@ -90,20 +90,3 @@ export const DETAILED_PORTFOLIO_FIELDS = gql`
     }
   }
 `;
-
-export const TRADE_ORDERS_DETAILS = gql`
-  fragment TradeOrdersDetails on Transaction {
-    id
-    orderStatus
-    securityName
-    type {
-      typeName
-      typeNamesAsMap
-    }
-    transactionDate
-    tradeAmountInPortfolioCurrency
-    parentPortfolio {
-      name
-    }
-  }
-`;

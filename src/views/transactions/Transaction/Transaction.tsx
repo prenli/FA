@@ -25,8 +25,8 @@ export const Transaction = ({
       <div className="flex justify-between">
         <div className="">{securityName}</div>
         <TransactionValue
-          value={tradeAmountInPortfolioCurrency}
-          sign={cashFlowEffect}
+          value={tradeAmountInPortfolioCurrency * cashFlowEffect}
+          currency={parentPortfolio.currency.securityCode}
         />
       </div>
       <div className="flex justify-between text-xs">

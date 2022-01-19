@@ -1,5 +1,5 @@
 import React from "react";
-import { TradeOrder } from "api/types";
+import { TradeOrder } from "api/orders/types";
 import { Card } from "components";
 import { TradeOrderPosition } from "../TradeOrderPosition/TradeOrderPosition";
 

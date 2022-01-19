@@ -13,7 +13,7 @@ const HOLDINGS_QUERY = gql`
         parameters: {
           paramsSet: {
             key: "ALLOC"
-            timePeriodCodes: "CALYEAR-0"
+            timePeriodCodes: "DAYS-0"
             grouppedByProperties: [TYPE, SECURITY]
             includeData: false
             includeChildren: true

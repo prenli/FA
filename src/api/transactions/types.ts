@@ -10,6 +10,9 @@ export interface Transaction {
   securityName: string;
   parentPortfolio: {
     name: string;
+    currency: {
+      securityCode: string;
+    };
   };
 }
 
@@ -35,6 +38,7 @@ export interface TransactionDetails extends Transaction {
   grossPrice: number;
   totalCost: number;
   tradeAmount: number;
+  currencyCode: string;
 }
 
 export interface TransactionDetailsQuery {

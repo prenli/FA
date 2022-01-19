@@ -1,10 +1,20 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface TransactionValueProps {
   value: number;
-  sign: number;
+  currency: string;
 }
 
-export const TransactionValue = ({ value, sign }: TransactionValueProps) => (
-  <div className="font-medium">{`${sign < 0 ? "-" : "+"}${value}`}</div>
-);
+export const TransactionValue = ({
+  value,
+  currency,
+}: TransactionValueProps) => {
+  const { t } = useTranslation();
+  return (
+    <div className="font-medium">{`${value > 0 ? "+" : ""}${t(
+      "numberWithCurrency",
+      { value, currency }
+    )}`}</div>
+  );
+};

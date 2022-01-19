@@ -1,5 +1,5 @@
 import React from "react";
-import { TradeOrder } from "api/types";
+import { TradeOrder } from "api/orders/types";
 import { useTranslation } from "react-i18next";
 import { getTransactionTypeName } from "utils/transactions";
 
@@ -12,7 +12,7 @@ export const TradeOrderPosition: React.FC<Props> = ({
   parentPortfolio,
   type: { typeNamesAsMap, typeName },
 }) => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const transationTypeName = getTransactionTypeName(
     typeNamesAsMap,
     typeName,
@@ -23,7 +23,12 @@ export const TradeOrderPosition: React.FC<Props> = ({
     <div className="p-2">
       <div className="flex flex-row justify-between pb-1 text-lg">
         <span>{securityName}</span>
-        <span className="font-bold">{tradeAmountInPortfolioCurrency}</span>
+        <span className="font-bold">
+          {t("numberWithCurrency", {
+            value: tradeAmountInPortfolioCurrency,
+            currency: parentPortfolio.currency.securityCode,
+          })}
+        </span>
       </div>
       <div className="flex flex-row justify-between text-sm">
         <div>

@@ -1,8 +1,8 @@
 import React from "react";
-import { useGetAllPortfolios } from "api/useGetAllPortfolios";
+import { useGetAllPortfolios } from "api/overview/useGetAllPortfolios";
 import { QueryLoadingWrapper } from "components";
 import { useTranslation } from "react-i18next";
-import { AllPortfolios } from "../../api/types";
+import { AllPortfolios } from "../../api/overview/types";
 import { PortfolioInfoCard } from "./PortfolioInfoCard/PortfolioInfoCard";
 
 export const OverviewView = () => {

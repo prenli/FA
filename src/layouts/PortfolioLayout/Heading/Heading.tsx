@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetPortfolio } from "api/useGetPortfolio";
+import { useGetPortfolio } from "api/overview/useGetPortfolio";
 import { BackNavigationButton, Heading as HeadingComponent } from "components";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 

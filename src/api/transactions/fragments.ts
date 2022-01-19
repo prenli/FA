@@ -13,6 +13,9 @@ export const TRANSACTION_FIELDS = gql`
     securityName
     parentPortfolio {
       name
+      currency {
+        securityCode
+      }
     }
   }
 `;
@@ -28,5 +31,6 @@ export const TRANSACTION_DETAILS_FIELDS = gql`
     grossPrice
     totalCost
     tradeAmount
+    currencyCode
   }
 `;

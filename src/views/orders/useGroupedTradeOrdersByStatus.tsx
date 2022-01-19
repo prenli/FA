@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { ORDER_STATUS } from "api/enums";
-import { OrderStatus, TradeOrder } from "api/types";
+import { ORDER_STATUS } from "api/orders/enums";
+import { OrderStatus, TradeOrder } from "api/orders/types";
 
 // HINT: Add or remove ORDER_STATUS from this list to modify trade orders groups on "Trade Orders" tab.
 const GROUP_TYPES_TO_DISPLAY = [

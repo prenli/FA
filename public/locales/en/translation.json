@@ -1,4 +1,6 @@
 {
+  "number": "{{value, number}}",
+  "numberWithCurrency": "{{value, currency}}",
   "navTab": {
     "title": "All portfolios",
     "tabs": {

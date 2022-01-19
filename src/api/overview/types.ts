@@ -1,5 +1,3 @@
-import { ORDER_STATUS } from "./enums";
-
 interface BaseReport {
   marketValue: number;
   valueChangeAbsolute: number;
@@ -51,35 +49,4 @@ export interface AllPortfoliosQuery {
 
 export interface PortfolioQuery {
   portfolio: DetailedPortfolio;
-}
-
-export type OrderStatus = `${ORDER_STATUS}`;
-
-export interface TradeOrder {
-  id: number;
-  orderStatus: OrderStatus;
-  securityName: string;
-  type: {
-    typeName: string;
-    typeNamesAsMap: Record<string, string>;
-  };
-  transactionDate: string;
-  tradeAmountInPortfolioCurrency: number;
-  parentPortfolio: {
-    name: string;
-  };
-}
-
-export interface AllTradeOrdersQuery {
-  contact: {
-    id: number;
-    tradeOrders: TradeOrder[];
-  };
-}
-
-export interface PortfolioTradeOrdersQuery {
-  portfolio: {
-    id: number;
-    tradeOrders: TradeOrder[];
-  };
 }
