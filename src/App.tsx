@@ -3,6 +3,7 @@ import { ApolloProvider } from "@apollo/client";
 import { KeycloakProvider } from "contexts/keycloakContext";
 import { apolloClient } from "services/apolloClient";
 import { keycloakService } from "services/keycloakService";
+import { LocaleFeeder } from "./components";
 import { RootRoutes } from "./pages/routes";
 
 function App() {
@@ -13,7 +14,9 @@ function App() {
       MissingLinkedContactComponent={<div>Missing linked contact...</div>}
     >
       <ApolloProvider client={apolloClient}>
-        <RootRoutes />
+        <LocaleFeeder>
+          <RootRoutes />
+        </LocaleFeeder>
       </ApolloProvider>
     </KeycloakProvider>
   );

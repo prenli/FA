@@ -8,3 +8,4 @@ export { TranslationText } from "./TranslationText/TranslationText";
 export { QueryLoadingWrapper } from "./QueryLoadingWrapper/QueryLoadingWrapper";
 export { DatePicker } from "./DatePicker/DatePicker";
 export { Button } from "./Button/Button";
+export { LocaleFeeder } from "./LocaleFeeder/LocaleFeeder";
