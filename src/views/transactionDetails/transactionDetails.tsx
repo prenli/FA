@@ -50,9 +50,13 @@ export const TransactionDetails = ({
           {security?.isinCode ?? t("messages.notAvailable")}
         </LabeledDiv>
         <div />
-        <LabeledDiv label="Transaction date">{transactionDate}</LabeledDiv>
+        <LabeledDiv label="Transaction date">
+          {t("date", { date: new Date(transactionDate) })}
+        </LabeledDiv>
         <LabeledDiv label="Settlement date">
-          {settlementDate ?? t("messages.notAvailable")}
+          {settlementDate
+            ? t("date", { date: new Date(settlementDate) })
+            : t("messages.notAvailable")}
         </LabeledDiv>
       </div>
       <Button variant="Secondary" isFullWidth>

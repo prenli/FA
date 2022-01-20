@@ -1,38 +1,10 @@
-import { intlFormat } from "date-fns";
+export const toShortISOString = (date: Date) =>
+  `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
-interface FormatOptions {
-  localeMatcher?: "lookup" | "best fit";
-  weekday?: "narrow" | "short" | "long";
-  era?: "narrow" | "short" | "long";
-  year?: "numeric" | "2-digit";
-  month?: "numeric" | "2-digit" | "narrow" | "short" | "long";
-  day?: "numeric" | "2-digit";
-  hour?: "numeric" | "2-digit";
-  minute?: "numeric" | "2-digit";
-  second?: "numeric" | "2-digit";
-  timeZoneName?: "short" | "long";
-  formatMatcher?: "basic" | "best fit";
-  hour12?: boolean;
-  timeZone?: string;
-}
+export const startOfMonth = (date: Date) => {
+  const resultDate = new Date(date);
+  resultDate.setDate(1);
+  resultDate.setHours(0, 0, 0, 0);
 
-export const formatToLocalDate = (
-  date: Date,
-  formatOptions: FormatOptions,
-  locale: string
-) => {
-  return intlFormat(date, formatOptions, {
-    locale,
-  });
-};
-export const formatToLocalShortDate = (date: Date, locale: string) => {
-  return formatToLocalDate(
-    date,
-    {
-      year: "numeric",
-      month: "numeric",
-      day: "numeric",
-    },
-    locale
-  );
+  return resultDate;
 };

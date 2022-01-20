@@ -1,6 +1,7 @@
 {
   "number": "{{value, number}}",
   "numberWithCurrency": "{{value, currency}}",
+  "date": "{{date, datetime}}",
   "navTab": {
     "title": "All portfolios",
     "tabs": {

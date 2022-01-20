@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 import { useKeycloak } from "contexts/keycloakContext";
-import { startOfMonth, endOfDay } from "date-fns";
+import { toShortISOString, startOfMonth } from "utils/date";
 import { TRANSACTION_FIELDS } from "./fragments";
 import { AllPortfoliosTransactionsQuery } from "./types";
 
@@ -24,7 +24,7 @@ const TRANSACTIONS_QUERY = gql`
 const now = new Date();
 const initialRange = {
   start: startOfMonth(now),
-  end: endOfDay(now),
+  end: now,
 };
 
 export const useGetAllPortfoliosTransactions = () => {
@@ -41,8 +41,8 @@ export const useGetAllPortfoliosTransactions = () => {
     TRANSACTIONS_QUERY,
     {
       variables: {
-        startDate,
-        endDate,
+        startDate: toShortISOString(startDate),
+        endDate: toShortISOString(endDate),
         contactId: linkedContact,
       },
       fetchPolicy: "cache-and-network",

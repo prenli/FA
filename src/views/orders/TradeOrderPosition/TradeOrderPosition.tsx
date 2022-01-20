@@ -32,7 +32,8 @@ export const TradeOrderPosition: React.FC<Props> = ({
       </div>
       <div className="flex flex-row justify-between text-sm">
         <div>
-          <span>{transactionDate}</span> - <span>{parentPortfolio.name}</span>
+          <span>{t("date", { date: new Date(transactionDate) })}</span> -{" "}
+          <span>{parentPortfolio.name}</span>
         </div>
         <span>{transationTypeName}</span>
       </div>

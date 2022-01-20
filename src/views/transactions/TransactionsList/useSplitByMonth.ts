@@ -1,10 +1,9 @@
 import { useMemo } from "react";
 import { Transaction as TransactionType } from "api/transactions/types";
 import { useTranslation } from "react-i18next";
-import { formatToLocalDate } from "utils/date";
 
 export const useSplitByMonth = (data: TransactionType[]) => {
-  const { i18n } = useTranslation();
+  const { t } = useTranslation();
   return useMemo(() => {
     const splitData: {
       [key: string]: TransactionType[];
@@ -19,19 +18,16 @@ export const useSplitByMonth = (data: TransactionType[]) => {
       splitData[transactionDateLabel].push(transaction);
     });
     return Object.entries(splitData)
-      .sort((entryA, entryB) => (entryA[0] < entryB[0] ? 1 : -1))
-      .map((entry) => ({
-        label: formatToLocalDate(
-          new Date(entry[0]),
-          {
-            year: "numeric",
-            month: "long",
-          },
-          i18n.language
-        ),
-        transactions: entry[1],
+      .sort(([dateA], [dateB]) => (dateA < dateB ? 1 : -1))
+      .map(([date, transactions]) => ({
+        label: t("date", {
+          date: new Date(date),
+          year: "numeric",
+          month: "long",
+        }),
+        transactions: transactions,
       }));
-  }, [data, i18n.language]);
+  }, [data, t]);
 };
 
 const getYearMonthLabel = (date: Date) =>
