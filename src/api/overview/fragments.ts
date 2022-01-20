@@ -37,17 +37,7 @@ const SECURITY_POSITIONS_FIELDS = gql`
       id
       securityCode
       name
-      isinCode
-      type {
-        code
-      }
-      latestMarketData {
-        latestPrice: close
-      }
     }
-    amount
-    purchaseTradeAmount
-    marketTradeAmount
     valueChangeAbsolute
   }
 `;
@@ -55,7 +45,6 @@ const SECURITY_POSITIONS_FIELDS = gql`
 // to distinct Contact portfolioReport from Portfolio portfolioReport in Contact version we set portfolioId as portfolio.contact.id
 export const SUMMARY_FIELDS = gql`
   ${PORTFOLIO_REPORT_FIELDS}
-  ${SECURITY_POSITIONS_FIELDS}
   fragment SummaryFields on Contact {
     id
     name
@@ -65,9 +54,6 @@ export const SUMMARY_FIELDS = gql`
         contact {
           id
         }
-      }
-      securityPositions: portfolioReportItems {
-        ...SecurityPositionsFields
       }
     }
   }

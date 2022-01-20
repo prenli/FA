@@ -10,6 +10,11 @@ const Overview = lazy(() =>
 const Holdings = lazy(() =>
   import("./holdings").then((module) => ({ default: module.HoldingsView }))
 );
+const Holding = lazy(() =>
+  import("./holdings/[holdingId]").then((module) => ({
+    default: module.HoldingPage,
+  }))
+);
 const Transactions = lazy(() =>
   import("./transactions").then((module) => ({
     default: module.TransactionsPage,
@@ -76,6 +81,10 @@ export const portfolioRoutes = [
         path: "",
         element: <PortfolioLayout />,
         children: portfolioTabRoutes,
+      },
+      {
+        path: "holdings/:holdingId",
+        element: <Holding />,
       },
     ],
   },

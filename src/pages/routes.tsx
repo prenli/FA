@@ -14,7 +14,7 @@ const Holdings = lazy(() =>
 );
 const Holding = lazy(() =>
   import("./holdings/[holdingId]").then((module) => ({
-    default: module.Holding,
+    default: module.HoldingPage,
   }))
 );
 const Transactions = lazy(() =>

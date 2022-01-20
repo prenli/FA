@@ -21,6 +21,7 @@ const HOLDINGS_QUERY = gql`
             locale: $locale
           }
           includeDrilldownPositions: false
+          security: false
         }
       ) {
         ...AllocationBySecurityTypeFields
