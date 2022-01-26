@@ -1,5 +1,6 @@
 import React, { ComponentProps, ReactNode } from "react";
 import { Tab } from "@headlessui/react";
+import classNames from "classnames";
 import {
   PagesCarousel,
   PagesCarouselProps,
@@ -8,9 +9,12 @@ import {
 const NavTab = (props: ComponentProps<typeof Tab>) => (
   <Tab
     className={({ selected }) =>
-      ` border-current px-2 py-0 whitespace-nowrap ${
-        selected ? "border-b-2 font-semibold" : "border-b-0"
-      }`
+      classNames("border-current p-2 whitespace-nowrap", {
+        "border-b border-blue-600 font-semibold text-base text-blue-600":
+          selected,
+        "border-b border-transparent text-gray-600 text-base font-normal":
+          !selected,
+      })
     }
     {...props}
   />
@@ -20,7 +24,7 @@ NavTab.Group = Tab.Group;
 
 const NavTabList = (props: ComponentProps<typeof Tab.List>) => (
   <Tab.List
-    className="flex overflow-auto flex-nowrap p-2 border-b-2 scroll-hidden"
+    className="flex overflow-auto flex-nowrap px-2 border-b border-gray-200 scroll-hidden"
     {...props}
   />
 );
