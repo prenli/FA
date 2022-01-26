@@ -2,6 +2,11 @@
   "number": "{{value, number}}",
   "numberWithCurrency": "{{value, currency}}",
   "date": "{{date, datetime}}",
+  "component": {
+    "select": {
+      "placeholder": "Please select"
+    }
+  },
   "navTab": {
     "title": "All portfolios",
     "tabs": {

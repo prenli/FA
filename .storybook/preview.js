@@ -1,6 +1,9 @@
 import "styles/tailwind.css";
+import { i18n } from "./i18next.js";
 
 export const parameters = {
+  i18n,
+  locale: "en",
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
     matchers: {
@@ -12,6 +15,19 @@ export const parameters = {
     "storybook/docs/panel": {
       hidden: true,
     },
+  },
+  backgrounds: {
+    default: "light",
+    values: [
+      {
+        name: "dark",
+        value: "#333333",
+      },
+      {
+        name: "light",
+        value: "#FFFFFF",
+      },
+    ],
   },
   viewport: {
     viewports: [
