@@ -31,7 +31,20 @@
   "holdingsPage": {
     "latestMarketPrice": "Latest Market Price",
     "unrealizedProfits": "Unrealized profits",
-    "marketValue": "Market Value"
+    "marketValue": "Market Value",
+    "holdings": "Holdings",
+    "units": "Units",
+    "purchaseValue": "Purchase value",
+    "accruedInterest": "Accrued interest",
+    "changePercentage": "Change %",
+    "type": "Type",
+    "isinCode": "ISIN code",
+    "currency": "Currency",
+    "prospectus": "Prospectus",
+    "kiid": "KIID",
+    "buy": "Buy",
+    "sell": "Sell",
+    "securityDetails": "Security details"
   },
   "transactionsPage": {
     "title": "All transactions",

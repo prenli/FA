@@ -35,6 +35,7 @@ export const PORTFOLIO_REPORT_HOLDINGS_DETAILS_FIELDS = gql`
       purchaseTradeAmount
       marketValue
       valueChangeAbsolute
+      valueChangeRelative
     }
   }
 `;

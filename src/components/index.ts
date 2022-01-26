@@ -9,3 +9,4 @@ export { QueryLoadingWrapper } from "./QueryLoadingWrapper/QueryLoadingWrapper";
 export { DatePicker } from "./DatePicker/DatePicker";
 export { Button } from "./Button/Button";
 export { LocaleFeeder } from "./LocaleFeeder/LocaleFeeder";
+export { LabeledDiv } from "./LabeledDiv/LabeledDiv";

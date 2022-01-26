@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { TransactionDetails as TransactionDetailsType } from "api/transactions/types";
-import { Button } from "components";
+import { Button, LabeledDiv } from "components";
 import { useTranslation } from "react-i18next";
 import { getTransactionTypeName } from "utils/transactions";
 
@@ -65,15 +65,3 @@ export const TransactionDetails = ({
     </div>
   );
 };
-
-interface LabeledDivProps {
-  label: ReactNode;
-  children: ReactNode;
-}
-
-const LabeledDiv = ({ label, children }: LabeledDivProps) => (
-  <div className="leading-none">
-    <label className="text-sm">{label}</label>
-    <div className="font-bold">{children}</div>
-  </div>
-);

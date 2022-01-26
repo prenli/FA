@@ -5,7 +5,7 @@ type Variant = "Primary" | "Secondary";
 
 interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   variant?: Variant;
-  isFullWidth: boolean;
+  isFullWidth?: boolean;
   leftIcon?: ReactElement;
 }
 

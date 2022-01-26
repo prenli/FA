@@ -75,6 +75,7 @@ export interface HoldingPosition {
   purchaseTradeAmount: number;
   marketValue: number;
   valueChangeAbsolute: number;
+  valueChangeRelative: number;
 }
 
 export interface AllPortfoliosHoldingDetailsQuery {
