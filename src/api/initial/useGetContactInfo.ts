@@ -8,6 +8,10 @@ const CONTACT_INFO_QUERY = gql`
       language {
         locale
       }
+      portfolios {
+        id
+        name
+      }
     }
   }
 `;
@@ -17,6 +21,10 @@ export interface ContactInfoQuery {
     language: {
       locale: string;
     };
+    portfolios: {
+      id: number;
+      name: string;
+    }[];
   };
 }
 

@@ -1,8 +1,9 @@
 import React, { lazy } from "react";
 import { TranslationText } from "components";
 import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
-import { PortfolioLayout } from "layouts/PortfolioLayout/PortfolioLayout";
 import { Navigate } from "react-router-dom";
+import { NavTabLayout } from "../../layouts/NavTabLayout/NavTabLayout";
+import { PortfolioNavigationHeaderLayout } from "../../layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
 
 const Overview = lazy(() =>
   import("./overview").then((module) => ({ default: module.OverviewPage }))
@@ -79,8 +80,14 @@ export const portfolioRoutes = [
       },
       {
         path: "",
-        element: <PortfolioLayout />,
-        children: portfolioTabRoutes,
+        element: <PortfolioNavigationHeaderLayout />,
+        children: [
+          {
+            path: "",
+            element: <NavTabLayout routes={portfolioTabRoutes} />,
+            children: portfolioTabRoutes,
+          },
+        ],
       },
       {
         path: "holdings/:holdingId",

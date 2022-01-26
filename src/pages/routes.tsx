@@ -1,9 +1,10 @@
 import React, { lazy } from "react";
 import { TranslationText } from "components";
-import { AllPortfoliosLayout } from "layouts/AllPortfoliosLayout/AllPortfoliosLayout";
 import { MainLayout } from "layouts/MainLayout/MainLayout";
 import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
 import { useRoutes, Navigate } from "react-router-dom";
+import { NavTabLayout } from "../layouts/NavTabLayout/NavTabLayout";
+import { PortfolioNavigationHeaderLayout } from "../layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
 import { portfolioRoutes } from "./portfolio/routes";
 
 const Overview = lazy(() =>
@@ -83,8 +84,14 @@ const mainRoutes = [
   },
   {
     path: "",
-    element: <AllPortfoliosLayout />,
-    children: mainTabRoutes,
+    element: <PortfolioNavigationHeaderLayout />,
+    children: [
+      {
+        path: "",
+        element: <NavTabLayout routes={mainTabRoutes} />,
+        children: mainTabRoutes,
+      },
+    ],
   },
   {
     path: "holdings/:holdingId",

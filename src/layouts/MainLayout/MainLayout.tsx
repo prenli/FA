@@ -4,14 +4,16 @@ import { Outlet } from "react-router-dom";
 
 export const MainLayout = () => {
   return (
-    <Suspense
-      fallback={
-        <Center>
-          <LoadingIndicator />
-        </Center>
-      }
-    >
-      <Outlet />
-    </Suspense>
+    <div className="mt-8">
+      <Suspense
+        fallback={
+          <Center>
+            <LoadingIndicator />
+          </Center>
+        }
+      >
+        <Outlet />
+      </Suspense>
+    </div>
   );
 };
