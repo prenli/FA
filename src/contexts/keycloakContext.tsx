@@ -23,13 +23,17 @@ export const KeycloakProvider = (props: KeycloakProviderProps) => {
     InitializingComponent,
     MissingLinkedContactComponent,
   } = props;
-  const { initialized, linkedContact } = keycloak.state;
+  const { error, initialized, linkedContact } = keycloak.state;
   const [, forceRender] = useReducer((previous) => previous + 1, 0);
 
   useEffect(() => {
     keycloak.subscribe(forceRender);
     return () => keycloak.unsubscribe();
   }, [forceRender, keycloak]);
+
+  if (error) {
+    return <div className="m-4">Authorisation server error</div>;
+  }
 
   if (!initialized) {
     return InitializingComponent;

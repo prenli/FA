@@ -31,6 +31,7 @@ type SubscribeFunctionType = () => void;
 export type KeycloakServiceStateType = {
   initialized: boolean;
   authenticated: boolean;
+  error?: boolean;
   linkedContact: string | undefined;
 };
 
@@ -51,7 +52,14 @@ class KeycloakService {
   }
 
   init() {
-    this.keycloak.init(keycloakInitConfig);
+    this.keycloak.init(keycloakInitConfig).catch((error) => {
+      console.error(error);
+      this.state = {
+        ...this.state,
+        error: true,
+      };
+      this.updateState();
+    });
 
     this.keycloak.onReady = this.onReady;
     this.keycloak.onAuthError = this.onError;
