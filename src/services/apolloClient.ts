@@ -1,8 +1,14 @@
 import { ApolloClient, InMemoryCache, HttpLink, from } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { API_URL } from "config";
 import { keycloakService } from "./keycloakService";
 
-const httpLink = new HttpLink({ uri: "/graphql" });
+const httpLink = new HttpLink({
+  uri: `${API_URL}/graphql`,
+  fetchOptions: {
+    mode: "cors",
+  },
+});
 
 const authMiddleware = setContext(async (operation, { headers }) => {
   const token = await keycloakService.getToken();

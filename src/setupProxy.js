@@ -1,6 +1,6 @@
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
-const PROXY = "https://fadev.fasolutions.com";
+const PROXY = process.env.API_URL;
 
 module.exports = function (app) {
   app.use(
