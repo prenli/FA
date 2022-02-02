@@ -4,11 +4,18 @@ pipelines:
   branches:
     master:
       - step:
-          name: Build
+          name: Build app
           script:
             - yarn install && yarn build
           artifacts:
             - build/**
+            
+      - step:
+          name: Build function
+          script:
+            - yarn install && yarn build
+          artifacts:
+            - functions/lib/**
 
       - step:
           name: Deploy to Firebase
