@@ -1,4 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
+import { getFetchPolicyOptions } from "api/utils";
 import { TRANSACTION_DETAILS_FIELDS, TRANSACTION_FIELDS } from "./fragments";
 import { TransactionDetailsQuery } from "./types";
 
@@ -14,15 +15,15 @@ const TRANSACTION_DETAILS_QUERY = gql`
 `;
 
 export const useGetTransactionDetails = (transactionId: string | undefined) => {
-  const { error, data } = useQuery<TransactionDetailsQuery>(
+  const { loading, error, data } = useQuery<TransactionDetailsQuery>(
     TRANSACTION_DETAILS_QUERY,
     {
       variables: {
-        transactionId: transactionId,
+        transactionId,
       },
-      fetchPolicy: "cache-and-network",
+      ...getFetchPolicyOptions(`useGetTransactionDetails.${transactionId}`),
     }
   );
 
-  return { error, data: data?.transaction };
+  return { loading, error, data: data?.transaction };
 };

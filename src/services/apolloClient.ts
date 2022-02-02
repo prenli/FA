@@ -1,5 +1,6 @@
 import { ApolloClient, InMemoryCache, HttpLink, from } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { LocalStorageWrapper, CachePersistor } from "apollo3-cache-persist";
 import { API_URL } from "config";
 import { keycloakService } from "./keycloakService";
 
@@ -20,9 +21,8 @@ const authMiddleware = setContext(async (operation, { headers }) => {
   };
 });
 
-export const apolloClient = new ApolloClient({
-  link: from([authMiddleware, httpLink]),
-  cache: new InMemoryCache({
+export const getPersistedApolloClient = async () => {
+  const cache = new InMemoryCache({
     typePolicies: {
       PortfolioReport: {
         keyFields: ["portfolioId"],
@@ -33,8 +33,23 @@ export const apolloClient = new ApolloClient({
         },
       },
       PortfolioReportItem: {
-        keyFields: ["security", ["id"]],
+        keyFields: ["portfolioId", "security", ["id"]],
+      },
+      AnalysisDTO: {
+        keyFields: ["allocationTopLevel", ["portfolio", ["id"]]],
       },
     },
-  }),
-});
+  });
+  const persistor = new CachePersistor({
+    cache,
+    storage: new LocalStorageWrapper(window.localStorage),
+    maxSize: 20971520, // 20 MB
+  });
+
+  await persistor.restore();
+
+  return new ApolloClient({
+    link: from([authMiddleware, httpLink]),
+    cache,
+  });
+};

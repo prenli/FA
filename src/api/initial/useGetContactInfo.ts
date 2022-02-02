@@ -1,5 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
-import { useKeycloak } from "contexts/keycloakContext";
+import { useKeycloak } from "providers/KeycloakProvider";
+import { getFetchPolicyOptions } from "../utils";
 
 const CONTACT_INFO_QUERY = gql`
   query GetContactInfo($contactId: Long) {
@@ -30,12 +31,15 @@ export interface ContactInfoQuery {
 
 export const useGetContactInfo = () => {
   const { linkedContact } = useKeycloak();
-  const { error, data } = useQuery<ContactInfoQuery>(CONTACT_INFO_QUERY, {
-    variables: {
-      contactId: linkedContact,
-    },
-    fetchPolicy: "cache-first",
-  });
+  const { loading, error, data } = useQuery<ContactInfoQuery>(
+    CONTACT_INFO_QUERY,
+    {
+      variables: {
+        contactId: linkedContact,
+      },
+      ...getFetchPolicyOptions(`useGetContactInfo.${linkedContact}`),
+    }
+  );
 
-  return { data, error };
+  return { loading, data, error };
 };

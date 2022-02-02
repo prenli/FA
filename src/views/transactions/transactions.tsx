@@ -1,17 +1,15 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { ApolloError } from "@apollo/client";
 import { Transaction as TransactionType } from "api/transactions/types";
+import { QueryData } from "api/types";
 import { DatePicker, QueryLoadingWrapper } from "components";
 import { useTranslation } from "react-i18next";
 import { TransactionsContainer } from "./TransactionsContainer/TransactionsContainer";
 
-interface TransactionsProps {
+interface TransactionsProps extends QueryData<TransactionType[]> {
   startDate: Date;
   setStartDate: Dispatch<SetStateAction<Date>>;
   endDate: Date;
   setEndDate: Dispatch<SetStateAction<Date>>;
-  error: ApolloError | undefined;
-  data: TransactionType[] | undefined;
 }
 
 export const Transactions = ({

@@ -1,5 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
-import { useKeycloak } from "contexts/keycloakContext";
+import { getFetchPolicyOptions } from "api/utils";
+import { useKeycloak } from "providers/KeycloakProvider";
 import { TRADE_ORDERS_DETAILS } from "./fragments";
 import { AllTradeOrdersQuery } from "./types";
 
@@ -17,12 +18,15 @@ const TRADE_ORDERS_QUERY = gql`
 
 export const useGetAllTradeOrders = () => {
   const { linkedContact } = useKeycloak();
-  const { error, data } = useQuery<AllTradeOrdersQuery>(TRADE_ORDERS_QUERY, {
-    variables: {
-      contactId: linkedContact,
-    },
-    fetchPolicy: "cache-and-network",
-  });
+  const { loading, error, data } = useQuery<AllTradeOrdersQuery>(
+    TRADE_ORDERS_QUERY,
+    {
+      variables: {
+        contactId: linkedContact,
+      },
+      ...getFetchPolicyOptions(`useGetAllTradeOrders.${linkedContact}`),
+    }
+  );
 
-  return { error, data: data?.contact.tradeOrders };
+  return { loading, error, data: data?.contact.tradeOrders };
 };

@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 export const MainLayout = () => {
   return (
-    <div className="mt-8">
+    <div className="box-border pt-8 h-screen">
       <Suspense
         fallback={
           <Center>

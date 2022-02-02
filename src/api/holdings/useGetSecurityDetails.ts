@@ -1,4 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
+import { getFetchPolicyOptions } from "api/utils";
 import { SecurityDetailsQuery } from "./types";
 
 const SECURITY_DETAILS_QUERY = gql`
@@ -30,17 +31,18 @@ const SECURITY_DETAILS_QUERY = gql`
 `;
 
 export const useGetSecurityDetails = (securityCode: string | undefined) => {
-  const { error, data } = useQuery<SecurityDetailsQuery>(
+  const { loading, error, data } = useQuery<SecurityDetailsQuery>(
     SECURITY_DETAILS_QUERY,
     {
       variables: {
-        securityCode: securityCode,
+        securityCode,
       },
-      fetchPolicy: "cache-first",
+      ...getFetchPolicyOptions(`useGetSecurityDetails.${securityCode}`),
     }
   );
 
   return {
+    loading,
     error,
     data: data?.securities[0],
   };

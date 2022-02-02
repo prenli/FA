@@ -1,10 +1,9 @@
 import React from "react";
-import { ApolloProvider } from "@apollo/client";
-import { KeycloakProvider } from "contexts/keycloakContext";
-import { apolloClient } from "services/apolloClient";
+import { KeycloakProvider } from "providers/KeycloakProvider";
 import { keycloakService } from "services/keycloakService";
 import { LocaleFeeder } from "./components";
 import { RootRoutes } from "./pages/routes";
+import { PersistedApolloProvider } from "./providers/PersistedApolloProvider";
 
 function App() {
   return (
@@ -13,11 +12,11 @@ function App() {
       InitializingComponent={<div>Initializing...</div>}
       MissingLinkedContactComponent={<div>Missing linked contact...</div>}
     >
-      <ApolloProvider client={apolloClient}>
+      <PersistedApolloProvider>
         <LocaleFeeder>
           <RootRoutes />
         </LocaleFeeder>
-      </ApolloProvider>
+      </PersistedApolloProvider>
     </KeycloakProvider>
   );
 }

@@ -1,25 +1,28 @@
 import React from "react";
-import { ApolloError } from "@apollo/client";
+import { QueryData } from "api/types";
 import { Center } from "../Center/Center";
 import { LoadingIndicator } from "../LoadingIndicator/LoadingIndicator";
 import { QueryError } from "../QueryError/QueryError";
 
-interface QueryLoadingWrapperProps<T> {
-  error: ApolloError | undefined;
-  data: T | undefined;
+interface QueryLoadingWrapperProps<T> extends QueryData<T> {
   SuccessComponent: (props: { data: T }) => JSX.Element;
 }
 
 export const QueryLoadingWrapper = <TData,>({
+  loading,
   error,
   data,
   SuccessComponent,
 }: QueryLoadingWrapperProps<TData>) => {
-  if (error) {
+  if (error && !data) {
     return <QueryError />;
   }
   if (data) {
     return <SuccessComponent data={data} />;
+  }
+  // when offline and do not have cached data returns data === undefined, no error and not loading
+  if (!loading) {
+    return <div>No cached data</div>;
   }
   return (
     <Center>

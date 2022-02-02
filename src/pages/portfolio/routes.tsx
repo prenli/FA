@@ -1,9 +1,9 @@
 import React, { lazy } from "react";
 import { TranslationText } from "components";
 import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
+import { NavTabLayout } from "layouts/NavTabLayout/NavTabLayout";
+import { PortfolioNavigationHeaderLayout } from "layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
 import { Navigate } from "react-router-dom";
-import { NavTabLayout } from "../../layouts/NavTabLayout/NavTabLayout";
-import { PortfolioNavigationHeaderLayout } from "../../layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
 
 const Overview = lazy(() =>
   import("./overview").then((module) => ({ default: module.OverviewPage }))

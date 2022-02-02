@@ -1,4 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
+import { getFetchPolicyOptions } from "api/utils";
 import { TRADE_ORDERS_DETAILS } from "./fragments";
 import { PortfolioTradeOrdersQuery } from "./types";
 
@@ -15,15 +16,15 @@ const PORTFOLIO_TRADE_ORDERS_QUERY = gql`
 `;
 
 export const useGetPortfolioTradeOrders = (portfolioId: string | undefined) => {
-  const { error, data } = useQuery<PortfolioTradeOrdersQuery>(
+  const { loading, error, data } = useQuery<PortfolioTradeOrdersQuery>(
     PORTFOLIO_TRADE_ORDERS_QUERY,
     {
       variables: {
         portfolioId,
       },
-      fetchPolicy: "cache-and-network",
+      ...getFetchPolicyOptions(`useGetPortfolioTradeOrders.${portfolioId}`),
     }
   );
 
-  return { error, data: data?.portfolio.tradeOrders };
+  return { loading, error, data: data?.portfolio.tradeOrders };
 };

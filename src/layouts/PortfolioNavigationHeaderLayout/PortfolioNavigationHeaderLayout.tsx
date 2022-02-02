@@ -4,7 +4,7 @@ import { PortfolioNavigationHeader } from "./PortfolioNavigationHeader/Portfolio
 
 export const PortfolioNavigationHeaderLayout = () => {
   return (
-    <div className="container flex flex-col mx-auto h-screen">
+    <div className="container flex flex-col mx-auto h-full">
       <PortfolioNavigationHeader />
       <Outlet />
     </div>

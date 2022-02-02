@@ -32,7 +32,8 @@ export const PORTFOLIO_FIELDS = gql`
 `;
 
 const SECURITY_POSITIONS_FIELDS = gql`
-  fragment SecurityPositionsFields on PortfolioReportItem {
+  fragment SecurityPositionFields on PortfolioReportItem {
+    portfolioId
     security {
       id
       securityCode
@@ -71,7 +72,7 @@ export const DETAILED_PORTFOLIO_FIELDS = gql`
     portfolioReport {
       ...PortfolioReportFieldsWithId
       securityPositions: portfolioReportItems {
-        ...SecurityPositionsFields
+        ...SecurityPositionFields
       }
     }
   }

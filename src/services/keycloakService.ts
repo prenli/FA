@@ -82,7 +82,7 @@ class KeycloakService {
   }
 
   onError = (errorData?: KeycloakError) => {
-    console.log(errorData);
+    console.error(errorData);
   };
 
   onTokenExpired = async () => {

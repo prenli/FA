@@ -1,4 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
+import { getFetchPolicyOptions } from "api/utils";
 import { PORTFOLIO_REPORT_HOLDINGS_DETAILS_FIELDS } from "./fragments";
 import { PortfolioHoldingDetailsQuery } from "./types";
 
@@ -19,17 +20,18 @@ export const useGetPortfolioHoldingDetails = (
   portfolioId: string | undefined,
   securityCode: string | undefined
 ) => {
-  const { error, data } = useQuery<PortfolioHoldingDetailsQuery>(
+  const { loading, error, data } = useQuery<PortfolioHoldingDetailsQuery>(
     HOLDING_DETAILS_QUERY,
     {
       variables: {
-        portfolioId: portfolioId,
+        portfolioId,
       },
-      fetchPolicy: "cache-first",
+      ...getFetchPolicyOptions(`useGetPortfolioHoldingDetails.${portfolioId}`),
     }
   );
 
   return {
+    loading,
     error,
     data: data?.portfolio.portfolioReport.holdingPositions.find(
       (holding) => holding.security.securityCode === securityCode

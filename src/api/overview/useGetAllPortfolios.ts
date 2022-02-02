@@ -1,5 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
-import { useKeycloak } from "contexts/keycloakContext";
+import { getFetchPolicyOptions } from "api/utils";
+import { useKeycloak } from "providers/KeycloakProvider";
 import { SUMMARY_FIELDS, PORTFOLIO_FIELDS } from "./fragments";
 import { AllPortfoliosQuery } from "./types";
 
@@ -19,12 +20,12 @@ const CONTACT_QUERY = gql`
 
 export const useGetAllPortfolios = () => {
   const { linkedContact } = useKeycloak();
-  const { error, data } = useQuery<AllPortfoliosQuery>(CONTACT_QUERY, {
+  const { loading, error, data } = useQuery<AllPortfoliosQuery>(CONTACT_QUERY, {
     variables: {
       contactId: linkedContact,
     },
-    fetchPolicy: "cache-and-network",
+    ...getFetchPolicyOptions(`useGetAllPortfolios.${linkedContact}`),
   });
 
-  return { error, data: data?.contact };
+  return { loading, error, data: data?.contact };
 };

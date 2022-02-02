@@ -7,10 +7,16 @@ import { HoldingDetails } from "views/holdingDetails/holdingDetails";
 
 export const HoldingPage = () => {
   const { holdingId } = useParams();
-  const { error: securityError, data: securityData } =
-    useGetSecurityDetails(holdingId);
-  const { error: holdingError, data: holdingData } =
-    useGetAllPortfoliosHoldingDetails(holdingId);
+  const {
+    loading: securityLoading,
+    error: securityError,
+    data: securityData,
+  } = useGetSecurityDetails(holdingId);
+  const {
+    loading: holdingLoading,
+    error: holdingError,
+    data: holdingData,
+  } = useGetAllPortfoliosHoldingDetails(holdingId);
   const mergedData = securityData &&
     holdingData && {
       ...holdingData,
@@ -19,6 +25,7 @@ export const HoldingPage = () => {
 
   return (
     <QueryLoadingWrapper
+      loading={securityLoading || holdingLoading}
       data={mergedData}
       error={securityError || holdingError}
       SuccessComponent={HoldingDetails}

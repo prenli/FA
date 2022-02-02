@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { Center, LoadingIndicator } from "../../components";
+import { Center, LoadingIndicator } from "components";
 import { NavTab } from "./NavTab/NavTab";
 import { NavTabPath } from "./NavTab/types";
 import { useNavTab } from "./NavTab/useNavTab";

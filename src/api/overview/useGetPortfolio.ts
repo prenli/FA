@@ -1,4 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
+import { getFetchPolicyOptions } from "api/utils";
 import { DETAILED_PORTFOLIO_FIELDS } from "./fragments";
 import { PortfolioQuery } from "./types";
 
@@ -13,12 +14,12 @@ const PORTFOLIO_QUERY = gql`
 `;
 
 export const useGetPortfolio = (portfolioId: string | undefined) => {
-  const { error, data } = useQuery<PortfolioQuery>(PORTFOLIO_QUERY, {
+  const { loading, error, data } = useQuery<PortfolioQuery>(PORTFOLIO_QUERY, {
     variables: {
-      portfolioId: portfolioId,
+      portfolioId,
     },
-    fetchPolicy: "cache-and-network",
+    ...getFetchPolicyOptions(`useGetPortfolio.${portfolioId}`),
   });
 
-  return { error, data: data?.portfolio };
+  return { loading, error, data: data?.portfolio };
 };

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
-import { useKeycloak } from "contexts/keycloakContext";
+import { getFetchPolicyOptions } from "api/utils";
+import { useKeycloak } from "providers/KeycloakProvider";
 import { toShortISOString, startOfMonth } from "utils/date";
 import { TRANSACTION_FIELDS } from "./fragments";
 import { AllPortfoliosTransactionsQuery } from "./types";
@@ -37,7 +38,7 @@ export const useGetAllPortfoliosTransactions = () => {
     initialRange.end = endDate;
   }, [startDate, endDate]);
 
-  const { error, data } = useQuery<AllPortfoliosTransactionsQuery>(
+  const { loading, error, data } = useQuery<AllPortfoliosTransactionsQuery>(
     TRANSACTIONS_QUERY,
     {
       variables: {
@@ -45,11 +46,14 @@ export const useGetAllPortfoliosTransactions = () => {
         endDate: toShortISOString(endDate),
         contactId: linkedContact,
       },
-      fetchPolicy: "cache-and-network",
+      ...getFetchPolicyOptions(
+        `useGetAllPortfoliosTransactions.${linkedContact}.${startDate}.${endDate}`
+      ),
     }
   );
 
   return {
+    loading,
     error,
     data: data?.contact.transactions,
     startDate,
