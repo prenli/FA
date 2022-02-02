@@ -4,6 +4,11 @@ import Keycloak, {
   KeycloakProfile,
   KeycloakPromise,
 } from "keycloak-js";
+import {
+  getLastUsedLinkedContact,
+  isStandalone,
+  setLastUsedLinkedContact,
+} from "./pwa";
 
 const keycloakInitConfig = {
   onLoad: "check-sso",
@@ -54,10 +59,20 @@ class KeycloakService {
   init() {
     this.keycloak.init(keycloakInitConfig).catch((error) => {
       console.error(error);
-      this.state = {
-        ...this.state,
-        error: true,
-      };
+      const lastUsedLinkedContact = getLastUsedLinkedContact();
+      if (isStandalone && lastUsedLinkedContact) {
+        this.state = {
+          ...this.state,
+          initialized: true,
+          authenticated: true,
+          linkedContact: lastUsedLinkedContact,
+        };
+      } else {
+        this.state = {
+          ...this.state,
+          error: true,
+        };
+      }
       this.updateState();
     });
 
@@ -120,6 +135,7 @@ class KeycloakService {
       const profile = await this.keycloak.loadUserProfile();
       const linkedContact = this.getLinkedContactFromProfile(profile);
       if (linkedContact !== this.state.linkedContact) {
+        setLastUsedLinkedContact(linkedContact);
         this.state = {
           ...this.state,
           linkedContact: linkedContact,

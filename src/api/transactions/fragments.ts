@@ -19,6 +19,9 @@ export const TRANSACTION_FIELDS = gql`
     }
   }
 `;
+// transactions type tag colors
+// amountEffect > 0 cashFlowEffect < 0 - blue
+// amountEffect < 0 cashFlowEffect > 0 - red
 
 export const TRANSACTION_DETAILS_FIELDS = gql`
   fragment TransactionDetailsFields on Transaction {

@@ -3,6 +3,7 @@ import { setContext } from "@apollo/client/link/context";
 import { LocalStorageWrapper, CachePersistor } from "apollo3-cache-persist";
 import { API_URL } from "config";
 import { keycloakService } from "./keycloakService";
+import { isInstalled } from "./pwa";
 
 const httpLink = new HttpLink({
   uri: `${API_URL}/graphql`,
@@ -21,32 +22,37 @@ const authMiddleware = setContext(async (operation, { headers }) => {
   };
 });
 
-export const getPersistedApolloClient = async () => {
-  const cache = new InMemoryCache({
-    typePolicies: {
-      PortfolioReport: {
-        keyFields: ["portfolioId"],
-        fields: {
-          portfolioReportItems: {
-            merge: false,
-          },
+const cache = new InMemoryCache({
+  typePolicies: {
+    PortfolioReport: {
+      keyFields: ["portfolioId"],
+      fields: {
+        portfolioReportItems: {
+          merge: false,
         },
       },
-      PortfolioReportItem: {
-        keyFields: ["portfolioId", "security", ["id"]],
-      },
-      AnalysisDTO: {
-        keyFields: ["allocationTopLevel", ["portfolio", ["id"]]],
-      },
     },
-  });
-  const persistor = new CachePersistor({
-    cache,
-    storage: new LocalStorageWrapper(window.localStorage),
-    maxSize: 20971520, // 20 MB
-  });
+    PortfolioReportItem: {
+      keyFields: ["portfolioId", "security", ["id"]],
+    },
+    AnalysisDTO: {
+      keyFields: ["allocationTopLevel", ["portfolio", ["id"]]],
+    },
+  },
+});
 
+export const persistor = new CachePersistor({
+  cache,
+  storage: new LocalStorageWrapper(window.localStorage),
+  maxSize: 20971520, // 20 MB
+});
+
+export const getPersistedApolloClient = async () => {
   await persistor.restore();
+
+  if (!isInstalled) {
+    persistor.pause();
+  }
 
   return new ApolloClient({
     link: from([authMiddleware, httpLink]),
