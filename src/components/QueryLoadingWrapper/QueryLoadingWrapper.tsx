@@ -22,7 +22,7 @@ export const QueryLoadingWrapper = <TData,>({
   }
   // when offline and do not have cached data returns data === undefined, no error and not loading
   if (!loading) {
-    return <div>No cached data</div>;
+    return <div className="min-h-[400px]">No cached data</div>;
   }
   return (
     <Center>
