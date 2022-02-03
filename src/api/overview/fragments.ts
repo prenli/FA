@@ -75,5 +75,33 @@ export const DETAILED_PORTFOLIO_FIELDS = gql`
         ...SecurityPositionFields
       }
     }
+    analytics(
+      parameters: {
+        paramsSet: {
+          key: "holdingsByType"
+          timePeriodCodes: "DAYS-1"
+          grouppedByProperties: [TYPE]
+          includeData: false
+          includeChildren: true
+          drilldownEnabled: false
+          limit: 0
+          locale: $locale
+        }
+        includeDrilldownPositions: false
+      }
+    ) {
+      allocationTopLevel: grouppedAnalytics(key: "holdingsByType") {
+        portfolio {
+          id
+        }
+        allocationByType: grouppedAnalytics {
+          code
+          name
+          figures: firstAnalysis {
+            shareOfTotal
+          }
+        }
+      }
+    }
   }
 `;

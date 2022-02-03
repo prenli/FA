@@ -13,7 +13,7 @@ const HOLDINGS_QUERY = gql`
       analytics(
         parameters: {
           paramsSet: {
-            key: "ALLOC"
+            key: "holdingsByTypeBySecurity"
             timePeriodCodes: "DAYS-0"
             grouppedByProperties: [TYPE, SECURITY]
             includeData: false

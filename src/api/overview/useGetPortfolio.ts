@@ -1,11 +1,12 @@
 import { gql, useQuery } from "@apollo/client";
 import { getFetchPolicyOptions } from "api/utils";
+import { useTranslation } from "react-i18next";
 import { DETAILED_PORTFOLIO_FIELDS } from "./fragments";
 import { PortfolioQuery } from "./types";
 
 const PORTFOLIO_QUERY = gql`
   ${DETAILED_PORTFOLIO_FIELDS}
-  query GetPortfolio($portfolioId: Long) {
+  query GetPortfolio($portfolioId: Long, $locale: Locale) {
     portfolio(id: $portfolioId) {
       id
       ...DetailedPortfolioFields
@@ -14,9 +15,11 @@ const PORTFOLIO_QUERY = gql`
 `;
 
 export const useGetPortfolio = (portfolioId: string | undefined) => {
+  const { i18n } = useTranslation();
   const { loading, error, data } = useQuery<PortfolioQuery>(PORTFOLIO_QUERY, {
     variables: {
       portfolioId,
+      locale: i18n.language,
     },
     ...getFetchPolicyOptions(`useGetPortfolio.${portfolioId}`),
   });

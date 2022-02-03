@@ -33,9 +33,22 @@ interface Portfolio extends Summary {
   };
 }
 
+export interface AllocationByType {
+  code: string;
+  name: string;
+  figures: {
+    shareOfTotal: number;
+  };
+}
+
 export interface DetailedPortfolio extends DetailedSummary {
   currency: {
     securityCode: string;
+  };
+  analytics: {
+    allocationTopLevel: {
+      allocationByType: AllocationByType[];
+    };
   };
 }
 

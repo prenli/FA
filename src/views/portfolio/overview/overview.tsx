@@ -1,11 +1,13 @@
 import React from "react";
 import { DetailedPortfolio } from "api/overview/types";
 import { useGetPortfolio } from "api/overview/useGetPortfolio";
-import { QueryLoadingWrapper } from "components";
+import { Card, QueryLoadingWrapper } from "components";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import { PieChart } from "../../../components/PieChart/PieChart";
 import { ListedSecuritiesCard } from "./ListedSecuritiesCard/ListedSecuritiesCard";
 import { PortfolioValueCard } from "./PortfolioValueCard/PortfolioValueCard";
+import { useGetChartData } from "./useGetChartData/useGetChartData";
 import { useSecuritiesSummary } from "./useSecuritiesSummary/useSecuritiesSummary";
 
 export const OverviewView = () => {
@@ -31,6 +33,7 @@ const Overview = ({ data }: OverviewProps) => {
   );
   const { positionMarketValue, accountBalance, valueChangeAbsolute } =
     portfolioReport;
+  const chartData = useGetChartData(data);
 
   return (
     <div className="flex flex-col gap-4 items-start px-2 mb-2">
@@ -57,6 +60,11 @@ const Overview = ({ data }: OverviewProps) => {
         label={t("overviewPage.worst3Holdings")}
         securities={worstSecurities}
       />
+      <Card>
+        <div className="py-4">
+          <PieChart {...chartData} />
+        </div>
+      </Card>
     </div>
   );
 };
