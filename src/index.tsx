@@ -5,7 +5,6 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./i18n";
-import "@themesberg/flowbite";
 import { bootstrapPwa } from "./services/pwa";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 

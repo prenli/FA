@@ -1,6 +1,7 @@
 {
   "number": "{{value, number}}",
   "numberWithCurrency": "{{value, currency}}",
+  "numberWithCurrencyRounded": "{{value, currency(maximumFractionDigits: 0; currency: currency)}}",
   "date": "{{date, datetime}}",
   "component": {
     "select": {
@@ -8,7 +9,7 @@
     }
   },
   "navTab": {
-    "title": "All portfolios",
+    "totalInvestments": "Total investments",
     "tabs": {
       "overview": "Overview",
       "holdings": "Holdings",
@@ -24,7 +25,7 @@
     "unrealizedProfits": "Unrealized profits"
   },
   "overviewPage": {
-    "allPortfoliosSummaryTitle": "All portfolios",
+    "allPortfoliosSummaryTitle": "Total investments",
     "top3Holdings": "Top 3 holdings",
     "worst3Holdings": "Worst 3 holdings"
   },

@@ -36,7 +36,7 @@ const NavTabPanels = (props: PagesCarouselProps) => (
 NavTab.Panels = NavTabPanels;
 
 const NavTabPanel = (props: { children: ReactNode }) => (
-  <div className="overflow-x-hidden m-4 h-full" {...props} />
+  <div className="overflow-x-hidden my-4 mx-2 h-full" {...props} />
 );
 NavTab.Panel = NavTabPanel;
 

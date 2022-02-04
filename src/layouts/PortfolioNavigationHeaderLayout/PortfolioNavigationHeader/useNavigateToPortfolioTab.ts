@@ -7,7 +7,7 @@ export const useNavigateToPortfolioTab = () => {
 
   return useCallback(
     (urlPrefix: string) => {
-      const currentTab = location.pathname.split("/").at(-1);
+      const currentTab = location.pathname.split("/").slice(-1)[0];
       navigate(`${urlPrefix}/${currentTab}`);
     },
     [navigate, location]

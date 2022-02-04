@@ -3,7 +3,7 @@ import { AllPortfolios } from "api/overview/types";
 import { useGetAllPortfolios } from "api/overview/useGetAllPortfolios";
 import { QueryLoadingWrapper } from "components";
 import { useTranslation } from "react-i18next";
-import { PortfolioInfoCard } from "./PortfolioInfoCard/PortfolioInfoCard";
+import { PortfolioInfoCard } from "./components/PortfolioInfoCard";
 
 export const OverviewView = () => {
   const queryData = useGetAllPortfolios();
@@ -20,10 +20,11 @@ const Overview = ({ data }: OverviewProps) => {
   const { portfolioReport: allPortfoliosReport, portfolios } = data;
 
   return (
-    <div className="flex flex-col gap-4 items-start px-3 mb-4">
+    <div className="flex flex-col gap-4 items-start mb-4">
       <PortfolioInfoCard
         {...allPortfoliosReport}
         name={t("overviewPage.allPortfoliosSummaryTitle")}
+        colorScheme="black"
       />
       {portfolios.map((portfolio) => {
         const { name, portfolioReport, id } = portfolio;

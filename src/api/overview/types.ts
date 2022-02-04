@@ -1,8 +1,12 @@
-interface BaseReport {
+export interface BaseReport {
   marketValue: number;
   valueChangeAbsolute: number;
   accountBalance: number;
-  positionMarketValue: number;
+  portfolio: {
+    currency: {
+      securityCode: string;
+    };
+  };
 }
 
 interface Summary<TReport extends BaseReport = BaseReport> {

@@ -4,6 +4,15 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      fontSize: {
+        xs: ["0.75rem", "150%"],
+        sm: ["0.875rem", "150%"],
+        base: ["1rem", "150%"],
+        lg: ["1.125rem", "150%"],
+        xl: ["1.125rem", "150%"],
+        "2xl": ["1.5rem", "150%"],
+        "3xl": ["1.875rem", "150%"],
+      },
       fontFamily: {
         sans: [
           "Inter",
@@ -57,7 +66,6 @@ module.exports = {
     },
   },
   plugins: [
-    require("@themesberg/flowbite/plugin"),
     plugin(function ({ addUtilities }) {
       addUtilities({
         ".scroll-hidden::-webkit-scrollbar": {
@@ -69,5 +77,6 @@ module.exports = {
         },
       });
     }),
+    require("flowbite/plugin"),
   ],
 };

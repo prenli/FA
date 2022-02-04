@@ -3,22 +3,26 @@ import { gql } from "@apollo/client";
 const PORTFOLIO_REPORT_FIELDS = gql`
   fragment PortfolioReportFields on PortfolioReport {
     marketValue
-    positionMarketValue
     valueChangeAbsolute
-    accountBalance
+    portfolio {
+      currency {
+        securityCode
+      }
+    }
   }
 `;
 
-const PORTFOLIO_REPORT_FIELDS_WITH_ID = gql`
+const PORTFOLIO_REPORT_FIELDS_FOR_PORTFOLIO = gql`
   ${PORTFOLIO_REPORT_FIELDS}
-  fragment PortfolioReportFieldsWithId on PortfolioReport {
+  fragment PortfolioReportFieldsForPortfolio on PortfolioReport {
     portfolioId
+    accountBalance
     ...PortfolioReportFields
   }
 `;
 
 export const PORTFOLIO_FIELDS = gql`
-  ${PORTFOLIO_REPORT_FIELDS_WITH_ID}
+  ${PORTFOLIO_REPORT_FIELDS_FOR_PORTFOLIO}
   fragment PortfolioFields on Portfolio {
     id
     name
@@ -26,7 +30,7 @@ export const PORTFOLIO_FIELDS = gql`
       securityCode
     }
     portfolioReport {
-      ...PortfolioReportFieldsWithId
+      ...PortfolioReportFieldsForPortfolio
     }
   }
 `;
@@ -61,7 +65,7 @@ export const SUMMARY_FIELDS = gql`
 `;
 
 export const DETAILED_PORTFOLIO_FIELDS = gql`
-  ${PORTFOLIO_REPORT_FIELDS_WITH_ID}
+  ${PORTFOLIO_REPORT_FIELDS_FOR_PORTFOLIO}
   ${SECURITY_POSITIONS_FIELDS}
   fragment DetailedPortfolioFields on Portfolio {
     id
@@ -70,7 +74,7 @@ export const DETAILED_PORTFOLIO_FIELDS = gql`
       securityCode
     }
     portfolioReport {
-      ...PortfolioReportFieldsWithId
+      ...PortfolioReportFieldsForPortfolio
       securityPositions: portfolioReportItems {
         ...SecurityPositionFields
       }

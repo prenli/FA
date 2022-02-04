@@ -5,10 +5,10 @@ import { Card, QueryLoadingWrapper } from "components";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { PieChart } from "../../../components/PieChart/PieChart";
-import { ListedSecuritiesCard } from "./ListedSecuritiesCard/ListedSecuritiesCard";
-import { PortfolioValueCard } from "./PortfolioValueCard/PortfolioValueCard";
-import { useGetChartData } from "./useGetChartData/useGetChartData";
-import { useSecuritiesSummary } from "./useSecuritiesSummary/useSecuritiesSummary";
+import { PortfolioInfoCard } from "../../overview/components/PortfolioInfoCard";
+import { ListedSecuritiesCard } from "./components/ListedSecuritiesCard";
+import { useGetChartData } from "./hooks/useGetChartData";
+import { useSecuritiesSummary } from "./hooks/useSecuritiesSummary";
 
 export const OverviewView = () => {
   const { portfolioId } = useParams();
@@ -25,42 +25,37 @@ const Overview = ({ data }: OverviewProps) => {
   const { t } = useTranslation();
 
   const {
-    portfolioReport,
-    currency: { securityCode: currency },
+    portfolioReport: {
+      portfolio: {
+        currency: { securityCode },
+      },
+    },
   } = data;
+
   const { topSecurities, worstSecurities } = useSecuritiesSummary(
     data.portfolioReport.securityPositions
   );
-  const { positionMarketValue, accountBalance, valueChangeAbsolute } =
-    portfolioReport;
+
   const chartData = useGetChartData(data);
 
   return (
-    <div className="flex flex-col gap-4 items-start px-2 mb-2">
-      <PortfolioValueCard
-        label={t("portfolioSummary.currentMarketValue")}
-        value={positionMarketValue}
-        currency={currency}
-      />
-      <PortfolioValueCard
-        label={t("portfolioSummary.unrealizedProfits")}
-        value={valueChangeAbsolute}
-        currency={currency}
-      />
-      <PortfolioValueCard
-        label={t("portfolioSummary.availableCash")}
-        value={accountBalance}
-        currency={currency}
+    <div className="flex flex-col gap-4 items-start mb-2">
+      <PortfolioInfoCard
+        {...data.portfolioReport}
+        name={data.name}
+        colorScheme="blue"
       />
       <ListedSecuritiesCard
         label={t("overviewPage.top3Holdings")}
         securities={topSecurities}
+        currency={securityCode}
       />
       <ListedSecuritiesCard
         label={t("overviewPage.worst3Holdings")}
         securities={worstSecurities}
+        currency={securityCode}
       />
-      <Card>
+      <Card header="Security type allocation">
         <div className="py-4">
           <PieChart {...chartData} />
         </div>

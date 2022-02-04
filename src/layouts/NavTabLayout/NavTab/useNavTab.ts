@@ -9,7 +9,7 @@ interface useNavTabProps {
 export const useNavTab = ({ navTabPaths }: useNavTabProps) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const activePath = location.pathname.split("/").at(-1);
+  const activePath = location.pathname.split("/").slice(-1)[0];
   const currentTabIndex = getActiveTabIndex(navTabPaths, activePath);
 
   const navigateToTab = (newIndex: number) => {
