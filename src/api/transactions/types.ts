@@ -5,6 +5,7 @@ export interface Transaction {
     typeName: string;
     typeNamesAsMap: Record<string, string>;
     cashFlowEffect: number;
+    amountEffect: number;
   };
   tradeAmountInPortfolioCurrency: number;
   securityName: string;

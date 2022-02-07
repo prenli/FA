@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { Transaction as TransactionType } from "api/transactions/types";
 import { QueryData } from "api/types";
-import { DatePicker, QueryLoadingWrapper } from "components";
+import { Card, DatePicker, QueryLoadingWrapper } from "components";
 import { useTranslation } from "react-i18next";
 import { TransactionsContainer } from "./TransactionsContainer/TransactionsContainer";
 
@@ -21,21 +21,23 @@ export const Transactions = ({
 }: TransactionsProps) => {
   const { t } = useTranslation();
   return (
-    <div className="flex flex-col gap-4 mx-2 ">
-      <div className="flex gap-2 text-normal">
-        <DatePicker
-          label={t("transactionsPage.datePickerFromLabel")}
-          value={startDate}
-          onChange={setStartDate}
-          maxDate={endDate}
-        />
-        <DatePicker
-          label={t("transactionsPage.datePickerFromTo")}
-          value={endDate}
-          onChange={setEndDate}
-          minDate={startDate}
-        />
-      </div>
+    <div className="flex flex-col gap-4">
+      <Card>
+        <div className="flex gap-2 justify-between p-2 text-normal">
+          <DatePicker
+            label={t("transactionsPage.datePickerFromLabel")}
+            value={startDate}
+            onChange={setStartDate}
+            maxDate={endDate}
+          />
+          <DatePicker
+            label={t("transactionsPage.datePickerFromTo")}
+            value={endDate}
+            onChange={setEndDate}
+            minDate={startDate}
+          />
+        </div>
+      </Card>
       <QueryLoadingWrapper
         {...queryData}
         SuccessComponent={TransactionsContainer}

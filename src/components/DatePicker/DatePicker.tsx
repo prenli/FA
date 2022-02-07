@@ -1,4 +1,5 @@
-import React, { useCallback } from "react";
+import React from "react";
+import { ReactComponent as CalendarIcon } from "assets/calendar.svg";
 import ReactDatePicker, {
   DatePickerProps as ReactDatePickerProps,
 } from "react-date-picker/dist/entry.nostyle";
@@ -13,43 +14,20 @@ interface DatePickerProps extends ReactDatePickerProps {
 export const DatePicker = ({ label, ...props }: DatePickerProps) => {
   const { i18n } = useTranslation();
 
-  const positionRef = useAdjustCalendarPosition();
-
   return (
-    <div className="flex flex-col gap-0 ">
-      {label && <label className="text-sm font-semibold">{label}</label>}
+    <div className="flex flex-col gap-0 w-full ">
+      {label && (
+        <label className="mb-1 text-sm font-medium text-gray-900">
+          {label}
+        </label>
+      )}
       <ReactDatePicker
-        calendarIcon={null}
+        calendarIcon={<CalendarIcon />}
         clearIcon={null}
-        className="rounded-lg"
+        className="isolate py-3 px-3.5 text-base font-normal leading-tight text-gray-500 bg-gray-50 rounded-lg border border-gray-200"
         locale={i18n.language}
-        inputRef={positionRef}
         {...props}
       />
     </div>
   );
-};
-
-const useAdjustCalendarPosition = () => {
-  return useCallback((node: Element | null) => {
-    if (!node) {
-      return;
-    }
-    const calendarDistanceToRight =
-      window.innerWidth - node.getBoundingClientRect().right;
-    if (calendarDistanceToRight < 0) {
-      adjustHorizontally(node, calendarDistanceToRight);
-    }
-  }, []);
-};
-
-const adjustHorizontally = (node: Element, overlappingDistance: number) => {
-  if (!node.parentElement) {
-    return;
-  }
-  // react-date-picker display calendar aligned to the left (or right) of input and decreased its size when necessary
-  // to prevent that we set min width and move calendar to the side if calendar is overlapping window
-  node.parentElement.style.minWidth = `${node.getBoundingClientRect().width}px`;
-  node.parentElement.style.marginLeft = `${overlappingDistance - 20}px`;
-  node.parentElement.style.marginRight = `${overlappingDistance - 20}px`;
 };

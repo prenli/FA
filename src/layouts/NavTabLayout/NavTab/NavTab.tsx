@@ -24,7 +24,7 @@ NavTab.Group = Tab.Group;
 
 const NavTabList = (props: ComponentProps<typeof Tab.List>) => (
   <Tab.List
-    className="flex overflow-auto flex-nowrap px-2 border-b border-gray-200 scroll-hidden"
+    className="flex overflow-auto flex-nowrap px-2 bg-white border-b border-gray-200 shadow-md scroll-hidden"
     {...props}
   />
 );

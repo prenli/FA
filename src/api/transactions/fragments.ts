@@ -8,6 +8,7 @@ export const TRANSACTION_FIELDS = gql`
       typeName
       typeNamesAsMap
       cashFlowEffect
+      amountEffect
     }
     tradeAmountInPortfolioCurrency
     securityName

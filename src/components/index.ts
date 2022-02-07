@@ -12,3 +12,4 @@ export { LocaleFeeder } from "./LocaleFeeder/LocaleFeeder";
 export { LabeledDiv } from "./LabeledDiv/LabeledDiv";
 export { GainLoseColoring } from "./GainLoseColoring/GainLoseColoring";
 export { CountryFlag } from "./CountryFlag/CountryFlag";
+export { Badge } from "./Badge/Badge";

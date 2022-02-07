@@ -30,7 +30,7 @@ export const HoldingsGroupedByType = ({
         <div>{t("holdingsPage.name")}</div>
         <div>{t("holdingsPage.marketValue")}</div>
       </div>
-      <div className="p-2 divider">
+      <div className="px-2 divider">
         <div className="flex flex-col divide-y">
           {allocationBySecurity.map((security) => (
             <HoldingSummary
