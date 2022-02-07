@@ -30,6 +30,7 @@
     "worst3Holdings": "Worst 3 holdings"
   },
   "holdingsPage": {
+    "name": "Name",
     "latestMarketPrice": "Latest Market Price",
     "unrealizedProfits": "Unrealized profits",
     "marketValue": "Market Value",

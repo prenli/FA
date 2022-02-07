@@ -33,7 +33,7 @@ export const PagesCarousel = ({
           return (
             <div
               key={index}
-              className={`transition-all duration-300 overflow-x-hidden ${
+              className={`transition-all overflow-x-hidden ${
                 isCurrent ? "w-full" : "w-0 h-0"
               }`}
             >

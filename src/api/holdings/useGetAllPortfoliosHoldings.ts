@@ -5,6 +5,7 @@ import { getFetchPolicyOptions } from "../utils";
 import { ALLOCATION_BY_SECURITY_TYPE_FIELDS } from "./fragments";
 import { AllPortfoliosHoldingsQuery } from "./types";
 
+// to distinct Contact analytics from Portfolio analytics in Contact version we set portfolio.id as portfolio.parentPortfolioId (line 32)
 const HOLDINGS_QUERY = gql`
   ${ALLOCATION_BY_SECURITY_TYPE_FIELDS}
   query GetHoldings($contactId: Long, $locale: Locale) {
@@ -13,7 +14,7 @@ const HOLDINGS_QUERY = gql`
       analytics(
         parameters: {
           paramsSet: {
-            key: "holdingsByTypeBySecurity"
+            key: "allHoldingsByTypeBySecurity"
             timePeriodCodes: "DAYS-0"
             grouppedByProperties: [TYPE, SECURITY]
             includeData: false
@@ -25,7 +26,15 @@ const HOLDINGS_QUERY = gql`
           includeDrilldownPositions: false
         }
       ) {
-        ...AllocationBySecurityTypeFields
+        allocationTopLevel: grouppedAnalytics(
+          key: "allHoldingsByTypeBySecurity"
+        ) {
+          portfolio {
+            id: parentPortfolioId
+            currencyCode
+          }
+          ...AllocationBySecurityTypeFields
+        }
       }
     }
   }
@@ -48,6 +57,11 @@ export const useGetAllPortfoliosHoldings = () => {
   return {
     loading,
     error,
-    data: data?.contact.analytics.allocationTopLevel.allocationByType,
+    data: data && {
+      allocationByType:
+        data.contact.analytics.allocationTopLevel.allocationByType,
+      currency:
+        data.contact.analytics.allocationTopLevel.portfolio.currencyCode,
+    },
   };
 };

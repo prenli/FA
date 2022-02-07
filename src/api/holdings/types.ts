@@ -1,9 +1,12 @@
 export interface AllocationBySecurity {
   code: string;
   name: string;
+  security: {
+    isinCode: string;
+    countryCode: string;
+  };
   figures: {
     marketValue: number;
-    amount: number;
     tradeAmount: number;
   };
 }
@@ -13,6 +16,7 @@ export interface AllocationByType {
   name: string;
   figures: {
     marketValue: number;
+    tradeAmount: number;
   };
   allocationBySecurity: AllocationBySecurity[];
 }
@@ -21,6 +25,9 @@ export interface AllPortfoliosHoldingsQuery {
   contact: {
     analytics: {
       allocationTopLevel: {
+        portfolio: {
+          currencyCode: string;
+        };
         allocationByType: AllocationByType[];
       };
     };
@@ -31,6 +38,9 @@ export interface PortfolioHoldingsQuery {
   portfolio: {
     analytics: {
       allocationTopLevel: {
+        portfolio: {
+          currencyCode: string;
+        };
         allocationByType: AllocationByType[];
       };
     };

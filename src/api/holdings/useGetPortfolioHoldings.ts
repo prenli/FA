@@ -24,7 +24,13 @@ const HOLDINGS_QUERY = gql`
           includeDrilldownPositions: false
         }
       ) {
-        ...AllocationBySecurityTypeFields
+        allocationTopLevel: grouppedAnalytics(key: "holdingsByTypeBySecurity") {
+          portfolio {
+            id
+            currencyCode
+          }
+          ...AllocationBySecurityTypeFields
+        }
       }
     }
   }
@@ -46,6 +52,11 @@ export const useGetPortfolioHoldings = (portfolioId: string | undefined) => {
   return {
     loading,
     error,
-    data: data?.portfolio.analytics.allocationTopLevel.allocationByType,
+    data: data && {
+      allocationByType:
+        data.portfolio.analytics.allocationTopLevel.allocationByType,
+      currency:
+        data.portfolio.analytics.allocationTopLevel.portfolio.currencyCode,
+    },
   };
 };

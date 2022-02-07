@@ -1,25 +1,24 @@
 import { gql } from "@apollo/client";
 
 export const ALLOCATION_BY_SECURITY_TYPE_FIELDS = gql`
-  fragment AllocationBySecurityTypeFields on AnalysisDTO {
-    allocationTopLevel: grouppedAnalytics(key: "holdingsByTypeBySecurity") {
-      portfolio {
-        id
+  fragment AllocationBySecurityTypeFields on GrouppedAnalyticsDTO {
+    allocationByType: grouppedAnalytics {
+      code
+      name
+      figures: firstAnalysis {
+        marketValue
+        tradeAmount
       }
-      allocationByType: grouppedAnalytics {
+      allocationBySecurity: grouppedAnalytics {
         code
         name
+        security {
+          isinCode
+          countryCode
+        }
         figures: firstAnalysis {
           marketValue
-        }
-        allocationBySecurity: grouppedAnalytics {
-          code
-          name
-          figures: firstAnalysis {
-            marketValue
-            amount
-            tradeAmount
-          }
+          tradeAmount
         }
       }
     }
