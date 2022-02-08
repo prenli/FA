@@ -22,22 +22,26 @@
   "portfolioSummary": {
     "currentMarketValue": "Current Market Value",
     "availableCash": "Available Cash",
-    "unrealizedProfits": "Unrealized profits"
+    "unrealizedProfits": "Unrealised profits",
+    "name": "Name"
   },
   "overviewPage": {
     "allPortfoliosSummaryTitle": "Total investments",
-    "top3Holdings": "Top 3 holdings",
-    "worst3Holdings": "Worst 3 holdings"
+    "top3Holdings": "Best performing holdings",
+    "worst3Holdings": "Least performing holdings",
+    "unrealizedProfits": "Unrealised profits",
+    "name": "Name"
   },
   "holdingsPage": {
     "name": "Name",
     "latestMarketPrice": "Latest Market Price",
-    "unrealizedProfits": "Unrealized profits",
+    "unrealizedProfits": "Unrealised profits",
     "marketValue": "Market Value",
     "holdings": "Holdings",
     "units": "Units",
     "purchaseValue": "Purchase value",
     "accruedInterest": "Accrued interest",
+    "availableCash": "Available cash",
     "changePercentage": "Change %",
     "type": "Type",
     "isinCode": "ISIN code",

@@ -18,7 +18,7 @@ const SECURITY_DETAILS_QUERY = gql`
         obsDate
         close
       }
-      marketDataHistory(startDate: "") {
+      marketDataHistory(startDate: "MONTHS-1") {
         price: close
         date: obsDate
       }

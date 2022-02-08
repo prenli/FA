@@ -25,6 +25,9 @@ const Overview = ({ data }: OverviewProps) => {
         {...allPortfoliosReport}
         name={t("overviewPage.allPortfoliosSummaryTitle")}
         colorScheme="black"
+        // there is no way to get currency for aggregated portfolioReport (portfolioReport under contact context),
+        // but all portfolios have same currency, so we use currency from first one
+        portfolio={portfolios[0]?.portfolioReport.portfolio}
       />
       {portfolios.map((portfolio) => {
         const { name, portfolioReport, id } = portfolio;

@@ -17,7 +17,11 @@ export const ListedSecuritiesCard = ({
   const { t } = useTranslation();
   return (
     <Card header={label}>
-      <div className="flex flex-col p-2 divide-y">
+      <div className="flex justify-between py-1 px-2 text-sm font-semibold text-gray-500 bg-gray-100">
+        <div>{t("overviewPage.name")}</div>
+        <div>{t("overviewPage.unrealizedProfits")}</div>
+      </div>
+      <div className="flex flex-col px-2 divide-y">
         {securities.map((security) => {
           const {
             security: { name, securityCode },
@@ -26,7 +30,7 @@ export const ListedSecuritiesCard = ({
           return (
             <div
               key={securityCode}
-              className="flex justify-between items-center p-1"
+              className="flex justify-between items-center py-2"
             >
               <div className="text-base font-normal">{name}</div>
               <div className="whitespace-nowrap">

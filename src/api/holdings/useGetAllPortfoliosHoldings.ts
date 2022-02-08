@@ -11,12 +11,18 @@ const HOLDINGS_QUERY = gql`
   query GetHoldings($contactId: Long, $locale: Locale) {
     contact(id: $contactId) {
       id
+      portfolios {
+        id
+        currency {
+          securityCode
+        }
+      }
       analytics(
         parameters: {
           paramsSet: {
             key: "allHoldingsByTypeBySecurity"
             timePeriodCodes: "DAYS-0"
-            grouppedByProperties: [TYPE, SECURITY]
+            grouppedByProperties: [TYPE, POSITION]
             includeData: false
             includeChildren: true
             drilldownEnabled: false
@@ -31,7 +37,6 @@ const HOLDINGS_QUERY = gql`
         ) {
           portfolio {
             id: parentPortfolioId
-            currencyCode
           }
           ...AllocationBySecurityTypeFields
         }
@@ -60,8 +65,9 @@ export const useGetAllPortfoliosHoldings = () => {
     data: data && {
       allocationByType:
         data.contact.analytics.allocationTopLevel.allocationByType,
-      currency:
-        data.contact.analytics.allocationTopLevel.portfolio.currencyCode,
+      // there is no way to get currency for analytics under contact context,
+      // but all portfolios have same currency, so we use currency from first one
+      currency: data.contact.portfolios[0]?.currency.securityCode,
     },
   };
 };

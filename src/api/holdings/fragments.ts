@@ -15,10 +15,12 @@ export const ALLOCATION_BY_SECURITY_TYPE_FIELDS = gql`
         security {
           isinCode
           countryCode
+          currencyCode
         }
         figures: firstAnalysis {
           marketValue
           tradeAmount
+          fxRate
         }
       }
     }

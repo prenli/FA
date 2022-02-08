@@ -3,12 +3,14 @@ import { Transaction as TransactionType } from "api/transactions/types";
 import { Badge } from "components";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
+import { useParams } from "react-router-dom";
 import {
   getTransactionColor,
   getTransactionTypeName,
 } from "utils/transactions";
 
 type TransactionProps = TransactionType;
+
 export const Transaction = ({
   id,
   transactionDate,
@@ -19,6 +21,8 @@ export const Transaction = ({
 }: TransactionProps) => {
   const { i18n, t } = useTranslation();
   const navigate = useNavigate();
+  const { portfolioId } = useParams();
+  const showPortfolioLabel = !portfolioId;
 
   return (
     <div
@@ -35,10 +39,10 @@ export const Transaction = ({
         </div>
       </div>
       <div className="flex justify-between text-xs">
-        <div className="text-sm font-semibold text-gray-500">{`
-        ${t("date", { date: new Date(transactionDate) })} - ${
-          parentPortfolio.name
-        }`}</div>
+        <div className="text-sm font-semibold text-gray-500">
+          <span>{t("date", { date: new Date(transactionDate) })}</span>
+          <span>{showPortfolioLabel && ` - ${parentPortfolio.name}`}</span>
+        </div>
         <Badge colorScheme={getTransactionColor(amountEffect, cashFlowEffect)}>
           {getTransactionTypeName(typeNamesAsMap, typeName, i18n.language)}
         </Badge>

@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 interface HoldingProps extends AllocationBySecurity {
   currency: string;
+  hideValueChange?: boolean;
+  hideFlag?: boolean;
 }
 
 export const HoldingSummary = ({
@@ -14,6 +16,8 @@ export const HoldingSummary = ({
   security: { isinCode, countryCode },
   figures: { marketValue, tradeAmount },
   currency,
+  hideValueChange = false,
+  hideFlag = false,
 }: HoldingProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -24,28 +28,32 @@ export const HoldingSummary = ({
       <div className="flex gap-4 justify-between items-center text-gray-800">
         <div className="text-lg font-semibold leading-5 text-gray-900">
           <span>{name}</span>
-          <CountryFlag
-            code={countryCode}
-            className="inline ml-1.5 align-baseline w-[20px] h-[14px]"
-          />
+          {!hideFlag && (
+            <CountryFlag
+              code={countryCode}
+              className="inline ml-1.5 align-baseline w-[20px] h-[14px]"
+            />
+          )}
         </div>
         <div className="text-base font-medium">
           {t("numberWithCurrency", { value: marketValue, currency })}
         </div>
       </div>
       <div className="flex justify-between">
-        <div className="text-xs font-light ">{isinCode}</div>
-        <div className="text-xs font-medium">
-          <GainLoseColoring value={valueChange}>
-            {t("numberWithCurrency", {
-              value: valueChange,
-              currency,
-              formatParams: {
-                value: { signDisplay: "always" },
-              },
-            })}
-          </GainLoseColoring>
-        </div>
+        <div className="text-xs font-light ">{isinCode || code}</div>
+        {!hideValueChange && (
+          <div className="text-xs font-medium">
+            <GainLoseColoring value={valueChange}>
+              {t("numberWithCurrency", {
+                value: valueChange,
+                currency,
+                formatParams: {
+                  value: { signDisplay: "always" },
+                },
+              })}
+            </GainLoseColoring>
+          </div>
+        )}
       </div>
     </div>
   );

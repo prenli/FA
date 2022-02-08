@@ -14,7 +14,7 @@ const HOLDINGS_QUERY = gql`
           paramsSet: {
             key: "holdingsByTypeBySecurity"
             timePeriodCodes: "DAYS-0"
-            grouppedByProperties: [TYPE, SECURITY]
+            grouppedByProperties: [TYPE, POSITION]
             includeData: false
             includeChildren: true
             drilldownEnabled: false

@@ -4,10 +4,12 @@ export interface AllocationBySecurity {
   security: {
     isinCode: string;
     countryCode: string;
+    currencyCode: string;
   };
   figures: {
     marketValue: number;
     tradeAmount: number;
+    fxRate: number;
   };
 }
 
@@ -23,6 +25,11 @@ export interface AllocationByType {
 
 export interface AllPortfoliosHoldingsQuery {
   contact: {
+    portfolios: {
+      currency: {
+        securityCode: string;
+      };
+    }[];
     analytics: {
       allocationTopLevel: {
         portfolio: {
