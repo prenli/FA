@@ -1,7 +1,7 @@
 import React from "react";
 import { Transaction } from "api/transactions/types";
-import { NoTransactions } from "../NoTransactions/NoTransactions";
-import { TransactionsList } from "../TransactionsList/TransactionsList";
+import { NoTransactions } from "./NoTransactions";
+import { TransactionsList } from "./TransactionsList";
 
 export interface TransactionsContainerProps {
   data: Transaction[];

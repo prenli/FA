@@ -31,9 +31,6 @@ const Transaction = lazy(() =>
 const Orders = lazy(() =>
   import("./orders").then((module) => ({ default: module.OrdersPage }))
 );
-const Trading = lazy(() =>
-  import("./trading").then((module) => ({ default: module.Trading }))
-);
 const Documents = lazy(() =>
   import("./documents").then((module) => ({ default: module.Documents }))
 );
@@ -61,12 +58,6 @@ export const mainTabRoutes: NavTabPath[] = [
     path: "orders",
     tabLabel: <TranslationText translationKey="navTab.tabs.orders" />,
     tabComponent: <Orders />,
-    element: null,
-  },
-  {
-    path: "trading",
-    tabLabel: <TranslationText translationKey="navTab.tabs.trading" />,
-    tabComponent: <Trading />,
     element: null,
   },
   {

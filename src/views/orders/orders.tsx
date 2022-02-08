@@ -1,28 +1,44 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { TradeOrder } from "api/orders/types";
-import { TradeOrdersGroup } from "./TradeOrdersGroup/TradeOrdersGroup";
-import { useGroupedTradeOrdersByStatus } from "./useGroupedTradeOrdersByStatus";
+import { QueryData } from "api/types";
+import { Card, DatePicker, QueryLoadingWrapper } from "components";
+import { useTranslation } from "react-i18next";
+import { OrdersContainer } from "./components/OrdersContainer";
 
-interface OrdersProps {
-  data: TradeOrder[];
+interface OrdersProps extends QueryData<TradeOrder[]> {
+  startDate: Date;
+  setStartDate: Dispatch<SetStateAction<Date>>;
+  endDate: Date;
+  setEndDate: Dispatch<SetStateAction<Date>>;
 }
 
-export const Orders = ({ data }: OrdersProps) => {
-  const groupedTradeOrders = useGroupedTradeOrdersByStatus(data);
-
+export const Orders = ({
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
+  ...queryData
+}: OrdersProps) => {
+  const { t } = useTranslation();
   return (
-    <div className="flex flex-col gap-3">
-      {groupedTradeOrders.length >= 1 ? (
-        groupedTradeOrders.map((group) => (
-          <TradeOrdersGroup
-            key={group.type}
-            label={group.label}
-            tradeOrders={group.tradeOrders}
+    <div className="flex flex-col gap-4">
+      <Card>
+        <div className="flex gap-2 justify-between p-2 text-normal">
+          <DatePicker
+            label={t("transactionsPage.datePickerFromLabel")}
+            value={startDate}
+            onChange={setStartDate}
+            maxDate={endDate}
           />
-        ))
-      ) : (
-        <p>No data available.</p>
-      )}
+          <DatePicker
+            label={t("transactionsPage.datePickerFromTo")}
+            value={endDate}
+            onChange={setEndDate}
+            minDate={startDate}
+          />
+        </div>
+      </Card>
+      <QueryLoadingWrapper {...queryData} SuccessComponent={OrdersContainer} />
     </div>
   );
 };

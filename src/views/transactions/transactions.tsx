@@ -3,7 +3,7 @@ import { Transaction as TransactionType } from "api/transactions/types";
 import { QueryData } from "api/types";
 import { Card, DatePicker, QueryLoadingWrapper } from "components";
 import { useTranslation } from "react-i18next";
-import { TransactionsContainer } from "./TransactionsContainer/TransactionsContainer";
+import { TransactionsContainer } from "./components/TransactionsContainer";
 
 interface TransactionsProps extends QueryData<TransactionType[]> {
   startDate: Date;

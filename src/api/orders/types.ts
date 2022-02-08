@@ -9,6 +9,8 @@ export interface TradeOrder {
   type: {
     typeName: string;
     typeNamesAsMap: Record<string, string>;
+    cashFlowEffect: number;
+    amountEffect: number;
   };
   transactionDate: string;
   tradeAmountInPortfolioCurrency: number;

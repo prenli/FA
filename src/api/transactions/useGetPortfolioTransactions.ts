@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 import { getFetchPolicyOptions } from "api/utils";
 import { toShortISOString, startOfMonth } from "utils/date";
+import { useDateRange } from "../useDateRange";
 import { TRANSACTION_FIELDS } from "./fragments";
 import { PortfolioTransactionsQuery } from "./types";
 
@@ -30,13 +30,8 @@ const initialRange = {
 export const useGetPortfolioTransactions = (
   portfolioId: string | undefined
 ) => {
-  const [startDate, setStartDate] = useState<Date>(initialRange.start);
-  const [endDate, setEndDate] = useState<Date>(initialRange.end);
-
-  useEffect(() => {
-    initialRange.start = startDate;
-    initialRange.end = endDate;
-  }, [startDate, endDate]);
+  const dateRangeProps = useDateRange(initialRange);
+  const { startDate, endDate } = dateRangeProps;
 
   const { loading, error, data } = useQuery<PortfolioTransactionsQuery>(
     TRANSACTIONS_QUERY,
@@ -56,9 +51,6 @@ export const useGetPortfolioTransactions = (
     loading,
     error,
     data: data?.portfolio.transactions,
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
+    ...dateRangeProps,
   };
 };

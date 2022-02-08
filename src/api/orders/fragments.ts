@@ -8,6 +8,8 @@ export const TRADE_ORDERS_DETAILS = gql`
     type {
       typeName
       typeNamesAsMap
+      cashFlowEffect
+      amountEffect
     }
     transactionDate
     tradeAmountInPortfolioCurrency

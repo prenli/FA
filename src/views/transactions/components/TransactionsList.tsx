@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "components";
-import { Transaction } from "../Transaction/Transaction";
-import { TransactionsContainerProps } from "../TransactionsContainer/TransactionsContainer";
+import { Transaction } from "./Transaction";
+import { TransactionsContainerProps } from "./TransactionsContainer";
 import { useSplitByMonth } from "./useSplitByMonth";
 
 type TransactionsListProps = TransactionsContainerProps;
