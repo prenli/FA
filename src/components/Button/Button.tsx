@@ -19,10 +19,10 @@ export const Button = ({
   <button
     {...props}
     className={classNames(
-      "border border-black rounded-lg p-2 inline-flex items-center justify-center relative whitespace-nowrap align-middle",
+      "border border-blue-600 rounded-lg p-2 inline-flex items-center justify-center relative whitespace-nowrap align-middle",
       {
-        "bg-black text-white fill-white": variant === "Primary",
-        "text-black fill-black": variant === "Secondary",
+        "bg-blue-600 text-white fill-white stroke-white": variant === "Primary",
+        "text-blue-600 fill-blue-600 stroke-blue-600": variant === "Secondary",
         "w-full": isFullWidth,
       }
     )}

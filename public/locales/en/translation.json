@@ -57,12 +57,6 @@
     "datePickerFromLabel": "Date from",
     "datePickerFromTo": "Date to"
   },
-  "ordersPage": {
-    "title": "All orders"
-  },
-  "tradingPage": {
-    "title": "All trading"
-  },
   "documentsPage": {
     "title": "All documents"
   },
@@ -71,6 +65,7 @@
   },
   "messages": {
     "noDataAvailable": "No data available.",
-    "notAvailable": "not available"
+    "notAvailable": "not available",
+    "newVersion": "There is a new version available.\nPlease reload the page."
   }
 }

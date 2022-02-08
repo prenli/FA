@@ -6,7 +6,6 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./i18n";
 import { bootstrapPwa } from "./services/pwa";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,7 +16,6 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-serviceWorkerRegistration.register();
 bootstrapPwa();
 
 // If you want to start measuring performance in your app, pass a function

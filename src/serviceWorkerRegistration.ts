@@ -20,6 +20,26 @@ const isLocalhost = Boolean(
     )
 );
 
+let appLoaded = false;
+window.addEventListener("load", () => {
+  appLoaded = true;
+});
+
+const afterLoadRegister = (config?: Config) => {
+  const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+  if (isLocalhost) {
+    checkValidServiceWorker(swUrl, config);
+    navigator.serviceWorker.ready.then(() => {
+      console.log(
+        "This web app is being served cache-first by a service " +
+          "worker. To learn more, visit https://cra.link/PWA"
+      );
+    });
+  } else {
+    registerValidSW(swUrl, config);
+  }
+};
+
 type Config = {
   onSuccess?: (registration: ServiceWorkerRegistration) => void;
   onUpdate?: (registration: ServiceWorkerRegistration) => void;
@@ -35,27 +55,13 @@ export function register(config?: Config) {
       // serve assets; see https://github.com/facebook/create-react-app/issues/2374
       return;
     }
-
-    window.addEventListener("load", () => {
-      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
-
-      if (isLocalhost) {
-        // This is running on localhost. Let's check if a service worker still exists or not.
-        checkValidServiceWorker(swUrl, config);
-
-        // Add some additional logging to localhost, pointing developers to the
-        // service worker/PWA documentation.
-        navigator.serviceWorker.ready.then(() => {
-          console.log(
-            "This web app is being served cache-first by a service " +
-              "worker. To learn more, visit https://cra.link/PWA"
-          );
-        });
-      } else {
-        // Is not localhost. Just register service worker
-        registerValidSW(swUrl, config);
-      }
-    });
+    if (appLoaded) {
+      afterLoadRegister(config);
+    } else {
+      window.addEventListener("load", () => {
+        afterLoadRegister(config);
+      });
+    }
   }
 }
 
