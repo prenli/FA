@@ -12,6 +12,9 @@ const CONTACT_INFO_QUERY = gql`
       portfolios {
         id
         name
+        currency {
+          securityCode
+        }
       }
     }
   }
@@ -25,6 +28,9 @@ export interface ContactInfoQuery {
     portfolios: {
       id: number;
       name: string;
+      currency: {
+        securityCode: string;
+      };
     }[];
   };
 }
@@ -41,5 +47,14 @@ export const useGetContactInfo = () => {
     }
   );
 
-  return { loading, data, error };
+  return {
+    loading,
+    error,
+    data: data && {
+      portfolios: data.contact.portfolios,
+      language: data.contact.language.locale,
+      // all contact portfolios have same currency
+      portfoliosCurrency: data.contact.portfolios[0].currency.securityCode,
+    },
+  };
 };

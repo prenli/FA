@@ -1,6 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { useKeycloak } from "providers/KeycloakProvider";
 import { useTranslation } from "react-i18next";
+import { useGetContactInfo } from "../initial/useGetContactInfo";
 import { getFetchPolicyOptions } from "../utils";
 import { ALLOCATION_BY_SECURITY_TYPE_FIELDS } from "./fragments";
 import { AllPortfoliosHoldingsQuery } from "./types";
@@ -11,12 +12,6 @@ const HOLDINGS_QUERY = gql`
   query GetHoldings($contactId: Long, $locale: Locale) {
     contact(id: $contactId) {
       id
-      portfolios {
-        id
-        currency {
-          securityCode
-        }
-      }
       analytics(
         parameters: {
           paramsSet: {
@@ -48,6 +43,8 @@ const HOLDINGS_QUERY = gql`
 export const useGetAllPortfoliosHoldings = () => {
   const { linkedContact } = useKeycloak();
   const { i18n } = useTranslation();
+  const { data: { portfoliosCurrency } = { portfoliosCurrency: "EUR" } } =
+    useGetContactInfo();
   const { loading, error, data } = useQuery<AllPortfoliosHoldingsQuery>(
     HOLDINGS_QUERY,
     {
@@ -67,7 +64,7 @@ export const useGetAllPortfoliosHoldings = () => {
         data.contact.analytics.allocationTopLevel.allocationByType,
       // there is no way to get currency for analytics under contact context,
       // but all portfolios have same currency, so we use currency from first one
-      currency: data.contact.portfolios[0]?.currency.securityCode,
+      currency: portfoliosCurrency,
     },
   };
 };

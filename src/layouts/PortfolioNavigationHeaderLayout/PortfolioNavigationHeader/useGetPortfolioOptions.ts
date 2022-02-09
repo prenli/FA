@@ -5,9 +5,7 @@ import { PortfolioOption } from "./PortfolioNavigationHeader";
 
 export const useGetPortfolioOptions = () => {
   const { t } = useTranslation();
-  const {
-    data: { contact: { portfolios } } = { contact: { portfolios: [] } },
-  } = useGetContactInfo();
+  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
 
   const portfolioOptions: PortfolioOption[] = useMemo(
     () => [

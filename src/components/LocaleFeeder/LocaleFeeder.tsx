@@ -9,7 +9,7 @@ interface LocaleFeederProps {
 
 export const LocaleFeeder = ({ children }: LocaleFeederProps) => {
   const { data, error } = useGetContactInfo();
-  const { isReady } = useFeedI18nextWithLocale(data);
+  const { isReady } = useFeedI18nextWithLocale(data?.language);
 
   if (error) {
     return <QueryError />;

@@ -38,6 +38,7 @@
     "unrealizedProfits": "Unrealised profits",
     "marketValue": "Market Value",
     "holdings": "Holdings",
+    "holding": "Holding",
     "units": "Units",
     "purchaseValue": "Purchase value",
     "accruedInterest": "Accrued interest",
@@ -50,7 +51,8 @@
     "kiid": "KIID",
     "buy": "Buy",
     "sell": "Sell",
-    "securityDetails": "Security details"
+    "price": "Price",
+    "security": "Security"
   },
   "transactionsPage": {
     "title": "All transactions",

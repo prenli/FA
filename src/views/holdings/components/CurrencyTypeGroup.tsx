@@ -39,6 +39,7 @@ export const CurrencyTypeGroup = ({
                 marketValue:
                   security.figures.marketValue * security.figures.fxRate,
               }}
+              showDetailsOnClick={false}
             />
           ))}
         </div>

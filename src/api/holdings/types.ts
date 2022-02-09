@@ -25,11 +25,6 @@ export interface AllocationByType {
 
 export interface AllPortfoliosHoldingsQuery {
   contact: {
-    portfolios: {
-      currency: {
-        securityCode: string;
-      };
-    }[];
     analytics: {
       allocationTopLevel: {
         portfolio: {
@@ -71,6 +66,7 @@ export interface SecurityDetailsPosition {
   };
   latestMarketData: {
     close: number;
+    obsDate: string;
   };
   marketDataHistory: MarketHistoryDataPoint[];
   type: {

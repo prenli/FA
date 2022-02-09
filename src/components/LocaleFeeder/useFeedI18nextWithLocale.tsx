@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react";
-import { ContactInfoQuery } from "api/initial/useGetContactInfo";
 import { initI18n } from "i18n";
 
-export const useFeedI18nextWithLocale = (
-  data: ContactInfoQuery | undefined
-) => {
+export const useFeedI18nextWithLocale = (language: string | undefined) => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    if (data && !isReady) {
-      const locale = data?.contact.language.locale || "en-US";
+    if (language && !isReady) {
+      const locale = language || "en-US";
       initI18n(locale.replace("_", "-"), () => {
         setIsReady(true);
       });
     }
-  }, [data, isReady]);
+  }, [language, isReady]);
 
   return { isReady };
 };

@@ -13,3 +13,4 @@ export { LabeledDiv } from "./LabeledDiv/LabeledDiv";
 export { GainLoseColoring } from "./GainLoseColoring/GainLoseColoring";
 export { CountryFlag } from "./CountryFlag/CountryFlag";
 export { Badge } from "./Badge/Badge";
+export { LineChart } from "./LineChart/LineChart";

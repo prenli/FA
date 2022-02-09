@@ -8,6 +8,7 @@ interface HoldingProps extends AllocationBySecurity {
   currency: string;
   hideValueChange?: boolean;
   hideFlag?: boolean;
+  showDetailsOnClick?: boolean;
 }
 
 export const HoldingSummary = ({
@@ -18,13 +19,17 @@ export const HoldingSummary = ({
   currency,
   hideValueChange = false,
   hideFlag = false,
+  showDetailsOnClick = true,
 }: HoldingProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const valueChange = marketValue - tradeAmount;
 
   return (
-    <div className="py-2" onClick={() => navigate(`holdings/${code}`)}>
+    <div
+      className="py-2"
+      onClick={() => showDetailsOnClick && navigate(`holdings/${code}`)}
+    >
       <div className="flex gap-4 justify-between items-center text-gray-800">
         <div className="text-lg font-semibold leading-5 text-gray-900">
           <span>{name}</span>
