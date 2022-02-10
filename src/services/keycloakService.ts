@@ -56,24 +56,37 @@ class KeycloakService {
     this.init();
   }
 
+  initOffline() {
+    const lastUsedLinkedContact = getLastUsedLinkedContact();
+    if (isStandalone && lastUsedLinkedContact) {
+      this.state = {
+        ...this.state,
+        initialized: true,
+        authenticated: true,
+        linkedContact: lastUsedLinkedContact,
+      };
+    } else {
+      this.state = {
+        ...this.state,
+        error: true,
+      };
+    }
+    this.updateState();
+    const initWhenReconnect = () => {
+      this.init();
+      window.removeEventListener("online", initWhenReconnect);
+    };
+    window.addEventListener("online", initWhenReconnect);
+  }
+
   init() {
+    if (!window.navigator.onLine) {
+      this.initOffline();
+      return;
+    }
     this.keycloak.init(keycloakInitConfig).catch((error) => {
       console.error(error);
-      const lastUsedLinkedContact = getLastUsedLinkedContact();
-      if (isStandalone && lastUsedLinkedContact) {
-        this.state = {
-          ...this.state,
-          initialized: true,
-          authenticated: true,
-          linkedContact: lastUsedLinkedContact,
-        };
-      } else {
-        this.state = {
-          ...this.state,
-          error: true,
-        };
-      }
-      this.updateState();
+      this.initOffline();
     });
 
     this.keycloak.onReady = this.onReady;

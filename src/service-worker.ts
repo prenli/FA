@@ -58,10 +58,7 @@ registerRoute(
 registerRoute(
   // Add in any other file extensions or routing criteria as needed.
   ({ url }) =>
-    url.origin === self.location.origin &&
-    (url.pathname.endsWith(".png") ||
-      url.pathname.endsWith(".json") ||
-      url.pathname.endsWith(".js")),
+    url.origin === self.location.origin && url.pathname.endsWith(".png"),
   // Customize this strategy as needed, e.g., by changing to CacheFirst.
   new StaleWhileRevalidate({
     cacheName: "images",
@@ -70,6 +67,24 @@ registerRoute(
       // least-recently used images are removed.
       new ExpirationPlugin({ maxEntries: 50 }),
     ],
+  })
+);
+
+registerRoute(
+  ({ url }) =>
+    url.origin === self.location.origin &&
+    url.pathname.endsWith(".json") &&
+    url.pathname.startsWith("/locales"),
+  new StaleWhileRevalidate({
+    cacheName: "translations",
+  })
+);
+
+registerRoute(
+  ({ url }) =>
+    url.origin === self.location.origin && url.pathname.includes("keycloak"),
+  new StaleWhileRevalidate({
+    cacheName: "keycloak",
   })
 );
 
