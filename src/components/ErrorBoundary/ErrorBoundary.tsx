@@ -1,4 +1,9 @@
-import React, { ReactNode, useState } from "react";
+import {
+  ReactNode,
+  useState,
+  Component,
+  ErrorInfo as ReactErrorInfo,
+} from "react";
 
 interface Props {
   children: ReactNode;
@@ -6,17 +11,17 @@ interface Props {
 
 interface State {
   error: Error | undefined;
-  errorInfo: React.ErrorInfo | undefined;
+  errorInfo: ReactErrorInfo | undefined;
 }
 
-export class ErrorBoundary extends React.Component<Props, State> {
+export class ErrorBoundary extends Component<Props, State> {
   public state: State = { error: undefined, errorInfo: undefined };
 
   static getDerivedStateFromError(error: Error) {
     return { error };
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+  componentDidCatch(error: Error, errorInfo: ReactErrorInfo) {
     this.setState({ errorInfo });
   }
 
@@ -30,7 +35,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
 
 interface ErrorInfoProps {
   error: Error | undefined;
-  errorInfo: React.ErrorInfo | undefined;
+  errorInfo: ReactErrorInfo | undefined;
 }
 
 const ErrorInfo = ({ error, errorInfo }: ErrorInfoProps) => {

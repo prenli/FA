@@ -1,4 +1,3 @@
-import React from "react";
 import { ReactComponent as ChevronLeft } from "assets/chevron-left.svg";
 
 interface BackNavigationButtonProps {

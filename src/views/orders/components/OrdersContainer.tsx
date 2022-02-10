@@ -1,4 +1,3 @@
-import React from "react";
 import { TradeOrder } from "api/orders/types";
 import { NoOrders } from "./NoOrders";
 import { TradeOrdersGroup } from "./TradeOrdersGroup";

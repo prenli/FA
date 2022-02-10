@@ -1,4 +1,3 @@
-import React from "react";
 import { Transaction } from "api/transactions/types";
 import { NoTransactions } from "./NoTransactions";
 import { TransactionsList } from "./TransactionsList";

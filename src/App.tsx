@@ -1,4 +1,3 @@
-import React from "react";
 import { KeycloakProvider } from "providers/KeycloakProvider";
 import { keycloakService } from "services/keycloakService";
 import { LocaleFeeder } from "./components";

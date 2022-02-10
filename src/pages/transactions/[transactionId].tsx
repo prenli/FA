@@ -1,4 +1,3 @@
-import React from "react";
 import { useGetTransactionDetails } from "api/transactions/useGetTransactionDetails";
 import { BackNavigationButton, Heading, QueryLoadingWrapper } from "components";
 import { useNavigate, useParams } from "react-router-dom";

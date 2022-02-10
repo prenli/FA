@@ -1,4 +1,3 @@
-import React from "react";
 import { TradeOrder } from "api/orders/types";
 import { useTranslation } from "react-i18next";
 import {

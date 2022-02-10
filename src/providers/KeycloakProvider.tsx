@@ -1,4 +1,5 @@
-import React, { createContext, ReactNode, useReducer, useEffect } from "react";
+import { useContext } from "react";
+import { createContext, ReactNode, useReducer, useEffect } from "react";
 import {
   keycloakService,
   keycloakServiceInitialState,
@@ -51,7 +52,7 @@ export const KeycloakProvider = (props: KeycloakProviderProps) => {
 };
 
 export const useKeycloak = () => {
-  const context = React.useContext(KeycloakContext);
+  const context = useContext(KeycloakContext);
   if (context === undefined) {
     throw new Error("useKeycloak must be used within a KeycloakProvider");
   }

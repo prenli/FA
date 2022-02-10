@@ -10,6 +10,7 @@ module.exports = {
     "react-app",
     "react-app/jest",
     "plugin:tailwindcss/recommended",
+    "plugin:react/jsx-runtime",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {

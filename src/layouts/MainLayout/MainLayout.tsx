@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { LoadingIndicator, Center } from "components";
 import { ErrorBoundary } from "components/ErrorBoundary/ErrorBoundary";
 import { Outlet } from "react-router-dom";

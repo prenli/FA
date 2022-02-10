@@ -1,4 +1,3 @@
-import React from "react";
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
 import { Center, LoadingIndicator, QueryError } from "components";
 import { useFeedI18nextWithLocale } from "./useFeedI18nextWithLocale";

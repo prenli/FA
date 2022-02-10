@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { SecurityPosition } from "api/overview/types";
 import { Card, GainLoseColoring } from "components";
 import { useTranslation } from "react-i18next";

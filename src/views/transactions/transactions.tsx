@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Transaction as TransactionType } from "api/transactions/types";
 import { QueryData } from "api/types";
 import { Card, DatePicker, QueryLoadingWrapper } from "components";

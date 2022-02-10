@@ -1,4 +1,3 @@
-import React from "react";
 import { TradeOrder } from "api/orders/types";
 import { Card } from "components";
 import { Transaction } from "../../transactions/components/Transaction";

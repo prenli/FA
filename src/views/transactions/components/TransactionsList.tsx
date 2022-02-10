@@ -1,4 +1,3 @@
-import React from "react";
 import { Card } from "components";
 import { Transaction } from "./Transaction";
 import { TransactionsContainerProps } from "./TransactionsContainer";

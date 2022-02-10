@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import { lazy } from "react";
 import { TranslationText } from "components";
 import { MainLayout } from "layouts/MainLayout/MainLayout";
 import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";

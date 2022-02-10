@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { Center, LoadingIndicator } from "components";
 import { NavTab } from "./NavTab/NavTab";
 import { NavTabPath } from "./NavTab/types";

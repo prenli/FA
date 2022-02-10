@@ -1,4 +1,3 @@
-import React from "react";
 import { ReactComponent as CalendarIcon } from "assets/calendar.svg";
 import ReactDatePicker, {
   DatePickerProps as ReactDatePickerProps,

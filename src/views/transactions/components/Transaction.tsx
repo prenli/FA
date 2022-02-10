@@ -1,4 +1,3 @@
-import React from "react";
 import { Transaction as TransactionType } from "api/transactions/types";
 import { Badge } from "components";
 import { useTranslation } from "react-i18next";

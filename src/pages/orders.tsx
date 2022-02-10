@@ -1,4 +1,3 @@
-import React from "react";
 import { useGetAllTradeOrders } from "api/orders/useGetAllTradeOrders";
 import { Orders } from "views/orders/orders";
 

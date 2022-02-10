@@ -1,4 +1,3 @@
-import React from "react";
 import { useGetPortfolioHoldings } from "api/holdings/useGetPortfolioHoldings";
 import { QueryLoadingWrapper } from "components";
 import { useParams } from "react-router-dom";

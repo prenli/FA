@@ -1,4 +1,3 @@
-import React from "react";
 import { useGetAllPortfoliosTransactions } from "api/transactions/useGetAllPortfoliosTransactions";
 import { Transactions } from "views/transactions/transactions";
 

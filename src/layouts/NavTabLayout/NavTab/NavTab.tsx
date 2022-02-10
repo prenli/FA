@@ -1,4 +1,4 @@
-import React, { ComponentProps, ReactNode } from "react";
+import { ComponentProps, ReactNode } from "react";
 import { Tab } from "@headlessui/react";
 import classNames from "classnames";
 import {

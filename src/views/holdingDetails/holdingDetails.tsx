@@ -1,4 +1,3 @@
-import React from "react";
 import { HoldingPosition, SecurityDetailsPosition } from "api/holdings/types";
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
 import {

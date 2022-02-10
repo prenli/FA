@@ -1,4 +1,3 @@
-import React from "react";
 import { DetailedPortfolio } from "api/overview/types";
 import { useGetPortfolio } from "api/overview/useGetPortfolio";
 import { Card, QueryLoadingWrapper } from "components";

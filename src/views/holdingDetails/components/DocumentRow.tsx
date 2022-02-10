@@ -1,4 +1,3 @@
-import React from "react";
 import { ReactComponent as LinkIcon } from "assets/external-link.svg";
 
 interface DocumentRowProps {

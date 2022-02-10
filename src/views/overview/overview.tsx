@@ -1,4 +1,3 @@
-import React from "react";
 import { AllPortfolios } from "api/overview/types";
 import { useGetAllPortfolios } from "api/overview/useGetAllPortfolios";
 import { QueryLoadingWrapper } from "components";

@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { BaseReport } from "api/overview/types";
 import { ReactComponent as ChartBackground } from "assets/chartVector.svg";
 import classNames from "classnames";

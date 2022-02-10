@@ -1,4 +1,3 @@
-import React from "react";
 import { AllocationByType } from "api/holdings/types";
 import { Card } from "components";
 import { useTranslation } from "react-i18next";

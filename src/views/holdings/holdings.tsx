@@ -1,4 +1,3 @@
-import React from "react";
 import { AllocationByType } from "api/holdings/types";
 import { CurrencyTypeGroup } from "./components/CurrencyTypeGroup";
 import { HoldingsGroupedByType } from "./components/HoldingsGroupedByType";

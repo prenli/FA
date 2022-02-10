@@ -1,4 +1,3 @@
-import React from "react";
 import { TransactionDetails as TransactionDetailsType } from "api/transactions/types";
 import { Button, LabeledDiv } from "components";
 import { useTranslation } from "react-i18next";

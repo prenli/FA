@@ -1,4 +1,3 @@
-import React from "react";
 import { QueryData } from "api/types";
 import { Center } from "../Center/Center";
 import { LoadingIndicator } from "../LoadingIndicator/LoadingIndicator";

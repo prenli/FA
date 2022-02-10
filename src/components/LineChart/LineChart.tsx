@@ -1,4 +1,3 @@
-import React from "react";
 import { ApexOptions } from "apexcharts";
 import Chart from "react-apexcharts";
 

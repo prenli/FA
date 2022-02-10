@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { ReactComponent as RefreshIcon } from "assets/refresh.svg";
 import { Button, Center } from "components";
 import { useTranslation } from "react-i18next";

@@ -1,4 +1,3 @@
-import React from "react";
 import { useGetPortfolioHoldingDetails } from "api/holdings/useGetPortfolioHoldingDetails";
 import { useGetSecurityDetails } from "api/holdings/useGetSecurityDetails";
 import { QueryLoadingWrapper } from "components";

@@ -1,4 +1,4 @@
-import React, { ReactNode, Fragment } from "react";
+import { ReactNode, Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { ReactComponent as ChevronDown } from "assets/chevron-down.svg";
 import classNames from "classnames";

@@ -1,4 +1,3 @@
-import React from "react";
 import { AllocationBySecurity } from "api/holdings/types";
 import { GainLoseColoring, CountryFlag } from "components";
 import { useTranslation } from "react-i18next";

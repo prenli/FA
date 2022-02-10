@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState, Children } from "react";
 import { useSwipeable } from "react-swipeable";
 
 export type SwipeDirection = "left" | "right";
@@ -26,7 +26,7 @@ export const PagesCarousel = ({
   return (
     <div className="overflow-auto relative flex-1 w-full" {...handlers}>
       <div className="flex">
-        {React.Children.map(children, (child, index) => {
+        {Children.map(children, (child, index) => {
           const isCurrent = index === currentPageIndex;
           const shouldBeRendered =
             isCurrent || visitedPageIndexes.includes(index);
