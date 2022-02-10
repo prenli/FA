@@ -138,6 +138,7 @@ class KeycloakService {
       ...this.state,
       initialized: true,
       authenticated: authenticated,
+      error: false,
     };
     await this.updateLinkedContact();
     this.updateState();

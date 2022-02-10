@@ -1,12 +1,11 @@
 import { persistor } from "./apolloClient";
 
 export let isInstalled = true;
-export let isStandalone = false;
+export const isStandalone = window.matchMedia(
+  "(display-mode: standalone)"
+).matches;
 
 export const bootstrapPwa = () => {
-  if (window.matchMedia("(display-mode: standalone)").matches) {
-    isStandalone = true;
-  }
   window.addEventListener("beforeinstallprompt", () => {
     isInstalled = false;
   });
