@@ -39,6 +39,9 @@ const cache = new InMemoryCache({
     AnalysisDTO: {
       keyFields: ["allocationTopLevel", ["portfolio", ["id"]]],
     },
+    Document: {
+      keyFields: ["identifier"],
+    },
   },
 });
 

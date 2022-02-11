@@ -4,6 +4,7 @@ import {
   Component,
   ErrorInfo as ReactErrorInfo,
 } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   children: ReactNode;
@@ -39,11 +40,12 @@ interface ErrorInfoProps {
 }
 
 const ErrorInfo = ({ error, errorInfo }: ErrorInfoProps) => {
+  const { t } = useTranslation();
   const [showDetails, setShowDetails] = useState(false);
 
   return (
     <div className="px-2">
-      <div onClick={() => setShowDetails(true)}>Something went wrong</div>
+      <div onClick={() => setShowDetails(true)}>{t("messages.error")}</div>
       {showDetails && (
         <div className="p-2">
           <div className="font-semibold">{error?.message}</div>

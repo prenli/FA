@@ -32,7 +32,7 @@ const Orders = lazy(() =>
   import("./orders").then((module) => ({ default: module.OrdersPage }))
 );
 const Documents = lazy(() =>
-  import("./documents").then((module) => ({ default: module.Documents }))
+  import("./documents").then((module) => ({ default: module.DocumentsPage }))
 );
 
 export const mainTabRoutes: NavTabPath[] = [

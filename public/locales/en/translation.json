@@ -77,7 +77,7 @@
     "total": "Total"
   },
   "documentsPage": {
-    "title": "All documents"
+    "title": "Documents"
   },
   "404Page": {
     "title": "404 - Not found"
@@ -85,6 +85,7 @@
   "messages": {
     "noDataAvailable": "No data available.",
     "notAvailable": "not available",
-    "newVersion": "There is a new version available.\nPlease reload the page."
+    "newVersion": "There is a new version available.\nPlease reload the page.",
+    "error": "Something went wrong"
   }
 }

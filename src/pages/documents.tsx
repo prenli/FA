@@ -1,6 +1,9 @@
-import { useTranslation } from "react-i18next";
+import { useGetDocuments } from "api/documents/useGetDocuments";
+import { QueryLoadingWrapper } from "components";
+import { Documents } from "../views/documents/documents";
 
-export const Documents = () => {
-  const { t } = useTranslation();
-  return <h2 className="text-2xl font-semibold">{t("documentsPage.title")}</h2>;
+export const DocumentsPage = () => {
+  const queryData = useGetDocuments();
+
+  return <QueryLoadingWrapper {...queryData} SuccessComponent={Documents} />;
 };

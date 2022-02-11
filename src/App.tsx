@@ -1,25 +1,30 @@
 import { KeycloakProvider } from "providers/KeycloakProvider";
+import { ToastContainer } from "react-toastify";
 import { keycloakService } from "services/keycloakService";
 import { LocaleFeeder } from "./components";
 import { RootRoutes } from "./pages/routes";
 import { PersistedApolloProvider } from "./providers/PersistedApolloProvider";
 import { ServiceWorkerRegistrationProvider } from "./providers/ServiceWorkerRegistrationProvider";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
-    <KeycloakProvider
-      keycloak={keycloakService}
-      InitializingComponent={<div>Initializing...</div>}
-      MissingLinkedContactComponent={<div>Missing linked contact...</div>}
-    >
-      <PersistedApolloProvider>
-        <LocaleFeeder>
-          <ServiceWorkerRegistrationProvider>
-            <RootRoutes />
-          </ServiceWorkerRegistrationProvider>
-        </LocaleFeeder>
-      </PersistedApolloProvider>
-    </KeycloakProvider>
+    <div>
+      <KeycloakProvider
+        keycloak={keycloakService}
+        InitializingComponent={<div>Initializing...</div>}
+        MissingLinkedContactComponent={<div>Missing linked contact...</div>}
+      >
+        <PersistedApolloProvider>
+          <LocaleFeeder>
+            <ServiceWorkerRegistrationProvider>
+              <RootRoutes />
+            </ServiceWorkerRegistrationProvider>
+          </LocaleFeeder>
+        </PersistedApolloProvider>
+      </KeycloakProvider>
+      <ToastContainer />
+    </div>
   );
 }
 

@@ -1,8 +1,11 @@
+import { useGetDocuments } from "api/documents/useGetDocuments";
+import { QueryLoadingWrapper } from "components";
 import { useParams } from "react-router-dom";
+import { Documents } from "views/documents/documents";
 
-export const Documents = () => {
+export const DocumentsPage = () => {
   const { portfolioId } = useParams();
-  return (
-    <h2 className="text-2xl font-semibold">{`Portfolio #${portfolioId} Documents`}</h2>
-  );
+  const queryData = useGetDocuments(portfolioId);
+
+  return <QueryLoadingWrapper {...queryData} SuccessComponent={Documents} />;
 };

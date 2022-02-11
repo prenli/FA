@@ -16,10 +16,10 @@ Primary.args = {
   onClick: () => alert("Button clicked"),
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  children: "Secondary",
-  variant: "Secondary",
+export const Dark = Template.bind({});
+Dark.args = {
+  children: "Dark",
+  variant: "Dark",
 };
 
 export const FullWidth = Template.bind({});
