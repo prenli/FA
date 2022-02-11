@@ -25,7 +25,7 @@ export const DocumentRow = ({
         variant="Dark"
         size="xs"
         isLoading={downloading}
-        leftIcon={<DownloadIcon />}
+        LeftIcon={DownloadIcon}
         onClick={() => downloadDocument(identifier)}
       />
     </div>

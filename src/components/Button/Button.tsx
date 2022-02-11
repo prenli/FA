@@ -1,4 +1,4 @@
-import { ReactElement, ComponentPropsWithoutRef } from "react";
+import { FunctionComponent, ComponentPropsWithoutRef, SVGProps } from "react";
 import { ReactComponent as Spinner } from "assets/spinner.svg";
 import classNames from "classnames";
 
@@ -9,7 +9,7 @@ interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   variant?: Variant;
   isFullWidth?: boolean;
   isLoading?: boolean;
-  leftIcon?: ReactElement;
+  LeftIcon?: FunctionComponent<SVGProps<SVGSVGElement>>;
   size?: Size;
 }
 
@@ -18,7 +18,7 @@ export const Button = ({
   variant = "Primary",
   isFullWidth = false,
   isLoading = false,
-  leftIcon,
+  LeftIcon,
   size = "md",
   ...props
 }: ButtonProps) => (
@@ -38,7 +38,7 @@ export const Button = ({
       }
     )}
   >
-    {(leftIcon || isLoading) && (
+    {(LeftIcon || isLoading) && (
       <span
         className={classNames("inline-flex self-center w-5 h-5 shrink-0", {
           "mr-2": !!children,
@@ -47,7 +47,7 @@ export const Button = ({
         {isLoading ? (
           <Spinner className="w-5 h-5 text-blue-400 animate-spin fill-white" />
         ) : (
-          leftIcon
+          LeftIcon && <LeftIcon className="w-5 h-5" />
         )}
       </span>
     )}

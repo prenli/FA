@@ -138,7 +138,7 @@ export const TransactionDetails = ({
         <Button
           isFullWidth
           isLoading={downloading}
-          leftIcon={<DocumentDownloadIcon />}
+          LeftIcon={DocumentDownloadIcon}
           onClick={() => downloadDocument(documents[0].identifier)}
         >
           Download transaction note
