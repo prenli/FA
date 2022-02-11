@@ -55,9 +55,26 @@
     "security": "Security"
   },
   "transactionsPage": {
-    "title": "All transactions",
+    "header": "Transaction",
     "datePickerFromLabel": "Date from",
-    "datePickerFromTo": "Date to"
+    "datePickerFromTo": "Date to",
+    "type": "Type",
+    "details": "Details",
+    "security": "Security",
+    "marketplace": "Marketplace",
+    "isin": "ISIN code",
+    "securityName": "Security name",
+    "portfolioName": "Portfolio name",
+    "transactionDate": "Transaction date",
+    "settlementDate": "Settlement date",
+    "units": "Units",
+    "cost": "Cost",
+    "description": "Description",
+    "fxRate": "Fx rate",
+    "unitPrice": "Unit price",
+    "grossTradeAmount": "Gross trade amount",
+    "netTradeAmount": "Net trade amount",
+    "total": "Total"
   },
   "documentsPage": {
     "title": "All documents"

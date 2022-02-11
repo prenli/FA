@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 
 interface CountryFlagProps extends React.SVGProps<SVGSVGElement> {
   code: string;

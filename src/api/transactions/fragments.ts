@@ -25,7 +25,12 @@ export const TRANSACTION_DETAILS_FIELDS = gql`
   fragment TransactionDetailsFields on Transaction {
     amount
     security {
+      id
       isinCode
+      exchange {
+        id
+        name
+      }
     }
     settlementDate
     unitPrice
@@ -33,5 +38,14 @@ export const TRANSACTION_DETAILS_FIELDS = gql`
     totalCost
     tradeAmount
     currencyCode
+    fxRate
+    documents {
+      identifier
+    }
+    extInfo
+    marketPlace {
+      id
+      name
+    }
   }
 `;

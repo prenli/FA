@@ -88,6 +88,15 @@ registerRoute(
   })
 );
 
+registerRoute(
+  ({ url }) =>
+    url.origin === self.location.origin && url.pathname.endsWith(".map"),
+  new StaleWhileRevalidate({
+    cacheName: "maps",
+    plugins: [new ExpirationPlugin({ maxAgeSeconds: 7 * 24 * 60 * 60 })],
+  })
+);
+
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener("message", (event) => {

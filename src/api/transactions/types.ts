@@ -31,8 +31,11 @@ export interface AllPortfoliosTransactionsQuery {
 
 export interface TransactionDetails extends Transaction {
   amount: number;
-  security: {
+  security?: {
     isinCode: string;
+    exchange?: {
+      name: string;
+    };
   };
   settlementDate: Date;
   unitPrice: number;
@@ -40,6 +43,14 @@ export interface TransactionDetails extends Transaction {
   totalCost: number;
   tradeAmount: number;
   currencyCode: string;
+  fxRate: number;
+  documents: {
+    identifier: string;
+  }[];
+  extInfo: string;
+  marketPlace?: {
+    name: string;
+  };
 }
 
 export interface TransactionDetailsQuery {

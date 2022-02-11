@@ -12,6 +12,7 @@ const HOLDING_DETAILS_QUERY = gql`
       portfolioReport {
         ...PortfolioReportHoldingDetailsFields
         portfolioId: portfolio {
+          id
           contact {
             id
           }

@@ -56,6 +56,7 @@ export const SUMMARY_FIELDS = gql`
     portfolioReport {
       ...PortfolioReportFields
       portfolioId: portfolio {
+        id
         contact {
           id
         }

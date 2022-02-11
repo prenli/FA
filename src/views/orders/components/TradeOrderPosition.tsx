@@ -1,20 +1,20 @@
 import { TradeOrder } from "api/orders/types";
+import { Badge } from "components";
 import { useTranslation } from "react-i18next";
 import {
   getTransactionColor,
   getTransactionTypeName,
 } from "utils/transactions";
-import { Badge } from "../../../components";
 
-type Props = TradeOrder;
+type TradeOrderPositionProps = TradeOrder;
 
-export const TradeOrderPosition: React.FC<Props> = ({
+export const TradeOrderPosition = ({
   securityName,
   tradeAmountInPortfolioCurrency,
   transactionDate,
   parentPortfolio,
   type: { typeNamesAsMap, typeName, amountEffect, cashFlowEffect },
-}) => {
+}: TradeOrderPositionProps) => {
   const { i18n, t } = useTranslation();
 
   return (

@@ -13,6 +13,7 @@ export const ALLOCATION_BY_SECURITY_TYPE_FIELDS = gql`
         code
         name
         security {
+          id
           isinCode
           countryCode
           currencyCode

@@ -7,6 +7,7 @@ import { isInstalled } from "./pwa";
 
 const httpLink = new HttpLink({
   uri: `${API_URL}/graphql`,
+  //uri: `${API_URL}/services/fund/graphql`,
   fetchOptions: {
     mode: "cors",
   },

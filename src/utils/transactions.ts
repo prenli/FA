@@ -11,9 +11,9 @@ export const getTransactionColor = (
   cashFlowEffect: number
 ) =>
   amountEffect > 0 && cashFlowEffect < 0
-    ? "blue"
+    ? ("blue" as const)
     : amountEffect < 0 && cashFlowEffect > 0
-    ? "red"
+    ? ("red" as const)
     : amountEffect === 0 && cashFlowEffect > 0
-    ? "green"
-    : "gray";
+    ? ("green" as const)
+    : ("gray" as const);
