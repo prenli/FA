@@ -23,6 +23,7 @@ export const DocumentRow = ({
       </div>
       <Button
         variant="Dark"
+        size="xs"
         isLoading={downloading}
         leftIcon={<DownloadIcon />}
         onClick={() => downloadDocument(identifier)}
