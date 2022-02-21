@@ -41,7 +41,7 @@ export const Button = ({
     {(LeftIcon || isLoading) && (
       <span
         className={classNames("inline-flex self-center w-5 h-5 shrink-0", {
-          "mr-2": !!children,
+          "mr-2": children !== undefined,
         })}
       >
         {isLoading ? (
