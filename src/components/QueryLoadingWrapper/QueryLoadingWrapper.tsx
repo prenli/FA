@@ -1,11 +1,14 @@
 import { QueryData } from "api/types";
+import { useTranslation } from "react-i18next";
+import { Slide, toast } from "react-toastify";
 import { Center } from "../Center/Center";
 import { LoadingIndicator } from "../LoadingIndicator/LoadingIndicator";
-import { QueryError } from "../QueryError/QueryError";
 
 interface QueryLoadingWrapperProps<T> extends QueryData<T> {
   SuccessComponent: (props: { data: T }) => JSX.Element;
 }
+
+const QUERY_ERROR_TOAST_ID = "QUERY_ERROR_TOAST_ID";
 
 export const QueryLoadingWrapper = <TData,>({
   loading,
@@ -13,14 +16,22 @@ export const QueryLoadingWrapper = <TData,>({
   data,
   SuccessComponent,
 }: QueryLoadingWrapperProps<TData>) => {
-  if (error && !data) {
-    return <QueryError />;
+  const { t } = useTranslation();
+  if (error) {
+    toast.error(t("messages.queryError"), {
+      toastId: QUERY_ERROR_TOAST_ID,
+      position: toast.POSITION.BOTTOM_CENTER,
+      hideProgressBar: true,
+      theme: "colored",
+      transition: Slide,
+      autoClose: false,
+    });
   }
   if (data) {
     return <SuccessComponent data={data} />;
   }
   // when offline and do not have cached data returns data === undefined, no error and not loading
-  if (!loading) {
+  if (!loading || (error && !data)) {
     return <div className="min-h-[400px]">No cached data</div>;
   }
   return (

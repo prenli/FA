@@ -10,7 +10,7 @@ export const LocaleFeeder = ({ children }: LocaleFeederProps) => {
   const { data, error } = useGetContactInfo();
   const { isReady } = useFeedI18nextWithLocale(data?.language);
 
-  if (error) {
+  if (error && !data) {
     return <QueryError />;
   }
 

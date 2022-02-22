@@ -86,6 +86,7 @@
     "noDataAvailable": "No data available.",
     "notAvailable": "not available",
     "newVersion": "There is a new version available.\nPlease reload the page.",
-    "error": "Something went wrong"
+    "error": "Something went wrong",
+    "queryError": "Server error, your data may by outdated."
   }
 }
