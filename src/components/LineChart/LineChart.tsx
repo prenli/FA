@@ -2,8 +2,8 @@ import { ApexOptions } from "apexcharts";
 import Chart from "react-apexcharts";
 
 interface LineChartProps {
-  series?: Array<unknown>;
-  labels?: Array<string>;
+  series: Array<unknown>;
+  labels: Array<string>;
   options?: ApexOptions;
 }
 
@@ -36,7 +36,6 @@ const lineChartDefaultOptions = {
   },
   grid: {
     padding: {
-      bottom: 2,
       top: 2,
     },
   },
@@ -54,10 +53,41 @@ const lineChartDefaultOptions = {
   },
 };
 
-export const LineChart = ({ series, labels, options }: LineChartProps) => (
-  <Chart
-    options={{ labels, ...lineChartDefaultOptions, ...options }}
-    series={series}
-    type="area"
-  />
-);
+const getLabelPosition = (labels: string[], position: number) =>
+  Math.floor((position * (labels.length - 1)) / 3);
+
+export const LineChart = ({ series, labels, options }: LineChartProps) => {
+  return (
+    <>
+      <Chart
+        options={{ labels, ...lineChartDefaultOptions, ...options }}
+        series={series}
+        type="area"
+      />
+      <div className="grid relative grid-cols-2 mx-1 text-sm font-medium text-gray-500">
+        <div className="text-left">{labels[getLabelPosition(labels, 0)]}</div>
+        <div
+          className="absolute "
+          style={{
+            left: `${
+              (100 * getLabelPosition(labels, 1)) / getLabelPosition(labels, 3)
+            }%`,
+          }}
+        >
+          <div className="ml-[-50%]">{labels[getLabelPosition(labels, 1)]}</div>
+        </div>
+        <div
+          className="absolute "
+          style={{
+            left: `${
+              (100 * getLabelPosition(labels, 2)) / getLabelPosition(labels, 3)
+            }%`,
+          }}
+        >
+          <div className="ml-[-50%]">{labels[getLabelPosition(labels, 2)]}</div>
+        </div>
+        <div className="text-right">{labels[getLabelPosition(labels, 3)]}</div>
+      </div>
+    </>
+  );
+};

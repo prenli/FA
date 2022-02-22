@@ -3,6 +3,7 @@ import { ReactComponent as DownloadIcon } from "assets/download.svg";
 import { Button } from "components";
 import { useTranslation } from "react-i18next";
 import { useDownloadDocument } from "../../../api/documents/useDownloadDocument";
+import { dateFromYYYYMMDD } from "../../../utils/date";
 
 type DocumentRowProps = Document;
 
@@ -18,7 +19,7 @@ export const DocumentRow = ({
       <div className="overflow-hidden ">
         <div className="text-base font-semibold truncate">{fileName}</div>
         <div className="text-sm font-semibold text-gray-500">
-          {t("date", { date: new Date(created) })}
+          {t("date", { date: dateFromYYYYMMDD(created) })}
         </div>
       </div>
       <Button

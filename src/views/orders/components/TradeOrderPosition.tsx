@@ -5,6 +5,7 @@ import {
   getTransactionColor,
   getTransactionTypeName,
 } from "utils/transactions";
+import { dateFromYYYYMMDD } from "../../../utils/date";
 
 type TradeOrderPositionProps = TradeOrder;
 
@@ -30,7 +31,7 @@ export const TradeOrderPosition = ({
       </div>
       <div className="flex justify-between text-xs">
         <div className="text-sm font-semibold text-gray-500">{`
-        ${t("date", { date: new Date(transactionDate) })} - ${
+        ${t("date", { date: dateFromYYYYMMDD(transactionDate) })} - ${
           parentPortfolio.name
         }`}</div>
         <Badge colorScheme={getTransactionColor(amountEffect, cashFlowEffect)}>

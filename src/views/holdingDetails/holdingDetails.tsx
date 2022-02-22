@@ -9,6 +9,7 @@ import {
 } from "components";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { dateFromYYYYMMDD } from "utils/date";
 import { getTransactionTypeName } from "utils/transactions";
 import { addProtocolToUrl } from "utils/url";
 import { DataRow } from "./components/DataRow";
@@ -73,7 +74,11 @@ export const HoldingDetails = ({
                   },
                 ]}
                 labels={marketDataHistory.map((data) =>
-                  t("date", { date: new Date(data.date) })
+                  t("date", {
+                    date: dateFromYYYYMMDD(data.date),
+                    month: "short",
+                    day: "numeric",
+                  })
                 )}
               />
             </div>

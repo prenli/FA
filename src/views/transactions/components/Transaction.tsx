@@ -7,6 +7,7 @@ import {
   getTransactionColor,
   getTransactionTypeName,
 } from "utils/transactions";
+import { dateFromYYYYMMDD } from "../../../utils/date";
 
 type TransactionProps = TransactionType;
 
@@ -39,7 +40,7 @@ export const Transaction = ({
       </div>
       <div className="flex justify-between text-xs">
         <div className="text-sm font-semibold text-gray-500">
-          <span>{t("date", { date: new Date(transactionDate) })}</span>
+          <span>{t("date", { date: dateFromYYYYMMDD(transactionDate) })}</span>
           <span>{showPortfolioLabel && ` - ${parentPortfolio.name}`}</span>
         </div>
         <Badge colorScheme={getTransactionColor(amountEffect, cashFlowEffect)}>

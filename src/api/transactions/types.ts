@@ -37,7 +37,7 @@ export interface TransactionDetails extends Transaction {
       name: string;
     };
   };
-  settlementDate: Date;
+  settlementDate: string;
   unitPrice: number;
   grossPrice: number;
   totalCost: number;

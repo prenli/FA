@@ -8,6 +8,7 @@ import {
   getTransactionColor,
   getTransactionTypeName,
 } from "utils/transactions";
+import { dateFromYYYYMMDD } from "../../utils/date";
 import { DataRow } from "../holdingDetails/components/DataRow";
 
 interface TransactionDetailsProps {
@@ -65,13 +66,13 @@ export const TransactionDetails = ({
         <div className="grid grid-cols-2 gap-2">
           <InfoCard
             label={t("transactionsPage.transactionDate")}
-            value={t("date", { date: new Date(transactionDate) })}
+            value={t("date", { date: dateFromYYYYMMDD(transactionDate) })}
           />
           <InfoCard
             label={t("transactionsPage.settlementDate")}
             value={
               settlementDate
-                ? t("date", { date: new Date(settlementDate) })
+                ? t("date", { date: dateFromYYYYMMDD(settlementDate) })
                 : t("messages.notAvailable")
             }
           />
