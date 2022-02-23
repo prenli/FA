@@ -1,5 +1,6 @@
 import { ApexOptions } from "apexcharts";
 import Chart from "react-apexcharts";
+import { useTranslation } from "react-i18next";
 
 interface LineChartProps {
   series: Array<unknown>;
@@ -37,6 +38,7 @@ const lineChartDefaultOptions = {
   grid: {
     padding: {
       top: 2,
+      bottom: 2,
     },
   },
   theme: {
@@ -45,26 +47,34 @@ const lineChartDefaultOptions = {
       color: "#1A56DB",
     },
   },
-  tooltip: {
-    style: {
-      fontSize: "14px",
-      fontFamily: "Inter, sans-serif",
-    },
-  },
 };
 
 const getLabelPosition = (labels: string[], position: number) =>
   Math.floor((position * (labels.length - 1)) / 3);
 
 export const LineChart = ({ series, labels, options }: LineChartProps) => {
+  const { t } = useTranslation();
   return (
     <>
       <Chart
-        options={{ labels, ...lineChartDefaultOptions, ...options }}
+        options={{
+          labels,
+          ...lineChartDefaultOptions,
+          tooltip: {
+            style: {
+              fontSize: "14px",
+              fontFamily: "Inter, sans-serif",
+            },
+            y: {
+              formatter: (value: number) => t("number", { value }),
+            },
+          },
+          ...options,
+        }}
         series={series}
         type="area"
       />
-      <div className="grid relative grid-cols-2 mx-1 text-sm font-medium text-gray-500">
+      <div className="grid relative grid-cols-2 mx-1 text-sm font-medium text-gray-500 min-h-[21px]">
         <div className="text-left">{labels[getLabelPosition(labels, 0)]}</div>
         <div
           className="absolute "

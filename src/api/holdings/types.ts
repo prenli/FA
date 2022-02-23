@@ -49,7 +49,7 @@ export interface PortfolioHoldingsQuery {
   };
 }
 
-interface MarketHistoryDataPoint {
+export interface MarketHistoryDataPoint {
   price: number;
   date: string;
 }
@@ -65,10 +65,9 @@ export interface SecurityDetailsPosition {
     securityCode: string;
   };
   latestMarketData: {
-    close: number;
-    obsDate: string;
+    price: number;
+    date: string;
   };
-  marketDataHistory: MarketHistoryDataPoint[];
   type: {
     code: string;
     namesAsMap: Record<string, string>;
@@ -77,6 +76,14 @@ export interface SecurityDetailsPosition {
 
 export interface SecurityDetailsQuery {
   securities: SecurityDetailsPosition[];
+}
+
+export interface SecurityMarketDataHistory {
+  marketDataHistory: MarketHistoryDataPoint[];
+}
+
+export interface SecurityMarketDataHistoryQuery {
+  securities: SecurityMarketDataHistory[];
 }
 
 export interface HoldingPosition {

@@ -56,7 +56,7 @@ export const useGetPortfolioHoldings = (portfolioId: string | undefined) => {
       allocationByType:
         data.portfolio.analytics.allocationTopLevel.allocationByType,
       currency:
-        data.portfolio.analytics.allocationTopLevel.portfolio.currencyCode,
+        data.portfolio.analytics.allocationTopLevel.portfolio?.currencyCode,
     },
   };
 };

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Transaction as TransactionType } from "api/transactions/types";
 import { useTranslation } from "react-i18next";
-import { dateFromYYYYMMDD } from "../../../utils/date";
+import { dateFromYYYYMMDD } from "utils/date";
 
 export const useSplitByMonth = (data: TransactionType[]) => {
   const { t } = useTranslation();
@@ -20,14 +20,17 @@ export const useSplitByMonth = (data: TransactionType[]) => {
     });
     return Object.entries(splitData)
       .sort(([dateA], [dateB]) => (dateA < dateB ? 1 : -1))
-      .map(([date, transactions]) => ({
-        label: t("date", {
-          date: dateFromYYYYMMDD(date),
-          year: "numeric",
-          month: "long",
-        }),
-        transactions: transactions,
-      }));
+      .map(([date, transactions]) => {
+        const dateArray = date.split("-").map((period) => parseInt(period));
+        return {
+          label: t("date", {
+            date: new Date(dateArray[0], dateArray[1] - 1),
+            year: "numeric",
+            month: "long",
+          }),
+          transactions: transactions,
+        };
+      });
   }, [data, t]);
 };
 

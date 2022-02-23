@@ -2,8 +2,9 @@ import { ApolloClient, InMemoryCache, HttpLink, from } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { LocalStorageWrapper, CachePersistor } from "apollo3-cache-persist";
 import { API_URL } from "config";
-import { keycloakService } from "./keycloakService";
-import { isInstalled } from "./pwa";
+import { keycloakService } from "../keycloakService";
+import { isInstalled } from "../pwa";
+import { persistenceMapper } from "./utils";
 
 const httpLink = new HttpLink({
   uri: `${API_URL}/graphql`,
@@ -49,6 +50,7 @@ export const persistor = new CachePersistor({
   cache,
   storage: new LocalStorageWrapper(window.localStorage),
   maxSize: 20971520, // 20 MB
+  persistenceMapper: persistenceMapper,
 });
 
 export const getPersistedApolloClient = async () => {

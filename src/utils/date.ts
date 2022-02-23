@@ -11,5 +11,5 @@ export const startOfMonth = (date: Date) => {
 
 export const dateFromYYYYMMDD = (stringDate: string) => {
   const dateArray = stringDate.split("-").map((period) => parseInt(period));
-  return new Date(dateArray[0], dateArray[1], dateArray[2]);
+  return new Date(dateArray[0], dateArray[1] - 1, dateArray[2]);
 };

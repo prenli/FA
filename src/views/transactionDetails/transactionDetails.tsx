@@ -4,11 +4,11 @@ import { ReactComponent as DocumentDownloadIcon } from "assets/document-download
 import { Button, Card } from "components";
 import { InfoCard } from "pages/transactions/components/InfoCard";
 import { useTranslation } from "react-i18next";
+import { dateFromYYYYMMDD } from "utils/date";
 import {
   getTransactionColor,
   getTransactionTypeName,
 } from "utils/transactions";
-import { dateFromYYYYMMDD } from "../../utils/date";
 import { DataRow } from "../holdingDetails/components/DataRow";
 
 interface TransactionDetailsProps {

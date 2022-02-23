@@ -1,11 +1,11 @@
 import { TradeOrder } from "api/orders/types";
 import { Badge } from "components";
 import { useTranslation } from "react-i18next";
+import { dateFromYYYYMMDD } from "utils/date";
 import {
   getTransactionColor,
   getTransactionTypeName,
 } from "utils/transactions";
-import { dateFromYYYYMMDD } from "../../../utils/date";
 
 type TradeOrderPositionProps = TradeOrder;
 

@@ -1,31 +1,39 @@
 import { WatchQueryFetchPolicy } from "@apollo/client";
 
-let wasApiHookCalledMap: Record<string, boolean> = {};
+let apiHookCalledMap: Record<string, Date> = {};
 
 interface FetchPolicyOptions {
   fetchPolicy: WatchQueryFetchPolicy;
   onCompleted: (data: unknown) => void;
-  pollInterval: number;
 }
+
+const TIME_TO_STALE = 86_400_000; // day in ms
+
+const isStale = (hookKey: string) => {
+  if (!apiHookCalledMap[hookKey]) {
+    return true;
+  }
+  return (
+    new Date().getTime() - apiHookCalledMap[hookKey].getTime() > TIME_TO_STALE
+  );
+};
 
 /*
 App persists its Apollo Client cache to localStorage
 To have fresh data we get the data from api on every first hook call after app refresh
-wasApiHookCalledMap keeping information if specified hook was rendered in current run
-if hook was rendered we set fetchPolicy to "cache-only" if not we set "cache-and-network" (displays cached data but fetch current from api)
+apiHookCalledMap keeping information when specified hook was rendered in current run
+if hook was rendered less than TIME_TO_STALE we set fetchPolicy to "cache-only" if not we set "cache-and-network" (displays cached data but fetch current from api)
 Apollo Client provides nextFetchPolicy, but it is reset to fetchPolicy after render of component where hook was used
-Also we are pooling data from api on every pollInterval value milliseconds
  */
 export const getFetchPolicyOptions = (hookKey: string): FetchPolicyOptions => ({
   fetchPolicy:
-    !wasApiHookCalledMap[hookKey] && window.navigator.onLine
+    isStale(hookKey) && window.navigator.onLine
       ? "cache-and-network"
       : "cache-only",
   onCompleted: (data: unknown) => {
-    wasApiHookCalledMap = {
-      ...wasApiHookCalledMap,
-      [hookKey]: true,
+    apiHookCalledMap = {
+      ...apiHookCalledMap,
+      [hookKey]: new Date(),
     };
   },
-  pollInterval: 60 * 60 * 1000, // 1 h
 });

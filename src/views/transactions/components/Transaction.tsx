@@ -3,11 +3,11 @@ import { Badge } from "components";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
+import { dateFromYYYYMMDD } from "utils/date";
 import {
   getTransactionColor,
   getTransactionTypeName,
 } from "utils/transactions";
-import { dateFromYYYYMMDD } from "../../../utils/date";
 
 type TransactionProps = TransactionType;
 

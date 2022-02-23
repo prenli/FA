@@ -15,12 +15,8 @@ const SECURITY_DETAILS_QUERY = gql`
         securityCode
       }
       latestMarketData {
-        obsDate
-        close
-      }
-      marketDataHistory(timePeriodCode: "MONTHS-1") {
-        price: close
         date: obsDate
+        price: close
       }
       type {
         code

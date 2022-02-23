@@ -5,15 +5,14 @@ import {
   Card,
   GainLoseColoring,
   Heading,
-  LineChart,
 } from "components";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { dateFromYYYYMMDD } from "utils/date";
 import { getTransactionTypeName } from "utils/transactions";
 import { addProtocolToUrl } from "utils/url";
 import { DataRow } from "./components/DataRow";
 import { DocumentRow } from "./components/DocumentRow";
+import { HistoryDataChart } from "./components/HistoryDataChart";
 import { HoldingHeader } from "./components/HoldingHeader";
 import { LineChartHeader } from "./components/LineChartHeader";
 
@@ -35,8 +34,7 @@ export const HoldingDetails = ({
       name,
       isinCode,
       type: { namesAsMap, code: typeCode },
-      latestMarketData: { close, obsDate },
-      marketDataHistory,
+      latestMarketData: { date, price },
       currency: { securityCode: currency },
       url,
       url2,
@@ -59,29 +57,13 @@ export const HoldingDetails = ({
           <Card
             header={
               <LineChartHeader
-                price={close}
-                date={obsDate}
+                price={price}
+                date={date}
                 currency={portfoliosCurrency}
               />
             }
           >
-            <div className="my-2">
-              <LineChart
-                series={[
-                  {
-                    name: "Price",
-                    data: marketDataHistory.map((data) => data.price),
-                  },
-                ]}
-                labels={marketDataHistory.map((data) =>
-                  t("date", {
-                    date: dateFromYYYYMMDD(data.date),
-                    month: "short",
-                    day: "numeric",
-                  })
-                )}
-              />
-            </div>
+            <HistoryDataChart />
           </Card>
           <Card
             header={

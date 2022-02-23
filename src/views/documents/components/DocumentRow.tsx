@@ -2,8 +2,8 @@ import { Document } from "api/documents/types";
 import { ReactComponent as DownloadIcon } from "assets/download.svg";
 import { Button } from "components";
 import { useTranslation } from "react-i18next";
+import { dateFromYYYYMMDD } from "utils/date";
 import { useDownloadDocument } from "../../../api/documents/useDownloadDocument";
-import { dateFromYYYYMMDD } from "../../../utils/date";
 
 type DocumentRowProps = Document;
 
