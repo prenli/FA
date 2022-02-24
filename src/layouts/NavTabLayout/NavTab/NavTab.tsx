@@ -1,6 +1,8 @@
 import { ComponentProps, ReactNode } from "react";
 import { Tab } from "@headlessui/react";
 import classNames from "classnames";
+import { Fragment } from "preact";
+import { PageLayout } from "../../PageLayout/PageLayout";
 import {
   PagesCarousel,
   PagesCarouselProps,
@@ -36,7 +38,9 @@ const NavTabPanels = (props: PagesCarouselProps) => (
 NavTab.Panels = NavTabPanels;
 
 const NavTabPanel = (props: { children: ReactNode }) => (
-  <div className="overflow-x-hidden my-4 mx-2 h-full" {...props} />
+  <PageLayout>
+    <Fragment {...props} />
+  </PageLayout>
 );
 NavTab.Panel = NavTabPanel;
 

@@ -3,9 +3,9 @@ import { PortfolioNavigationHeader } from "./PortfolioNavigationHeader/Portfolio
 
 export const PortfolioNavigationHeaderLayout = () => {
   return (
-    <div className="container flex flex-col mx-auto h-full">
+    <nav className="flex flex-col h-full">
       <PortfolioNavigationHeader />
       <Outlet />
-    </div>
+    </nav>
   );
 };

@@ -7,17 +7,27 @@ export const useGetPortfolioOptions = () => {
   const { t } = useTranslation();
   const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
 
-  const portfolioOptions: PortfolioOption[] = useMemo(
-    () => [
+  const portfolioOptions: PortfolioOption[] = useMemo(() => {
+    if (portfolios.length === 1) {
+      const portfolio = portfolios[0];
+      return [
+        {
+          id: portfolio.id,
+          urlPrefix: `/portfolio/${portfolio.id}`,
+          label: `Portfolio ${portfolio.name}`,
+        },
+      ];
+    }
+
+    return [
       { id: 0, urlPrefix: "", label: t("navTab.totalInvestments") },
       ...portfolios.map((portfolio) => ({
         id: portfolio.id,
         urlPrefix: `/portfolio/${portfolio.id}`,
         label: `Portfolio ${portfolio.name}`,
       })),
-    ],
-    [portfolios, t]
-  );
+    ];
+  }, [portfolios, t]);
 
   return portfolioOptions;
 };

@@ -6,6 +6,7 @@ import {
   GainLoseColoring,
   Heading,
 } from "components";
+import { PageLayout } from "layouts/PageLayout/PageLayout";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getTransactionTypeName } from "utils/transactions";
@@ -52,115 +53,117 @@ export const HoldingDetails = ({
         <BackNavigationButton onClick={() => navigate(-1)} />
         {name ?? ""}
       </Heading>
-      <div className="overflow-y-scroll grow-1">
-        <div className="flex overflow-y-auto flex-col gap-4 my-4 mx-2">
-          <Card
-            header={
-              <LineChartHeader
-                price={price}
-                date={date}
-                currency={portfoliosCurrency}
-              />
-            }
-          >
-            <HistoryDataChart />
-          </Card>
-          <Card
-            header={
-              <HoldingHeader
-                currency={portfoliosCurrency}
-                marketValue={marketValue}
-              />
-            }
-          >
-            <div className="flex flex-col px-2 my-1 divide-y">
-              <DataRow
-                label={t("holdingsPage.units")}
-                value={t("number", { value: amount })}
-              />
-              <DataRow
-                label={t("holdingsPage.purchaseValue")}
-                value={t("numberWithCurrency", {
-                  value: purchaseTradeAmount,
-                  currency: portfoliosCurrency,
-                })}
-              />
-              <DataRow
-                label={t("holdingsPage.accruedInterest")}
-                value={t("numberWithCurrency", {
-                  value: accruedInterest,
-                  currency: portfoliosCurrency,
-                })}
-              />
-              <DataRow
-                label={t("holdingsPage.marketValue")}
-                value={t("numberWithCurrency", {
-                  value: marketValue,
-                  currency: portfoliosCurrency,
-                })}
-              />
-              <DataRow
-                label={t("holdingsPage.changePercentage")}
-                value={
-                  <GainLoseColoring value={valueChangeRelative}>
-                    {`${t("number", {
-                      value: valueChangeRelative,
-                      formatParams: {
-                        value: {
-                          signDisplay: "always",
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
+      <div className="overflow-y-auto grow-1">
+        <PageLayout>
+          <div className="flex flex-col gap-4">
+            <Card
+              header={
+                <LineChartHeader
+                  price={price}
+                  date={date}
+                  currency={portfoliosCurrency}
+                />
+              }
+            >
+              <HistoryDataChart />
+            </Card>
+            <Card
+              header={
+                <HoldingHeader
+                  currency={portfoliosCurrency}
+                  marketValue={marketValue}
+                />
+              }
+            >
+              <div className="flex flex-col px-2 my-1 divide-y">
+                <DataRow
+                  label={t("holdingsPage.units")}
+                  value={t("number", { value: amount })}
+                />
+                <DataRow
+                  label={t("holdingsPage.purchaseValue")}
+                  value={t("numberWithCurrency", {
+                    value: purchaseTradeAmount,
+                    currency: portfoliosCurrency,
+                  })}
+                />
+                <DataRow
+                  label={t("holdingsPage.accruedInterest")}
+                  value={t("numberWithCurrency", {
+                    value: accruedInterest,
+                    currency: portfoliosCurrency,
+                  })}
+                />
+                <DataRow
+                  label={t("holdingsPage.marketValue")}
+                  value={t("numberWithCurrency", {
+                    value: marketValue,
+                    currency: portfoliosCurrency,
+                  })}
+                />
+                <DataRow
+                  label={t("holdingsPage.changePercentage")}
+                  value={
+                    <GainLoseColoring value={valueChangeRelative}>
+                      {`${t("number", {
+                        value: valueChangeRelative,
+                        formatParams: {
+                          value: {
+                            signDisplay: "always",
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          },
                         },
-                      },
-                    })} %`}
-                  </GainLoseColoring>
-                }
-              />
-              <DataRow
-                label={t("holdingsPage.unrealizedProfits")}
-                value={
-                  <GainLoseColoring value={valueChangeRelative}>
-                    {t("numberWithCurrency", {
-                      value: valueChangeAbsolute,
-                      currency: portfoliosCurrency,
-                      formatParams: {
-                        value: {
-                          signDisplay: "always",
+                      })} %`}
+                    </GainLoseColoring>
+                  }
+                />
+                <DataRow
+                  label={t("holdingsPage.unrealizedProfits")}
+                  value={
+                    <GainLoseColoring value={valueChangeRelative}>
+                      {t("numberWithCurrency", {
+                        value: valueChangeAbsolute,
+                        currency: portfoliosCurrency,
+                        formatParams: {
+                          value: {
+                            signDisplay: "always",
+                          },
                         },
-                      },
-                    })}
-                  </GainLoseColoring>
-                }
-              />
-            </div>
-          </Card>
-          <Card header={t("holdingsPage.security")}>
-            <div className="flex flex-col px-2 my-1 divide-y">
-              <DataRow
-                label={t("holdingsPage.type")}
-                value={getTransactionTypeName(
-                  namesAsMap,
-                  typeCode,
-                  i18n.language
+                      })}
+                    </GainLoseColoring>
+                  }
+                />
+              </div>
+            </Card>
+            <Card header={t("holdingsPage.security")}>
+              <div className="flex flex-col px-2 my-1 divide-y">
+                <DataRow
+                  label={t("holdingsPage.type")}
+                  value={getTransactionTypeName(
+                    namesAsMap,
+                    typeCode,
+                    i18n.language
+                  )}
+                />
+                <DataRow label={t("holdingsPage.isinCode")} value={isinCode} />
+                <DataRow label={t("holdingsPage.currency")} value={currency} />
+                {url && (
+                  <DocumentRow
+                    label={t("holdingsPage.prospectus")}
+                    url={addProtocolToUrl(url)}
+                  />
                 )}
-              />
-              <DataRow label={t("holdingsPage.isinCode")} value={isinCode} />
-              <DataRow label={t("holdingsPage.currency")} value={currency} />
-              {url && (
-                <DocumentRow
-                  label={t("holdingsPage.prospectus")}
-                  url={addProtocolToUrl(url)}
-                />
-              )}
-              {url2 && (
-                <DocumentRow
-                  label={t("holdingsPage.kiid")}
-                  url={addProtocolToUrl(url2)}
-                />
-              )}
-            </div>
-          </Card>
-        </div>
+                {url2 && (
+                  <DocumentRow
+                    label={t("holdingsPage.kiid")}
+                    url={addProtocolToUrl(url2)}
+                  />
+                )}
+              </div>
+            </Card>
+          </div>
+        </PageLayout>
       </div>
     </div>
   );
