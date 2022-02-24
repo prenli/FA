@@ -1,3 +1,5 @@
+import { ReactComponent as Spinner } from "assets/spinner.svg";
+
 export const LoadingIndicator = () => (
-  <div className="w-16 h-16 rounded-full border-b-2 border-red-900 animate-spin" />
+  <Spinner className="w-16 h-16 text-gray-200 animate-spin fill-blue-600" />
 );
