@@ -64,7 +64,7 @@ export interface SecurityDetailsPosition {
   currency: {
     securityCode: string;
   };
-  latestMarketData: {
+  latestMarketData?: {
     price: number;
     date: string;
   };

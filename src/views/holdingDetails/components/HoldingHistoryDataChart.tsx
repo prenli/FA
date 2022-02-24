@@ -1,10 +1,10 @@
 import { useState } from "react";
+import { MarketHistoryDataPoint } from "api/holdings/types";
 import { useGetSecurityMarketDataHistory } from "api/holdings/useGetSecurityMarketDataHistory";
 import { LineChart, ButtonRadio, LoadingIndicator, Center } from "components";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { dateFromYYYYMMDD } from "utils/date";
-import { MarketHistoryDataPoint } from "../../../api/holdings/types";
 
 export const chartRangeOptions = [
   {
@@ -50,7 +50,7 @@ const limitDataPoints = (data: MarketHistoryDataPoint[]) => {
   return data.filter((dataPoint, index) => index % decimateRatio === 0);
 };
 
-export const HistoryDataChart = () => {
+export const HoldingHistoryDataChart = () => {
   const { holdingId } = useParams();
   const { t } = useTranslation();
   const [selectedRange, setRange] = useState(chartRangeOptions[0]);
@@ -70,6 +70,11 @@ export const HistoryDataChart = () => {
             <Center>
               <LoadingIndicator />
             </Center>
+          </div>
+        )}
+        {!securityLoading && preparedMarketData.length === 0 && (
+          <div className="absolute inset-0">
+            <Center>{t("messages.noDataAvailable")}</Center>
           </div>
         )}
         <LineChart

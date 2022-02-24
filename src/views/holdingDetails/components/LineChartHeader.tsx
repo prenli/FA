@@ -2,8 +2,8 @@ import { useTranslation } from "react-i18next";
 import { dateFromYYYYMMDD } from "utils/date";
 
 interface LineChartHeaderProps {
-  price: number;
-  date: string;
+  price?: number;
+  date?: string;
   currency: string;
 }
 
@@ -24,7 +24,7 @@ export const LineChartHeader = ({
           })}
         </div>
         <div className="text-sm font-medium text-gray-500">
-          {t("date", { date: dateFromYYYYMMDD(date) })}
+          {date && t("date", { date: dateFromYYYYMMDD(date) })}
         </div>
       </div>
     </div>

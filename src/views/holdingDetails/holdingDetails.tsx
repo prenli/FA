@@ -13,8 +13,8 @@ import { getTransactionTypeName } from "utils/transactions";
 import { addProtocolToUrl } from "utils/url";
 import { DataRow } from "./components/DataRow";
 import { DocumentRow } from "./components/DocumentRow";
-import { HistoryDataChart } from "./components/HistoryDataChart";
 import { HoldingHeader } from "./components/HoldingHeader";
+import { HoldingHistoryDataChart } from "./components/HoldingHistoryDataChart";
 import { LineChartHeader } from "./components/LineChartHeader";
 
 interface HoldingDetailsProps {
@@ -35,7 +35,7 @@ export const HoldingDetails = ({
       name,
       isinCode,
       type: { namesAsMap, code: typeCode },
-      latestMarketData: { date, price },
+      latestMarketData,
       currency: { securityCode: currency },
       url,
       url2,
@@ -59,13 +59,13 @@ export const HoldingDetails = ({
             <Card
               header={
                 <LineChartHeader
-                  price={price}
-                  date={date}
+                  price={latestMarketData?.price}
+                  date={latestMarketData?.date}
                   currency={portfoliosCurrency}
                 />
               }
             >
-              <HistoryDataChart />
+              <HoldingHistoryDataChart />
             </Card>
             <Card
               header={
