@@ -49,9 +49,6 @@ const lineChartDefaultOptions = {
   },
 };
 
-const getLabelPosition = (labels: string[], position: number) =>
-  Math.floor((position * (labels.length - 1)) / 3);
-
 export const LineChart = ({ series, labels, options }: LineChartProps) => {
   const { t } = useTranslation();
   return (
@@ -74,8 +71,27 @@ export const LineChart = ({ series, labels, options }: LineChartProps) => {
         series={series}
         type="area"
       />
-      <div className="grid relative grid-cols-2 mx-1 text-sm font-medium text-gray-500 min-h-[21px]">
-        <div className="text-left">{labels[getLabelPosition(labels, 0)]}</div>
+      <XLabels labels={labels} />
+    </>
+  );
+};
+
+const getLabelPosition = (labels: string[], position: number) =>
+  Math.floor((position * (labels.length - 1)) / 3);
+
+interface XLabelsProps {
+  labels: Array<string>;
+}
+
+const XLabels = ({ labels }: XLabelsProps) => {
+  if (labels.length <= 2) {
+    return <div className="min-h-[21px]" />;
+  }
+
+  return (
+    <div className="grid relative grid-cols-2 mx-1 text-sm font-medium text-gray-500 min-h-[21px]">
+      <div className="text-left">{labels[getLabelPosition(labels, 0)]}</div>
+      {labels.length > 3 && (
         <div
           className="absolute "
           style={{
@@ -86,6 +102,8 @@ export const LineChart = ({ series, labels, options }: LineChartProps) => {
         >
           <div className="ml-[-50%]">{labels[getLabelPosition(labels, 1)]}</div>
         </div>
+      )}
+      {labels.length > 2 && (
         <div
           className="absolute "
           style={{
@@ -96,8 +114,8 @@ export const LineChart = ({ series, labels, options }: LineChartProps) => {
         >
           <div className="ml-[-50%]">{labels[getLabelPosition(labels, 2)]}</div>
         </div>
-        <div className="text-right">{labels[getLabelPosition(labels, 3)]}</div>
-      </div>
-    </>
+      )}
+      <div className="text-right">{labels[getLabelPosition(labels, 3)]}</div>
+    </div>
   );
 };
