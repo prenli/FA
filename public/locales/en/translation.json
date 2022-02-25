@@ -22,8 +22,7 @@
   "portfolioSummary": {
     "currentMarketValue": "Current Market Value",
     "availableCash": "Available Cash",
-    "unrealizedProfits": "Unrealised profits",
-    "name": "Name"
+    "unrealizedProfits": "Unrealised profits"
   },
   "overviewPage": {
     "allPortfoliosSummaryTitle": "Total investments",
@@ -34,10 +33,8 @@
   },
   "holdingsPage": {
     "name": "Name",
-    "latestMarketPrice": "Latest Market Price",
     "unrealizedProfits": "Unrealised profits",
     "marketValue": "Market Value",
-    "holdings": "Holdings",
     "holding": "Holding",
     "units": "Units",
     "purchaseValue": "Purchase value",
@@ -50,8 +47,6 @@
     "prospectus": "Prospectus",
     "kiid": "KIID",
     "buy": "Buy",
-    "sell": "Sell",
-    "price": "Price",
     "security": "Security"
   },
   "transactionsPage": {
