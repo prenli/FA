@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { SwipeDirection } from "../PagesCarousel/PagesCarousel";
 import { NavTabPath } from "./types";
@@ -11,12 +12,18 @@ export const useNavTab = ({ navTabPaths }: useNavTabProps) => {
   const location = useLocation();
   const activePath = location.pathname.split("/").slice(-1)[0];
   const currentTabIndex = getActiveTabIndex(navTabPaths, activePath);
+  const tabsRef = useRef<Element[]>([]);
+
+  useEffect(() => {
+    tabsRef.current[currentTabIndex]?.scrollIntoView();
+  }, [currentTabIndex]);
 
   const navigateToTab = (newIndex: number) => {
     navigate(`../${navTabPaths[newIndex].path}`);
   };
 
   return {
+    tabsRef,
     groupProps: {
       selectedIndex: currentTabIndex,
       onChange: navigateToTab,

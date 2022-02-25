@@ -1,26 +1,40 @@
-import { ComponentProps, ReactNode } from "react";
+import {
+  ComponentProps,
+  ReactNode,
+  Fragment,
+  forwardRef,
+  ForwardedRef,
+} from "react";
 import { Tab } from "@headlessui/react";
 import classNames from "classnames";
-import { Fragment } from "preact";
 import { PageLayout } from "../../PageLayout/PageLayout";
 import {
   PagesCarousel,
   PagesCarouselProps,
 } from "../PagesCarousel/PagesCarousel";
 
-const NavTab = (props: ComponentProps<typeof Tab>) => (
-  <Tab
-    className={({ selected }) =>
-      classNames("border-current p-2 whitespace-nowrap", {
-        "border-b border-blue-600 font-semibold text-base text-blue-600":
-          selected,
-        "border-b border-transparent text-gray-600 text-base font-normal":
-          !selected,
-      })
-    }
-    {...props}
-  />
+const NavTab = (
+  props: ComponentProps<typeof Tab>,
+  ref: ForwardedRef<HTMLDivElement>
+) => (
+  <div ref={ref}>
+    <Tab
+      ref={ref}
+      className={({ selected }) =>
+        classNames("border-current p-2 whitespace-nowrap", {
+          "border-b border-blue-600 font-semibold text-base text-blue-600":
+            selected,
+          "border-b border-transparent text-gray-600 text-base font-normal":
+            !selected,
+        })
+      }
+      {...props}
+    />
+  </div>
 );
+
+// headlessui Tab do not forward ref
+NavTab.NavTab = forwardRef(NavTab);
 
 NavTab.Group = Tab.Group;
 

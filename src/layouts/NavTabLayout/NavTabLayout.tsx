@@ -9,7 +9,7 @@ interface NavTabTemplateLayoutProps {
 }
 
 export const NavTabLayout = ({ routes }: NavTabTemplateLayoutProps) => {
-  const { groupProps, panelsProps } = useNavTab({
+  const { tabsRef, groupProps, panelsProps } = useNavTab({
     navTabPaths: routes,
   });
 
@@ -18,7 +18,12 @@ export const NavTabLayout = ({ routes }: NavTabTemplateLayoutProps) => {
       <NavTab.Group {...groupProps}>
         <NavTab.List>
           {routes.map((route, index) => (
-            <NavTab key={`NavTab_${index}`}>{route.tabLabel}</NavTab>
+            <NavTab.NavTab
+              key={`NavTab_${index}`}
+              ref={(el: HTMLDivElement) => (tabsRef.current[index] = el)}
+            >
+              {route.tabLabel}
+            </NavTab.NavTab>
           ))}
         </NavTab.List>
         <Suspense fallback={<LoadingIndicator center />}>
