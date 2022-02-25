@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Center, LoadingIndicator } from "components";
+import { LoadingIndicator } from "components";
 import { NavTab } from "./NavTab/NavTab";
 import { NavTabPath } from "./NavTab/types";
 import { useNavTab } from "./NavTab/useNavTab";
@@ -21,13 +21,7 @@ export const NavTabLayout = ({ routes }: NavTabTemplateLayoutProps) => {
             <NavTab key={`NavTab_${index}`}>{route.tabLabel}</NavTab>
           ))}
         </NavTab.List>
-        <Suspense
-          fallback={
-            <Center>
-              <LoadingIndicator />
-            </Center>
-          }
-        >
+        <Suspense fallback={<LoadingIndicator center />}>
           <NavTab.Panels {...panelsProps}>
             {routes.map((route, index) => (
               <NavTab.Panel key={index}>{route.tabComponent}</NavTab.Panel>

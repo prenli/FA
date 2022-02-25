@@ -67,9 +67,7 @@ export const HoldingHistoryDataChart = () => {
       <div className="relative">
         {securityLoading && (
           <div className="absolute w-full h-full">
-            <Center>
-              <LoadingIndicator />
-            </Center>
+            <LoadingIndicator center />
           </div>
         )}
         {!securityLoading && preparedMarketData.length === 0 && (

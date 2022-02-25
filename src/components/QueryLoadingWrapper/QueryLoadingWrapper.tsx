@@ -1,7 +1,6 @@
 import { QueryData } from "api/types";
 import { useTranslation } from "react-i18next";
 import { Slide, toast } from "react-toastify";
-import { Center } from "../Center/Center";
 import { LoadingIndicator } from "../LoadingIndicator/LoadingIndicator";
 
 interface QueryLoadingWrapperProps<T> extends QueryData<T> {
@@ -34,9 +33,5 @@ export const QueryLoadingWrapper = <TData,>({
   if (!loading || (error && !data)) {
     return <div className="min-h-[400px]">No cached data</div>;
   }
-  return (
-    <Center>
-      <LoadingIndicator />
-    </Center>
-  );
+  return <LoadingIndicator center />;
 };

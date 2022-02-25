@@ -2,7 +2,7 @@ import { ReactNode, useState, useEffect } from "react";
 import { ApolloProvider } from "@apollo/client";
 import { ApolloClient } from "@apollo/client/core/ApolloClient";
 import { getPersistedApolloClient } from "services/apolloClient";
-import { Center, LoadingIndicator } from "../components";
+import { LoadingIndicator } from "../components";
 
 interface PersistedApolloProviderProps {
   children: ReactNode;
@@ -28,9 +28,9 @@ export const PersistedApolloProvider = ({
 
   if (!client) {
     return (
-      <Center>
-        <LoadingIndicator />
-      </Center>
+      <div className="h-screen">
+        <LoadingIndicator center />
+      </div>
     );
   }
 

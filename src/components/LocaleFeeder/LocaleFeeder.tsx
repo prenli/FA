@@ -1,5 +1,5 @@
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
-import { Center, LoadingIndicator, QueryError } from "components";
+import { LoadingIndicator, QueryError } from "components";
 import { useFeedI18nextWithLocale } from "./useFeedI18nextWithLocale";
 
 interface LocaleFeederProps {
@@ -16,9 +16,9 @@ export const LocaleFeeder = ({ children }: LocaleFeederProps) => {
 
   if (!isReady) {
     return (
-      <Center>
-        <LoadingIndicator />
-      </Center>
+      <div className="h-screen">
+        <LoadingIndicator center />
+      </div>
     );
   }
 
