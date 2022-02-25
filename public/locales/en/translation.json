@@ -47,7 +47,11 @@
     "prospectus": "Prospectus",
     "kiid": "KIID",
     "buy": "Buy",
-    "security": "Security"
+    "security": "Security",
+    "noHoldings": "No holdings"
+  },
+  "ordersPage": {
+    "noOrders": "No orders for specified period"
   },
   "transactionsPage": {
     "header": "Transaction",
@@ -69,10 +73,12 @@
     "unitPrice": "Unit price",
     "grossTradeAmount": "Gross trade amount",
     "netTradeAmount": "Net trade amount",
-    "total": "Total"
+    "total": "Total",
+    "noTransactions": "No transactions for specified period"
   },
   "documentsPage": {
-    "title": "Documents"
+    "title": "Documents",
+    "noDocuments": "No documents"
   },
   "404Page": {
     "title": "404 - Not found"
