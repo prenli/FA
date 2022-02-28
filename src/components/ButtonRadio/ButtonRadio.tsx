@@ -31,7 +31,8 @@ export const ButtonRadio = <TOption extends Option>({
               className={classNames(
                 "p-1.5 text-center grow cursor-pointer hover:bg-gray-100 focus:ring-0",
                 {
-                  "bg-blue-100 text-blue-600 hover:bg-blue-200": checked,
+                  "bg-primary-100 text-primary-600 hover:bg-primary-200":
+                    checked,
                 }
               )}
             >

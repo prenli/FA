@@ -2,6 +2,9 @@ const cracoServiceWorkerConfig = require("./cracoServiceWorkerConfig");
 
 module.exports = {
   plugins: process.env.WITH_SW ? [{ plugin: cracoServiceWorkerConfig }] : [],
+  babel: {
+    plugins: ["preval"],
+  },
   webpack: {
     configure: (webpackConfig) => {
       // webpack has problems with dynamic imports for loaders that have issuers

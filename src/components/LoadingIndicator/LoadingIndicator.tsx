@@ -7,7 +7,7 @@ interface LoadingIndicatorProps {
 
 export const LoadingIndicator = ({ center = false }: LoadingIndicatorProps) => {
   const SpinnerNode = (
-    <Spinner className="w-16 h-16 text-gray-200 animate-spin fill-blue-600" />
+    <Spinner className="w-16 h-16 text-gray-200 animate-spin fill-primary-600" />
   );
   return center ? <Center>{SpinnerNode}</Center> : SpinnerNode;
 };

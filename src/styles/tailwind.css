@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  --color-primary: blue;
+}
+
 /* chart styles from flowbite */
 .apexcharts-tooltip {
   @apply bg-white dark:bg-gray-700 text-gray-500 dark:text-gray-400 border-0 rounded-lg shadow-lg !important;

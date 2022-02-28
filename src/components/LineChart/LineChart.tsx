@@ -1,6 +1,7 @@
 import { ApexOptions } from "apexcharts";
 import Chart from "react-apexcharts";
 import { useTranslation } from "react-i18next";
+import theme from "resolvedTailwindTheme";
 
 interface LineChartProps {
   series: Array<unknown>;
@@ -44,13 +45,14 @@ const lineChartDefaultOptions = {
   theme: {
     monochrome: {
       enabled: true,
-      color: "#1A56DB",
+      color: theme.colors.primary["600"],
     },
   },
 };
 
 export const LineChart = ({ series, labels, options }: LineChartProps) => {
   const { t } = useTranslation();
+
   return (
     <>
       <Chart

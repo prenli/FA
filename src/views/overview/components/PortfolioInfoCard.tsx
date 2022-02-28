@@ -42,7 +42,7 @@ export const PortfolioInfoCard = ({
           "bg-gradient-to-br from-gray-500 to-black text-gray-100":
             colorScheme === "black",
           "bg-gray-200": colorScheme === "gray",
-          "bg-blue-100": colorScheme === "blue",
+          "bg-primary-100": colorScheme === "blue",
         })}
         onClick={navigateToPortfolioDetails}
       >

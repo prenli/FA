@@ -28,7 +28,7 @@ export const Button = ({
     className={classNames(
       "box-border text-white fill-white border-2 rounded-lg inline-flex items-center justify-center relative whitespace-nowrap align-middle",
       {
-        "bg-blue-600 border-blue-600 hover:bg-blue-800 focus:border-2 focus:border-blue-400":
+        "bg-primary-600 border-primary-600 hover:bg-primary-800 focus:border-2 focus:border-primary-400":
           variant === "Primary",
         "bg-gray-700 border-gray-700 hover:bg-gray-800 focus:border-2 focus:border-gray-300":
           variant === "Dark",
@@ -45,7 +45,7 @@ export const Button = ({
         })}
       >
         {isLoading ? (
-          <Spinner className="w-5 h-5 text-blue-400 animate-spin fill-white" />
+          <Spinner className="w-5 h-5 text-primary-400 animate-spin fill-white" />
         ) : (
           LeftIcon && <LeftIcon className="w-5 h-5" />
         )}

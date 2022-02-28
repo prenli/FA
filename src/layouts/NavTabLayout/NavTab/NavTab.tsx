@@ -21,7 +21,7 @@ const NavTab = (
     <Tab
       className={({ selected }) =>
         classNames("border-current p-2 whitespace-nowrap", {
-          "border-b border-blue-600 font-semibold text-base text-blue-600":
+          "border-b border-primary-600 font-semibold text-base text-primary-600":
             selected,
           "border-b border-transparent text-gray-600 text-base font-normal":
             !selected,

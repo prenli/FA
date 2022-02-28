@@ -1,9 +1,13 @@
+const colors = require("tailwindcss/colors");
 const plugin = require("tailwindcss/plugin");
 
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      colors: {
+        primary: colors.blue,
+      },
       fontSize: {
         xs: ["0.75rem", "150%"],
         sm: ["0.875rem", "150%"],

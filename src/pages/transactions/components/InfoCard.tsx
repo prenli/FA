@@ -13,7 +13,7 @@ export const InfoCard = ({ label, value, colorScheme }: InfoCardProps) => (
   <Card>
     <div
       className={classNames("p-2", {
-        "bg-blue-50": colorScheme === "blue",
+        "bg-primary-50": colorScheme === "blue",
         "bg-red-50": colorScheme === "red",
         "bg-green-50": colorScheme === "green",
       })}
@@ -21,7 +21,7 @@ export const InfoCard = ({ label, value, colorScheme }: InfoCardProps) => (
       <div className="text-sm font-normal">{label}</div>
       <div
         className={classNames("text-xl font-semibold", {
-          "text-blue-500": colorScheme === "blue",
+          "text-primary-500": colorScheme === "blue",
           "text-red-500": colorScheme === "red",
           "text-green-500": colorScheme === "green",
         })}
