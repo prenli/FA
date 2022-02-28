@@ -46,7 +46,7 @@
     "currency": "Currency",
     "prospectus": "Prospectus",
     "kiid": "KIID",
-    "buy": "Buy",
+    "price": "Price",
     "security": "Security",
     "noHoldings": "No holdings"
   },
