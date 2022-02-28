@@ -6,6 +6,7 @@ import { RootRoutes } from "./pages/routes";
 import { PersistedApolloProvider } from "./providers/PersistedApolloProvider";
 import { ServiceWorkerRegistrationProvider } from "./providers/ServiceWorkerRegistrationProvider";
 import "react-toastify/dist/ReactToastify.css";
+import "styles/fonts.css";
 
 function App() {
   return (

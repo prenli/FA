@@ -19,7 +19,6 @@ const NavTab = (
 ) => (
   <div ref={ref}>
     <Tab
-      ref={ref}
       className={({ selected }) =>
         classNames("border-current p-2 whitespace-nowrap", {
           "border-b border-blue-600 font-semibold text-base text-blue-600":
