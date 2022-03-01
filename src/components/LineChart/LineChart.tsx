@@ -1,7 +1,7 @@
 import { ApexOptions } from "apexcharts";
 import Chart from "react-apexcharts";
 import { useTranslation } from "react-i18next";
-import theme from "resolvedTailwindTheme";
+import theme from "tailwindTheme";
 
 interface LineChartProps {
   series: Array<unknown>;
