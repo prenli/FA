@@ -1,14 +1,47 @@
 import { useMemo } from "react";
 import { ORDER_STATUS } from "api/orders/enums";
 import { OrderStatus, TradeOrder } from "api/orders/types";
+import { useTranslation } from "react-i18next";
 
-// HINT: Add or remove ORDER_STATUS from this list to modify trade orders groups on "Trade Orders" tab.
-const GROUP_TYPES_TO_DISPLAY = [
-  ORDER_STATUS.Open, // TODO: translate status names when API is ready
+const ORDER_STATUSES_TO_DISPLAY = [
+  ORDER_STATUS.Open,
   ORDER_STATUS["In execution"],
   ORDER_STATUS.Accepted,
   ORDER_STATUS.Cancelled,
-];
+] as const;
+
+type OrderStatusToDisplayType = typeof ORDER_STATUSES_TO_DISPLAY[number];
+
+const isOrderStatusToDisplayType = (
+  status: string
+): status is OrderStatusToDisplayType => {
+  return (ORDER_STATUSES_TO_DISPLAY as readonly string[]).includes(status);
+};
+
+const assertUnreachable = (_x: never): never => {
+  throw new Error("Didn't expect to get here");
+};
+
+const getOrderStatusLabelKey = (orderStatus: OrderStatusToDisplayType) => {
+  switch (orderStatus) {
+    case ORDER_STATUS.Open: {
+      return "ordersPage.open";
+    }
+    case ORDER_STATUS["In execution"]: {
+      return "ordersPage.inExecution";
+    }
+    case ORDER_STATUS.Accepted: {
+      return "ordersPage.accepted";
+    }
+    case ORDER_STATUS.Cancelled: {
+      return "ordersPage.cancelled";
+    }
+    default: {
+      assertUnreachable(orderStatus);
+      return "";
+    }
+  }
+};
 
 export interface TradeOrdersGroup {
   type: OrderStatus;
@@ -17,30 +50,30 @@ export interface TradeOrdersGroup {
 }
 
 export const useGroupedTradeOrdersByStatus = (tradeOrders: TradeOrder[]) => {
+  const { t } = useTranslation();
   return useMemo(() => {
     const grouped: TradeOrdersGroup[] = [];
 
     tradeOrders.forEach((tradeOrder) => {
       const orderStatus = tradeOrder.orderStatus;
 
-      let indexOfGrouped = grouped.findIndex(
-        (group) => group.type === orderStatus
-      );
+      if (isOrderStatusToDisplayType(orderStatus)) {
+        let indexOfGrouped = grouped.findIndex(
+          (group) => group.type === orderStatus
+        );
 
-      if (indexOfGrouped === -1) {
-        indexOfGrouped = grouped.length;
+        if (indexOfGrouped === -1) {
+          indexOfGrouped = grouped.length;
 
-        grouped.push({
-          type: orderStatus,
-          label: ORDER_STATUS[orderStatus],
-          tradeOrders: [],
-        });
+          grouped.push({
+            type: orderStatus,
+            label: t(getOrderStatusLabelKey(orderStatus)),
+            tradeOrders: [],
+          });
+        }
+        grouped[indexOfGrouped].tradeOrders.push(tradeOrder);
       }
-      grouped[indexOfGrouped].tradeOrders.push(tradeOrder);
     });
-
-    return grouped.filter((group) =>
-      GROUP_TYPES_TO_DISPLAY.includes(Number(group.type))
-    );
-  }, [tradeOrders]);
+    return grouped;
+  }, [tradeOrders, t]);
 };

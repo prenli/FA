@@ -15,7 +15,7 @@ const HOLDING_DETAILS_QUERY = gql`
     }
   }
 `;
-// TODO: use data from analytics instead of portfolioReport
+
 export const useGetPortfolioHoldingDetails = (
   portfolioId: string | undefined,
   securityCode: string | undefined

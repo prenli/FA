@@ -1,6 +1,7 @@
 import { ORDER_STATUS } from "./enums";
 
-export type OrderStatus = `${ORDER_STATUS}`;
+type Values<T> = T[keyof T];
+export type OrderStatus = Values<typeof ORDER_STATUS>;
 
 export interface TradeOrder {
   id: number;

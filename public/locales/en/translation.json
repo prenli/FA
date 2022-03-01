@@ -51,7 +51,11 @@
     "noHoldings": "No holdings"
   },
   "ordersPage": {
-    "noOrders": "No orders for specified period"
+    "noOrders": "No orders for specified period",
+    "inExecution": "In execution",
+    "open": "Open",
+    "accepted": "Accepted",
+    "cancelled": "Cancelled"
   },
   "transactionsPage": {
     "header": "Transaction",
