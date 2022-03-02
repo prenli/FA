@@ -2,7 +2,10 @@ import { gql, useQuery } from "@apollo/client";
 import { SecurityMarketDataHistoryQuery } from "./types";
 
 const SECURITY_DETAILS_QUERY = gql`
-  query GetSecurityDetails($securityCode: String, $timePeriodCode: String) {
+  query GetSecurityMarketDataHistory(
+    $securityCode: String
+    $timePeriodCode: String
+  ) {
     securities(securityCode: $securityCode) {
       id
       marketDataHistory(timePeriodCode: $timePeriodCode) {
