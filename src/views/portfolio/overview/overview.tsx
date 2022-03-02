@@ -38,12 +38,14 @@ const Overview = ({ data }: OverviewProps) => {
   const chartData = useGetChartData(data);
 
   return (
-    <div className="flex flex-col gap-4 items-start mb-2">
-      <PortfolioInfoCard
-        {...data.portfolioReport}
-        name={data.name}
-        colorScheme="blue"
-      />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 mb-2">
+      <div>
+        <PortfolioInfoCard
+          {...data.portfolioReport}
+          name={data.name}
+          colorScheme="blue"
+        />
+      </div>
       <ListedSecuritiesCard
         label={t("overviewPage.top3Holdings")}
         securities={topSecurities}
@@ -54,11 +56,13 @@ const Overview = ({ data }: OverviewProps) => {
         securities={worstSecurities}
         currency={securityCode}
       />
-      <Card header="Security type allocation">
-        <div className="py-4">
-          <PieChart {...chartData} />
-        </div>
-      </Card>
+      <div className="md:col-start-2 md:row-span-3 md:row-start-1 max-h-[570px]">
+        <Card header="Security type allocation">
+          <div className="py-4">
+            <PieChart {...chartData} />
+          </div>
+        </Card>
+      </div>
     </div>
   );
 };
