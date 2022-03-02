@@ -19,7 +19,7 @@ const Overview = ({ data }: OverviewProps) => {
   const { portfolioReport: allPortfoliosReport, portfolios } = data;
 
   return (
-    <div className="flex flex-col gap-4 items-start mb-4">
+    <div className="grid gap-4 mb-4 grid-cols-[repeat(auto-fit,_minmax(280px,_1fr))]">
       <PortfolioInfoCard
         {...allPortfoliosReport}
         name={t("overviewPage.allPortfoliosSummaryTitle")}
