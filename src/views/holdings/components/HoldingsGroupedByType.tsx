@@ -1,7 +1,9 @@
 import { AllocationByType } from "api/holdings/types";
 import { Card, GainLoseColoring } from "components";
 import { useTranslation } from "react-i18next";
-import { HoldingSummary } from "./HoldingSummary";
+import { useMatchesBreakpoint } from "../../../hooks/useMatchesBreakpoint";
+import { HoldingSummaryLong } from "./HoldingSummaryLong";
+import { HoldingSummaryShort } from "./HoldingSummaryShort";
 
 interface HoldingsGroupedByTypeProps extends AllocationByType {
   currency: string;
@@ -14,6 +16,13 @@ export const HoldingsGroupedByType = ({
   currency,
 }: HoldingsGroupedByTypeProps) => {
   const { t } = useTranslation();
+
+  const isLargeVersion = useMatchesBreakpoint("md");
+
+  const HoldingSummary = isLargeVersion
+    ? HoldingSummaryLong
+    : HoldingSummaryShort;
+
   return (
     <Card
       header={
@@ -25,12 +34,20 @@ export const HoldingsGroupedByType = ({
         />
       }
     >
-      <div className="flex justify-between py-1 px-2 text-sm font-semibold text-gray-500 bg-gray-100">
-        <div>{t("holdingsPage.name")}</div>
-        <div>{t("holdingsPage.marketValue")}</div>
+      <div className="flex md:grid md:grid-cols-5 justify-between py-1 px-2 text-sm font-semibold text-gray-500 bg-gray-100">
+        <div className="col-span-2">{t("holdingsPage.name")}</div>
+        {isLargeVersion && (
+          <div className="text-center">{t("holdingsPage.isinCode")}</div>
+        )}
+        <div className="text-right">{t("holdingsPage.marketValue")}</div>
+        {isLargeVersion && (
+          <div className="text-right">
+            {t("holdingsPage.unrealizedProfits")}
+          </div>
+        )}
       </div>
-      <div className="px-2 divider">
-        <div className="flex flex-col divide-y">
+      <div className="px-2 ">
+        <div className="flex md:grid flex-col md:grid-cols-5 md:leading-5 divide-y">
           {allocationBySecurity.map((security) => (
             <HoldingSummary
               key={security.code}
@@ -43,6 +60,8 @@ export const HoldingsGroupedByType = ({
     </Card>
   );
 };
+
+//const GridHeader = () => {};
 
 interface TypeHeaderProps {
   name: string;

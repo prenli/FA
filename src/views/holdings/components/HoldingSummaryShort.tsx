@@ -10,7 +10,7 @@ interface HoldingProps extends AllocationBySecurity {
   showDetailsOnClick?: boolean;
 }
 
-export const HoldingSummary = ({
+export const HoldingSummaryShort = ({
   name,
   code,
   security: { isinCode, countryCode },

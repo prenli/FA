@@ -1,7 +1,7 @@
 import { AllocationByType } from "api/holdings/types";
 import { Card } from "components";
 import { useTranslation } from "react-i18next";
-import { HoldingSummary } from "./HoldingSummary";
+import { HoldingSummaryShort } from "./HoldingSummaryShort";
 
 interface CurrencyTypeGroupProps extends AllocationByType {
   currency: string;
@@ -14,6 +14,7 @@ export const CurrencyTypeGroup = ({
   currency,
 }: CurrencyTypeGroupProps) => {
   const { t } = useTranslation();
+
   return (
     <Card
       header={
@@ -27,7 +28,7 @@ export const CurrencyTypeGroup = ({
       <div className="px-2 divider">
         <div className="flex flex-col divide-y">
           {allocationBySecurity.map((security) => (
-            <HoldingSummary
+            <HoldingSummaryShort
               key={security.code}
               currency={security.security.currencyCode}
               hideValueChange
