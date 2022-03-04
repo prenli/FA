@@ -3,6 +3,15 @@ const plugin = require("tailwindcss/plugin");
 
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  safelist: [
+    "md:grid-cols-1",
+    "md:grid-cols-2",
+    "md:grid-cols-3",
+    "md:grid-cols-4",
+    "md:grid-cols-5",
+    "md:grid-cols-6",
+    "md:grid-cols-7",
+  ],
   theme: {
     extend: {
       colors: {

@@ -43,6 +43,7 @@
     "changePercentage": "Change %",
     "type": "Type",
     "isinCode": "ISIN code",
+    "accountNumber": "Account Number",
     "currency": "Currency",
     "prospectus": "Prospectus",
     "kiid": "KIID",

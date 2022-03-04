@@ -15,3 +15,4 @@ export { CountryFlag } from "./CountryFlag/CountryFlag";
 export { Badge } from "./Badge/Badge";
 export { LineChart } from "./LineChart/LineChart";
 export { ButtonRadio } from "./ButtonRadio/ButtonRadio";
+export { ResponsiveDataGrid } from "./ResponsiveDataRow/ResponsiveDataGrid";

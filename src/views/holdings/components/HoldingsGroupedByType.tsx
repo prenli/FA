@@ -1,9 +1,13 @@
 import { AllocationByType } from "api/holdings/types";
-import { Card, GainLoseColoring } from "components";
+import {
+  Card,
+  CountryFlag,
+  GainLoseColoring,
+  ResponsiveDataGrid,
+} from "components";
+import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
 import { useTranslation } from "react-i18next";
-import { useMatchesBreakpoint } from "../../../hooks/useMatchesBreakpoint";
-import { HoldingSummaryLong } from "./HoldingSummaryLong";
-import { HoldingSummaryShort } from "./HoldingSummaryShort";
+import { useNavigate } from "react-router";
 
 interface HoldingsGroupedByTypeProps extends AllocationByType {
   currency: string;
@@ -11,57 +15,107 @@ interface HoldingsGroupedByTypeProps extends AllocationByType {
 
 export const HoldingsGroupedByType = ({
   name,
-  figures: { marketValue, tradeAmount },
+  figures: { marketValue: groupMarketValue, tradeAmount: groupTradeAmount },
   allocationBySecurity,
   currency,
+  code: groupCode,
 }: HoldingsGroupedByTypeProps) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
-  const isLargeVersion = useMatchesBreakpoint("md");
-
-  const HoldingSummary = isLargeVersion
-    ? HoldingSummaryLong
-    : HoldingSummaryShort;
+  const isMdVersion = useMatchesBreakpoint("md");
+  const isLgVersion = useMatchesBreakpoint("lg");
+  const isXlVersion = useMatchesBreakpoint("xl");
 
   return (
     <Card
       header={
         <TypeHeader
           name={name}
-          marketValue={marketValue}
-          tradeAmount={tradeAmount}
+          marketValue={groupMarketValue}
+          tradeAmount={groupTradeAmount}
           currency={currency}
         />
       }
     >
-      <div className="flex md:grid md:grid-cols-5 justify-between py-1 px-2 text-sm font-semibold text-gray-500 bg-gray-100">
-        <div className="col-span-2">{t("holdingsPage.name")}</div>
-        {isLargeVersion && (
-          <div className="text-center">{t("holdingsPage.isinCode")}</div>
-        )}
-        <div className="text-right">{t("holdingsPage.marketValue")}</div>
-        {isLargeVersion && (
-          <div className="text-right">
-            {t("holdingsPage.unrealizedProfits")}
-          </div>
-        )}
-      </div>
-      <div className="px-2 ">
-        <div className="flex md:grid flex-col md:grid-cols-5 md:leading-5 divide-y">
-          {allocationBySecurity.map((security) => (
-            <HoldingSummary
+      <ResponsiveDataGrid
+        headerLabels={
+          isMdVersion
+            ? [
+                t("holdingsPage.name"),
+                groupCode === "CURRENCY"
+                  ? t("holdingsPage.accountNumber")
+                  : t("holdingsPage.isinCode"),
+                ...(isLgVersion ? [t("holdingsPage.units")] : []),
+                ...(isXlVersion ? [t("holdingsPage.purchaseValue")] : []),
+                t("holdingsPage.marketValue"),
+                t("holdingsPage.unrealizedProfits"),
+              ]
+            : [t("holdingsPage.name"), t("holdingsPage.marketValue")]
+        }
+      >
+        {allocationBySecurity.map((security) => {
+          const {
+            name,
+            code,
+            security: { isinCode, countryCode },
+            figures: { marketValue, tradeAmount, amount, purchaseTradeAmount },
+          } = security;
+          const valueChange = marketValue - tradeAmount;
+
+          return (
+            <ResponsiveDataGrid.Row
               key={security.code}
-              currency={currency}
-              {...security}
-            />
-          ))}
-        </div>
-      </div>
+              onClick={() =>
+                groupCode !== "CURRENCY" && navigate(`holdings/${code}`)
+              }
+            >
+              <div className="text-lg md:text-base font-semibold leading-5 text-gray-900">
+                <span>{name}</span>
+                {groupCode !== "CURRENCY" && (
+                  <CountryFlag
+                    code={countryCode}
+                    className="inline ml-1.5 align-baseline w-[20px] h-[14px]"
+                  />
+                )}
+              </div>
+              <div className="text-xs md:text-base font-light">
+                {isinCode || code || "-"}
+              </div>
+              {isLgVersion && (
+                <div className="text-base font-medium">
+                  {t("number", { value: amount })}
+                </div>
+              )}
+              {isXlVersion && (
+                <div className="text-base font-medium">
+                  {t("numberWithCurrency", {
+                    value: purchaseTradeAmount,
+                    currency: currency,
+                  })}
+                </div>
+              )}
+              <div className="text-base font-medium">
+                {t("numberWithCurrency", { value: marketValue, currency })}
+              </div>
+              <div className="text-xs md:text-base font-medium">
+                <GainLoseColoring value={valueChange}>
+                  {t("numberWithCurrency", {
+                    value: valueChange,
+                    currency,
+                    formatParams: {
+                      value: { signDisplay: "always" },
+                    },
+                  })}
+                </GainLoseColoring>
+              </div>
+            </ResponsiveDataGrid.Row>
+          );
+        })}
+      </ResponsiveDataGrid>
     </Card>
   );
 };
-
-//const GridHeader = () => {};
 
 interface TypeHeaderProps {
   name: string;

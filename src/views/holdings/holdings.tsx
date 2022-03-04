@@ -1,5 +1,4 @@
 import { AllocationByType } from "api/holdings/types";
-import { CurrencyTypeGroup } from "./components/CurrencyTypeGroup";
 import { HoldingsGroupedByType } from "./components/HoldingsGroupedByType";
 import { NoHoldings } from "./components/NoHoldings";
 
@@ -18,17 +17,13 @@ export const Holdings = ({
   }
   return (
     <div className="flex flex-col gap-4">
-      {allocationByType.map((group) =>
-        group.code === "CURRENCY" ? (
-          <CurrencyTypeGroup key={group.code} currency={currency} {...group} />
-        ) : (
-          <HoldingsGroupedByType
-            key={group.code}
-            currency={currency}
-            {...group}
-          />
-        )
-      )}
+      {allocationByType.map((group) => (
+        <HoldingsGroupedByType
+          key={group.code}
+          currency={currency}
+          {...group}
+        />
+      ))}
     </div>
   );
 };

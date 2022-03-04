@@ -10,6 +10,8 @@ export interface AllocationBySecurity {
     marketValue: number;
     tradeAmount: number;
     fxRate: number;
+    amount: number;
+    purchaseTradeAmount: number;
   };
 }
 

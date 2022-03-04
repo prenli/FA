@@ -22,6 +22,8 @@ export const ALLOCATION_BY_SECURITY_TYPE_FIELDS = gql`
           marketValue
           tradeAmount
           fxRate
+          amount
+          purchaseTradeAmount
         }
       }
     }
