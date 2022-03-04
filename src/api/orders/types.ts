@@ -5,6 +5,7 @@ export type OrderStatus = Values<typeof ORDER_STATUS>;
 
 export interface TradeOrder {
   id: number;
+  amount: number;
   orderStatus: OrderStatus;
   securityName: string;
   type: {

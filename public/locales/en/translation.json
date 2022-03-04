@@ -65,6 +65,7 @@
     "type": "Type",
     "details": "Details",
     "security": "Security",
+    "tradeAmount": "Trade Amount",
     "marketplace": "Marketplace",
     "isin": "ISIN code",
     "securityName": "Security name",

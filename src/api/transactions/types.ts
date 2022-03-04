@@ -1,5 +1,6 @@
 export interface Transaction {
   id: number;
+  amount: number;
   transactionDate: string;
   type: {
     typeName: string;
@@ -30,7 +31,6 @@ export interface AllPortfoliosTransactionsQuery {
 }
 
 export interface TransactionDetails extends Transaction {
-  amount: number;
   security?: {
     isinCode: string;
     exchange?: {

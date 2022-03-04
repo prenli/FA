@@ -1,6 +1,6 @@
 import { TradeOrder } from "api/orders/types";
+import { TransactionsGroup } from "../../transactions/components/TransactionsGroup";
 import { NoOrders } from "./NoOrders";
-import { TradeOrdersGroup } from "./TradeOrdersGroup";
 import { useGroupedTradeOrdersByStatus } from "./useGroupedTradeOrdersByStatus";
 
 interface OrdersContainerProps {
@@ -16,10 +16,10 @@ export const OrdersContainer = ({ data }: OrdersContainerProps) => {
   return (
     <div className="flex flex-col gap-4">
       {groupedTradeOrders.map((group) => (
-        <TradeOrdersGroup
+        <TransactionsGroup
           key={group.type}
           label={group.label}
-          tradeOrders={group.tradeOrders}
+          transactions={group.tradeOrders}
         />
       ))}
     </div>

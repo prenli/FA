@@ -18,24 +18,26 @@ const ResponsiveDataGrid = ({
 
   return (
     <>
-      <div
-        className={`flex md:grid md:grid-cols-${numberOfColumns} justify-between py-1 px-2 text-sm font-semibold text-gray-500 bg-gray-100`}
-      >
-        {headerLabels.map((label, index) => {
-          if (index === 0) {
+      {headerLabels.length > 0 && (
+        <div
+          className={`flex md:grid md:grid-cols-${numberOfColumns} justify-between py-1 px-2 text-sm font-semibold text-gray-500 bg-gray-100`}
+        >
+          {headerLabels.map((label, index) => {
+            if (index === 0) {
+              return (
+                <div className="col-span-2" key={index}>
+                  {label}
+                </div>
+              );
+            }
             return (
-              <div className="col-span-2" key={index}>
+              <div className="text-right" key={index}>
                 {label}
               </div>
             );
-          }
-          return (
-            <div className="text-right" key={index}>
-              {label}
-            </div>
-          );
-        })}
-      </div>
+          })}
+        </div>
+      )}
       <div className="px-2 ">
         <div
           className={`flex md:grid flex-col md:grid-cols-${numberOfColumns} md:leading-5 divide-y`}
@@ -50,9 +52,10 @@ const ResponsiveDataGrid = ({
 interface RowProps {
   children: ReactNode;
   onClick: () => void;
+  flexOrder: [number, number, number, number];
 }
 
-const Row = ({ children, onClick }: RowProps) => {
+const Row = ({ flexOrder, children, onClick }: RowProps) => {
   const isGrid = useMatchesBreakpoint("md");
 
   const ChildrenArray = Children.toArray(children);
@@ -85,12 +88,12 @@ const Row = ({ children, onClick }: RowProps) => {
   return (
     <div className="py-2" onClick={onClick}>
       <div className="flex gap-4 justify-between items-center text-gray-800">
-        {ChildrenArray[0]}
-        {ChildrenArray[2]}
+        {ChildrenArray[flexOrder[0]]}
+        {ChildrenArray[flexOrder[1]]}
       </div>
       <div className="flex justify-between">
-        {ChildrenArray[1]}
-        {ChildrenArray[3]}
+        {ChildrenArray[flexOrder[2]]}
+        {ChildrenArray[flexOrder[3]]}
       </div>
     </div>
   );

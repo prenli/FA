@@ -65,6 +65,7 @@ export const HoldingsGroupedByType = ({
 
           return (
             <ResponsiveDataGrid.Row
+              flexOrder={[0, 2, 1, 3]}
               key={security.code}
               onClick={() =>
                 groupCode !== "CURRENCY" && navigate(`holdings/${code}`)

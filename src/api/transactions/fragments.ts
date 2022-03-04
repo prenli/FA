@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 export const TRANSACTION_FIELDS = gql`
   fragment TransactionsFields on Transaction {
     id
+    amount
     transactionDate
     type {
       typeName
@@ -23,6 +24,7 @@ export const TRANSACTION_FIELDS = gql`
 
 export const TRANSACTION_DETAILS_FIELDS = gql`
   fragment TransactionDetailsFields on Transaction {
+    id
     amount
     security {
       id
