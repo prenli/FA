@@ -7,6 +7,7 @@ interface LineChartProps {
   series: Array<unknown>;
   labels: Array<string>;
   options?: ApexOptions;
+  detailed?: boolean;
 }
 
 const lineChartColors = {
@@ -48,9 +49,26 @@ const lineChartDefaultOptions = {
       color: theme.colors.primary["600"],
     },
   },
+  dataLabels: { enabled: false },
+  xaxis: {
+    tickAmount: 5,
+    labels: {
+      rotate: 0,
+      offsetX: 2,
+      style: {
+        fontSize: "14px",
+        fontFamily: "Inter, sans-serif",
+      },
+    },
+  },
 };
 
-export const LineChart = ({ series, labels, options }: LineChartProps) => {
+export const LineChart = ({
+  series,
+  labels,
+  options,
+  detailed = false,
+}: LineChartProps) => {
   const { t } = useTranslation();
 
   return (
@@ -59,6 +77,21 @@ export const LineChart = ({ series, labels, options }: LineChartProps) => {
         options={{
           labels,
           ...lineChartDefaultOptions,
+          ...(detailed && {
+            chart: {
+              ...lineChartDefaultOptions.chart,
+              sparkline: { enabled: false },
+            },
+            yaxis: {
+              labels: {
+                formatter: (value: number) => t("number", { value }),
+                style: {
+                  fontSize: "14px",
+                  fontFamily: "Inter, sans-serif",
+                },
+              },
+            },
+          }),
           tooltip: {
             style: {
               fontSize: "14px",
@@ -74,7 +107,7 @@ export const LineChart = ({ series, labels, options }: LineChartProps) => {
         type="area"
         height="100%"
       />
-      <XLabels labels={labels} />
+      {!detailed && <XLabels labels={labels} />}
     </>
   );
 };

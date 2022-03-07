@@ -5,6 +5,7 @@ import { LineChart, ButtonRadio, LoadingIndicator, Center } from "components";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { dateFromYYYYMMDD } from "utils/date";
+import { useMatchesBreakpoint } from "../../../hooks/useMatchesBreakpoint";
 
 export const chartRangeOptions = [
   {
@@ -54,6 +55,7 @@ export const HoldingHistoryDataChart = () => {
   const { holdingId } = useParams();
   const { t } = useTranslation();
   const [selectedRange, setRange] = useState(chartRangeOptions[0]);
+  const isChartDetailed = useMatchesBreakpoint("lg");
 
   const { loading: securityLoading, data: securityData } =
     useGetSecurityMarketDataHistory(holdingId, selectedRange.id);
@@ -88,6 +90,7 @@ export const HoldingHistoryDataChart = () => {
               ...(selectedRange.dateFormatting || defaultDateFormatting),
             })
           )}
+          detailed={isChartDetailed}
         />
       </div>
       <div className="my-2.5 mx-2">
