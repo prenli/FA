@@ -40,103 +40,110 @@ export const TransactionDetails = ({
   const { downloadDocument, downloading } = useDownloadDocument();
   return (
     <PageLayout>
-      <div className="flex flex-col gap-4">
-        <div className="grid gap-2">
-          <div className="grid grid-cols-2 gap-2">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 gap-2 md:grid-cols-[repeat(auto-fill,_minmax(175px,_1fr))]">
+          <InfoCard
+            label={t("transactionsPage.type")}
+            value={getTransactionTypeName(
+              typeNamesAsMap,
+              typeName,
+              i18n.language
+            )}
+            colorScheme={getTransactionColor(amountEffect, cashFlowEffect)}
+          />
+          <InfoCard
+            label={t("transactionsPage.total")}
+            value={t("numberWithCurrency", { value: totalCost, currency })}
+          />
+          <div className="col-span-2 md:col-span-1">
             <InfoCard
-              label={t("transactionsPage.type")}
-              value={getTransactionTypeName(
-                typeNamesAsMap,
-                typeName,
-                i18n.language
-              )}
-              colorScheme={getTransactionColor(amountEffect, cashFlowEffect)}
+              label={t("transactionsPage.securityName")}
+              value={securityName}
             />
+          </div>
+          <div className="col-span-2 md:col-span-1">
             <InfoCard
-              label={t("transactionsPage.total")}
-              value={t("numberWithCurrency", { value: totalCost, currency })}
+              label={t("transactionsPage.portfolioName")}
+              value={portfolioName}
             />
           </div>
           <InfoCard
-            label={t("transactionsPage.securityName")}
-            value={securityName}
+            label={t("transactionsPage.transactionDate")}
+            value={t("date", { date: dateFromYYYYMMDD(transactionDate) })}
           />
           <InfoCard
-            label={t("transactionsPage.portfolioName")}
-            value={portfolioName}
+            label={t("transactionsPage.settlementDate")}
+            value={
+              settlementDate
+                ? t("date", { date: dateFromYYYYMMDD(settlementDate) })
+                : t("messages.notAvailable")
+            }
           />
-          <div className="grid grid-cols-2 gap-2">
-            <InfoCard
-              label={t("transactionsPage.transactionDate")}
-              value={t("date", { date: dateFromYYYYMMDD(transactionDate) })}
-            />
-            <InfoCard
-              label={t("transactionsPage.settlementDate")}
-              value={
-                settlementDate
-                  ? t("date", { date: dateFromYYYYMMDD(settlementDate) })
-                  : t("messages.notAvailable")
-              }
-            />
+        </div>
+        <div className="grid xl:grid-cols-2 lg:col-span-2 md:row-span-3 gap-4 content-start">
+          <Card header={t("transactionsPage.details")}>
+            <div className="flex flex-col px-2 my-1 divide-y">
+              <DataRow
+                label={t("transactionsPage.units")}
+                value={t("number", { value: amount })}
+              />
+              <DataRow
+                label={t("transactionsPage.unitPrice")}
+                value={t("numberWithCurrency", { value: unitPrice, currency })}
+              />
+              <DataRow
+                label={t("transactionsPage.grossTradeAmount")}
+                value={t("numberWithCurrency", { value: grossPrice, currency })}
+              />
+              <DataRow
+                label={t("transactionsPage.cost")}
+                value={t("numberWithCurrency", { value: totalCost, currency })}
+              />
+              <DataRow
+                label={t("transactionsPage.netTradeAmount")}
+                value={t("numberWithCurrency", {
+                  value: tradeAmount,
+                  currency,
+                })}
+              />
+              <DataRow
+                label={t("transactionsPage.fxRate")}
+                value={t("number", {
+                  value: fxRate,
+                  formatParams: {
+                    value: {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    },
+                  },
+                })}
+              />
+            </div>
+          </Card>
+          <div className="h-fit">
+            <Card header={t("transactionsPage.security")}>
+              <div className="flex flex-col px-2 my-1 divide-y">
+                <DataRow
+                  label={t("transactionsPage.isin")}
+                  value={security?.isinCode ?? t("messages.notAvailable")}
+                />
+                <DataRow
+                  label={t("transactionsPage.marketplace")}
+                  value={
+                    marketPlace?.name ??
+                    security?.exchange?.name ??
+                    t("messages.notAvailable")
+                  }
+                />
+              </div>
+            </Card>
           </div>
         </div>
-        <Card header={t("transactionsPage.details")}>
-          <div className="flex flex-col px-2 my-1 divide-y">
-            <DataRow
-              label={t("transactionsPage.units")}
-              value={t("number", { value: amount })}
-            />
-            <DataRow
-              label={t("transactionsPage.unitPrice")}
-              value={t("numberWithCurrency", { value: unitPrice, currency })}
-            />
-            <DataRow
-              label={t("transactionsPage.grossTradeAmount")}
-              value={t("numberWithCurrency", { value: grossPrice, currency })}
-            />
-            <DataRow
-              label={t("transactionsPage.cost")}
-              value={t("numberWithCurrency", { value: totalCost, currency })}
-            />
-            <DataRow
-              label={t("transactionsPage.netTradeAmount")}
-              value={t("numberWithCurrency", { value: tradeAmount, currency })}
-            />
-            <DataRow
-              label={t("transactionsPage.fxRate")}
-              value={t("number", {
-                value: fxRate,
-                formatParams: {
-                  value: {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  },
-                },
-              })}
-            />
-          </div>
-        </Card>
         {extInfo && (
           <Card header={t("transactionsPage.description")}>
             <p className="p-2 text-base font-normal">{extInfo}</p>
           </Card>
         )}
-        <Card header={t("transactionsPage.security")}>
-          <div className="flex flex-col px-2 my-1 divide-y">
-            <DataRow
-              label={t("transactionsPage.isin")}
-              value={security?.isinCode ?? t("messages.notAvailable")}
-            />
-            <DataRow
-              label={t("transactionsPage.marketplace")}
-              value={
-                marketPlace?.name ??
-                security?.exchange?.name ??
-                t("messages.notAvailable")
-              }
-            />
-          </div>
-        </Card>
         {documents.length > 0 && (
           <Button
             isFullWidth
