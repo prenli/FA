@@ -72,6 +72,7 @@ export const LineChart = ({ series, labels, options }: LineChartProps) => {
         }}
         series={series}
         type="area"
+        height="100%"
       />
       <XLabels labels={labels} />
     </>

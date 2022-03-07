@@ -63,8 +63,8 @@ export const HoldingHistoryDataChart = () => {
   const preparedMarketData = limitDataPoints(marketDataHistory);
 
   return (
-    <div className=" my-2">
-      <div className="relative">
+    <div className="flex flex-col my-2 grow">
+      <div className="relative grow">
         {securityLoading && (
           <div className="absolute w-full h-full">
             <LoadingIndicator center />

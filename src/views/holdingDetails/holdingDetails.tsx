@@ -55,18 +55,20 @@ export const HoldingDetails = ({
       </Heading>
       <div className="overflow-y-auto grow-1">
         <PageLayout>
-          <div className="flex flex-col gap-4">
-            <Card
-              header={
-                <LineChartHeader
-                  price={latestMarketData?.price}
-                  date={latestMarketData?.date}
-                  currency={portfoliosCurrency}
-                />
-              }
-            >
-              <HoldingHistoryDataChart />
-            </Card>
+          <div className="grid gap-4 md:grid-cols-[300px_auto] lg:grid-cols-[400px_auto] xl:grid-cols-[500px_auto]">
+            <div className="md:col-start-2 md:row-start-1 lg:row-end-3">
+              <Card
+                header={
+                  <LineChartHeader
+                    price={latestMarketData?.price}
+                    date={latestMarketData?.date}
+                    currency={portfoliosCurrency}
+                  />
+                }
+              >
+                <HoldingHistoryDataChart />
+              </Card>
+            </div>
             <Card
               header={
                 <HoldingHeader

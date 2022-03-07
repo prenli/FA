@@ -56,9 +56,9 @@ const Overview = ({ data }: OverviewProps) => {
         securities={worstSecurities}
         currency={securityCode}
       />
-      <div className="md:col-start-2 md:row-span-3 md:row-start-1 max-h-[570px]">
+      <div className="md:col-start-2 md:row-start-1 md:row-end-3 lg:row-end-4">
         <Card header="Security type allocation">
-          <div className="py-4">
+          <div className="pt-4 grow min-h-[300px]">
             <PieChart {...chartData} />
           </div>
         </Card>
