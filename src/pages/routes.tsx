@@ -25,7 +25,7 @@ const Transactions = lazy(() =>
 );
 const Transaction = lazy(() =>
   import("./transactions/[transactionId]").then((module) => ({
-    default: module.Transaction,
+    default: module.TransactionPage,
   }))
 );
 const Orders = lazy(() =>

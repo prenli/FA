@@ -62,7 +62,7 @@ export const TransactionsGroup = ({
               <ResponsiveDataGrid.Row
                 flexOrder={[0, 3, 2, 1]}
                 key={id}
-                onClick={() => navigate(`/transactions/${id}`)}
+                onClick={() => navigate(`transactions/${id}`)}
               >
                 <div className="text-base font-semibold">{securityName}</div>
                 <div className="float-right w-max text-center">

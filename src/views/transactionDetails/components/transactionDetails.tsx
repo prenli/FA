@@ -3,14 +3,14 @@ import { TransactionDetails as TransactionDetailsType } from "api/transactions/t
 import { ReactComponent as DocumentDownloadIcon } from "assets/document-download.svg";
 import { Button, Card } from "components";
 import { PageLayout } from "layouts/PageLayout/PageLayout";
-import { InfoCard } from "pages/transactions/components/InfoCard";
 import { useTranslation } from "react-i18next";
 import { dateFromYYYYMMDD } from "utils/date";
 import {
   getTransactionColor,
   getTransactionTypeName,
 } from "utils/transactions";
-import { DataRow } from "../holdingDetails/components/DataRow";
+import { InfoCard } from "views/transactionDetails/components/InfoCard";
+import { DataRow } from "../../holdingDetails/components/DataRow";
 
 interface TransactionDetailsProps {
   data: TransactionDetailsType;
