@@ -12,10 +12,12 @@ export const Example = () => (
       series={[
         {
           name: "Price",
-          data: marketData.map((data) => data.price),
+          data: marketData.map((data) => ({
+            x: data.date,
+            y: data.price,
+          })),
         },
       ]}
-      labels={marketData.map((data) => data.date)}
     />
   </div>
 );

@@ -3,9 +3,16 @@ import Chart from "react-apexcharts";
 import { useTranslation } from "react-i18next";
 import theme from "tailwindTheme";
 
+export interface LineData {
+  name: string;
+  data: {
+    x: string;
+    y: number;
+  }[];
+}
+
 interface LineChartProps {
-  series: Array<unknown>;
-  labels: Array<string>;
+  series: Array<LineData>;
   options?: ApexOptions;
   detailed?: boolean;
 }
@@ -65,17 +72,15 @@ const lineChartDefaultOptions = {
 
 export const LineChart = ({
   series,
-  labels,
   options,
   detailed = false,
 }: LineChartProps) => {
   const { t } = useTranslation();
 
   return (
-    <>
+    <div className="h-full">
       <Chart
         options={{
-          labels,
           ...lineChartDefaultOptions,
           ...(detailed && {
             chart: {
@@ -107,8 +112,8 @@ export const LineChart = ({
         type="area"
         height="100%"
       />
-      {!detailed && <XLabels labels={labels} />}
-    </>
+      {!detailed && <XLabels labels={series[0].data.map((datum) => datum.x)} />}
+    </div>
   );
 };
 

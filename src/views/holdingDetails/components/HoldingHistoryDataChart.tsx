@@ -2,10 +2,11 @@ import { useState } from "react";
 import { MarketHistoryDataPoint } from "api/holdings/types";
 import { useGetSecurityMarketDataHistory } from "api/holdings/useGetSecurityMarketDataHistory";
 import { LineChart, ButtonRadio, LoadingIndicator, Center } from "components";
+import { LineData } from "components/LineChart/LineChart";
+import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { dateFromYYYYMMDD } from "utils/date";
-import { useMatchesBreakpoint } from "../../../hooks/useMatchesBreakpoint";
 
 export const chartRangeOptions = [
   {
@@ -81,15 +82,17 @@ export const HoldingHistoryDataChart = () => {
           series={[
             {
               name: "Price",
-              data: preparedMarketData.map((data) => data.price),
+              data: removeXDuplicates(
+                preparedMarketData.map((data) => ({
+                  x: t("date", {
+                    date: dateFromYYYYMMDD(data.date),
+                    ...(selectedRange.dateFormatting || defaultDateFormatting),
+                  }),
+                  y: data.price,
+                }))
+              ),
             },
           ]}
-          labels={preparedMarketData.map((data) =>
-            t("date", {
-              date: dateFromYYYYMMDD(data.date),
-              ...(selectedRange.dateFormatting || defaultDateFormatting),
-            })
-          )}
           detailed={isChartDetailed}
         />
       </div>
@@ -103,3 +106,9 @@ export const HoldingHistoryDataChart = () => {
     </div>
   );
 };
+
+// assuming that data array is sorted
+const removeXDuplicates = (seriesDataArray: LineData["data"]) =>
+  seriesDataArray.filter((item, index, array) => {
+    return !index || item.x !== array[index - 1].x;
+  });
