@@ -21,7 +21,7 @@ export const PortfolioNavigationHeader = () => {
   };
 
   return (
-    <div className="flex gap-2 p-2 bg-white">
+    <div className="flex gap-2 p-2 lg:p-1 bg-white">
       <div className="rounded h-[40px] w-[40px]">
         <Logo />
       </div>

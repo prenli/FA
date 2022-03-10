@@ -20,11 +20,10 @@ const NavTab = (
   <div ref={ref}>
     <Tab
       className={({ selected }) =>
-        classNames("border-current p-2 whitespace-nowrap", {
-          "border-b border-primary-600 font-semibold text-base text-primary-600":
+        classNames("border-current p-2 whitespace-nowrap text-base ", {
+          "border-b border-primary-600 font-semibold text-primary-600":
             selected,
-          "border-b border-transparent text-gray-600 text-base font-normal":
-            !selected,
+          "border-b border-transparent text-gray-600 font-normal": !selected,
         })
       }
       {...props}
@@ -38,10 +37,12 @@ NavTab.NavTab = forwardRef(NavTab);
 NavTab.Group = Tab.Group;
 
 const NavTabList = (props: ComponentProps<typeof Tab.List>) => (
-  <Tab.List
-    className="flex overflow-auto flex-nowrap px-2 bg-white border-b border-gray-200 shadow-md scroll-hidden"
-    {...props}
-  />
+  <nav className="w-full bg-white border-b border-gray-200 shadow-md ">
+    <Tab.List
+      className="lg:container flex flex-nowrap items-end px-2 lg:mx-auto scroll-hidden"
+      {...props}
+    />
+  </nav>
 );
 NavTab.List = NavTabList;
 
