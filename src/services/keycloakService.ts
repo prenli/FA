@@ -19,7 +19,7 @@ const keycloakInitConfig = {
 
 type FAKeycloakProfile = KeycloakProfile & {
   attributes?: {
-    linked_contact: string[];
+    linked_contact?: string[];
   };
 };
 
@@ -159,7 +159,7 @@ class KeycloakService {
   }
 
   getLinkedContactFromProfile(profile: FAKeycloakProfile) {
-    return profile?.attributes?.linked_contact[0];
+    return profile?.attributes?.linked_contact?.[0];
   }
 
   updateState() {
