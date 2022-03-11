@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { SecurityPosition } from "api/overview/types";
 import { Card, GainLoseColoring } from "components";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 
 interface ListedSecuritiesCardProps {
   securities: SecurityPosition[];
@@ -15,6 +16,7 @@ export const ListedSecuritiesCard = ({
   currency,
 }: ListedSecuritiesCardProps) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   return (
     <Card header={label}>
       <div className="flex justify-between py-1 px-2 text-sm font-semibold text-gray-500 bg-gray-100">
@@ -31,6 +33,7 @@ export const ListedSecuritiesCard = ({
             <div
               key={securityCode}
               className="flex justify-between items-center py-2"
+              onClick={() => navigate(`holdings/${securityCode}`)}
             >
               <div className="text-base font-normal">{name}</div>
               <div className="whitespace-nowrap">

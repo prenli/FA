@@ -50,7 +50,7 @@ export const HoldingDetails = ({
   return (
     <div className="flex overflow-hidden flex-col h-full">
       <Heading>
-        <BackNavigationButton onClick={() => navigate("../holdings")} />
+        <BackNavigationButton onClick={() => navigate(-1)} />
         {name ?? ""}
       </Heading>
       <div className="overflow-y-auto grow-1">
