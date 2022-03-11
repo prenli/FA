@@ -89,13 +89,15 @@ export const HoldingDetails = ({
                     currency: portfoliosCurrency,
                   })}
                 />
-                <DataRow
-                  label={t("holdingsPage.accruedInterest")}
-                  value={t("numberWithCurrency", {
-                    value: accruedInterest,
-                    currency: portfoliosCurrency,
-                  })}
-                />
+                {typeCode === "BOND" && (
+                  <DataRow
+                    label={t("holdingsPage.accruedInterest")}
+                    value={t("numberWithCurrency", {
+                      value: accruedInterest,
+                      currency: portfoliosCurrency,
+                    })}
+                  />
+                )}
                 <DataRow
                   label={t("holdingsPage.marketValue")}
                   value={t("numberWithCurrency", {
