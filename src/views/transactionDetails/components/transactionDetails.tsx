@@ -4,6 +4,7 @@ import { ReactComponent as DocumentDownloadIcon } from "assets/document-download
 import { Button, Card } from "components";
 import { PageLayout } from "layouts/PageLayout/PageLayout";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import { dateFromYYYYMMDD } from "utils/date";
 import {
   getTransactionColor,
@@ -11,6 +12,7 @@ import {
 } from "utils/transactions";
 import { InfoCard } from "views/transactionDetails/components/InfoCard";
 import { DataRow } from "../../holdingDetails/components/DataRow";
+import { TransactionType } from "../transactionDetailsView";
 
 interface TransactionDetailsProps {
   data: TransactionDetailsType;
@@ -38,6 +40,7 @@ export const TransactionDetails = ({
 }: TransactionDetailsProps) => {
   const { t, i18n } = useTranslation();
   const { downloadDocument, downloading } = useDownloadDocument();
+  const transactionType = useGetTransactionType();
   return (
     <PageLayout>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -151,10 +154,21 @@ export const TransactionDetails = ({
             LeftIcon={DocumentDownloadIcon}
             onClick={() => downloadDocument(documents[0].identifier)}
           >
-            Download transaction note
+            {transactionType === "transaction"
+              ? t("transactionsPage.header")
+              : t("ordersPage.header")}
           </Button>
         )}
       </div>
     </PageLayout>
   );
+};
+
+const useGetTransactionType = (): TransactionType => {
+  const { transactionId } = useParams();
+
+  if (transactionId) {
+    return "transaction" as const;
+  }
+  return "order" as const;
 };

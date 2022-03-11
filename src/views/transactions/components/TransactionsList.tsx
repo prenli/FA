@@ -13,6 +13,7 @@ export const TransactionsList = ({ data }: TransactionsListProps) => {
           key={group.label}
           transactions={group.transactions}
           label={group.label}
+          type="transaction"
         />
       ))}
     </>

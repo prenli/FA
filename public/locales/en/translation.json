@@ -52,11 +52,13 @@
     "noHoldings": "No holdings"
   },
   "ordersPage": {
+    "header": "Order",
     "noOrders": "No orders for specified period",
     "inExecution": "In execution",
     "open": "Open",
     "accepted": "Accepted",
-    "cancelled": "Cancelled"
+    "cancelled": "Cancelled",
+    "downloadFileButtonLabel": "Download order note"
   },
   "transactionsPage": {
     "header": "Transaction",
@@ -80,7 +82,8 @@
     "grossTradeAmount": "Gross trade amount",
     "netTradeAmount": "Net trade amount",
     "total": "Total",
-    "noTransactions": "No transactions for specified period"
+    "noTransactions": "No transactions for specified period",
+    "downloadFileButtonLabel": "Download transaction note"
   },
   "documentsPage": {
     "title": "Documents",

@@ -10,15 +10,21 @@ import {
   getTransactionColor,
   getTransactionTypeName,
 } from "utils/transactions";
+import {
+  getNavigationPath,
+  TransactionType,
+} from "../../transactionDetails/transactionDetailsView";
 
 interface TransactionsGroupProps {
   label: string;
   transactions: TradeOrder[] | Transaction[];
+  type: TransactionType;
 }
 
 export const TransactionsGroup = ({
   label,
   transactions,
+  type,
 }: TransactionsGroupProps) => {
   const { portfolioId } = useParams();
   const showPortfolioLabel = !portfolioId;
@@ -62,7 +68,7 @@ export const TransactionsGroup = ({
               <ResponsiveDataGrid.Row
                 flexOrder={[0, 3, 2, 1]}
                 key={id}
-                onClick={() => navigate(`transactions/${id}`)}
+                onClick={() => navigate(`${getNavigationPath(type)}/${id}`)}
               >
                 <div className="text-base font-semibold">{securityName}</div>
                 <div className="float-right w-max text-center">

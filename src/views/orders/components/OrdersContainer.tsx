@@ -20,6 +20,7 @@ export const OrdersContainer = ({ data }: OrdersContainerProps) => {
           key={group.type}
           label={group.label}
           transactions={group.tradeOrders}
+          type="order"
         />
       ))}
     </div>
