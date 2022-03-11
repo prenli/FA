@@ -21,7 +21,7 @@ export const NavTabLayout = ({ routes }: NavTabTemplateLayoutProps) => {
       <NavTab.Group {...groupProps}>
         <NavTab.List>
           {showPortfolioNavigationHeader && (
-            <div className="min-w-[350px]">
+            <div className="min-w-[300px]">
               <PortfolioNavigationHeader />
             </div>
           )}

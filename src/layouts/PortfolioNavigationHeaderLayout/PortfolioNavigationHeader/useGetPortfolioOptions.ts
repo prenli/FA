@@ -10,24 +10,22 @@ export const useGetPortfolioOptions = () => {
   const portfolioOptions: PortfolioOption[] = useMemo(() => {
     if (portfolios.length === 1) {
       const portfolio = portfolios[0];
-      return [
-        {
-          id: portfolio.id,
-          urlPrefix: `/portfolio/${portfolio.id}`,
-          label: `Portfolio ${portfolio.name}`,
-        },
-      ];
+      return [getPortfolioOption(portfolio.id, portfolio.name)];
     }
 
     return [
       { id: 0, urlPrefix: "", label: t("navTab.totalInvestments") },
-      ...portfolios.map((portfolio) => ({
-        id: portfolio.id,
-        urlPrefix: `/portfolio/${portfolio.id}`,
-        label: `Portfolio ${portfolio.name}`,
-      })),
+      ...portfolios.map((portfolio) =>
+        getPortfolioOption(portfolio.id, portfolio.name)
+      ),
     ];
   }, [portfolios, t]);
 
   return portfolioOptions;
 };
+
+const getPortfolioOption = (id: number, name: string) => ({
+  id: id,
+  urlPrefix: `/portfolio/${id}`,
+  label: name,
+});
