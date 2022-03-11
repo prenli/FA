@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { dateFromYYYYMMDD } from "utils/date";
 import {
   getTransactionColor,
-  getTransactionTypeName,
+  getNameFromBackendTranslations,
 } from "utils/transactions";
 
 type TradeOrderPositionProps = TradeOrder;
@@ -35,7 +35,11 @@ export const TradeOrderPosition = ({
           parentPortfolio.name
         }`}</div>
         <Badge colorScheme={getTransactionColor(amountEffect, cashFlowEffect)}>
-          {getTransactionTypeName(typeNamesAsMap, typeName, i18n.language)}
+          {getNameFromBackendTranslations(
+            typeNamesAsMap,
+            typeName,
+            i18n.language
+          )}
         </Badge>
       </div>
     </div>

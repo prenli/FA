@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import { dateFromYYYYMMDD } from "utils/date";
 import {
   getTransactionColor,
-  getTransactionTypeName,
+  getNameFromBackendTranslations,
 } from "utils/transactions";
 import { InfoCard } from "views/transactionDetails/components/InfoCard";
 import { DataRow } from "../../holdingDetails/components/DataRow";
@@ -47,7 +47,7 @@ export const TransactionDetails = ({
         <div className="grid grid-cols-2 gap-2 md:grid-cols-[repeat(auto-fill,_minmax(175px,_1fr))]">
           <InfoCard
             label={t("transactionsPage.type")}
-            value={getTransactionTypeName(
+            value={getNameFromBackendTranslations(
               typeNamesAsMap,
               typeName,
               i18n.language

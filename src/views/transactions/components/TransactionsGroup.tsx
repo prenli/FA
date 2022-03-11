@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import { dateFromYYYYMMDD } from "utils/date";
 import {
   getTransactionColor,
-  getTransactionTypeName,
+  getNameFromBackendTranslations,
 } from "utils/transactions";
 import {
   getNavigationPath,
@@ -78,7 +78,7 @@ export const TransactionsGroup = ({
                       cashFlowEffect
                     )}
                   >
-                    {getTransactionTypeName(
+                    {getNameFromBackendTranslations(
                       typeNamesAsMap,
                       typeName,
                       i18n.language

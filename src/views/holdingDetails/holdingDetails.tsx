@@ -9,7 +9,7 @@ import {
 import { PageLayout } from "layouts/PageLayout/PageLayout";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { getTransactionTypeName } from "utils/transactions";
+import { getNameFromBackendTranslations } from "utils/transactions";
 import { addProtocolToUrl } from "utils/url";
 import { DataRow } from "./components/DataRow";
 import { DocumentRow } from "./components/DocumentRow";
@@ -62,7 +62,7 @@ export const HoldingDetails = ({
                   <LineChartHeader
                     price={latestMarketData?.price}
                     date={latestMarketData?.date}
-                    currency={portfoliosCurrency}
+                    currency={currency}
                   />
                 }
               >
@@ -142,7 +142,7 @@ export const HoldingDetails = ({
               <div className="flex flex-col px-2 my-1 divide-y">
                 <DataRow
                   label={t("holdingsPage.type")}
-                  value={getTransactionTypeName(
+                  value={getNameFromBackendTranslations(
                     namesAsMap,
                     typeCode,
                     i18n.language

@@ -1,9 +1,11 @@
-export const getTransactionTypeName = (
-  typeNamesAsMap: Record<string, string>,
-  defaultTypeName: string,
+export const getNameFromBackendTranslations = (
+  backendTranslationsMap: Record<string, string>,
+  fallbackTranslation: string,
   locale: string
 ) => {
-  return typeNamesAsMap[locale.replace("-", "_")] || defaultTypeName;
+  return (
+    backendTranslationsMap[locale.replace("-", "_")] || fallbackTranslation
+  );
 };
 
 export const getTransactionColor = (
