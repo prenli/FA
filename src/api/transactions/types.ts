@@ -33,6 +33,11 @@ export interface AllPortfoliosTransactionsQuery {
 export interface TransactionDetails extends Transaction {
   security?: {
     isinCode: string;
+    securityCode: string;
+    country: {
+      id: number;
+      code: string;
+    };
     exchange?: {
       name: string;
     };

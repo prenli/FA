@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import classNames from "classnames";
 import { Card } from "components";
 
@@ -5,12 +6,18 @@ type ColorScheme = "gray" | "green" | "red" | "blue";
 
 interface InfoCardProps {
   label: string;
-  value: string;
+  value: ReactNode;
   colorScheme?: ColorScheme;
+  onClick?: () => void;
 }
 
-export const InfoCard = ({ label, value, colorScheme }: InfoCardProps) => (
-  <Card>
+export const InfoCard = ({
+  label,
+  value,
+  colorScheme,
+  onClick,
+}: InfoCardProps) => (
+  <Card onClick={onClick}>
     <div
       className={classNames("p-2", {
         "bg-primary-50": colorScheme === "blue",

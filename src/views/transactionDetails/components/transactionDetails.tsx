@@ -1,9 +1,10 @@
 import { useDownloadDocument } from "api/documents/useDownloadDocument";
 import { TransactionDetails as TransactionDetailsType } from "api/transactions/types";
 import { ReactComponent as DocumentDownloadIcon } from "assets/document-download.svg";
-import { Button, Card } from "components";
+import { Button, Card, CountryFlag } from "components";
 import { PageLayout } from "layouts/PageLayout/PageLayout";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import { dateFromYYYYMMDD } from "utils/date";
 import {
@@ -41,6 +42,7 @@ export const TransactionDetails = ({
   const { t, i18n } = useTranslation();
   const { downloadDocument, downloading } = useDownloadDocument();
   const transactionType = useGetTransactionType();
+  const navigate = useNavigate();
   return (
     <PageLayout>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -61,7 +63,20 @@ export const TransactionDetails = ({
           <div className="col-span-2 md:col-span-1">
             <InfoCard
               label={t("transactionsPage.securityName")}
-              value={securityName}
+              value={
+                <div>
+                  <span>{securityName}</span>
+                  {security && (
+                    <CountryFlag
+                      code={security.country.code}
+                      className="inline ml-1.5 align-baseline w-[20px] h-[14px]"
+                    />
+                  )}
+                </div>
+              }
+              onClick={() =>
+                !!security && navigate(`../holdings/${security.securityCode}`)
+              }
             />
           </div>
           <div className="col-span-2 md:col-span-1">

@@ -29,6 +29,10 @@ export const TRANSACTION_DETAILS_FIELDS = gql`
     security {
       id
       isinCode
+      securityCode
+      country {
+        code
+      }
       exchange {
         id
         name
