@@ -37,7 +37,7 @@ NavTab.NavTab = forwardRef(NavTab);
 NavTab.Group = Tab.Group;
 
 const NavTabList = (props: ComponentProps<typeof Tab.List>) => (
-  <nav className="w-full bg-white border-b border-gray-200 shadow-md ">
+  <nav className="overflow-auto w-full bg-white border-b border-gray-200 shadow-md scroll-hidden">
     <Tab.List
       className="lg:container flex flex-nowrap items-end px-2 lg:mx-auto scroll-hidden"
       {...props}
