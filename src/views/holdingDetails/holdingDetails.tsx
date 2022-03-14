@@ -141,12 +141,12 @@ export const HoldingDetails = ({
               </div>
             </Card>
             <Card header={t("holdingsPage.security")}>
-              <div className="flex flex-col px-2 my-1 divide-y">
+              <div className="flex flex-col px-2 my-1 capitalize divide-y">
                 <DataRow
                   label={t("holdingsPage.type")}
                   value={getNameFromBackendTranslations(
                     namesAsMap,
-                    typeCode,
+                    typeCode.toLowerCase(),
                     i18n.language
                   )}
                 />

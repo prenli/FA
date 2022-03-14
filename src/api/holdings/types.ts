@@ -71,7 +71,7 @@ export interface SecurityDetailsPosition {
     date: string;
   };
   type: {
-    code: string;
+    code: "STOCK" | "FUND" | "ETFs" | "PE" | "BOND" | "CURRENCY";
     namesAsMap: Record<string, string>;
   };
 }

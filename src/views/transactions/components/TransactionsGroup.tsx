@@ -80,7 +80,7 @@ export const TransactionsGroup = ({
                   >
                     {getNameFromBackendTranslations(
                       typeNamesAsMap,
-                      typeName,
+                      typeName.toLowerCase(),
                       i18n.language
                     )}
                   </Badge>
