@@ -1,6 +1,6 @@
 {
   "number": "{{value, number}}",
-  "numberWithCurrency": "{{value, currency}}",
+  "numberWithCurrency": "{{value, currency(maximumFractionDigits: 10; currency: currency)}}",
   "numberWithCurrencyRounded": "{{value, currency(maximumFractionDigits: 0; currency: currency)}}",
   "date": "{{date, datetime}}",
   "component": {
