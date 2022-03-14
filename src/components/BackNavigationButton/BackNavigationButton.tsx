@@ -7,7 +7,7 @@ interface BackNavigationButtonProps {
 export const BackNavigationButton = ({
   onClick,
 }: BackNavigationButtonProps) => (
-  <button onClick={onClick} className="text-2xl font-bold">
+  <button onClick={onClick} className="text-2xl font-bold cursor-pointer">
     <ChevronLeft />
   </button>
 );

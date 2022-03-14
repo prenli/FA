@@ -38,7 +38,7 @@ export const PortfolioInfoCard = ({
   return (
     <Card>
       <div
-        className={classNames("relative overflow-hidden", {
+        className={classNames("relative overflow-hidden cursor-pointer", {
           "bg-gradient-to-br from-gray-500 to-black text-gray-100":
             colorScheme === "black",
           "bg-gray-200": colorScheme === "gray",

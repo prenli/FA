@@ -32,7 +32,7 @@ export const ListedSecuritiesCard = ({
           return (
             <div
               key={securityCode}
-              className="flex justify-between items-center py-2"
+              className="flex justify-between items-center py-2 cursor-pointer"
               onClick={() => navigate(`holdings/${securityCode}`)}
             >
               <div className="text-base font-normal">{name}</div>

@@ -67,7 +67,7 @@ const Row = ({ flexOrder, children, onClick }: RowProps) => {
           if (index === 0) {
             return (
               <div
-                className="col-span-2 py-2 text-left"
+                className="col-span-2 py-2 text-left cursor-pointer"
                 onClick={onClick}
                 key={index}
               >
@@ -76,7 +76,11 @@ const Row = ({ flexOrder, children, onClick }: RowProps) => {
             );
           }
           return (
-            <div className="py-2 text-right" onClick={onClick} key={index}>
+            <div
+              className="py-2 text-right cursor-pointer"
+              onClick={onClick}
+              key={index}
+            >
               {child}
             </div>
           );
