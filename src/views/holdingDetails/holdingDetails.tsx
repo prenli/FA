@@ -110,7 +110,7 @@ export const HoldingDetails = ({
                   value={
                     <GainLoseColoring value={valueChangeRelative}>
                       {`${t("number", {
-                        value: valueChangeRelative,
+                        value: valueChangeRelative * 100,
                         formatParams: {
                           value: {
                             signDisplay: "always",

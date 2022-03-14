@@ -170,8 +170,8 @@ export const TransactionDetails = ({
             onClick={() => downloadDocument(documents[0].identifier)}
           >
             {transactionType === "transaction"
-              ? t("transactionsPage.header")
-              : t("ordersPage.header")}
+              ? t("transactionsPage.downloadFileButtonLabel")
+              : t("ordersPage.downloadFileButtonLabel")}
           </Button>
         )}
       </div>
