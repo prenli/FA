@@ -107,7 +107,16 @@ export const TransactionDetails = ({
               />
               <DataRow
                 label={t("transactionsPage.unitPrice")}
-                value={t("numberWithCurrency", { value: unitPrice, currency })}
+                value={t("numberWithCurrency", {
+                  value: unitPrice,
+                  currency,
+                  formatParams: {
+                    value: {
+                      // do not round unit price to two decimals - business requirement
+                      maximumFractionDigits: 10,
+                    },
+                  },
+                })}
               />
               <DataRow
                 label={t("transactionsPage.grossTradeAmount")}
