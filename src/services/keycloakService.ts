@@ -10,10 +10,17 @@ import {
   setLastUsedLinkedContact,
 } from "./pwa";
 
+const getSsoRedirectUri = () => {
+  const url = new URL(
+    `${process.env.PUBLIC_URL}/keycloak-silent-check-sso.html`,
+    window.location.origin
+  );
+  return url.href;
+};
+
 const keycloakInitConfig = {
   onLoad: "check-sso",
-  silentCheckSsoRedirectUri:
-    window.location.origin + "/keycloak-silent-check-sso.html",
+  silentCheckSsoRedirectUri: getSsoRedirectUri(),
   pkceMethod: "S256",
 } as const;
 
@@ -172,4 +179,6 @@ class KeycloakService {
   }
 }
 
-export const keycloakService = new KeycloakService(Keycloak("/keycloak.json"));
+export const keycloakService = new KeycloakService(
+  Keycloak(`${process.env.PUBLIC_URL}/keycloak.json`)
+);

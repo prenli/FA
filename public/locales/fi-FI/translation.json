@@ -1,36 +1,102 @@
 {
-  "navTab": {
-    "title": "Kaikki salkut",
-    "tabs": {
-      "overview": "Yleiskatsaus",
-      "holdings": "Tilat",
-      "transactions": "Tapahtumat",
-      "orders": "Kauppatilaukset",
-      "trading": "Kaupankäynti",
-      "documents": "Asiakirjat"
+  "number": "{{value, number}}",
+  "numberWithCurrency": "{{value, currency(currency: currency)}}",
+  "numberWithCurrencyRounded": "{{value, currency(maximumFractionDigits: 0; currency: currency)}}",
+  "date": "{{date, datetime}}",
+  "component": {
+    "select": {
+      "placeholder": "Please select"
     }
   },
+  "navTab": {
+    "totalInvestments": "Total investments",
+    "tabs": {
+      "overview": "Overview",
+      "holdings": "Holdings",
+      "transactions": "Transactions",
+      "orders": "Orders",
+      "trading": "Trading",
+      "documents": "Documents"
+    }
+  },
+  "portfolioSummary": {
+    "currentMarketValue": "Current Market Value",
+    "availableCash": "Available Cash",
+    "unrealizedProfits": "Unrealised profits"
+  },
   "overviewPage": {
-    "title": "Yleiskatsaus",
-    "button": "Siirry portfolioon"
+    "allPortfoliosSummaryTitle": "Total investments",
+    "top3Holdings": "Best performing holdings",
+    "worst3Holdings": "Least performing holdings",
+    "unrealizedProfits": "Unrealised profits",
+    "name": "Name"
   },
   "holdingsPage": {
-    "title": "Tilat",
-    "button": "Siirry tilalle"
-  },
-  "transactionsPage": {
-    "title": "Kaikki liiketoimet"
+    "name": "Name",
+    "unrealizedProfits": "Unrealised profits",
+    "marketValue": "Market Value",
+    "holding": "Holding",
+    "units": "Units",
+    "purchaseValue": "Purchase value",
+    "accruedInterest": "Accrued interest",
+    "availableCash": "Available cash",
+    "changePercentage": "Change %",
+    "type": "Type",
+    "isinCode": "ISIN code",
+    "accountNumber": "Account Number",
+    "currency": "Currency",
+    "prospectus": "Prospectus",
+    "kiid": "KIID",
+    "price": "Price",
+    "security": "Security",
+    "noHoldings": "No holdings"
   },
   "ordersPage": {
-    "title": "Kaikki tilaukset"
+    "header": "Order",
+    "noOrders": "No orders for specified period",
+    "inExecution": "In execution",
+    "open": "Open",
+    "accepted": "Accepted",
+    "cancelled": "Cancelled",
+    "downloadFileButtonLabel": "Download order note"
+  },
+  "transactionsPage": {
+    "header": "Transaction",
+    "datePickerFromLabel": "Date from",
+    "datePickerFromTo": "Date to",
+    "type": "Type",
+    "details": "Details",
+    "security": "Security",
+    "tradeAmount": "Trade Amount",
+    "marketplace": "Marketplace",
+    "isin": "ISIN code",
+    "securityName": "Security name",
+    "portfolioName": "Portfolio name",
+    "transactionDate": "Transaction date",
+    "settlementDate": "Settlement date",
+    "units": "Units",
+    "cost": "Cost",
+    "description": "Description",
+    "fxRate": "Fx rate",
+    "unitPrice": "Unit price",
+    "grossTradeAmount": "Gross trade amount",
+    "netTradeAmount": "Net trade amount",
+    "total": "Total",
+    "noTransactions": "No transactions for specified period",
+    "downloadFileButtonLabel": "Download transaction note"
   },
   "documentsPage": {
-    "title": "Kaikki asiakirjat"
+    "title": "Documents",
+    "noDocuments": "No documents"
   },
   "404Page": {
-    "title": "404 - Ei löydy"
+    "title": "404 - Not found"
   },
   "messages": {
-    "noDataAvailable": "Tietoja ei ole saatavilla."
+    "noDataAvailable": "No data available.",
+    "notAvailable": "not available",
+    "newVersion": "There is a new version available.\nPlease reload the page.",
+    "error": "Something went wrong",
+    "queryError": "Server error, your data may be outdated."
   }
 }
