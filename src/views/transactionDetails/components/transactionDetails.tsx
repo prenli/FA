@@ -66,7 +66,7 @@ export const TransactionDetails = ({
               value={
                 <div>
                   <span>{securityName}</span>
-                  {security && (
+                  {security && security.country && (
                     <CountryFlag
                       code={security.country.code}
                       className="inline ml-1.5 align-baseline w-[20px] h-[14px]"

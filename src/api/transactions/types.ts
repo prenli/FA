@@ -34,7 +34,7 @@ export interface TransactionDetails extends Transaction {
   security?: {
     isinCode: string;
     securityCode: string;
-    country: {
+    country?: {
       id: number;
       code: string;
     };
