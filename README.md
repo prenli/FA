@@ -17,4 +17,11 @@ This is FA Client App based on Create React App starter.
   	yarn start
 
 - _`yarn run storybook`_: starts Storybook
-- _`yarn run withSW`_: starts app with service workers (for PWA testing and development)
+- _`yarn run withSW`_: starts app with service workers (for local testing and development of PWA)
+
+## Primary color palette change
+
+You can change primary color in *theme.config.js* file. To do that set *primaryColor* variable to preferred color. You
+can choose from predefined color palettes. List of available palettes can be
+found [here](https://tailwindcss.com/docs/customizing-colors). You can also use custom palette - more information can be
+found [here](https://tailwindcss.com/docs/customizing-colors#generating-colors).
