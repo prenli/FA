@@ -15,7 +15,7 @@ export const useNavTab = ({ navTabPaths }: useNavTabProps) => {
   const tabsRef = useRef<Element[]>([]);
 
   useEffect(() => {
-    tabsRef.current[currentTabIndex]?.scrollIntoView();
+    tabsRef.current[currentTabIndex]?.scrollIntoView({ block: "nearest" });
   }, [currentTabIndex]);
 
   const navigateToTab = (newIndex: number) => {
