@@ -1,8 +1,4 @@
 {
-  "number": "{{value, number}}",
-  "numberWithCurrency": "{{value, currency(currency: currency)}}",
-  "numberWithCurrencyRounded": "{{value, currency(maximumFractionDigits: 0; currency: currency)}}",
-  "date": "{{date, datetime}}",
   "component": {
     "select": {
       "placeholder": "Please select"
