@@ -1,7 +1,7 @@
 {
   "number": "{{value, number}}",
-  "numberWithCurrency": "{{value, currency(currency: currency; currencyDisplay: code)}}",
-  "numberWithCurrencyRounded": "{{value, currency(maximumFractionDigits: 0; currency: currency; currencyDisplay: code)}}",
+  "numberWithCurrency": "{{value, currency(currency: currency)}}",
+  "numberWithCurrencyRounded": "{{value, currency(maximumFractionDigits: 0; currency: currency)}}",
   "date": "{{date, datetime}}",
   "component": {
     "select": {
