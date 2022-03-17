@@ -15,14 +15,17 @@ export const OrdersContainer = ({ data }: OrdersContainerProps) => {
 
   return (
     <div className="flex flex-col gap-4">
-      {groupedTradeOrders.map((group) => (
-        <TransactionsGroup
-          key={group.type}
-          label={group.label}
-          transactions={group.tradeOrders}
-          type="order"
-        />
-      ))}
+      {groupedTradeOrders.map(
+        (group) =>
+          group.tradeOrders.length > 0 && (
+            <TransactionsGroup
+              key={group.type}
+              label={group.label}
+              transactions={group.tradeOrders}
+              type="order"
+            />
+          )
+      )}
     </div>
   );
 };

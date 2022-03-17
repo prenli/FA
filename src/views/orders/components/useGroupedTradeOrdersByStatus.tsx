@@ -53,24 +53,22 @@ export const useGroupedTradeOrdersByStatus = (tradeOrders: TradeOrder[]) => {
   const { t } = useTranslation();
   return useMemo(() => {
     const grouped: TradeOrdersGroup[] = [];
+    ORDER_STATUSES_TO_DISPLAY.forEach((orderStatus) => {
+      grouped.push({
+        type: orderStatus,
+        label: t(getOrderStatusLabelKey(orderStatus)),
+        tradeOrders: [],
+      });
+    });
 
     tradeOrders.forEach((tradeOrder) => {
       const orderStatus = tradeOrder.orderStatus;
 
       if (isOrderStatusToDisplayType(orderStatus)) {
-        let indexOfGrouped = grouped.findIndex(
+        const indexOfGrouped = grouped.findIndex(
           (group) => group.type === orderStatus
         );
 
-        if (indexOfGrouped === -1) {
-          indexOfGrouped = grouped.length;
-
-          grouped.push({
-            type: orderStatus,
-            label: t(getOrderStatusLabelKey(orderStatus)),
-            tradeOrders: [],
-          });
-        }
         grouped[indexOfGrouped].tradeOrders.push(tradeOrder);
       }
     });
