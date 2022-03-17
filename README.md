@@ -41,8 +41,9 @@ To change app icon you need to change at least 3 files in *public* directory:
 * logo192.png (192px x 192px) - used in PWA
 * logo512.png (512px x 512px) - used in PWA
 
-You can also add other sizes but changes in *manifest.json* file would be necessary. More info can be
-found [here](https://developer.mozilla.org/en-US/docs/Web/Manifest/icons) and [here](https://web.dev/maskable-icon/).
+Keep in mind that for PWA we use maskable icons (more info can be found [here](https://web.dev/maskable-icon/)), if your
+icons aren't maskable please adjust *manifest.json* file. You can also add other sizes but changes in *manifest.json*
+file would be necessary. More info can be found [here](https://developer.mozilla.org/en-US/docs/Web/Manifest/icons).
 
 ### Primary color palette
 
