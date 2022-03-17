@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 
 const ORDER_STATUSES_TO_DISPLAY = [
   ORDER_STATUS.Open,
-  ORDER_STATUS["In execution"],
   ORDER_STATUS.Accepted,
+  ORDER_STATUS["In execution"],
   ORDER_STATUS.Cancelled,
 ] as const;
 
