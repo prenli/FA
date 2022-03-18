@@ -56,3 +56,10 @@ can choose from predefined color palettes. List of available palettes can be
 found [here](https://tailwindcss.com/docs/customizing-colors). You can also use custom palette - more information can be
 found [here](https://tailwindcss.com/docs/customizing-colors#generating-colors). To apply changes you must build
 project (yarn build).
+
+### Contact info
+
+You can change contact info tab content by editing *contact.html* file located in *public* directory. You can use
+Tailwind classes but please be aware that to reduce bundle size Tailwind scans files for class names and generate only
+css for classes that has been found (you can read more [here](https://tailwindcss.com/docs/content-configuration)), so
+if you use class that hasn't been used yet, build of the app will be necessary.
