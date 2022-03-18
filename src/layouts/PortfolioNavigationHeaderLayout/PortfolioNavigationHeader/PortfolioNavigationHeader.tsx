@@ -1,4 +1,3 @@
-import { ReactComponent as Logo } from "assets/logo.svg";
 import { Select } from "components/Select/Select";
 import { useGetCurrentPortfolio } from "./useGetCurrentPortfolio";
 import { useGetPortfolioOptions } from "./useGetPortfolioOptions";
@@ -23,7 +22,7 @@ export const PortfolioNavigationHeader = () => {
   return (
     <div className="flex gap-2 p-2 lg:p-1 bg-white">
       <div className="rounded h-[40px] w-[40px]">
-        <Logo />
+        <img src="/logo.svg" alt="logo" />
       </div>
       <div className="flex-1">
         {portfolioOptions.length > 1 ? (
