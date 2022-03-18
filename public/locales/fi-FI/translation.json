@@ -1,8 +1,4 @@
 {
-  "number": "{{value, number}}",
-  "numberWithCurrency": "{{value, currency(currency: currency)}}",
-  "numberWithCurrencyRounded": "{{value, currency(maximumFractionDigits: 0; currency: currency)}}",
-  "date": "{{date, datetime}}",
   "component": {
     "select": {
       "placeholder": "Please select"
@@ -16,7 +12,8 @@
       "transactions": "Transactions",
       "orders": "Orders",
       "trading": "Trading",
-      "documents": "Documents"
+      "documents": "Documents",
+      "contact": "Contact"
     }
   },
   "portfolioSummary": {
@@ -88,6 +85,9 @@
   "documentsPage": {
     "title": "Documents",
     "noDocuments": "No documents"
+  },
+  "contactPage": {
+    "cardHeader": "Contact"
   },
   "404Page": {
     "title": "404 - Not found"

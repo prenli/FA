@@ -37,6 +37,9 @@ const OrderDetails = lazy(() =>
 const Documents = lazy(() =>
   import("./documents").then((module) => ({ default: module.DocumentsPage }))
 );
+const Contact = lazy(() =>
+  import("./contact").then((module) => ({ default: module.ContactPage }))
+);
 
 export const portfolioTabRoutes: NavTabPath[] = [
   {
@@ -67,6 +70,12 @@ export const portfolioTabRoutes: NavTabPath[] = [
     path: "documents",
     tabLabel: <TranslationText translationKey="navTab.tabs.documents" />,
     tabComponent: <Documents />,
+    element: null,
+  },
+  {
+    path: "contact",
+    tabLabel: <TranslationText translationKey="navTab.tabs.contact" />,
+    tabComponent: <Contact />,
     element: null,
   },
 ];

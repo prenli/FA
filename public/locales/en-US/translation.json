@@ -16,7 +16,8 @@
       "transactions": "Transactions",
       "orders": "Orders",
       "trading": "Trading",
-      "documents": "Documents"
+      "documents": "Documents",
+      "contact": "Contact"
     }
   },
   "portfolioSummary": {
@@ -88,6 +89,9 @@
   "documentsPage": {
     "title": "Documents",
     "noDocuments": "No documents"
+  },
+  "contactPage": {
+    "cardHeader": "Contact"
   },
   "404Page": {
     "title": "404 - Not found"

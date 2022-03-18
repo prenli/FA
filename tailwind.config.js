@@ -3,7 +3,7 @@ const plugin = require("tailwindcss/plugin");
 const theme = require("./theme.config.js");
 
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/contact.html"],
   safelist: [
     "md:grid-cols-1",
     "md:grid-cols-2",
