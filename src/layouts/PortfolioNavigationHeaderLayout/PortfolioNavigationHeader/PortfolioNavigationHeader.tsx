@@ -1,4 +1,6 @@
+import { LogoutButton } from "components";
 import { Select } from "components/Select/Select";
+import { useIsPortfolioNavigationHeaderVisible } from "../../../hooks/useIsPortfolioNavigationHeaderVisible";
 import { useGetCurrentPortfolio } from "./useGetCurrentPortfolio";
 import { useGetPortfolioOptions } from "./useGetPortfolioOptions";
 import { useNavigateToPortfolioTab } from "./useNavigateToPortfolioTab";
@@ -18,6 +20,7 @@ export const PortfolioNavigationHeader = () => {
   const onPortfolioChange = (selectedOption: PortfolioOption) => {
     navigateToPortfolioTab(selectedOption.urlPrefix);
   };
+  const showLogoutButton = !useIsPortfolioNavigationHeaderVisible();
 
   return (
     <div className="flex gap-2 p-2 lg:p-1 bg-white">
@@ -37,6 +40,7 @@ export const PortfolioNavigationHeader = () => {
           </div>
         )}
       </div>
+      {showLogoutButton && <LogoutButton />}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import { LoadingIndicator } from "components";
-import { useMatchesBreakpoint } from "../../hooks/useMatchesBreakpoint";
+import { LoadingIndicator, LogoutButton } from "components";
+import { useIsPortfolioNavigationHeaderVisible } from "../../hooks/useIsPortfolioNavigationHeaderVisible";
 import { PortfolioNavigationHeader } from "../PortfolioNavigationHeaderLayout/PortfolioNavigationHeader/PortfolioNavigationHeader";
 import { NavTab } from "./NavTab/NavTab";
 import { NavTabPath } from "./NavTab/types";
@@ -14,7 +14,7 @@ export const NavTabLayout = ({ routes }: NavTabTemplateLayoutProps) => {
   const { tabsRef, groupProps, panelsProps } = useNavTab({
     navTabPaths: routes,
   });
-  const showPortfolioNavigationHeader = useMatchesBreakpoint("lg");
+  const showPortfolioNavigationHeader = useIsPortfolioNavigationHeaderVisible();
 
   return (
     <div className="flex overflow-auto flex-col flex-1 items-stretch">
@@ -33,6 +33,11 @@ export const NavTabLayout = ({ routes }: NavTabTemplateLayoutProps) => {
               {route.tabLabel}
             </NavTab.NavTab>
           ))}
+          {showPortfolioNavigationHeader && (
+            <div className="flex justify-end grow">
+              <LogoutButton />
+            </div>
+          )}
         </NavTab.List>
         <Suspense fallback={<LoadingIndicator center />}>
           <NavTab.Panels {...panelsProps}>

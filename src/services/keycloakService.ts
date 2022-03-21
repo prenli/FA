@@ -133,7 +133,7 @@ class KeycloakService {
       ...keycloakServiceInitialState,
     };
     this.updateState();
-    this.keycloak.login();
+    this.keycloak.logout();
   };
 
   onReady = async (authenticated: boolean) => {
