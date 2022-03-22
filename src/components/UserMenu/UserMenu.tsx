@@ -29,16 +29,14 @@ export const UserMenu = () => {
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
       >
-        <Menu.Items className="absolute right-0 z-10 w-52 bg-white rounded-md divide-y divide-gray-100 ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none">
-          <div className="p-2">
-            {menuItems.map((item, index) => (
-              <MenuItem
-                key={index}
-                label={t(item.labelTranslationKey)}
-                action={item.action}
-              />
-            ))}
-          </div>
+        <Menu.Items className="absolute right-0 z-10 py-1 w-52 bg-white rounded-md divide-y divide-gray-100 ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none">
+          {menuItems.map((item, index) => (
+            <MenuItem
+              key={index}
+              label={t(item.labelTranslationKey)}
+              action={item.action}
+            />
+          ))}
         </Menu.Items>
       </Transition>
     </Menu>
@@ -55,7 +53,7 @@ const MenuItem = ({ action, label }: MenuItemProps) => (
     {({ active }) => (
       <button
         className={classNames(
-          "group flex rounded-md items-center w-full px-2 py-2 text-base font-medium text-gray-900",
+          "p-2 group flex items-center w-full text-base font-medium text-gray-900",
           {
             "bg-primary-50": active,
           }

@@ -47,7 +47,7 @@ export const Select = <TOption extends Option>({
                   className={classNames(
                     "block py-2 px-4 text-sm text-gray-700 dark:text-gray-200 ",
                     {
-                      "dark:text-white bg-gray-100 dark:bg-gray-600": active,
+                      "dark:text-white bg-primary-50 dark:bg-gray-600": active,
                       "font-bold": selected,
                     }
                   )}
