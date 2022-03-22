@@ -1,7 +1,5 @@
 import { Suspense } from "react";
-import { LoadingIndicator, UserMenu } from "components";
-import { useIsPortfolioNavigationHeaderVisible } from "../../hooks/useIsPortfolioNavigationHeaderVisible";
-import { PortfolioNavigationHeader } from "../PortfolioNavigationHeaderLayout/PortfolioNavigationHeader/PortfolioNavigationHeader";
+import { LoadingIndicator } from "components";
 import { NavTab } from "./NavTab/NavTab";
 import { NavTabPath } from "./NavTab/types";
 import { useNavTab } from "./NavTab/useNavTab";
@@ -14,17 +12,11 @@ export const NavTabLayout = ({ routes }: NavTabTemplateLayoutProps) => {
   const { tabsRef, groupProps, panelsProps } = useNavTab({
     navTabPaths: routes,
   });
-  const showPortfolioNavigationHeader = useIsPortfolioNavigationHeaderVisible();
 
   return (
     <div className="flex overflow-auto flex-col flex-1 items-stretch">
       <NavTab.Group {...groupProps}>
         <NavTab.List>
-          {showPortfolioNavigationHeader && (
-            <div className="min-w-[300px]">
-              <PortfolioNavigationHeader />
-            </div>
-          )}
           {routes.map((route, index) => (
             <NavTab.NavTab
               key={`NavTab_${index}`}
@@ -33,11 +25,6 @@ export const NavTabLayout = ({ routes }: NavTabTemplateLayoutProps) => {
               {route.tabLabel}
             </NavTab.NavTab>
           ))}
-          {showPortfolioNavigationHeader && (
-            <div className="flex justify-end grow">
-              <UserMenu />
-            </div>
-          )}
         </NavTab.List>
         <Suspense fallback={<LoadingIndicator center />}>
           <NavTab.Panels {...panelsProps}>
