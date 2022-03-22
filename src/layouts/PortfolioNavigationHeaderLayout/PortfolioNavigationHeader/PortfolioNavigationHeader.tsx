@@ -1,4 +1,4 @@
-import { LogoutButton } from "components";
+import { UserMenu } from "components";
 import { Select } from "components/Select/Select";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
@@ -22,14 +22,14 @@ export const PortfolioNavigationHeader = () => {
   const onPortfolioChange = (selectedOption: PortfolioOption) => {
     navigateToPortfolioTab(selectedOption.urlPrefix);
   };
-  const showLogoutButton = !useIsPortfolioNavigationHeaderVisible();
+  const showUserMenu = !useIsPortfolioNavigationHeaderVisible();
   const { portfolioId } = useParams();
   const navigate = useNavigate();
 
   return (
     <div className="flex gap-2 p-2 lg:p-1 bg-white">
       <div
-        className="rounded h-[40px] w-[40px]"
+        className="rounded cursor-pointer h-[40px] w-[40px]"
         onClick={() =>
           navigate(
             portfolioId ? `/portfolio/${portfolioId}/overview` : "/overview"
@@ -51,7 +51,7 @@ export const PortfolioNavigationHeader = () => {
           </div>
         )}
       </div>
-      {showLogoutButton && <LogoutButton />}
+      {showUserMenu && <UserMenu />}
     </div>
   );
 };

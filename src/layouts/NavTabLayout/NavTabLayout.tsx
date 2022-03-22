@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { LoadingIndicator, LogoutButton } from "components";
+import { LoadingIndicator, UserMenu } from "components";
 import { useIsPortfolioNavigationHeaderVisible } from "../../hooks/useIsPortfolioNavigationHeaderVisible";
 import { PortfolioNavigationHeader } from "../PortfolioNavigationHeaderLayout/PortfolioNavigationHeader/PortfolioNavigationHeader";
 import { NavTab } from "./NavTab/NavTab";
@@ -35,7 +35,7 @@ export const NavTabLayout = ({ routes }: NavTabTemplateLayoutProps) => {
           ))}
           {showPortfolioNavigationHeader && (
             <div className="flex justify-end grow">
-              <LogoutButton />
+              <UserMenu />
             </div>
           )}
         </NavTab.List>

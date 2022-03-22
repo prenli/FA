@@ -47,7 +47,7 @@ export const Button = ({
         {isLoading ? (
           <Spinner className="w-5 h-5 text-primary-400 animate-spin fill-white" />
         ) : (
-          LeftIcon && <LeftIcon className="w-5 h-5" />
+          LeftIcon && <LeftIcon className="w-5 h-5" aria-hidden />
         )}
       </span>
     )}
