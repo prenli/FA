@@ -161,7 +161,6 @@ export const TransactionDetails = ({
                   formatParams: {
                     value: {
                       minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
                     },
                   },
                 })}
