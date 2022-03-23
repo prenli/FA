@@ -8,7 +8,7 @@ export const ContactView = () => {
 
   return (
     <Card header={t("contactPage.cardHeader")}>
-      <div dangerouslySetInnerHTML={{ __html: contactHTML }} className="p-2" />
+      <div dangerouslySetInnerHTML={{ __html: contactHTML }} />
     </Card>
   );
 };
