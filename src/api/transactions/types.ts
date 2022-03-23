@@ -43,12 +43,9 @@ export interface TransactionDetails extends Transaction {
     };
   };
   settlementDate: string;
-  unitPrice: number;
-  grossPrice: number;
-  totalCost: number;
-  tradeAmount: number;
-  currencyCode: string;
-  fxRate: number;
+  unitPriceInSecurityCurrency: number;
+  costInSecurityCurrency: number;
+  accountFxRate: number;
   documents: {
     identifier: string;
   }[];
@@ -56,6 +53,16 @@ export interface TransactionDetails extends Transaction {
   marketPlace?: {
     name: string;
   };
+  account?: {
+    currency: {
+      accountCurrencyCode: string;
+    };
+  };
+  securityCurrencyCode: string;
+  tradeAmountInAccountCurrency: number;
+  tradeAmountInSecurityCurrency: number;
+  grossPriceInSecurityCurrency: number;
+  grossPriceInAccountCurrency: number;
 }
 
 export interface TransactionDetailsQuery {

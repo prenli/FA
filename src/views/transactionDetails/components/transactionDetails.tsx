@@ -14,6 +14,7 @@ import {
 import { InfoCard } from "views/transactionDetails/components/InfoCard";
 import { DataRow } from "../../holdingDetails/components/DataRow";
 import { TransactionType } from "../transactionDetailsView";
+import { ValueInCurrencies } from "./ValueInCurrencies";
 
 interface TransactionDetailsProps {
   data: TransactionDetailsType;
@@ -24,19 +25,22 @@ export const TransactionDetails = ({
     amount,
     security,
     settlementDate,
-    unitPrice,
-    grossPrice,
+    unitPriceInSecurityCurrency,
     type: { typeName, typeNamesAsMap, cashFlowEffect, amountEffect },
     transactionDate,
     securityName,
     parentPortfolio: { name: portfolioName },
-    totalCost,
-    tradeAmount,
-    currencyCode: currency,
-    fxRate,
+    costInSecurityCurrency,
+    accountFxRate,
     marketPlace,
     documents,
     extInfo,
+    account,
+    securityCurrencyCode,
+    tradeAmountInAccountCurrency,
+    tradeAmountInSecurityCurrency,
+    grossPriceInSecurityCurrency,
+    grossPriceInAccountCurrency,
   },
 }: TransactionDetailsProps) => {
   const { t, i18n } = useTranslation();
@@ -58,7 +62,10 @@ export const TransactionDetails = ({
           />
           <InfoCard
             label={t("transactionsPage.total")}
-            value={t("numberWithCurrency", { value: totalCost, currency })}
+            value={t("numberWithCurrency", {
+              value: costInSecurityCurrency,
+              currency: securityCurrencyCode,
+            })}
           />
           <div className="col-span-2 md:col-span-1">
             <InfoCard
@@ -108,8 +115,8 @@ export const TransactionDetails = ({
               <DataRow
                 label={t("transactionsPage.unitPrice")}
                 value={t("numberWithCurrency", {
-                  value: unitPrice,
-                  currency,
+                  value: unitPriceInSecurityCurrency,
+                  currency: securityCurrencyCode,
                   formatParams: {
                     value: {
                       // do not round unit price to two decimals - business requirement
@@ -120,23 +127,37 @@ export const TransactionDetails = ({
               />
               <DataRow
                 label={t("transactionsPage.grossTradeAmount")}
-                value={t("numberWithCurrency", { value: grossPrice, currency })}
+                value={
+                  <ValueInCurrencies
+                    valueInSecurityCurrency={grossPriceInSecurityCurrency}
+                    securityCurrencyCode={securityCurrencyCode}
+                    valueInAccountCurrency={grossPriceInAccountCurrency}
+                    accountCurrencyCode={account?.currency.accountCurrencyCode}
+                  />
+                }
               />
               <DataRow
                 label={t("transactionsPage.cost")}
-                value={t("numberWithCurrency", { value: totalCost, currency })}
+                value={t("numberWithCurrency", {
+                  value: costInSecurityCurrency,
+                  currency: securityCurrencyCode,
+                })}
               />
               <DataRow
                 label={t("transactionsPage.netTradeAmount")}
-                value={t("numberWithCurrency", {
-                  value: tradeAmount,
-                  currency,
-                })}
+                value={
+                  <ValueInCurrencies
+                    valueInSecurityCurrency={tradeAmountInSecurityCurrency}
+                    securityCurrencyCode={securityCurrencyCode}
+                    valueInAccountCurrency={tradeAmountInAccountCurrency}
+                    accountCurrencyCode={account?.currency.accountCurrencyCode}
+                  />
+                }
               />
               <DataRow
                 label={t("transactionsPage.fxRate")}
                 value={t("number", {
-                  value: fxRate,
+                  value: accountFxRate,
                   formatParams: {
                     value: {
                       minimumFractionDigits: 2,

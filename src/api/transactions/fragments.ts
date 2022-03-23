@@ -39,12 +39,9 @@ export const TRANSACTION_DETAILS_FIELDS = gql`
       }
     }
     settlementDate
-    unitPrice
-    grossPrice
-    totalCost
-    tradeAmount
-    currencyCode
-    fxRate
+    unitPriceInSecurityCurrency: unitPrice
+    costInSecurityCurrency: totalCost
+    accountFxRate: accountFxRateView
     documents {
       identifier
     }
@@ -53,5 +50,15 @@ export const TRANSACTION_DETAILS_FIELDS = gql`
       id
       name
     }
+    account {
+      currency {
+        accountCurrencyCode: securityCode
+      }
+    }
+    securityCurrencyCode: currencyCode
+    tradeAmountInAccountCurrency
+    tradeAmountInSecurityCurrency: tradeAmount
+    grossPriceInSecurityCurrency: grossPrice
+    grossPriceInAccountCurrency
   }
 `;
