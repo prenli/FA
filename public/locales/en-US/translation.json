@@ -9,6 +9,7 @@
     }
   },
   "navTab": {
+    "logout": "Logout",
     "totalInvestments": "Total investments",
     "tabs": {
       "overview": "Overview",
