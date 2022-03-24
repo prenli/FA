@@ -16,8 +16,10 @@ export const ServiceWorkerRegistrationProvider = ({
 
   const onServiceWorkerUpdate = useCallback(
     (registration: ServiceWorkerRegistration) => {
-      const onPageRefresh = () => {
+      const onPageRefresh = async () => {
         registration.waiting?.postMessage({ type: "SKIP_WAITING" });
+        // clear caches
+        (await caches.keys()).forEach((cacheName) => caches.delete(cacheName));
         window.location.reload();
       };
       toast.info(
