@@ -1,22 +1,22 @@
 import { initReactI18next } from "react-i18next";
 import i18n from "i18next";
 
-const supportedLngs = ["en", "fi-FI"];
+const supportedLanguages = ["en-US", "fi-FI"];
 
 i18n.use(initReactI18next).init({
-  lng: "en",
-  fallbackLng: "en",
+  lng: "en-US",
+  fallbackLng: "en-US",
   interpolation: {
     escapeValue: false,
   },
   defaultNS: "translation",
-  supportedLngs,
+  supportedLanguages,
   react: {
     useSuspense: false,
   },
 });
 
-supportedLngs.forEach((lang) => {
+supportedLanguages.forEach((lang) => {
   i18n.addResourceBundle(
     lang,
     "translation",
