@@ -50,62 +50,64 @@ export const TransactionDetails = ({
   return (
     <PageLayout>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div className="grid grid-cols-2 gap-2 md:grid-cols-[repeat(auto-fill,_minmax(175px,_1fr))]">
-          <InfoCard
-            label={t("transactionsPage.type")}
-            value={getNameFromBackendTranslations(
-              typeNamesAsMap,
-              typeName,
-              i18n.language
-            )}
-            colorScheme={getTransactionColor(amountEffect, cashFlowEffect)}
-          />
-          <InfoCard
-            label={t("transactionsPage.total")}
-            value={t("numberWithCurrency", {
-              value: costInSecurityCurrency,
-              currency: securityCurrencyCode,
-            })}
-          />
-          <div className="col-span-2 md:col-span-1">
+        <div className="md:col-start-1 md:row-start-1 md:row-end-2 lg:row-end-3">
+          <div className="grid grid-cols-2 gap-2 md:grid-cols-[repeat(auto-fill,_minmax(175px,_1fr))]">
             <InfoCard
-              label={t("transactionsPage.securityName")}
+              label={t("transactionsPage.type")}
+              value={getNameFromBackendTranslations(
+                typeNamesAsMap,
+                typeName,
+                i18n.language
+              )}
+              colorScheme={getTransactionColor(amountEffect, cashFlowEffect)}
+            />
+            <InfoCard
+              label={t("transactionsPage.total")}
+              value={t("numberWithCurrency", {
+                value: costInSecurityCurrency,
+                currency: securityCurrencyCode,
+              })}
+            />
+            <div className="col-span-2">
+              <InfoCard
+                label={t("transactionsPage.securityName")}
+                value={
+                  <div>
+                    <span>{securityName}</span>
+                    {security && security.country && (
+                      <CountryFlag
+                        code={security.country.code}
+                        className="inline ml-1.5 align-baseline w-[20px] h-[14px]"
+                      />
+                    )}
+                  </div>
+                }
+                onClick={() =>
+                  !!security && navigate(`../holdings/${security.securityCode}`)
+                }
+              />
+            </div>
+            <div className="col-span-2">
+              <InfoCard
+                label={t("transactionsPage.portfolioName")}
+                value={portfolioName}
+              />
+            </div>
+            <InfoCard
+              label={t("transactionsPage.transactionDate")}
+              value={t("date", { date: dateFromYYYYMMDD(transactionDate) })}
+            />
+            <InfoCard
+              label={t("transactionsPage.settlementDate")}
               value={
-                <div>
-                  <span>{securityName}</span>
-                  {security && security.country && (
-                    <CountryFlag
-                      code={security.country.code}
-                      className="inline ml-1.5 align-baseline w-[20px] h-[14px]"
-                    />
-                  )}
-                </div>
-              }
-              onClick={() =>
-                !!security && navigate(`../holdings/${security.securityCode}`)
+                settlementDate
+                  ? t("date", { date: dateFromYYYYMMDD(settlementDate) })
+                  : t("messages.notAvailable")
               }
             />
           </div>
-          <div className="col-span-2 md:col-span-1">
-            <InfoCard
-              label={t("transactionsPage.portfolioName")}
-              value={portfolioName}
-            />
-          </div>
-          <InfoCard
-            label={t("transactionsPage.transactionDate")}
-            value={t("date", { date: dateFromYYYYMMDD(transactionDate) })}
-          />
-          <InfoCard
-            label={t("transactionsPage.settlementDate")}
-            value={
-              settlementDate
-                ? t("date", { date: dateFromYYYYMMDD(settlementDate) })
-                : t("messages.notAvailable")
-            }
-          />
         </div>
-        <div className="grid xl:grid-cols-2 lg:col-span-2 md:row-span-3 gap-4 content-start">
+        <div className="md:col-start-2 md:row-start-1 md:row-end-3 lg:row-end-4 gap-4">
           <Card header={t("transactionsPage.details")}>
             <div className="flex flex-col px-2 my-1 divide-y">
               <DataRow
@@ -165,43 +167,50 @@ export const TransactionDetails = ({
                   },
                 })}
               />
+              <div></div>
             </div>
           </Card>
-          <div className="h-fit">
-            <Card header={t("transactionsPage.security")}>
-              <div className="flex flex-col px-2 my-1 divide-y">
-                <DataRow
-                  label={t("transactionsPage.isin")}
-                  value={security?.isinCode ?? t("messages.notAvailable")}
-                />
-                <DataRow
-                  label={t("transactionsPage.marketplace")}
-                  value={
-                    marketPlace?.name ??
-                    security?.exchange?.name ??
-                    t("messages.notAvailable")
-                  }
-                />
-              </div>
-            </Card>
-          </div>
         </div>
-        {extInfo && (
-          <Card header={t("transactionsPage.description")}>
-            <p className="p-2 text-base font-normal">{extInfo}</p>
+        <div className="lg:col-start-3 lg:row-start-1 lg:row-end-2">
+          <Card header={t("transactionsPage.security")}>
+            <div className="flex flex-col px-2 my-1 divide-y">
+              <DataRow
+                label={t("transactionsPage.isin")}
+                value={security?.isinCode ?? t("messages.notAvailable")}
+              />
+              <DataRow
+                label={t("transactionsPage.marketplace")}
+                value={
+                  marketPlace?.name ??
+                  security?.exchange?.name ??
+                  t("messages.notAvailable")
+                }
+              />
+            </div>
           </Card>
-        )}
+        </div>
+        {/* on lg screens below row ends at 5th grid line (other lines ends at 4)
+        to make up the height difference resulting from gap added we set mb-4 */}
+        <div className="lg:col-start-3 lg:row-start-2 lg:row-end-5 lg:mb-4">
+          <Card header={t("transactionsPage.description")}>
+            <p className="p-2 text-base font-normal">
+              {extInfo || t("messages.notAvailable")}
+            </p>
+          </Card>
+        </div>
         {documents.length > 0 && (
-          <Button
-            isFullWidth
-            isLoading={downloading}
-            LeftIcon={DocumentDownloadIcon}
-            onClick={() => downloadDocument(documents[0].identifier)}
-          >
-            {transactionType === "transaction"
-              ? t("transactionsPage.downloadFileButtonLabel")
-              : t("ordersPage.downloadFileButtonLabel")}
-          </Button>
+          <div className="md:col-start-1 md:row-start-2 lg:row-start-3">
+            <Button
+              isFullWidth
+              isLoading={downloading}
+              LeftIcon={DocumentDownloadIcon}
+              onClick={() => downloadDocument(documents[0].identifier)}
+            >
+              {transactionType === "transaction"
+                ? t("transactionsPage.downloadFileButtonLabel")
+                : t("ordersPage.downloadFileButtonLabel")}
+            </Button>
+          </div>
         )}
       </div>
     </PageLayout>
