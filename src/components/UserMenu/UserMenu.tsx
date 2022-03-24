@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { Fragment, ReactNode } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ReactComponent as LogoutIcon } from "assets/logout.svg";
 import { ReactComponent as UserCircleIcon } from "assets/user-circle.svg";
@@ -15,9 +15,9 @@ const menuItems = [
 
 export const UserMenu = () => {
   return (
-    <Menu as="div" className="inline-block relative">
+    <Menu as="div" className="grid relative items-center">
       <Menu.Button>
-        <div className="py-1 rounded cursor-pointer h-[40px] w-[32px]">
+        <div className="w-8 h-8 rounded cursor-pointer">
           <UserCircleIcon className="h-full text-gray-900" />
         </div>
       </Menu.Button>
@@ -28,8 +28,9 @@ export const UserMenu = () => {
         leave="transition duration-75 ease-out"
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
+        as={Fragment}
       >
-        <Menu.Items className="absolute right-0 z-10 py-1 bg-white rounded-md divide-y divide-gray-100 ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none min-w-[120px]">
+        <Menu.Items className="absolute top-full right-0 z-10 py-1 bg-white rounded-md divide-y divide-gray-100 ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none min-w-[120px]">
           {menuItems.map((item, index) => (
             <MenuItem key={index} label={item.label} action={item.action} />
           ))}

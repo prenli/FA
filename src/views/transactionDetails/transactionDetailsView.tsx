@@ -1,5 +1,5 @@
 import { useGetTransactionDetails } from "api/transactions/useGetTransactionDetails";
-import { BackNavigationButton, Heading, QueryLoadingWrapper } from "components";
+import { DetailsHeading, QueryLoadingWrapper } from "components";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { TransactionDetails } from "./components/transactionDetails";
@@ -20,12 +20,11 @@ export const TransactionDetailsView = ({
   const navigate = useNavigate();
   return (
     <div className="flex overflow-hidden flex-col h-full">
-      <Heading>
-        <BackNavigationButton
-          onClick={() => navigate(getNavigationPath(type))}
-        />
+      <DetailsHeading
+        onBackButtonClick={() => navigate(getNavigationPath(type))}
+      >
         <HeaderLabel type={type} />
-      </Heading>
+      </DetailsHeading>
       <div className="overflow-y-scroll h-full grow-1">
         <QueryLoadingWrapper
           {...queryData}

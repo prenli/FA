@@ -1,11 +1,6 @@
 import { HoldingPosition, SecurityDetailsPosition } from "api/holdings/types";
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
-import {
-  BackNavigationButton,
-  Card,
-  GainLoseColoring,
-  Heading,
-} from "components";
+import { Card, GainLoseColoring, DetailsHeading } from "components";
 import { PageLayout } from "layouts/PageLayout/PageLayout";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -49,10 +44,9 @@ export const HoldingDetails = ({
 
   return (
     <div className="flex overflow-hidden flex-col h-full">
-      <Heading>
-        <BackNavigationButton onClick={() => navigate(-1)} />
+      <DetailsHeading onBackButtonClick={() => navigate(-1)}>
         {name ?? ""}
-      </Heading>
+      </DetailsHeading>
       <div className="overflow-y-auto grow-1">
         <PageLayout>
           <div className="grid gap-4 md:grid-cols-[300px_auto] lg:grid-cols-[400px_auto] xl:grid-cols-[500px_auto]">

@@ -1,5 +1,5 @@
 export { Center } from "./Center/Center";
-export { Heading } from "./Heading/Heading";
+export { DetailsHeading } from "./DetailsHeading/DetailsHeading";
 export { Card } from "./Card/Card";
 export { QueryError } from "./QueryError/QueryError";
 export { LoadingIndicator } from "./LoadingIndicator/LoadingIndicator";
@@ -17,3 +17,4 @@ export { LineChart } from "./LineChart/LineChart";
 export { ButtonRadio } from "./ButtonRadio/ButtonRadio";
 export { ResponsiveDataGrid } from "./ResponsiveDataRow/ResponsiveDataGrid";
 export { UserMenu } from "./UserMenu/UserMenu";
+export { Logo } from "./Logo/Logo";

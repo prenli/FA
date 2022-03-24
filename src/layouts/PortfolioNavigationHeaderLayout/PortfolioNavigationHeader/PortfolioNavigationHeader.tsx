@@ -1,7 +1,5 @@
-import { UserMenu } from "components";
+import { UserMenu, Logo } from "components";
 import { Select } from "components/Select/Select";
-import { useNavigate } from "react-router";
-import { useParams } from "react-router-dom";
 import { useGetCurrentPortfolio } from "./useGetCurrentPortfolio";
 import { useGetPortfolioOptions } from "./useGetPortfolioOptions";
 import { useNavigateToPortfolioTab } from "./useNavigateToPortfolioTab";
@@ -21,22 +19,11 @@ export const PortfolioNavigationHeader = () => {
   const onPortfolioChange = (selectedOption: PortfolioOption) => {
     navigateToPortfolioTab(selectedOption.urlPrefix);
   };
-  const { portfolioId } = useParams();
-  const navigate = useNavigate();
 
   return (
-    <div className=" bg-white">
+    <div className="bg-white">
       <div className="container flex gap-2 p-2 lg:p-1 mx-auto">
-        <div
-          className="rounded cursor-pointer h-[40px] w-[40px]"
-          onClick={() =>
-            navigate(
-              portfolioId ? `/portfolio/${portfolioId}/overview` : "/overview"
-            )
-          }
-        >
-          <img src="/logo.svg" alt="logo" />
-        </div>
+        <Logo />
         <div className="flex-1">
           {portfolioOptions.length > 1 ? (
             <div className="sm:min-w-[350px] sm:w-fit">
