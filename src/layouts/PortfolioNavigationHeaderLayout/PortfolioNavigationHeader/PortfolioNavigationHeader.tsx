@@ -22,7 +22,7 @@ export const PortfolioNavigationHeader = () => {
 
   return (
     <div className="bg-white">
-      <div className="container flex gap-2 p-2 lg:p-1 mx-auto">
+      <div className="container flex gap-2 items-center p-2 mx-auto">
         <Logo />
         <div className="flex-1">
           {portfolioOptions.length > 1 ? (
@@ -39,7 +39,9 @@ export const PortfolioNavigationHeader = () => {
             </div>
           )}
         </div>
-        <UserMenu />
+        <div className="px-2">
+          <UserMenu />
+        </div>
       </div>
     </div>
   );

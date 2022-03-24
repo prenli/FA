@@ -6,7 +6,7 @@ export const Logo = () => {
   const navigate = useNavigate();
   return (
     <div
-      className="rounded cursor-pointer h-[40px] w-[40px]"
+      className="w-10 h-10 rounded cursor-pointer"
       onClick={() =>
         navigate(
           portfolioId ? `/portfolio/${portfolioId}/overview` : "/overview"

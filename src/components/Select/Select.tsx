@@ -24,7 +24,7 @@ export const Select = <TOption extends Option>({
   const { t } = useTranslation();
   return (
     <Listbox value={value} onChange={onChange}>
-      <Listbox.Button className="flex items-center py-2.5 px-4 w-full text-lg font-bold dark:placeholder-gray-400 text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-300 focus:border-primary-500 dark:border-gray-600 dark:focus:border-primary-500 focus:ring-primary-500 dark:focus:ring-primary-500">
+      <Listbox.Button className="flex items-center py-2.5 px-4 w-full h-10 text-lg font-bold dark:placeholder-gray-400 text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-300 focus:border-primary-500 dark:border-gray-600 dark:focus:border-primary-500 focus:ring-primary-500 dark:focus:ring-primary-500">
         <div className="box-border flex flex-1 content-start leading-none">
           {value?.label ?? t("component.select.placeholder")}
         </div>
