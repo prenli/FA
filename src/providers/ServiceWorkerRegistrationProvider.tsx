@@ -40,6 +40,13 @@ interface RefreshToastProps {
   registration: ServiceWorkerRegistration;
 }
 
+const cachesToClearOnUpdate = [
+  "keycloak",
+  "images",
+  "translations",
+  "custom-html",
+];
+
 const RefreshToast = ({ registration }: RefreshToastProps) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
@@ -48,7 +55,9 @@ const RefreshToast = ({ registration }: RefreshToastProps) => {
     setLoading(true);
     registration.waiting?.postMessage({ type: "SKIP_WAITING" });
     // clear caches
-    (await caches.keys()).forEach((cacheName) => caches.delete(cacheName));
+    (await caches.keys()).forEach((cacheName) => {
+      if (cachesToClearOnUpdate.includes(cacheName)) caches.delete(cacheName);
+    });
     window.location.reload();
     setLoading(false);
   };
