@@ -89,7 +89,10 @@
   },
   "documentsPage": {
     "title": "Documents",
-    "noDocuments": "No documents"
+    "noDocuments": "No documents",
+    "name": "Name",
+    "date": "Date",
+    "download": "Download"
   },
   "contactPage": {
     "cardHeader": "Contact us"
