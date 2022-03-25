@@ -91,7 +91,7 @@
   },
   "documentsPage": {
     "title": "Documents",
-    "noDocuments": "No documents",
+    "noDocuments": "No documents are available",
     "name": "Name",
     "date": "Date",
     "download": "Download"
