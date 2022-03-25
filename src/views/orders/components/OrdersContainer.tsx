@@ -4,13 +4,19 @@ import { NoOrders } from "./NoOrders";
 import { useGroupedTradeOrdersByStatus } from "./useGroupedTradeOrdersByStatus";
 
 interface OrdersContainerProps {
-  data: TradeOrder[];
+  data: {
+    startDate: Date;
+    endDate: Date;
+    orders: TradeOrder[] | undefined;
+  };
 }
 
-export const OrdersContainer = ({ data }: OrdersContainerProps) => {
-  const groupedTradeOrders = useGroupedTradeOrdersByStatus(data);
-  if (data.length === 0) {
-    return <NoOrders />;
+export const OrdersContainer = ({
+  data: { startDate, endDate, orders },
+}: OrdersContainerProps) => {
+  const groupedTradeOrders = useGroupedTradeOrdersByStatus(orders);
+  if (!orders || orders.length === 0) {
+    return <NoOrders startDate={startDate} endDate={endDate} />;
   }
 
   return (

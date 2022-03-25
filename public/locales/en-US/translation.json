@@ -55,7 +55,8 @@
   },
   "ordersPage": {
     "header": "Order",
-    "noOrders": "No orders for specified period",
+    "noOrders": "No orders are available\n for this period",
+    "noOrdersInfo": "Try filtering with other dates",
     "inExecution": "In execution",
     "open": "Open",
     "accepted": "Accepted",
@@ -84,7 +85,8 @@
     "grossTradeAmount": "Gross trade amount",
     "netTradeAmount": "Net trade amount",
     "total": "Total",
-    "noTransactions": "No transactions for specified period",
+    "noTransactions": "No transactions are available\n for this period",
+    "noTransactionsInfo": "Try filtering with other dates",
     "downloadFileButtonLabel": "Download transaction note"
   },
   "documentsPage": {
@@ -97,14 +99,21 @@
   "contactPage": {
     "cardHeader": "Contact us"
   },
-  "404Page": {
-    "title": "404 - Not found"
+  "notFoundPage": {
+    "title": "That page doesn't exist!",
+    "info": "Sorry, the page you were\n looking for couldn't be found",
+    "return": "Return to previous page"
   },
   "messages": {
     "noDataAvailable": "No data available.",
     "notAvailable": "not available",
     "newVersion": "There is a new version available.\nPlease reload the page.",
     "error": "Something went wrong",
-    "queryError": "Server error, your data may be outdated."
+    "queryErrorWarning": "Server error, your data may be outdated.",
+    "queryError": "Server error",
+    "noPortfolios": "No portfolios are available",
+    "problemResolveInstructions": "Try refreshing the browser\n or contact us if the problem persists",
+    "noCachedData": "No cached data",
+    "noCachedDataInfo": "Right now we can't get data from server.\n Come back here later."
   }
 }

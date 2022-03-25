@@ -5,6 +5,7 @@ import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
 import { useRoutes, Navigate } from "react-router-dom";
 import { NavTabLayout } from "../layouts/NavTabLayout/NavTabLayout";
 import { PortfolioNavigationHeaderLayout } from "../layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
+import { NotFoundView } from "../views/notFoundView/notFoundView";
 import { portfolioRoutes } from "./portfolio/routes";
 
 const Overview = lazy(() =>
@@ -121,7 +122,7 @@ const rootRoutes = [
       ...portfolioRoutes,
       {
         path: "*",
-        element: <TranslationText translationKey="404Page.title" />,
+        element: <NotFoundView />,
       },
     ],
   },

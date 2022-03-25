@@ -17,6 +17,7 @@ export const Orders = ({
   setStartDate,
   endDate,
   setEndDate,
+  data,
   ...queryData
 }: OrdersProps) => {
   const { t } = useTranslation();
@@ -42,7 +43,15 @@ export const Orders = ({
           </div>
         </div>
       </Card>
-      <QueryLoadingWrapper {...queryData} SuccessComponent={OrdersContainer} />
+      <QueryLoadingWrapper
+        {...queryData}
+        data={{
+          orders: data,
+          startDate,
+          endDate,
+        }}
+        SuccessComponent={OrdersContainer}
+      />
     </div>
   );
 };

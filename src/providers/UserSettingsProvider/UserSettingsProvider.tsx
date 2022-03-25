@@ -1,12 +1,14 @@
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
-import { LoadingIndicator, QueryError } from "components";
+import { LoadingIndicator, NoPortfolios, QueryError } from "components";
 import { useFeedI18nextWithLocale } from "./useFeedI18nextWithLocale";
 
-interface LocaleFeederProps {
+interface UserSettingsProviderProps {
   children: JSX.Element;
 }
 
-export const LocaleFeeder = ({ children }: LocaleFeederProps) => {
+export const UserSettingsProvider = ({
+  children,
+}: UserSettingsProviderProps) => {
   const { data, error } = useGetContactInfo();
   const { isReady } = useFeedI18nextWithLocale(data?.language);
 
@@ -20,6 +22,10 @@ export const LocaleFeeder = ({ children }: LocaleFeederProps) => {
         <LoadingIndicator center />
       </div>
     );
+  }
+
+  if (data?.portfolios?.length === 0) {
+    return <NoPortfolios />;
   }
 
   return children;

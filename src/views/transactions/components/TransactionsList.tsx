@@ -1,10 +1,13 @@
-import { TransactionsContainerProps } from "./TransactionsContainer";
+import { Transaction } from "api/transactions/types";
 import { TransactionsGroup } from "./TransactionsGroup";
 import { useSplitByMonth } from "./useSplitByMonth";
 
-type TransactionsListProps = TransactionsContainerProps;
-export const TransactionsList = ({ data }: TransactionsListProps) => {
-  const splitData = useSplitByMonth(data);
+interface TransactionsListProps {
+  transactions: Transaction[];
+}
+
+export const TransactionsList = ({ transactions }: TransactionsListProps) => {
+  const splitData = useSplitByMonth(transactions);
 
   return (
     <>

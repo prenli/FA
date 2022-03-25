@@ -1,10 +1,11 @@
 import { KeycloakProvider } from "providers/KeycloakProvider";
 import { ToastContainer } from "react-toastify";
 import { keycloakService } from "services/keycloakService";
-import { LoadingIndicator, LocaleFeeder } from "./components";
+import { LoadingIndicator } from "./components";
 import { RootRoutes } from "./pages/routes";
 import { PersistedApolloProvider } from "./providers/PersistedApolloProvider";
 import { ServiceWorkerRegistrationProvider } from "./providers/ServiceWorkerRegistrationProvider";
+import { UserSettingsProvider } from "./providers/UserSettingsProvider/UserSettingsProvider";
 import "react-toastify/dist/ReactToastify.css";
 import "styles/fonts.css";
 
@@ -21,11 +22,11 @@ function App() {
         MissingLinkedContactComponent={<div>Missing linked contact.</div>}
       >
         <PersistedApolloProvider>
-          <LocaleFeeder>
+          <UserSettingsProvider>
             <ServiceWorkerRegistrationProvider>
               <RootRoutes />
             </ServiceWorkerRegistrationProvider>
-          </LocaleFeeder>
+          </UserSettingsProvider>
         </PersistedApolloProvider>
       </KeycloakProvider>
       <ToastContainer />

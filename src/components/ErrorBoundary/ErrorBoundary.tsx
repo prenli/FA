@@ -1,10 +1,6 @@
-import {
-  ReactNode,
-  useState,
-  Component,
-  ErrorInfo as ReactErrorInfo,
-} from "react";
+import { ReactNode, Component, ErrorInfo as ReactErrorInfo } from "react";
 import { useTranslation } from "react-i18next";
+import { EmptyComponent } from "../EmptyComponent/EmptyComponent";
 
 interface Props {
   children: ReactNode;
@@ -41,17 +37,12 @@ interface ErrorInfoProps {
 
 const ErrorInfo = ({ error, errorInfo }: ErrorInfoProps) => {
   const { t } = useTranslation();
-  const [showDetails, setShowDetails] = useState(false);
 
   return (
     <div className="px-2">
-      <div onClick={() => setShowDetails(true)}>{t("messages.error")}</div>
-      {showDetails && (
-        <div className="p-2">
-          <div className="font-semibold">{error?.message}</div>
-          <div>{errorInfo?.componentStack}</div>
-        </div>
-      )}
+      <EmptyComponent header={t("messages.error")}>
+        <div>{t("messages.problemResolveInstructions")}</div>
+      </EmptyComponent>
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import { QueryData } from "api/types";
 import { useTranslation } from "react-i18next";
 import { Slide, toast } from "react-toastify";
+import { Card } from "../Card/Card";
+import { EmptyComponent } from "../EmptyComponent/EmptyComponent";
 import { LoadingIndicator } from "../LoadingIndicator/LoadingIndicator";
 
 interface QueryLoadingWrapperProps<T> extends QueryData<T> {
@@ -17,7 +19,7 @@ export const QueryLoadingWrapper = <TData,>({
 }: QueryLoadingWrapperProps<TData>) => {
   const { t } = useTranslation();
   if (error) {
-    toast.error(t("messages.queryError"), {
+    toast.error(t("messages.queryErrorWarning"), {
       toastId: QUERY_ERROR_TOAST_ID,
       position: toast.POSITION.BOTTOM_CENTER,
       hideProgressBar: true,
@@ -31,7 +33,15 @@ export const QueryLoadingWrapper = <TData,>({
   }
   // when offline and do not have cached data returns data === undefined, no error and not loading
   if (!loading || (error && !data)) {
-    return <div className="min-h-[400px]">No cached data</div>;
+    return (
+      <Card>
+        <EmptyComponent header={t("messages.noCachedData")}>
+          {t("messages.noCachedDataInfo")}
+        </EmptyComponent>
+      </Card>
+    );
+
+    //<div className="min-h-[400px]">No cached data</div>;
   }
   return <LoadingIndicator center />;
 };

@@ -49,7 +49,9 @@ export interface TradeOrdersGroup {
   tradeOrders: TradeOrder[];
 }
 
-export const useGroupedTradeOrdersByStatus = (tradeOrders: TradeOrder[]) => {
+export const useGroupedTradeOrdersByStatus = (
+  tradeOrders: TradeOrder[] | undefined
+) => {
   const { t } = useTranslation();
   return useMemo(() => {
     const grouped: TradeOrdersGroup[] = [];
@@ -61,7 +63,7 @@ export const useGroupedTradeOrdersByStatus = (tradeOrders: TradeOrder[]) => {
       });
     });
 
-    tradeOrders.forEach((tradeOrder) => {
+    tradeOrders?.forEach((tradeOrder) => {
       const orderStatus = tradeOrder.orderStatus;
 
       if (isOrderStatusToDisplayType(orderStatus)) {
