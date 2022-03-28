@@ -25,7 +25,7 @@ export interface ContactInfoQuery {
     language: {
       locale: string;
     };
-    portfolios: {
+    portfolios?: {
       id: number;
       name: string;
       currency: {
@@ -51,10 +51,11 @@ export const useGetContactInfo = () => {
     loading,
     error,
     data: data && {
-      portfolios: data.contact.portfolios,
+      portfolios: data.contact.portfolios || [],
       language: data.contact.language.locale,
       // all contact portfolios have same currency
-      portfoliosCurrency: data.contact.portfolios[0].currency.securityCode,
+      portfoliosCurrency:
+        data.contact.portfolios?.[0].currency.securityCode || "",
     },
   };
 };
