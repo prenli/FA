@@ -81,7 +81,7 @@
     "units": "Units",
     "cost": "Cost",
     "description": "Description",
-    "fxRate": "Fx rate",
+    "fxRate": "FX rate",
     "unitPrice": "Unit price",
     "grossTradeAmount": "Gross trade amount",
     "netTradeAmount": "Net trade amount",

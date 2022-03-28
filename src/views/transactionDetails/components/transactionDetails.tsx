@@ -63,10 +63,18 @@ export const TransactionDetails = ({
             />
             <InfoCard
               label={t("transactionsPage.total")}
-              value={t("numberWithCurrency", {
-                value: costInSecurityCurrency,
-                currency: securityCurrencyCode,
-              })}
+              value={t(
+                "numberWithCurrency",
+                account
+                  ? {
+                      value: tradeAmountInAccountCurrency,
+                      currency: account.currency.accountCurrencyCode,
+                    }
+                  : {
+                      value: tradeAmountInSecurityCurrency,
+                      currency: securityCurrencyCode,
+                    }
+              )}
             />
             <div className="col-span-2">
               <InfoCard

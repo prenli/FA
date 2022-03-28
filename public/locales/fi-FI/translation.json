@@ -1,4 +1,9 @@
 {
+  "number": "{{value, number}}",
+  "numberWithCurrency": "{{value, currency(currency: currency)}}",
+  "numberWithCurrencyRounded": "{{value, currency(maximumFractionDigits: 0; currency: currency)}}",
+  "date": "{{date, datetime(day: 2-digit; month: 2-digit; year: numeric)}}",
+  "dateCustom": "{{date, datetime}}",
   "component": {
     "select": {
       "placeholder": "Please select"
@@ -76,7 +81,7 @@
     "units": "Units",
     "cost": "Cost",
     "description": "Description",
-    "fxRate": "Fx rate",
+    "fxRate": "FX rate",
     "unitPrice": "Unit price",
     "grossTradeAmount": "Gross trade amount",
     "netTradeAmount": "Net trade amount",

@@ -15,22 +15,31 @@ export const ValueInCurrencies = ({
 }: ValueInCurrenciesProps) => {
   const { t } = useTranslation();
 
-  return (
-    <>
+  if (!accountCurrencyCode || securityCurrencyCode === accountCurrencyCode) {
+    return (
       <div>
         {t("numberWithCurrency", {
           value: valueInSecurityCurrency,
           currency: securityCurrencyCode,
         })}
       </div>
-      {accountCurrencyCode && securityCurrencyCode !== accountCurrencyCode && (
-        <div className="text-sm font-medium leading-none text-gray-500">
-          {t("numberWithCurrency", {
-            value: valueInAccountCurrency,
-            currency: accountCurrencyCode,
-          })}
-        </div>
-      )}
+    );
+  }
+
+  return (
+    <>
+      <div>
+        {t("numberWithCurrency", {
+          value: valueInAccountCurrency,
+          currency: accountCurrencyCode,
+        })}
+      </div>
+      <div className="text-sm font-medium leading-none text-gray-500">
+        {t("numberWithCurrency", {
+          value: valueInSecurityCurrency,
+          currency: securityCurrencyCode,
+        })}
+      </div>
     </>
   );
 };
