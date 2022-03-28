@@ -37,8 +37,8 @@ export const chartRangeOptions = [
 ];
 
 const defaultDateFormatting = {
-  month: "short",
   day: "numeric",
+  month: "short",
 };
 
 // apex charts freezes when must draw too many data points chart, we decimate them to prevent this
@@ -84,7 +84,7 @@ export const HoldingHistoryDataChart = () => {
               name: "Price",
               data: removeXDuplicates(
                 preparedMarketData.map((data) => ({
-                  x: t("date", {
+                  x: t("dateCustom", {
                     date: dateFromYYYYMMDD(data.date),
                     ...(selectedRange.dateFormatting || defaultDateFormatting),
                   }),

@@ -6,6 +6,7 @@ export const TRANSACTION_FIELDS = gql`
     amount
     transactionDate
     type {
+      typeCode
       typeName
       typeNamesAsMap
       cashFlowEffect

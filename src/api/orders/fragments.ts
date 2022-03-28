@@ -7,6 +7,7 @@ export const TRADE_ORDERS_DETAILS = gql`
     orderStatus
     securityName
     type {
+      typeCode
       typeName
       typeNamesAsMap
       cashFlowEffect

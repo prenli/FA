@@ -43,6 +43,9 @@ const cache = new InMemoryCache({
     Document: {
       keyFields: ["identifier"],
     },
+    TransactionType: {
+      keyFields: ["typeCode"],
+    },
   },
 });
 

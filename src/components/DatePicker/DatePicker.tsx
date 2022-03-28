@@ -25,6 +25,7 @@ export const DatePicker = ({ label, ...props }: DatePickerProps) => {
         clearIcon={null}
         className="isolate py-3 px-3.5 text-base font-normal leading-tight text-gray-500 bg-gray-50 rounded-lg border border-gray-200"
         locale={i18n.language}
+        showLeadingZeros
         {...props}
       />
     </div>
