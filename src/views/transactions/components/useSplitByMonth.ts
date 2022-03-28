@@ -23,7 +23,7 @@ export const useSplitByMonth = (data: TransactionType[]) => {
       .map(([date, transactions]) => {
         const dateArray = date.split("-").map((period) => parseInt(period));
         return {
-          label: t("date", {
+          label: t("dateCustom", {
             date: new Date(dateArray[0], dateArray[1] - 1),
             year: "numeric",
             month: "long",
