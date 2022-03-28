@@ -38,7 +38,7 @@ export const ListedSecuritiesCard = ({
               <div className="text-base font-normal">{name}</div>
               <div className="whitespace-nowrap">
                 <GainLoseColoring value={valueChangeAbsolute}>
-                  {t("numberWithCurrencyRounded", {
+                  {t("numberWithCurrency", {
                     value: valueChangeAbsolute,
                     currency,
                     formatParams: {

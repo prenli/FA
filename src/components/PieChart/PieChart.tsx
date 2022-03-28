@@ -65,6 +65,6 @@ export const PieChart = ({ series, labels, options }: PieChartProps) => (
     options={{ labels, ...pieChartDefaultOptions, ...options }}
     series={series}
     type="pie"
-    height="100%"
+    height="105%"
   />
 );
