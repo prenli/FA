@@ -14,7 +14,7 @@ const ALL_DOCUMENTS_QUERY = gql`
       }
       portfolios {
         id
-        documents {
+        documents(filterTags: $filterTags) {
           ...DocumentFields
         }
       }
@@ -32,7 +32,7 @@ interface AllDocumentsQuery {
   };
 }
 
-const filterTags: string[] = [];
+const filterTags: string[] = ["Online"];
 
 export const useGetDocuments = (portfolioId?: string | undefined) => {
   const { linkedContact } = useKeycloak();
