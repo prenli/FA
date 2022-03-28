@@ -16,7 +16,7 @@ const SECURITY_DETAILS_QUERY = gql`
       }
       latestMarketData {
         date: obsDate
-        price: close
+        price: closeView
       }
       type {
         code

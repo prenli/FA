@@ -10,7 +10,7 @@ const SECURITY_DETAILS_QUERY = gql`
       id
       marketDataHistory(timePeriodCode: $timePeriodCode) {
         id
-        price: close
+        price: closeView
         date: obsDate
       }
     }
