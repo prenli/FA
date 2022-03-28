@@ -57,7 +57,7 @@ registerRoute(
     url.origin === self.location.origin &&
     (url.pathname.endsWith(".png") ||
       url.pathname.endsWith(".ico") ||
-      url.pathname.endsWith(".ico")),
+      url.pathname.endsWith(".svg")),
   new StaleWhileRevalidate({
     cacheName: "images",
   })
