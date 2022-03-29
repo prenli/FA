@@ -1,20 +1,55 @@
-# FA Client App
+# FA Client Portal
 
-This is FA Client App based on Create React App starter.
+Modern and responsive open source portal that allows your clients to access their investments
 
-## Authorization
+* Modern - fresh visual design, built using popular technologies
+* Responsive - access fluently with mobile and desktop devices
+* Open source - customize freely or use as-is
 
-App uses keycloak for authorization. Configuration file (*keycloak.json*) is located in *public* directory. Current file
-is customized for test environment. Change it to point to your FA instance if needed. You need also ask FA Support to
-change fa-api access type to *public* and add *Valid Redirect URI* and *Web Origin* set to `http://localhost`
+## Getting started
 
-## CORS policy
+### Prerequisites
+
+In order for you to get started with running and/or customizing FA Client Portal, you would need the following:
+
+* FA Platform test environment
+* Enabling the access for the FA Client Portal to connect with your platform => request the access from FA Customer Support
+    * change fa-api access type to *public*
+    * add *Valid Redirect URI* to be `http://localhost:3000/*`
+    * set *Web Origin* set to `+`.
+* Development tools installed including git, npm, yarn...
+
+
+### Steps
+
+#### Clone the project to your local computer
+
+Run the following in your 
+
+    git clone https://bitbucket.org/fasolutions-ondemand/fa-client-app.git
+
+#### Modify the application settings to match your FA Platform test environment
+
+We now assume the addess for your FA Platform is 
+
+https://mytestenv.fasolutions.com
+
+#### Point the authorization towards your test environment
+
+FA CLient Portal uses keycloak for authorization. Configuration file (*keycloak.json*) is located in *public* directory. Current file
+is customized for test environment. Change it to point to your FA Platform test environment. 
+
+    "auth-server-url": "https://mytestenv.fasolutions.com/auth/",
+
+#### CORS policy
 
 Currently, backend API allows only connection with headers from same origin. To bypass that you should use proxy server.
 For local development we use http-proxy-middleware, before you start please adjust REACT_APP_API_URL variable in *.env*
-file. Current value is pointing to test environment.
+file.
 
-## Development
+    REACT_APP_API_URL=https://mytestenv.fasolutions.com
+
+#### Running the application
 
 For local development run:
 
@@ -22,13 +57,6 @@ For local development run:
   	yarn start
 
 If you need develop PWA run _`yarn run withSW`_
-
-## Build for production
-
-Remember to change *keycloak.json* file to point to your FA instance and ask FA Support for configuration.
-Run  _`yarn build`_. After building process finishes copy contents of *build* directory to
-
-    ...description where to upload build directory contents
 
 ## Customization
 
@@ -74,3 +102,34 @@ You can change contact info tab content by editing *contact.html* file located i
 Tailwind classes but please be aware that to reduce bundle size Tailwind scans files for class names and generate only
 css for classes that has been found (you can read more [here](https://tailwindcss.com/docs/content-configuration)), so
 if you use class that hasn't been used yet, build of the app will be necessary.
+
+### Context root
+
+FA Client Portal application runs by default under */public/myinvestments/* context root. If you want to change the end *myinvestments* to be e.g. *portal*, you need to change the following:
+
+#### Deployment folder
+
+The application's deployment folder under */public/* needs to match the new context root.
+
+#### homepage configuration in the application
+
+The *homepage* parameter defined in *package.json* file needs to match the new context root:
+    "homepage": "/public/portal",
+
+## Deployment to test environment
+
+You can deploy FA Client Portal to your FA Platform test environment so that the application is hosted as part of FA Platform.
+Any application deployed to FA Platform are available under */public* context root or its subfolder.
+
+Let's assume we deploy the application under */public/myinvestments*. The application is preconfigured to run in that context root. 
+However, if you choose to run it in another context root, check the section *Context root*.
+
+Then, run  _`yarn build`_ to build the deployable version. 
+
+After building process finishes, copy contents of *build* directory to FA Platform test environment using FA FileManager in Admin Console. 
+If you do have have access to it, please contact our support.
+
+Tip! Create first the folder structure in the FA FileManager. Then upload files for each folder separately. This is due to the limitation in FA FileManager.
+
+
+
