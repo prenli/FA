@@ -1,14 +1,13 @@
-import { ReactNode } from "react";
-import { BaseReport, DetailedPortfolio } from "api/overview/types";
+import { DetailedPortfolio } from "api/overview/types";
 import { useGetPortfolio } from "api/overview/useGetPortfolio";
-import { Card, GainLoseColoring, QueryLoadingWrapper } from "components";
+import { Card, QueryLoadingWrapper } from "components";
 import { PieChart } from "components/PieChart/PieChart";
 import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import { CardWithChartBackground } from "../../overview/components/CardWithChartBackground";
 import { PortfolioInfoCard } from "../../overview/components/PortfolioInfoCard";
 import { ListedSecuritiesCard } from "./components/ListedSecuritiesCard";
+import { PortfolioSummary } from "./components/PortfolioSummary";
 import { useGetChartData } from "./hooks/useGetChartData";
 import { useSecuritiesSummary } from "./hooks/useSecuritiesSummary";
 
@@ -75,64 +74,5 @@ const Overview = ({ data }: OverviewProps) => {
         </Card>
       </div>
     </div>
-  );
-};
-
-interface DataCardProps {
-  value: ReactNode;
-  label: string;
-}
-
-const DataCard = ({ value, label }: DataCardProps) => (
-  <CardWithChartBackground>
-    <div className="p-4">
-      <div className="text-sm font-normal text-gray-600">{label}</div>
-      <div className="text-3xl font-medium text-gray-900">{value}</div>
-    </div>
-  </CardWithChartBackground>
-);
-
-const PortfolioSummary = ({
-  portfolio: {
-    currency: { securityCode },
-  },
-  marketValue,
-  valueChangeAbsolute,
-  accountBalance,
-}: BaseReport) => {
-  const { t } = useTranslation();
-
-  return (
-    <>
-      <DataCard
-        label={t("portfolioSummary.currentMarketValue")}
-        value={t("numberWithCurrencyRounded", {
-          value: marketValue,
-          currency: securityCode,
-          maximumFractionDigits: 0,
-        })}
-      />
-      <DataCard
-        label={t("portfolioSummary.unrealizedProfits")}
-        value={
-          <GainLoseColoring value={valueChangeAbsolute}>
-            {t("numberWithCurrencyRounded", {
-              value: valueChangeAbsolute,
-              currency: securityCode,
-              formatParams: {
-                value: { signDisplay: "always" },
-              },
-            })}
-          </GainLoseColoring>
-        }
-      />
-      <DataCard
-        label={t("portfolioSummary.availableCash")}
-        value={t("numberWithCurrencyRounded", {
-          value: accountBalance,
-          currency: securityCode,
-        })}
-      />
-    </>
   );
 };
