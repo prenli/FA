@@ -6,7 +6,7 @@ import { TransactionDetailsQuery } from "./types";
 const TRANSACTION_DETAILS_QUERY = gql`
   ${TRANSACTION_FIELDS}
   ${TRANSACTION_DETAILS_FIELDS}
-  query GetTransactionDetails($transactionId: Long) {
+  query GetTransactionDetails($transactionId: Long, $filterTags: [String]) {
     transaction(id: $transactionId) {
       ...TransactionsFields
       ...TransactionDetailsFields
@@ -14,12 +14,15 @@ const TRANSACTION_DETAILS_QUERY = gql`
   }
 `;
 
+const filterTags: string[] = ["Online"];
+
 export const useGetTransactionDetails = (transactionId: string | undefined) => {
   const { loading, error, data } = useQuery<TransactionDetailsQuery>(
     TRANSACTION_DETAILS_QUERY,
     {
       variables: {
         transactionId,
+        filterTags,
       },
       ...getFetchPolicyOptions(`useGetTransactionDetails.${transactionId}`),
     }

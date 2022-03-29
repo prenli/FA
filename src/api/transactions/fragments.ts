@@ -43,7 +43,7 @@ export const TRANSACTION_DETAILS_FIELDS = gql`
     unitPriceInSecurityCurrency: unitPrice
     costInSecurityCurrency: totalCost
     accountFxRate: accountFxRateView
-    documents {
+    documents(filterTags: $filterTags) {
       identifier
     }
     extInfo

@@ -18,11 +18,12 @@ export const CardWithChartBackground = ({
 }: CardWithChartBackgroundProps) => (
   <Card>
     <div
-      className={classNames("relative overflow-hidden cursor-pointer", {
+      className={classNames("relative overflow-hidden", {
         "bg-gradient-to-br from-gray-500 to-black text-gray-100":
           colorScheme === "black",
         "bg-gray-200": colorScheme === "gray",
         "bg-primary-100": colorScheme === "blue",
+        "cursor-pointer": !!onClick,
       })}
       onClick={onClick}
     >

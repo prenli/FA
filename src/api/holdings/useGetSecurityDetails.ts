@@ -15,6 +15,7 @@ const SECURITY_DETAILS_QUERY = gql`
         securityCode
       }
       latestMarketData {
+        id
         date: obsDate
         price: closeView
       }
