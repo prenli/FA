@@ -1,6 +1,6 @@
 {
   "name": "fa-client-app",
-  "homepage": ".",
+  "homepage": "/public/myinvestments",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
