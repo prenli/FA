@@ -5,13 +5,13 @@ export const useFeedI18nextWithLocale = (language: string | undefined) => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    if (language && !isReady) {
+    if (language) {
       const locale = language || "en-US";
       initI18n(locale.replace("_", "-"), () => {
         setIsReady(true);
       });
     }
-  }, [language, isReady]);
+  }, [language]);
 
   return { isReady };
 };
