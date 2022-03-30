@@ -23,7 +23,7 @@ const Overview = ({ data }: OverviewProps) => {
   const breakPortfolioInfoCard = useMatchesBreakpoint("sm");
 
   return (
-    <div className="grid gap-4 mb-4 grid-cols-[repeat(auto-fit,_minmax(350px,_1fr))]">
+    <div className="grid md:grid-cols-2 gap-4 mb-4">
       <div className="grid sm:grid-cols-2 md:col-span-full gap-4">
         {breakPortfolioInfoCard ? (
           <TotalSummary {...allPortfoliosReport} />
