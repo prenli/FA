@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Document } from "api/documents/types";
 import classNames from "classnames";
 import { Card } from "components";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useMatchesBreakpoint } from "../../hooks/useMatchesBreakpoint";
 import { DocumentRow } from "./components/DocumentRow";
 import { NoDocuments } from "./components/NoDocuments";
@@ -12,7 +12,7 @@ interface DocumentsProps {
 }
 
 export const Documents = ({ data: documents }: DocumentsProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   const isMdVersion = useMatchesBreakpoint("md");
 
   if (documents.length === 0) {

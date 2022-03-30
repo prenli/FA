@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { TradeOrder } from "api/orders/types";
 import { QueryData } from "api/types";
 import { Card, DatePicker, QueryLoadingWrapper } from "components";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { OrdersContainer } from "./components/OrdersContainer";
 
 interface OrdersProps extends QueryData<TradeOrder[]> {
@@ -21,7 +21,7 @@ export const Orders = ({
   loading,
   error,
 }: OrdersProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   return (
     <div className="flex flex-col gap-4">
       <Card>

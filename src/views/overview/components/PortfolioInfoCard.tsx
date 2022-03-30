@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { BaseReport } from "api/overview/types";
 import classNames from "classnames";
 import { GainLoseColoring } from "components";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useNavigate } from "react-router-dom";
 import {
   ColorScheme,
@@ -26,7 +26,7 @@ export const PortfolioInfoCard = ({
   colorScheme = "gray",
   id,
 }: PortfolioInfoCardProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   const navigate = useNavigate();
 
   const navigateToPortfolioDetails = () => {

@@ -2,7 +2,7 @@ import { TradeOrder } from "api/orders/types";
 import { Transaction } from "api/transactions/types";
 import { Badge, Card, ResponsiveDataGrid } from "components";
 import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import { dateFromYYYYMMDD } from "utils/date";
@@ -28,7 +28,7 @@ export const TransactionsGroup = ({
 }: TransactionsGroupProps) => {
   const { portfolioId } = useParams();
   const showPortfolioLabel = !portfolioId;
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useModifiedTranslation();
   const navigate = useNavigate();
 
   const isMdVersion = useMatchesBreakpoint("md");

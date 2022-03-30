@@ -1,7 +1,7 @@
 import { AllPortfolios } from "api/overview/types";
 import { useGetAllPortfolios } from "api/overview/useGetAllPortfolios";
 import { QueryLoadingWrapper } from "components";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useMatchesBreakpoint } from "../../hooks/useMatchesBreakpoint";
 import { PortfolioInfoCard } from "./components/PortfolioInfoCard";
 import { TotalSummary } from "./components/TotalSummary";
@@ -17,7 +17,7 @@ interface OverviewProps {
 }
 
 const Overview = ({ data }: OverviewProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   const { portfolioReport: allPortfoliosReport, portfolios } = data;
 
   const breakPortfolioInfoCard = useMatchesBreakpoint("sm");

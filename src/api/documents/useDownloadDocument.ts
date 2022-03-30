@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { saveAs } from "file-saver";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { toast, Slide } from "react-toastify";
 import { useGetDocumentData } from "./useGetDocumentData";
 
 export const useDownloadDocument = () => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   const { getDocumentData } = useGetDocumentData();
   const [downloading, setDownloading] = useState(false);
 

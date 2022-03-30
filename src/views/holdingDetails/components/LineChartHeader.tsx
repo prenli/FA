@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { dateFromYYYYMMDD } from "utils/date";
 
 interface LineChartHeaderProps {
@@ -12,7 +12,7 @@ export const LineChartHeader = ({
   date,
   currency,
 }: LineChartHeaderProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   return (
     <div className="flex justify-between items-center">
       <div>{t("holdingsPage.price")}</div>

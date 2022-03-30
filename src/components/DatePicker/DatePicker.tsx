@@ -1,17 +1,17 @@
 import { ReactComponent as CalendarIcon } from "assets/calendar.svg";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import ReactDatePicker, {
   DatePickerProps as ReactDatePickerProps,
 } from "react-date-picker/dist/entry.nostyle";
 import "./DatePicker.css";
 import "./Calendar.css";
-import { useTranslation } from "react-i18next";
 
 interface DatePickerProps extends ReactDatePickerProps {
   label?: string;
 }
 
 export const DatePicker = ({ label, ...props }: DatePickerProps) => {
-  const { i18n } = useTranslation();
+  const { i18n } = useModifiedTranslation();
 
   return (
     <div className="flex flex-col gap-0 w-full ">

@@ -1,7 +1,7 @@
 import { Document } from "api/documents/types";
 import { ReactComponent as DownloadIcon } from "assets/download.svg";
 import { Button } from "components";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { dateFromYYYYMMDD } from "utils/date";
 import { useDownloadDocument } from "../../../api/documents/useDownloadDocument";
 import { useMatchesBreakpoint } from "../../../hooks/useMatchesBreakpoint";
@@ -13,7 +13,7 @@ export const DocumentRow = ({
   fileName,
   created,
 }: DocumentRowProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   const { downloadDocument, downloading } = useDownloadDocument();
   const isGrid = useMatchesBreakpoint("md");
 

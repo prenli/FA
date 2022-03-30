@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 
 interface ValueInCurrenciesProps {
   valueInAccountCurrency: number;
@@ -13,7 +13,7 @@ export const ValueInCurrencies = ({
   valueInSecurityCurrency,
   securityCurrencyCode,
 }: ValueInCurrenciesProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
 
   if (!accountCurrencyCode || securityCurrencyCode === accountCurrencyCode) {
     return (

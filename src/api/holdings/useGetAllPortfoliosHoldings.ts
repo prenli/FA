@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useKeycloak } from "providers/KeycloakProvider";
-import { useTranslation } from "react-i18next";
 import { useGetContactInfo } from "../initial/useGetContactInfo";
 import { getFetchPolicyOptions } from "../utils";
 import { ALLOCATION_BY_SECURITY_TYPE_FIELDS } from "./fragments";
@@ -42,7 +42,7 @@ const HOLDINGS_QUERY = gql`
 
 export const useGetAllPortfoliosHoldings = () => {
   const { linkedContact } = useKeycloak();
-  const { i18n } = useTranslation();
+  const { i18n } = useModifiedTranslation();
   const { data: { portfoliosCurrency } = { portfoliosCurrency: "EUR" } } =
     useGetContactInfo();
   const { loading, error, data } = useQuery<AllPortfoliosHoldingsQuery>(

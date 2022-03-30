@@ -1,6 +1,6 @@
 import { BaseReport } from "api/overview/types";
 import { GainLoseColoring } from "components";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { DataCard } from "./DataCard";
 
 export const TotalSummary = ({
@@ -10,7 +10,7 @@ export const TotalSummary = ({
   marketValue,
   valueChangeAbsolute,
 }: BaseReport) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
 
   return (
     <>
@@ -20,7 +20,6 @@ export const TotalSummary = ({
         value={t("numberWithCurrencyRounded", {
           value: marketValue,
           currency: securityCode,
-          maximumFractionDigits: 0,
         })}
       />
       <DataCard

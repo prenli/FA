@@ -1,6 +1,6 @@
 import { BaseReport } from "api/overview/types";
 import { GainLoseColoring } from "components";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { DataCard } from "../../../overview/components/DataCard";
 
 export const PortfolioSummary = ({
@@ -11,7 +11,7 @@ export const PortfolioSummary = ({
   valueChangeAbsolute,
   accountBalance,
 }: BaseReport) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
 
   return (
     <>

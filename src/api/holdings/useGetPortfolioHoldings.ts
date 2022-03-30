@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { getFetchPolicyOptions } from "../utils";
 import { ALLOCATION_BY_SECURITY_TYPE_FIELDS } from "./fragments";
 import { PortfolioHoldingsQuery } from "./types";
@@ -37,7 +37,7 @@ const HOLDINGS_QUERY = gql`
 `;
 
 export const useGetPortfolioHoldings = (portfolioId: string | undefined) => {
-  const { i18n } = useTranslation();
+  const { i18n } = useModifiedTranslation();
   const { loading, error, data } = useQuery<PortfolioHoldingsQuery>(
     HOLDINGS_QUERY,
     {

@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { SecurityPosition } from "api/overview/types";
 import { Card, GainLoseColoring } from "components";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useNavigate } from "react-router";
 
 interface ListedSecuritiesCardProps {
@@ -15,7 +15,7 @@ export const ListedSecuritiesCard = ({
   label,
   currency,
 }: ListedSecuritiesCardProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   const navigate = useNavigate();
   return (
     <Card header={label}>

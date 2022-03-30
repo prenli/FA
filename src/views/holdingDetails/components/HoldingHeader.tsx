@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 
 interface HoldingHeaderProps {
   currency: string;
@@ -9,7 +9,7 @@ export const HoldingHeader = ({
   currency,
   marketValue,
 }: HoldingHeaderProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   return (
     <div className="flex justify-between items-center">
       <div>{t("holdingsPage.holding")}</div>

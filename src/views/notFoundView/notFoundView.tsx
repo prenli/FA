@@ -1,9 +1,9 @@
 import { EmptyComponent } from "components/EmptyComponent/EmptyComponent";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useNavigate } from "react-router";
 
 export const NotFoundView = () => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   const navigate = useNavigate();
   return (
     <EmptyComponent header={t("notFoundPage.title")}>

@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import { Transaction as TransactionType } from "api/transactions/types";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { dateFromYYYYMMDD } from "utils/date";
 
 export const useSplitByMonth = (data: TransactionType[]) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   return useMemo(() => {
     const splitData: {
       [key: string]: TransactionType[];

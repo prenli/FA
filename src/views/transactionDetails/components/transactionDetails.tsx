@@ -2,8 +2,8 @@ import { useDownloadDocument } from "api/documents/useDownloadDocument";
 import { TransactionDetails as TransactionDetailsType } from "api/transactions/types";
 import { ReactComponent as DocumentDownloadIcon } from "assets/document-download.svg";
 import { Button, Card, CountryFlag } from "components";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { PageLayout } from "layouts/PageLayout/PageLayout";
-import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import { dateFromYYYYMMDD } from "utils/date";
@@ -43,7 +43,7 @@ export const TransactionDetails = ({
     grossPriceInAccountCurrency,
   },
 }: TransactionDetailsProps) => {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useModifiedTranslation();
   const { downloadDocument, downloading } = useDownloadDocument();
   const transactionType = useGetTransactionType();
   const navigate = useNavigate();

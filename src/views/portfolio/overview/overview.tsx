@@ -3,7 +3,7 @@ import { useGetPortfolio } from "api/overview/useGetPortfolio";
 import { Card, QueryLoadingWrapper } from "components";
 import { PieChart } from "components/PieChart/PieChart";
 import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useParams } from "react-router-dom";
 import { PortfolioInfoCard } from "../../overview/components/PortfolioInfoCard";
 import { ListedSecuritiesCard } from "./components/ListedSecuritiesCard";
@@ -23,7 +23,7 @@ interface OverviewProps {
 }
 
 const Overview = ({ data }: OverviewProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
 
   const {
     portfolioReport: {

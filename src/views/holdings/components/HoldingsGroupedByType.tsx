@@ -6,7 +6,7 @@ import {
   ResponsiveDataGrid,
 } from "components";
 import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useNavigate } from "react-router";
 
 interface HoldingsGroupedByTypeProps extends AllocationByType {
@@ -20,7 +20,7 @@ export const HoldingsGroupedByType = ({
   currency,
   code: groupCode,
 }: HoldingsGroupedByTypeProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   const navigate = useNavigate();
 
   const isMdVersion = useMatchesBreakpoint("md");
@@ -131,7 +131,7 @@ const TypeHeader = ({
   tradeAmount,
   currency,
 }: TypeHeaderProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   const valueChange = marketValue - tradeAmount;
   return (
     <div className="flex justify-between items-center">

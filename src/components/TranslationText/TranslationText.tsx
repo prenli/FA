@@ -1,11 +1,11 @@
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 
 interface Props {
   translationKey: string;
 }
 
 export const TranslationText = ({ translationKey }: Props) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
 
   return <>{t(translationKey)}</>;
 };

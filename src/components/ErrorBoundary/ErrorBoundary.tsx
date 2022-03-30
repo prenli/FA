@@ -1,5 +1,5 @@
 import { ReactNode, Component, ErrorInfo as ReactErrorInfo } from "react";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { EmptyComponent } from "../EmptyComponent/EmptyComponent";
 
 interface Props {
@@ -36,7 +36,7 @@ interface ErrorInfoProps {
 }
 
 const ErrorInfo = ({ error, errorInfo }: ErrorInfoProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
 
   return (
     <div className="px-2">

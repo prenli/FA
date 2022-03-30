@@ -1,8 +1,8 @@
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { EmptyComponent } from "../EmptyComponent/EmptyComponent";
 
 export const QueryError = () => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   return (
     <EmptyComponent header={t("messages.queryError")}>
       {t("messages.problemResolveInstructions")}

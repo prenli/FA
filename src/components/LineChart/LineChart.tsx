@@ -1,6 +1,6 @@
 import { ApexOptions } from "apexcharts";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import Chart from "react-apexcharts";
-import { useTranslation } from "react-i18next";
 import theme from "tailwindTheme";
 
 export interface LineData {
@@ -75,7 +75,7 @@ export const LineChart = ({
   options,
   detailed = false,
 }: LineChartProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
 
   return (
     <div className="h-full">

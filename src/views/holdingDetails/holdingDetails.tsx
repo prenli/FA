@@ -1,8 +1,8 @@
 import { HoldingPosition, SecurityDetailsPosition } from "api/holdings/types";
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
 import { Card, GainLoseColoring, DetailsHeading } from "components";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { PageLayout } from "layouts/PageLayout/PageLayout";
-import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getNameFromBackendTranslations } from "utils/transactions";
 import { addProtocolToUrl } from "utils/url";
@@ -38,7 +38,7 @@ export const HoldingDetails = ({
   },
 }: HoldingDetailsProps) => {
   const navigate = useNavigate();
-  const { i18n, t } = useTranslation();
+  const { i18n, t } = useModifiedTranslation();
   const { data: { portfoliosCurrency } = { portfoliosCurrency: "EUR" } } =
     useGetContactInfo();
 

@@ -1,5 +1,5 @@
 import { QueryData } from "api/types";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { Slide, toast } from "react-toastify";
 import { Card } from "../Card/Card";
 import { EmptyComponent } from "../EmptyComponent/EmptyComponent";
@@ -17,7 +17,7 @@ export const QueryLoadingWrapper = <TData,>({
   data,
   SuccessComponent,
 }: QueryLoadingWrapperProps<TData>) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   if (error) {
     toast.error(t("messages.queryErrorWarning"), {
       toastId: QUERY_ERROR_TOAST_ID,

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { ORDER_STATUS } from "api/orders/enums";
 import { OrderStatus, TradeOrder } from "api/orders/types";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 
 const ORDER_STATUSES_TO_DISPLAY = [
   ORDER_STATUS.Open,
@@ -52,7 +52,7 @@ export interface TradeOrdersGroup {
 export const useGroupedTradeOrdersByStatus = (
   tradeOrders: TradeOrder[] | undefined
 ) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   return useMemo(() => {
     const grouped: TradeOrdersGroup[] = [];
     ORDER_STATUSES_TO_DISPLAY.forEach((orderStatus) => {

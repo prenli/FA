@@ -1,6 +1,6 @@
 import { useGetTransactionDetails } from "api/transactions/useGetTransactionDetails";
 import { DetailsHeading, QueryLoadingWrapper } from "components";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useNavigate } from "react-router-dom";
 import { TransactionDetails } from "./components/transactionDetails";
 
@@ -43,7 +43,7 @@ interface HeaderLabelProps {
 }
 
 const HeaderLabel = ({ type }: HeaderLabelProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   return (
     <>
       {type === "transaction"

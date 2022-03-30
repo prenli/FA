@@ -1,5 +1,5 @@
 import { EmptyComponent } from "components";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 
 interface NoTransactionsProps {
   startDate: Date;
@@ -7,7 +7,7 @@ interface NoTransactionsProps {
 }
 
 export const NoTransactions = ({ startDate, endDate }: NoTransactionsProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   return (
     <EmptyComponent header={t("transactionsPage.noTransactions")}>
       <div className="mb-4">

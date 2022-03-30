@@ -4,7 +4,7 @@ import { useGetSecurityMarketDataHistory } from "api/holdings/useGetSecurityMark
 import { LineChart, ButtonRadio, LoadingIndicator, Center } from "components";
 import { LineData } from "components/LineChart/LineChart";
 import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useParams } from "react-router-dom";
 import { dateFromYYYYMMDD } from "utils/date";
 
@@ -54,7 +54,7 @@ const limitDataPoints = (data: MarketHistoryDataPoint[]) => {
 
 export const HoldingHistoryDataChart = () => {
   const { holdingId } = useParams();
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   const [selectedRange, setRange] = useState(chartRangeOptions[0]);
   const isChartDetailed = useMatchesBreakpoint("lg");
 

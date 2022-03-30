@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { PortfolioOption } from "./PortfolioNavigationHeader";
 
 export const useGetPortfolioOptions = () => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
 
   const portfolioOptions: PortfolioOption[] = useMemo(() => {

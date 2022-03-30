@@ -1,6 +1,6 @@
 import { TradeOrder } from "api/orders/types";
 import { Badge } from "components";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { dateFromYYYYMMDD } from "utils/date";
 import {
   getTransactionColor,
@@ -16,7 +16,7 @@ export const TradeOrderPosition = ({
   parentPortfolio,
   type: { typeNamesAsMap, typeName, amountEffect, cashFlowEffect },
 }: TradeOrderPositionProps) => {
-  const { i18n, t } = useTranslation();
+  const { i18n, t } = useModifiedTranslation();
 
   return (
     <div className="py-2">

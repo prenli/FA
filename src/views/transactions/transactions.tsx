@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { Transaction as TransactionType } from "api/transactions/types";
 import { QueryData } from "api/types";
 import { Card, DatePicker, QueryLoadingWrapper } from "components";
-import { useTranslation } from "react-i18next";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { TransactionsContainer } from "./components/TransactionsContainer";
 
 interface TransactionsProps extends QueryData<TransactionType[]> {
@@ -21,7 +21,7 @@ export const Transactions = ({
   loading,
   error,
 }: TransactionsProps) => {
-  const { t } = useTranslation();
+  const { t } = useModifiedTranslation();
   return (
     <div className="flex flex-col gap-4">
       <Card>
