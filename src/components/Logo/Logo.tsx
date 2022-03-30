@@ -13,7 +13,7 @@ export const Logo = () => {
         )
       }
     >
-      <img src="/logo.svg" alt="logo" />
+      <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="logo" />
     </div>
   );
 };
