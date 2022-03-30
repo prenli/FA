@@ -40,7 +40,7 @@ export const TRANSACTION_DETAILS_FIELDS = gql`
       }
     }
     settlementDate
-    unitPriceInSecurityCurrency: unitPrice
+    unitPriceInSecurityCurrency: unitPriceView
     costInSecurityCurrency: totalCost
     accountFxRate: accountFxRateView
     documents(filterTags: $filterTags) {
