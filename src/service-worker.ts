@@ -11,7 +11,8 @@
 import { clientsClaim } from "workbox-core";
 import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
-import { StaleWhileRevalidate } from "workbox-strategies";
+import { SWROnInitThenCacheFirst } from "workbox/SWROnInitThenCacheFirst";
+import { resetVariables } from "./workbox/init";
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -58,7 +59,7 @@ registerRoute(
     (url.pathname.endsWith(".png") ||
       url.pathname.endsWith(".ico") ||
       url.pathname.endsWith(".svg")),
-  new StaleWhileRevalidate({
+  new SWROnInitThenCacheFirst({
     cacheName: "images",
   })
 );
@@ -69,7 +70,7 @@ registerRoute(
     url.pathname.endsWith(".html") &&
     !url.pathname.includes("index.html") &&
     !url.pathname.includes("keycloak-silent-check-sso.html"),
-  new StaleWhileRevalidate({
+  new SWROnInitThenCacheFirst({
     cacheName: "custom-html",
   })
 );
@@ -79,7 +80,7 @@ registerRoute(
     url.origin === self.location.origin &&
     url.pathname.endsWith(".json") &&
     url.pathname.startsWith("/locales"),
-  new StaleWhileRevalidate({
+  new SWROnInitThenCacheFirst({
     cacheName: "translations",
   })
 );
@@ -87,7 +88,7 @@ registerRoute(
 registerRoute(
   ({ url }) =>
     url.origin === self.location.origin && url.pathname.includes("keycloak"),
-  new StaleWhileRevalidate({
+  new SWROnInitThenCacheFirst({
     cacheName: "keycloak",
   })
 );
@@ -95,9 +96,12 @@ registerRoute(
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener("message", (event) => {
-  if (event.data && event.data.type === "SKIP_WAITING") {
-    self.skipWaiting();
+  if (event.data) {
+    if (event.data.type === "INIT") {
+      // reset SWROnInitThenCacheFirst strategy variables
+      resetVariables();
+    } else if (event.data.type === "SKIP_WAITING") {
+      self.skipWaiting();
+    }
   }
 });
-
-// Any other custom service worker logic can go here.

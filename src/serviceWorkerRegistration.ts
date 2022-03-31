@@ -47,6 +47,13 @@ type Config = {
 
 export function register(config?: Config) {
   if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.ready
+      .then((registration) => {
+        registration.active?.postMessage({ type: "INIT" });
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
     if (publicUrl.origin !== window.location.origin) {
