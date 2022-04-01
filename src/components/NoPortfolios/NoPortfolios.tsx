@@ -1,11 +1,11 @@
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { EmptyComponent } from "../EmptyComponent/EmptyComponent";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 
 export const NoPortfolios = () => {
   const { t } = useModifiedTranslation();
   return (
-    <EmptyComponent header={t("messages.noPortfolios")}>
+    <ErrorMessage header={t("messages.noPortfolios")}>
       {t("messages.problemResolveInstructions")}
-    </EmptyComponent>
+    </ErrorMessage>
   );
 };

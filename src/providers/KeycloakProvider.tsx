@@ -5,6 +5,10 @@ import {
   keycloakServiceInitialState,
   KeycloakServiceStateType,
 } from "services/keycloakService";
+import { ReactComponent as RefreshIcon } from "../assets/refresh.svg";
+import { Button, ErrorMessage, LoadingIndicator } from "../components";
+import { useModifiedTranslation } from "../hooks/useModifiedTranslation";
+import { DetectedLanguageProvider } from "./DetectedLanguageProvider";
 
 const KeycloakContext = createContext<KeycloakServiceStateType>(
   keycloakServiceInitialState
@@ -13,17 +17,10 @@ const KeycloakContext = createContext<KeycloakServiceStateType>(
 type KeycloakProviderProps = {
   children: ReactNode;
   keycloak: typeof keycloakService;
-  InitializingComponent: JSX.Element;
-  MissingLinkedContactComponent: JSX.Element;
 };
 
 export const KeycloakProvider = (props: KeycloakProviderProps) => {
-  const {
-    keycloak,
-    children,
-    InitializingComponent,
-    MissingLinkedContactComponent,
-  } = props;
+  const { keycloak, children } = props;
   const { error, initialized, linkedContact } = keycloak.state;
   const [, forceRender] = useReducer((previous) => previous + 1, 0);
 
@@ -33,15 +30,27 @@ export const KeycloakProvider = (props: KeycloakProviderProps) => {
   }, [forceRender, keycloak]);
 
   if (error) {
-    return <div className="m-4">Authorisation server error</div>;
+    return (
+      <DetectedLanguageProvider>
+        <ErrorMessageWithRefresh headerI18Key="messages.authorisationError" />
+      </DetectedLanguageProvider>
+    );
   }
 
   if (!initialized) {
-    return InitializingComponent;
+    return (
+      <div className="h-screen">
+        <LoadingIndicator center />
+      </div>
+    );
   }
 
   if (!linkedContact) {
-    return MissingLinkedContactComponent;
+    return (
+      <DetectedLanguageProvider>
+        <ErrorMessageWithRefresh headerI18Key="messages.missingLinkedContact" />
+      </DetectedLanguageProvider>
+    );
   }
 
   return (
@@ -57,4 +66,26 @@ export const useKeycloak = () => {
     throw new Error("useKeycloak must be used within a KeycloakProvider");
   }
   return context;
+};
+
+interface ErrorMessageWithRefreshProps {
+  headerI18Key: string;
+}
+
+const ErrorMessageWithRefresh = ({
+  headerI18Key,
+}: ErrorMessageWithRefreshProps) => {
+  const { t } = useModifiedTranslation();
+
+  return (
+    <div className="container m-4 mx-auto">
+      <ErrorMessage header={t(headerI18Key)}>
+        <div className="mb-4">{t("messages.problemResolveInstructions")}</div>
+        <Button
+          onClick={() => window.location.reload()}
+          LeftIcon={RefreshIcon}
+        />
+      </ErrorMessage>
+    </div>
+  );
 };

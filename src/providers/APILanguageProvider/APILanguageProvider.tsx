@@ -6,7 +6,7 @@ interface UserSettingsProviderProps {
   children: JSX.Element;
 }
 
-export const UserSettingsProvider = ({
+export const APILanguageProvider = ({
   children,
 }: UserSettingsProviderProps) => {
   const { data, error } = useGetContactInfo();

@@ -2,7 +2,7 @@ import { QueryData } from "api/types";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { Slide, toast } from "react-toastify";
 import { Card } from "../Card/Card";
-import { EmptyComponent } from "../EmptyComponent/EmptyComponent";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import { LoadingIndicator } from "../LoadingIndicator/LoadingIndicator";
 
 interface QueryLoadingWrapperProps<T> extends QueryData<T> {
@@ -35,9 +35,9 @@ export const QueryLoadingWrapper = <TData,>({
   if (!loading || (error && !data)) {
     return (
       <Card>
-        <EmptyComponent header={t("messages.noCachedData")}>
+        <ErrorMessage header={t("messages.noCachedData")}>
           {t("messages.noCachedDataInfo")}
-        </EmptyComponent>
+        </ErrorMessage>
       </Card>
     );
 

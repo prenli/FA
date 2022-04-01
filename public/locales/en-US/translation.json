@@ -116,6 +116,8 @@
     "noPortfolios": "No portfolios are available",
     "problemResolveInstructions": "Try refreshing the browser\n or contact us if the problem persists",
     "noCachedData": "No cached data",
+    "authorisationError": "Authorisation server error",
+    "missingLinkedContact": "Missing linked contact",
     "noCachedDataInfo": "Right now we can't get data from server.\n Come back here later."
   }
 }

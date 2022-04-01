@@ -1,32 +1,23 @@
 import { KeycloakProvider } from "providers/KeycloakProvider";
 import { ToastContainer } from "react-toastify";
 import { keycloakService } from "services/keycloakService";
-import { LoadingIndicator } from "./components";
 import { RootRoutes } from "./pages/routes";
+import { APILanguageProvider } from "./providers/APILanguageProvider/APILanguageProvider";
 import { PersistedApolloProvider } from "./providers/PersistedApolloProvider";
 import { ServiceWorkerRegistrationProvider } from "./providers/ServiceWorkerRegistrationProvider";
-import { UserSettingsProvider } from "./providers/UserSettingsProvider/UserSettingsProvider";
 import "react-toastify/dist/ReactToastify.css";
 import "styles/fonts.css";
 
 function App() {
   return (
     <div>
-      <KeycloakProvider
-        keycloak={keycloakService}
-        InitializingComponent={
-          <div className="h-screen">
-            <LoadingIndicator center />
-          </div>
-        }
-        MissingLinkedContactComponent={<div>Missing linked contact.</div>}
-      >
+      <KeycloakProvider keycloak={keycloakService}>
         <PersistedApolloProvider>
-          <UserSettingsProvider>
+          <APILanguageProvider>
             <ServiceWorkerRegistrationProvider>
               <RootRoutes />
             </ServiceWorkerRegistrationProvider>
-          </UserSettingsProvider>
+          </APILanguageProvider>
         </PersistedApolloProvider>
       </KeycloakProvider>
       <ToastContainer />

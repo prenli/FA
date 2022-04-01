@@ -1,4 +1,4 @@
-import { EmptyComponent } from "components/EmptyComponent/EmptyComponent";
+import { ErrorMessage } from "components/ErrorMessage/ErrorMessage";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useNavigate } from "react-router";
 
@@ -6,7 +6,7 @@ export const NotFoundView = () => {
   const { t } = useModifiedTranslation();
   const navigate = useNavigate();
   return (
-    <EmptyComponent header={t("notFoundPage.title")}>
+    <ErrorMessage header={t("notFoundPage.title")}>
       {t("notFoundPage.info")}
       <div
         onClick={() => navigate(-1)}
@@ -14,6 +14,6 @@ export const NotFoundView = () => {
       >
         {t("notFoundPage.return")}
       </div>
-    </EmptyComponent>
+    </ErrorMessage>
   );
 };

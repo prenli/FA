@@ -1,6 +1,6 @@
 import { ReactNode, Component, ErrorInfo as ReactErrorInfo } from "react";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { EmptyComponent } from "../EmptyComponent/EmptyComponent";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 
 interface Props {
   children: ReactNode;
@@ -40,9 +40,9 @@ const ErrorInfo = ({ error, errorInfo }: ErrorInfoProps) => {
 
   return (
     <div className="px-2">
-      <EmptyComponent header={t("messages.error")}>
+      <ErrorMessage header={t("messages.error")}>
         <div>{t("messages.problemResolveInstructions")}</div>
-      </EmptyComponent>
+      </ErrorMessage>
     </div>
   );
 };

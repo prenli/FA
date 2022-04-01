@@ -1,11 +1,11 @@
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { EmptyComponent } from "../EmptyComponent/EmptyComponent";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 
 export const QueryError = () => {
   const { t } = useModifiedTranslation();
   return (
-    <EmptyComponent header={t("messages.queryError")}>
+    <ErrorMessage header={t("messages.queryError")}>
       {t("messages.problemResolveInstructions")}
-    </EmptyComponent>
+    </ErrorMessage>
   );
 };

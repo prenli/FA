@@ -7,7 +7,7 @@ interface EmptyComponentProps {
   children?: ReactNode;
 }
 
-export const EmptyComponent = ({ header, children }: EmptyComponentProps) => (
+export const ErrorMessage = ({ header, children }: EmptyComponentProps) => (
   <Card>
     <div className="grid gap-4 justify-center justify-items-center items-center text-base font-normal text-gray-500 py-[10%]">
       <TimesCircle className="w-16 h-16 " />

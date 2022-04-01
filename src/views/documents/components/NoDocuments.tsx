@@ -1,7 +1,7 @@
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { EmptyComponent } from "../../../components";
+import { ErrorMessage } from "../../../components";
 
 export const NoDocuments = () => {
   const { t } = useModifiedTranslation();
-  return <EmptyComponent header={t("documentsPage.noDocuments")} />;
+  return <ErrorMessage header={t("documentsPage.noDocuments")} />;
 };

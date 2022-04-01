@@ -1,4 +1,10 @@
 {
+  "number": "{{value, number}}",
+  "numberRounded": "{{value, number(maximumFractionDigits: 0)}}",
+  "numberWithCurrency": "{{value, currency(currency: currency )}}",
+  "numberWithCurrencyRounded": "{{value, currency(maximumFractionDigits: 0; currency: currency )}}",
+  "date": "{{date, datetime(day: 2-digit; month: 2-digit; year: numeric)}}",
+  "dateCustom": "{{date, datetime}}",
   "component": {
     "select": {
       "placeholder": "Please select"
@@ -110,6 +116,8 @@
     "noPortfolios": "No portfolios are available",
     "problemResolveInstructions": "Try refreshing the browser\n or contact us if the problem persists",
     "noCachedData": "No cached data",
+    "authorisationError": "Authorisation server error",
+    "missingLinkedContact": "Missing linked contact",
     "noCachedDataInfo": "Right now we can't get data from server.\n Come back here later."
   }
 }

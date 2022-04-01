@@ -1,4 +1,4 @@
-import { EmptyComponent } from "components";
+import { ErrorMessage } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 
 interface NoOrdersProps {
@@ -9,12 +9,12 @@ interface NoOrdersProps {
 export const NoOrders = ({ startDate, endDate }: NoOrdersProps) => {
   const { t } = useModifiedTranslation();
   return (
-    <EmptyComponent header={t("ordersPage.noOrders")}>
+    <ErrorMessage header={t("ordersPage.noOrders")}>
       <div className="mb-4">
         <span>{t("date", { date: startDate })}</span> -{" "}
         <span>{t("date", { date: endDate })}</span>
       </div>
       {t("ordersPage.noOrdersInfo")}
-    </EmptyComponent>
+    </ErrorMessage>
   );
 };

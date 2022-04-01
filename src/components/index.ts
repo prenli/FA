@@ -17,5 +17,5 @@ export { ButtonRadio } from "./ButtonRadio/ButtonRadio";
 export { ResponsiveDataGrid } from "./ResponsiveDataRow/ResponsiveDataGrid";
 export { UserMenu } from "./UserMenu/UserMenu";
 export { Logo } from "./Logo/Logo";
-export { EmptyComponent } from "./EmptyComponent/EmptyComponent";
+export { ErrorMessage } from "./ErrorMessage/ErrorMessage";
 export { NoPortfolios } from "./NoPortfolios/NoPortfolios";
