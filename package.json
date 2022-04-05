@@ -1,7 +1,7 @@
 {
   "name": "fa-client-app",
   "homepage": "/public/myinvestments",
-  "version": "0.1.0",
+  "version": "1.0.0-snapshot",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.5.6",
