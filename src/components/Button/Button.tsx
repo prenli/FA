@@ -26,7 +26,7 @@ export const Button = ({
     {...props}
     type="button"
     className={classNames(
-      "box-border text-white fill-white border-2 rounded-lg inline-flex items-center justify-center relative whitespace-nowrap align-middle",
+      "box-border text-white fill-white border-2 rounded-lg inline-flex items-center justify-center relative whitespace-nowrap align-middle cursor-pointer",
       {
         "bg-primary-600 border-primary-600 hover:bg-primary-800 focus:border-2 focus:border-primary-400":
           variant === "Primary",

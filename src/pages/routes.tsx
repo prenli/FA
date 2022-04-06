@@ -43,6 +43,9 @@ const Documents = lazy(() =>
 const Contact = lazy(() =>
   import("./contact").then((module) => ({ default: module.ContactPage }))
 );
+const Form = lazy(() =>
+  import("./form").then((module) => ({ default: module.FormPage }))
+);
 
 export const mainTabRoutes: NavTabPath[] = [
   {
@@ -110,6 +113,10 @@ const mainRoutes = [
   {
     path: "orders/:orderId",
     element: <OrderDetails />,
+  },
+  {
+    path: "form/:formKey",
+    element: <Form />,
   },
 ];
 
