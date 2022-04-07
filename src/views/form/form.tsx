@@ -12,10 +12,9 @@ interface FormViewProps {
 export const FormView = ({ header }: FormViewProps) => {
   const { formKey } = useParams();
   const { data } = useStartProcess(formKey);
-  const formDefinition = data?.startProcess?.formDefinition;
   const { userProfile } = useKeycloak();
 
-  return formDefinition ? (
+  return data && data.formDefinition ? (
     <div>
       <div className="bg-white sm:border-b border-gray-200 sm:shadow-md ">
         <div className="md:container flex gap-2 items-center p-2 md:mx-auto text-2xl font-bold">
@@ -31,7 +30,7 @@ export const FormView = ({ header }: FormViewProps) => {
       <div className="sm:pt-4 pb-4">
         <Form
           as="span"
-          form={JSON.parse(formDefinition)}
+          form={data.formDefinition}
           onSubmit={(e: unknown) => console.log(e)}
           onError={console.log}
           onChange={console.log}
@@ -42,7 +41,7 @@ export const FormView = ({ header }: FormViewProps) => {
               firstName: userProfile?.firstName,
               lastName: userProfile?.lastName,
               email: userProfile?.email,
-              ...data.startProcess.data,
+              ...data.data,
             },
           }}
         />

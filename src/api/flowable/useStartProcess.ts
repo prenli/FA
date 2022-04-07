@@ -8,24 +8,44 @@ const START_PROCESS = gql`
       formDefinition
       taskId
       processInstanceId
+      data
     }
   }
 `;
 
+interface StartProcessResponse {
+  startProcess: {
+    formDefinition: string;
+    taskId: string;
+    processInstanceId: string;
+    data: Record<string, unknown>;
+  };
+}
+
+type FormDefinition = Record<string, unknown> | undefined;
+
 export const useStartProcess = (key: string | undefined) => {
-  const [startProcess, { data, loading, error, reset }] = useMutation(
-    START_PROCESS,
-    {
+  const [startProcess, { data, loading, error, reset }] =
+    useMutation<StartProcessResponse>(START_PROCESS, {
       variables: {
         key,
       },
       context: { apiName: FLOWABLE_API_NAME },
-    }
-  );
+    });
 
   useEffect(() => {
     startProcess();
   }, [startProcess]);
 
-  return { data, loading, error, reset };
+  return {
+    loading,
+    error,
+    reset,
+    data: data && {
+      ...data.startProcess,
+      formDefinition: JSON.parse(
+        data.startProcess.formDefinition
+      ) as FormDefinition,
+    },
+  };
 };
