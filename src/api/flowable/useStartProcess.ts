@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useMutation, gql } from "@apollo/client";
 import { FLOWABLE_API_NAME } from "services/apolloClient";
 
@@ -13,39 +12,27 @@ const START_PROCESS = gql`
   }
 `;
 
-interface StartProcessResponse {
-  startProcess: {
-    formDefinition: string;
-    taskId: string;
-    processInstanceId: string;
-    data: Record<string, unknown>;
-  };
+export interface StartProcessResponseData {
+  formDefinition: string;
+  taskId: string;
+  processInstanceId: string;
+  data: Record<string, unknown>;
 }
 
-type FormDefinition = Record<string, unknown> | undefined;
-
 export const useStartProcess = (key: string | undefined) => {
-  const [startProcess, { data, loading, error, reset }] =
-    useMutation<StartProcessResponse>(START_PROCESS, {
-      variables: {
-        key,
-      },
-      context: { apiName: FLOWABLE_API_NAME },
-    });
-
-  useEffect(() => {
-    startProcess();
-  }, [startProcess]);
+  const [startProcess, { loading, error, reset }] = useMutation<{
+    startProcess: StartProcessResponseData;
+  }>(START_PROCESS, {
+    variables: {
+      key,
+    },
+    context: { apiName: FLOWABLE_API_NAME },
+  });
 
   return {
     loading,
     error,
     reset,
-    data: data && {
-      ...data.startProcess,
-      formDefinition: JSON.parse(
-        data.startProcess.formDefinition
-      ) as FormDefinition,
-    },
+    startProcess,
   };
 };

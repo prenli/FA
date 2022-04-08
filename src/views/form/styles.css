@@ -22,7 +22,7 @@
 }
 
 .formio-component .card-header {
-  @apply bg-transparent p-0 border-0;
+  @apply bg-transparent border-0;
 }
 
 .formio-component .card-body {
@@ -30,7 +30,7 @@
 }
 
 .formio-component .card-header ul.nav-tabs {
-  @apply border-b border-gray-200 shadow-md m-0 sm:mt-2 px-2 overflow-y-auto lg:overflow-y-visible flex flex-nowrap scroll-hidden !important;
+  @apply border-b border-gray-200 shadow-md m-[-16px] sm:mt-2 overflow-y-auto lg:overflow-y-visible flex flex-nowrap scroll-hidden !important;
 }
 
 .formio-component .card-header ul.nav-tabs li {

@@ -1,20 +1,38 @@
 import { Form } from "@formio/react";
-import { useStartProcess } from "api/flowable/useStartProcess";
-import { Logo, UserMenu } from "components";
-import { useKeycloak } from "providers/KeycloakProvider";
-import { useParams } from "react-router-dom";
+import { LoadingIndicator, Logo, UserMenu } from "components";
 import "./styles.css";
+import { useLocation } from "react-router-dom";
+import { useFormExecutor } from "./useFormExecutor";
 
 interface FormViewProps {
   header?: string;
+  initialData?: Record<string, unknown>;
 }
 
-export const FormView = ({ header }: FormViewProps) => {
-  const { formKey } = useParams();
-  const { data } = useStartProcess(formKey);
-  const { userProfile } = useKeycloak();
+interface LocationProps {
+  state: FormViewProps & {
+    from: Location;
+  };
+}
 
-  return data && data.formDefinition ? (
+export const FormView = ({
+  header,
+  initialData: propsInitialData = {},
+}: FormViewProps) => {
+  const {
+    formDefinition,
+    initialData: apiInitialData = {},
+    submitData,
+  } = useFormExecutor();
+
+  const { state: locationState } = useLocation() as unknown as LocationProps;
+  const initialData = {
+    ...locationState?.initialData,
+    ...propsInitialData,
+    ...apiInitialData,
+  };
+
+  return formDefinition ? (
     <div>
       <div className="bg-white sm:border-b border-gray-200 sm:shadow-md ">
         <div className="md:container flex gap-2 items-center p-2 md:mx-auto text-2xl font-bold">
@@ -28,24 +46,22 @@ export const FormView = ({ header }: FormViewProps) => {
         </div>
       </div>
       <div className="sm:pt-4 pb-4">
-        <Form
-          as="span"
-          form={data.formDefinition}
-          onSubmit={(e: unknown) => console.log(e)}
-          onError={console.log}
-          onChange={console.log}
-          onSubmitDone={console.log}
-          submission={{
-            data: {
-              username: userProfile?.username,
-              firstName: userProfile?.firstName,
-              lastName: userProfile?.lastName,
-              email: userProfile?.email,
-              ...data.data,
-            },
-          }}
-        />
+        {submitData && (
+          <Form
+            form={formDefinition}
+            onSubmit={submitData}
+            onError={console.log}
+            onChange={console.log}
+            submission={{
+              data: initialData,
+            }}
+          />
+        )}
       </div>
     </div>
-  ) : null;
+  ) : (
+    <div className="h-screen">
+      <LoadingIndicator center />
+    </div>
+  );
 };
