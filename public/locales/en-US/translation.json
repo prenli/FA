@@ -106,6 +106,11 @@
     "info": "Sorry, the page you were\n looking for couldn't be found",
     "return": "Return to previous page"
   },
+  "missingLinkedContact": {
+    "followOnboardingInstructions": "Please follow onboarding process",
+    "startOnboarding": "Start onboarding",
+    "missingLinkedContact": "Missing linked contact"
+  },
   "messages": {
     "noDataAvailable": "No data available.",
     "notAvailable": "not available",
@@ -114,10 +119,10 @@
     "queryErrorWarning": "Server error, your data may be outdated.",
     "queryError": "Server error",
     "noPortfolios": "No portfolios are available",
-    "problemResolveInstructions": "Try refreshing the browser\n or contact us if the problem persists",
     "noCachedData": "No cached data",
     "authorisationError": "Authorisation server error",
-    "missingLinkedContact": "Missing linked contact",
+    "problemResolveInstructions": "Try refreshing the browser\n or contact us if the problem persists",
+    "refreshPage": "Refresh page",
     "noCachedDataInfo": "Right now we can't get data from server.\n Come back here later."
   }
 }

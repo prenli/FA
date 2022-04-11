@@ -39,7 +39,7 @@ export const FormView = ({
           <div className="mr-2">
             <Logo />
           </div>
-          <div className="grow">{header}</div>
+          <div className="grow">{header || locationState?.header}</div>
           <div className="px-2">
             <UserMenu />
           </div>

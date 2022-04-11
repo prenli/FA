@@ -2,10 +2,11 @@ import { lazy } from "react";
 import { TranslationText } from "components";
 import { MainLayout } from "layouts/MainLayout/MainLayout";
 import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
-import { useRoutes, Navigate } from "react-router-dom";
-import { NavTabLayout } from "../layouts/NavTabLayout/NavTabLayout";
-import { PortfolioNavigationHeaderLayout } from "../layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
-import { NotFoundView } from "../views/notFoundView/notFoundView";
+import { NavTabLayout } from "layouts/NavTabLayout/NavTabLayout";
+import { PortfolioNavigationHeaderLayout } from "layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
+import { Navigate, useRoutes } from "react-router-dom";
+import { NotFoundView } from "../../views/notFoundView/notFoundView";
+import { authUserMainRoutes } from "../authUser/routes";
 import { portfolioRoutes } from "./portfolio/routes";
 
 const Overview = lazy(() =>
@@ -42,9 +43,6 @@ const Documents = lazy(() =>
 );
 const Contact = lazy(() =>
   import("./contact").then((module) => ({ default: module.ContactPage }))
-);
-const Form = lazy(() =>
-  import("./form").then((module) => ({ default: module.FormPage }))
 );
 
 export const mainTabRoutes: NavTabPath[] = [
@@ -86,7 +84,7 @@ export const mainTabRoutes: NavTabPath[] = [
   },
 ];
 
-const mainRoutes = [
+const linkedContactMainRoutes = [
   {
     path: "",
     element: <Navigate to="overview" replace />,
@@ -114,19 +112,16 @@ const mainRoutes = [
     path: "orders/:orderId",
     element: <OrderDetails />,
   },
-  {
-    path: "form/:formKey",
-    element: <Form />,
-  },
 ];
 
-const rootRoutes = [
+export const userWithLinkedContactRoutes = [
   {
     path: "",
     element: <MainLayout />,
     children: [
-      ...mainRoutes,
+      ...linkedContactMainRoutes,
       ...portfolioRoutes,
+      ...authUserMainRoutes,
       {
         path: "*",
         element: <NotFoundView />,
@@ -135,4 +130,5 @@ const rootRoutes = [
   },
 ];
 
-export const RootRoutes = () => useRoutes(rootRoutes);
+export const UserWithLinkedContactRoutes = () =>
+  useRoutes(userWithLinkedContactRoutes);

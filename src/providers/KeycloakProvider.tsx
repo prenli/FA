@@ -1,14 +1,15 @@
 import { useContext } from "react";
 import { createContext, ReactNode, useReducer, useEffect } from "react";
+import { ErrorMessage, LoadingIndicator } from "components";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
+import { AuthUserMainRoutes } from "pages/authUser/routes";
 import {
   keycloakService,
   keycloakServiceInitialState,
   KeycloakServiceStateType,
 } from "services/keycloakService";
-import { ReactComponent as RefreshIcon } from "../assets/refresh.svg";
-import { Button, ErrorMessage, LoadingIndicator } from "../components";
-import { useModifiedTranslation } from "../hooks/useModifiedTranslation";
 import { DetectedLanguageProvider } from "./DetectedLanguageProvider";
+import { PersistedApolloProvider } from "./PersistedApolloProvider";
 
 const KeycloakContext = createContext<KeycloakServiceStateType>(
   keycloakServiceInitialState
@@ -32,7 +33,7 @@ export const KeycloakProvider = (props: KeycloakProviderProps) => {
   if (error) {
     return (
       <DetectedLanguageProvider>
-        <ErrorMessageWithRefresh headerI18Key="messages.authorisationError" />
+        <KeycloakError />
       </DetectedLanguageProvider>
     );
   }
@@ -48,7 +49,9 @@ export const KeycloakProvider = (props: KeycloakProviderProps) => {
   if (!linkedContact) {
     return (
       <DetectedLanguageProvider>
-        <ErrorMessageWithRefresh headerI18Key="messages.missingLinkedContact" />
+        <PersistedApolloProvider>
+          <AuthUserMainRoutes />
+        </PersistedApolloProvider>
       </DetectedLanguageProvider>
     );
   }
@@ -68,23 +71,19 @@ export const useKeycloak = () => {
   return context;
 };
 
-interface ErrorMessageWithRefreshProps {
-  headerI18Key: string;
-}
-
-const ErrorMessageWithRefresh = ({
-  headerI18Key,
-}: ErrorMessageWithRefreshProps) => {
+const KeycloakError = () => {
   const { t } = useModifiedTranslation();
 
   return (
-    <div className="container m-4 mx-auto">
-      <ErrorMessage header={t(headerI18Key)}>
+    <div className="h-screen">
+      <ErrorMessage header={t("messages.authorisationError")}>
         <div className="mb-4">{t("messages.problemResolveInstructions")}</div>
-        <Button
+        <div
           onClick={() => window.location.reload()}
-          LeftIcon={RefreshIcon}
-        />
+          className="font-semibold text-primary-500 cursor-pointer"
+        >
+          {t("messages.refreshPage")}
+        </div>
       </ErrorMessage>
     </div>
   );

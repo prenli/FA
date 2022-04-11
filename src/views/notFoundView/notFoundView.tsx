@@ -10,7 +10,7 @@ export const NotFoundView = () => {
       {t("notFoundPage.info")}
       <div
         onClick={() => navigate(-1)}
-        className="font-semibold text-primary-500"
+        className="font-semibold text-primary-500 cursor-pointer"
       >
         {t("notFoundPage.return")}
       </div>

@@ -93,5 +93,5 @@
 }
 
 .react-date-picker__calendar--closed {
-  display: none;
+  visibility: hidden;
 }
