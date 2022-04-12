@@ -69,7 +69,7 @@ export const useFormExecutor = () => {
       });
       const completeTaskResponse = await completeTask({
         variables: {
-          data: JSON.stringify(submissionData),
+          data: JSON.stringify(submissionData.data),
           taskId: processData.taskId,
           processInstanceId: processData.processInstanceId,
         },
