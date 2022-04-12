@@ -1,6 +1,10 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~formiojs/dist/formio.full.css";
 
+.tw-container {
+  @apply container !important;
+}
+
 .formio-component {
   @apply text-gray-900 font-sans;
 }
@@ -9,8 +13,10 @@
   @apply text-sm font-medium p-0 mb-2;
 }
 
+.formio-component.formio-component-form {
+}
+
 .formio-component .formio-form {
-  @apply container mx-auto;
 }
 
 .formio-component .form-group.formio-component {
@@ -18,23 +24,23 @@
 }
 
 .formio-component .card {
-  @apply border-0 bg-white md:rounded-lg sm:border sm:shadow-md !important;
+  @apply bg-white rounded-lg border shadow-md !important;
 }
 
 .formio-component .card-header {
-  @apply bg-transparent border-0;
+  @apply bg-transparent border-0 p-0 pt-2;
 }
 
 .formio-component .card-body {
-  @apply pb-0;
+  @apply pb-0 px-3 sm:px-4;
 }
 
 .formio-component .card-header ul.nav-tabs {
-  @apply border-b border-gray-200 shadow-md m-[-16px] sm:mt-2 overflow-y-auto lg:overflow-y-visible flex flex-nowrap scroll-hidden !important;
+  @apply mx-0 px-2 sm:px-4 border-b border-gray-200 shadow-md mt-2 overflow-y-auto lg:overflow-y-visible flex flex-nowrap scroll-hidden !important;
 }
 
 .formio-component .card-header ul.nav-tabs li {
-  @apply border-current p-2 whitespace-nowrap text-base border-b border-transparent !important;
+  @apply border-current px-2 pb-2 whitespace-nowrap text-base border-b border-transparent !important;
 }
 
 .formio-component .card-header ul.nav-tabs li a {
@@ -89,8 +95,12 @@
   @apply align-bottom;
 }
 
+.formio-component .form-check-input:checked {
+  @apply bg-primary-700 border-primary-700 !important;
+}
+
 .formio-component-button {
-  @apply sm:mt-4 px-4 sm:px-0 flex justify-center;
+  @apply sm:mt-4  px-0 flex justify-center;
 }
 
 .formio-component-button .btn-primary {

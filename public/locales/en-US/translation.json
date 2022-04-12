@@ -106,7 +106,10 @@
     "info": "Sorry, the page you were\n looking for couldn't be found",
     "return": "Return to previous page"
   },
-  "missingLinkedContact": {
+  "formPage": {
+    "attachments": "Attachments"
+  },
+  "missingLinkedContactPage": {
     "followOnboardingInstructions": "Please follow onboarding process",
     "startOnboarding": "Start onboarding",
     "missingLinkedContact": "Missing linked contact"

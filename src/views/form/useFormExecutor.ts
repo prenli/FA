@@ -18,8 +18,9 @@ import { useParams } from "react-router-dom";
 
 type FormDefinition = Record<string, unknown>;
 
-interface Attachment {
+export interface Attachment {
   url: string;
+  name: string;
 }
 
 interface FormData {
@@ -33,6 +34,10 @@ interface ProcessData {
   processInstanceId: string;
 }
 
+const attachmentsObjectToList = (
+  attachments: Record<string, Attachment> | undefined
+) => (attachments ? Object.values(attachments) : []);
+
 export const useFormExecutor = () => {
   const [formData, setFormData] = useState<FormData>();
   const [processData, setProcessData] = useState<ProcessData>();
@@ -42,7 +47,7 @@ export const useFormExecutor = () => {
     setFormData({
       formDefinition: JSON.parse(initFormData.formDefinition) as FormDefinition,
       initialData: initFormData.data,
-      attachments: initFormData.data?.attachments as Attachment[],
+      attachments: attachmentsObjectToList(initFormData.data?.attachments),
     });
     setProcessData({
       taskId: initFormData.taskId,
@@ -83,6 +88,7 @@ export const useFormExecutor = () => {
     submitData,
     formDefinition: formData?.formDefinition,
     initialData: formData?.initialData,
+    attachments: formData?.attachments,
   };
 };
 
@@ -110,20 +116,20 @@ const finishCurrentTask = (
   nextTask: CompleteTaskResponse | undefined,
   setFormData: Dispatch<SetStateAction<FormData | undefined>>
 ) => {
-  const formDefinition = nextTask?.formDefinition
-    ? JSON.parse(nextTask?.formDefinition)
-    : null;
-
   // process not ended we have next task
-  if (formDefinition) {
+  if (nextTask) {
+    const formDefinition = nextTask.formDefinition
+      ? JSON.parse(nextTask?.formDefinition)
+      : null;
+
     setFormData({
       formDefinition,
-      initialData: nextTask?.data || {},
-      attachments: nextTask?.data?.attachments as Attachment[],
+      initialData: nextTask.data,
+      attachments: attachmentsObjectToList(nextTask.data.attachments),
     });
   }
 
   return {
-    processFinished: !formDefinition,
+    processFinished: !nextTask,
   };
 };

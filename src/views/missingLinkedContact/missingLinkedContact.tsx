@@ -7,9 +7,9 @@ export const MissingLinkedContact = () => {
   const navigate = useNavigate();
 
   return (
-    <ErrorMessage header={t("missingLinkedContact.missingLinkedContact")}>
+    <ErrorMessage header={t("missingLinkedContactPage.missingLinkedContact")}>
       <div className="mb-2">
-        {t("missingLinkedContact.followOnboardingInstructions")}
+        {t("missingLinkedContactPage.followOnboardingInstructions")}
       </div>
       <div
         onClick={() =>
@@ -19,7 +19,7 @@ export const MissingLinkedContact = () => {
         }
         className="font-semibold text-primary-500 cursor-pointer"
       >
-        {t("missingLinkedContact.startOnboarding")}
+        {t("missingLinkedContactPage.startOnboarding")}
       </div>
     </ErrorMessage>
   );

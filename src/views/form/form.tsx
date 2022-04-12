@@ -2,6 +2,7 @@ import { Form } from "@formio/react";
 import { LoadingIndicator, Logo, UserMenu } from "components";
 import "./styles.css";
 import { useLocation } from "react-router-dom";
+import { Attachments } from "./components/Attachments";
 import { useFormExecutor } from "./useFormExecutor";
 
 interface FormViewProps {
@@ -23,6 +24,7 @@ export const FormView = ({
     formDefinition,
     initialData: apiInitialData = {},
     submitData,
+    attachments,
   } = useFormExecutor();
 
   const { state: locationState } = useLocation() as unknown as LocationProps;
@@ -33,8 +35,8 @@ export const FormView = ({
   };
 
   return formDefinition ? (
-    <div>
-      <div className="bg-white sm:border-b border-gray-200 sm:shadow-md ">
+    <>
+      <div className="bg-white border-b border-gray-200 shadow-md ">
         <div className="md:container flex gap-2 items-center p-2 md:mx-auto text-2xl font-bold">
           <div className="mr-2">
             <Logo />
@@ -45,20 +47,25 @@ export const FormView = ({
           </div>
         </div>
       </div>
-      <div className="sm:pt-4 pb-4">
-        {submitData && (
-          <Form
-            form={formDefinition}
-            onSubmit={submitData}
-            onError={console.log}
-            onChange={console.log}
-            submission={{
-              data: initialData,
-            }}
-          />
-        )}
+      <div className="py-3 mx-auto tw-container">
+        <div className="grid grid-cols-1 gap-4 px-2">
+          {attachments && attachments.length > 0 && (
+            <Attachments attachments={attachments} />
+          )}
+          {submitData && (
+            <Form
+              form={formDefinition}
+              onSubmit={submitData}
+              // TODO: error handling
+              //onError={console.log}
+              submission={{
+                data: initialData,
+              }}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   ) : (
     <div className="h-screen">
       <LoadingIndicator center />
