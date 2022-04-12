@@ -79,7 +79,7 @@ registerRoute(
   ({ url }) =>
     url.origin === self.location.origin &&
     url.pathname.endsWith(".json") &&
-    url.pathname.startsWith("/locales"),
+    url.pathname.includes("/locales/"),
   new SWROnInitThenCacheFirst({
     cacheName: "translations",
   })
