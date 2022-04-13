@@ -5,12 +5,9 @@ import {
   SetStateAction,
   Dispatch,
 } from "react";
+import { TaskResponse, useCompleteTask } from "api/flowable/useCompleteTask";
 import {
-  CompleteTaskResponse,
-  useCompleteTask,
-} from "api/flowable/useCompleteTask";
-import {
-  StartProcessResponseData,
+  StartProcessTaskResponse,
   useStartProcess,
 } from "api/flowable/useStartProcess";
 import { useNavigate } from "react-router";
@@ -46,10 +43,10 @@ export const useFormExecutor = () => {
   const [apiError, setApiError] = useState<boolean>(false);
   const resetApiError = () => setApiError(false);
 
-  const initForm = useCallback((initFormData: StartProcessResponseData) => {
+  const initForm = useCallback((initFormData: StartProcessTaskResponse) => {
     setFormData({
       formDefinition: JSON.parse(initFormData.formDefinition) as FormDefinition,
-      initialData: initFormData.data,
+      initialData: initFormData.data || {},
       attachments: attachmentsObjectToList(initFormData.data?.attachments),
     });
     setProcessData({
@@ -81,7 +78,8 @@ export const useFormExecutor = () => {
         });
         const { processFinished } = finishCurrentTask(
           completeTaskResponse.data?.completeTask,
-          setFormData
+          setFormData,
+          setProcessData
         );
 
         if (processFinished) {
@@ -100,6 +98,7 @@ export const useFormExecutor = () => {
 
   return {
     submitData,
+    processData,
     formDefinition: formData?.formDefinition,
     initialData: formData?.initialData,
     attachments: formData?.attachments,
@@ -109,7 +108,7 @@ export const useFormExecutor = () => {
 };
 
 const useInitializeForm = (
-  onFormInitialization: (initData: StartProcessResponseData) => void
+  onFormInitialization: (initData: StartProcessTaskResponse) => void
 ) => {
   const { formKey } = useParams();
   const { startProcess } = useStartProcess(formKey);
@@ -129,23 +128,26 @@ const useInitializeForm = (
 };
 
 const finishCurrentTask = (
-  nextTask: CompleteTaskResponse | undefined,
-  setFormData: Dispatch<SetStateAction<FormData | undefined>>
+  nextTask: TaskResponse | undefined,
+  setFormData: Dispatch<SetStateAction<FormData | undefined>>,
+  setProcessData: Dispatch<SetStateAction<ProcessData | undefined>>
 ) => {
   // process not ended we have next task
-  if (nextTask) {
-    const formDefinition = nextTask.formDefinition
-      ? JSON.parse(nextTask?.formDefinition)
-      : null;
+  if (nextTask?.formDefinition) {
+    const formDefinition = JSON.parse(nextTask.formDefinition);
 
     setFormData({
       formDefinition,
-      initialData: nextTask.data,
-      attachments: attachmentsObjectToList(nextTask.data.attachments),
+      initialData: nextTask.data || {},
+      attachments: attachmentsObjectToList(nextTask.data?.attachments),
+    });
+    setProcessData({
+      taskId: nextTask.taskId,
+      processInstanceId: nextTask.processInstanceId,
     });
   }
 
   return {
-    processFinished: !nextTask,
+    processFinished: !nextTask?.formDefinition,
   };
 };

@@ -1,6 +1,6 @@
 import { useMutation, gql } from "@apollo/client";
 import { FLOWABLE_API_NAME } from "services/apolloClient";
-import { Attachment } from "../../views/form/useFormExecutor";
+import { TaskResponse } from "./useCompleteTask";
 
 const START_PROCESS = gql`
   mutation ($key: String) {
@@ -13,18 +13,11 @@ const START_PROCESS = gql`
   }
 `;
 
-export interface StartProcessResponseData {
-  formDefinition: string;
-  taskId: string;
-  processInstanceId: string;
-  data: {
-    attachments?: Record<string, Attachment>;
-  };
-}
+export type StartProcessTaskResponse = TaskResponse;
 
 export const useStartProcess = (key: string | undefined) => {
   const [startProcess, { loading, error, reset }] = useMutation<{
-    startProcess: StartProcessResponseData;
+    startProcess: StartProcessTaskResponse;
   }>(START_PROCESS, {
     variables: {
       key,

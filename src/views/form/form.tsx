@@ -30,6 +30,7 @@ export const FormView = ({
     formDefinition,
     initialData: apiInitialData = {},
     submitData,
+    processData,
     attachments,
     apiError,
     resetApiError,
@@ -62,8 +63,9 @@ export const FormView = ({
               {attachments && attachments.length > 0 && (
                 <Attachments attachments={attachments} />
               )}
-              {submitData && (
+              {submitData && processData && (
                 <Form
+                  key={processData.taskId}
                   form={formDefinition}
                   onSubmit={submitData}
                   onError={(errors: unknown) => setFormErrors(errors)}

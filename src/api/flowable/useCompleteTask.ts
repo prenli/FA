@@ -17,18 +17,18 @@ const COMPLETE_TASK = gql`
   }
 `;
 
-export interface CompleteTaskResponse {
+export interface TaskResponse {
   formDefinition: string;
   taskId: string;
   processInstanceId: string;
-  data: {
+  data?: {
     attachments?: Record<string, Attachment>;
   };
 }
 
 export const useCompleteTask = () => {
   const [completeTask, { data, loading, error, reset }] = useMutation<{
-    completeTask: CompleteTaskResponse;
+    completeTask: TaskResponse;
   }>(COMPLETE_TASK, {
     context: { apiName: FLOWABLE_API_NAME },
   });
