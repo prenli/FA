@@ -18,7 +18,7 @@ export const authUserMainRoutes = [
   },
 ];
 
-export const AuthUserMainRoutes = () =>
+export const AuthUserRoutes = () =>
   useRoutes([
     {
       path: "",

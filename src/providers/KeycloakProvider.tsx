@@ -2,7 +2,8 @@ import { useContext } from "react";
 import { createContext, ReactNode, useReducer, useEffect } from "react";
 import { ErrorMessage, LoadingIndicator } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { AuthUserMainRoutes } from "pages/authUser/routes";
+import { AuthUserRoutes } from "pages/authUser/routes";
+import { ServiceWorkerRegistrationProvider } from "providers/ServiceWorkerRegistrationProvider";
 import {
   keycloakService,
   keycloakServiceInitialState,
@@ -50,7 +51,9 @@ export const KeycloakProvider = (props: KeycloakProviderProps) => {
     return (
       <DetectedLanguageProvider>
         <PersistedApolloProvider>
-          <AuthUserMainRoutes />
+          <ServiceWorkerRegistrationProvider>
+            <AuthUserRoutes />
+          </ServiceWorkerRegistrationProvider>
         </PersistedApolloProvider>
       </DetectedLanguageProvider>
     );
