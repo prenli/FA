@@ -107,7 +107,10 @@
     "return": "Return to previous page"
   },
   "formPage": {
-    "attachments": "Attachments"
+    "attachments": "Attachments",
+    "submitError": "Error occurred",
+    "submitErrorInstructions": "Something went wrong during form submission\nPlease go back and try again",
+    "goBack": "Go back"
   },
   "missingLinkedContactPage": {
     "followOnboardingInstructions": "Please follow onboarding process",

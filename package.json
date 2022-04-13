@@ -1,12 +1,13 @@
 {
   "name": "fa-client-app",
   "homepage": "/public/myinvestments",
-  "version": "0.1.0",
+  "version": "1.1.0-SNAPSHOT",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.5.6",
     "@formio/react": "^5.2.0",
     "@headlessui/react": "^1.4.3",
+    "@popperjs/core": "^2.11.5",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",

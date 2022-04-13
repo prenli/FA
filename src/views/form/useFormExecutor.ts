@@ -43,6 +43,9 @@ export const useFormExecutor = () => {
   const [processData, setProcessData] = useState<ProcessData>();
   const navigate = useNavigate();
 
+  const [apiError, setApiError] = useState<boolean>(false);
+  const resetApiError = () => setApiError(false);
+
   const initForm = useCallback((initFormData: StartProcessResponseData) => {
     setFormData({
       formDefinition: JSON.parse(initFormData.formDefinition) as FormDefinition,
@@ -61,26 +64,37 @@ export const useFormExecutor = () => {
 
   const submitData =
     processData &&
-    (async (submissionData: Record<string, unknown>) => {
+    (async (submissionData: { data: Record<string, unknown> }) => {
+      const formDataBeforeSubmission = formData ? { ...formData } : undefined;
       setFormData({
         formDefinition: undefined,
         initialData: {},
         attachments: [],
       });
-      const completeTaskResponse = await completeTask({
-        variables: {
-          data: JSON.stringify(submissionData.data),
-          taskId: processData.taskId,
-          processInstanceId: processData.processInstanceId,
-        },
-      });
-      const { processFinished } = finishCurrentTask(
-        completeTaskResponse.data?.completeTask,
-        setFormData
-      );
+      try {
+        const completeTaskResponse = await completeTask({
+          variables: {
+            data: JSON.stringify(submissionData.data),
+            taskId: processData.taskId,
+            processInstanceId: processData.processInstanceId,
+          },
+        });
+        const { processFinished } = finishCurrentTask(
+          completeTaskResponse.data?.completeTask,
+          setFormData
+        );
 
-      if (processFinished) {
-        navigate("/");
+        if (processFinished) {
+          navigate("/");
+        }
+      } catch (error) {
+        if (formDataBeforeSubmission) {
+          setFormData({
+            ...formDataBeforeSubmission,
+            initialData: submissionData.data,
+          });
+        }
+        setApiError(true);
       }
     });
 
@@ -89,6 +103,8 @@ export const useFormExecutor = () => {
     formDefinition: formData?.formDefinition,
     initialData: formData?.initialData,
     attachments: formData?.attachments,
+    apiError,
+    resetApiError,
   };
 };
 

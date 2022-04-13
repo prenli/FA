@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState, Children } from "react";
+import { ReactNode, Children } from "react";
 import { useSwipeable } from "react-swipeable";
 
 export type SwipeDirection = "left" | "right";
@@ -14,8 +14,6 @@ export const PagesCarousel = ({
   currentPageIndex,
   onPageSwipe,
 }: PagesCarouselProps) => {
-  const visitedPageIndexes = useVisitedPageIndexes(currentPageIndex);
-
   const handlers = useSwipeable({
     onSwipedLeft: () => onPageSwipe("left"),
     onSwipedRight: () => onPageSwipe("right"),
@@ -24,12 +22,10 @@ export const PagesCarousel = ({
   });
 
   return (
-    <div className="overflow-auto relative flex-1 w-full" {...handlers}>
+    <div className="overflow-auto flex-1 w-full" {...handlers}>
       <div className="flex h-full">
         {Children.map(children, (child, index) => {
           const isCurrent = index === currentPageIndex;
-          const shouldBeRendered =
-            isCurrent || visitedPageIndexes.includes(index);
           return (
             <div
               key={index}
@@ -37,27 +33,11 @@ export const PagesCarousel = ({
                 isCurrent ? "w-full" : "w-0 h-0"
               }`}
             >
-              <div className="w-full">{shouldBeRendered && child}</div>
+              <div className="w-full">{isCurrent && child}</div>
             </div>
           );
         })}
       </div>
     </div>
   );
-};
-
-const useVisitedPageIndexes = (currentIndex: number) => {
-  const [visitedPageIndexes, setVisitedPageIndexes] = useState<number[]>([
-    currentIndex,
-  ]);
-  useEffect(() => {
-    setVisitedPageIndexes((previousIndexes) => {
-      if (previousIndexes.includes(currentIndex)) {
-        return previousIndexes;
-      }
-      return [...previousIndexes, currentIndex];
-    });
-  }, [currentIndex]);
-
-  return visitedPageIndexes;
 };
