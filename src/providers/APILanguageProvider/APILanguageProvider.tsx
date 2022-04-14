@@ -24,8 +24,8 @@ export const APILanguageProvider = ({
     );
   }
 
-  if (data?.portfolios?.length === 0) {
-    return <NoPortfolios />;
+  if (data?.portfolios.length === 0) {
+    return <NoPortfolios contactId={data?.contactId} />;
   }
 
   return children;

@@ -9,7 +9,6 @@ import {
   keycloakServiceInitialState,
   KeycloakServiceStateType,
 } from "services/keycloakService";
-import { DetectedLanguageProvider } from "./DetectedLanguageProvider";
 import { PersistedApolloProvider } from "./PersistedApolloProvider";
 
 const KeycloakContext = createContext<KeycloakServiceStateType>(
@@ -32,11 +31,7 @@ export const KeycloakProvider = (props: KeycloakProviderProps) => {
   }, [forceRender, keycloak]);
 
   if (error) {
-    return (
-      <DetectedLanguageProvider>
-        <KeycloakError />
-      </DetectedLanguageProvider>
-    );
+    return <KeycloakError />;
   }
 
   if (!initialized) {
@@ -49,13 +44,11 @@ export const KeycloakProvider = (props: KeycloakProviderProps) => {
 
   if (!linkedContact) {
     return (
-      <DetectedLanguageProvider>
-        <PersistedApolloProvider>
-          <ServiceWorkerRegistrationProvider>
-            <AuthUserRoutes />
-          </ServiceWorkerRegistrationProvider>
-        </PersistedApolloProvider>
-      </DetectedLanguageProvider>
+      <PersistedApolloProvider>
+        <ServiceWorkerRegistrationProvider>
+          <AuthUserRoutes />
+        </ServiceWorkerRegistrationProvider>
+      </PersistedApolloProvider>
     );
   }
 

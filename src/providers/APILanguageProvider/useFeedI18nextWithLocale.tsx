@@ -6,8 +6,7 @@ export const useFeedI18nextWithLocale = (language: string | undefined) => {
 
   useEffect(() => {
     if (language) {
-      const locale = language || "en-US";
-      initI18n(locale.replace("_", "-"), () => {
+      initI18n(language.replace("_", "-"), () => {
         setIsReady(true);
       });
     }
