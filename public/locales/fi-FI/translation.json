@@ -24,8 +24,8 @@
     }
   },
   "portfolioSummary": {
-    "currentMarketValue": "Current Market Value",
-    "availableCash": "Available Cash",
+    "currentMarketValue": "Current market value",
+    "availableCash": "Available cash",
     "unrealizedProfits": "Unrealised profits"
   },
   "overviewPage": {
@@ -38,7 +38,7 @@
   "holdingsPage": {
     "name": "Name",
     "unrealizedProfits": "Unrealised profits",
-    "marketValue": "Market Value",
+    "marketValue": "Market value",
     "holding": "Holding",
     "units": "Units",
     "purchaseValue": "Purchase value",
@@ -47,7 +47,7 @@
     "changePercentage": "Change %",
     "type": "Type",
     "isinCode": "ISIN code",
-    "accountNumber": "Account Number",
+    "accountNumber": "Account number",
     "currency": "Currency",
     "prospectus": "Prospectus",
     "kiid": "KIID",
@@ -72,7 +72,7 @@
     "type": "Type",
     "details": "Details",
     "security": "Security",
-    "tradeAmount": "Trade Amount",
+    "tradeAmount": "Trade amount",
     "marketplace": "Marketplace",
     "isin": "ISIN code",
     "securityName": "Security name",
