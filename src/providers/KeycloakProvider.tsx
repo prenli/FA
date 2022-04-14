@@ -1,14 +1,13 @@
 import { useContext } from "react";
 import { createContext, ReactNode, useReducer, useEffect } from "react";
+import { ReactComponent as RefreshIcon } from "assets/refresh.svg";
+import { Button, ErrorMessage, LoadingIndicator } from "components";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import {
   keycloakService,
   keycloakServiceInitialState,
   KeycloakServiceStateType,
 } from "services/keycloakService";
-import { ReactComponent as RefreshIcon } from "../assets/refresh.svg";
-import { Button, ErrorMessage, LoadingIndicator } from "../components";
-import { useModifiedTranslation } from "../hooks/useModifiedTranslation";
-import { DetectedLanguageProvider } from "./DetectedLanguageProvider";
 
 const KeycloakContext = createContext<KeycloakServiceStateType>(
   keycloakServiceInitialState
@@ -31,9 +30,7 @@ export const KeycloakProvider = (props: KeycloakProviderProps) => {
 
   if (error) {
     return (
-      <DetectedLanguageProvider>
-        <ErrorMessageWithRefresh headerI18Key="messages.authorisationError" />
-      </DetectedLanguageProvider>
+      <ErrorMessageWithRefresh headerI18Key="messages.authorisationError" />
     );
   }
 
@@ -47,9 +44,7 @@ export const KeycloakProvider = (props: KeycloakProviderProps) => {
 
   if (!linkedContact) {
     return (
-      <DetectedLanguageProvider>
-        <ErrorMessageWithRefresh headerI18Key="messages.missingLinkedContact" />
-      </DetectedLanguageProvider>
+      <ErrorMessageWithRefresh headerI18Key="messages.missingLinkedContact" />
     );
   }
 

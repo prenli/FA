@@ -21,7 +21,8 @@ const CONTACT_INFO_QUERY = gql`
 `;
 
 export interface ContactInfoQuery {
-  contact: {
+  contact?: {
+    id: number;
     language: {
       locale: string;
     };
@@ -51,11 +52,12 @@ export const useGetContactInfo = () => {
     loading,
     error,
     data: data && {
-      portfolios: data.contact.portfolios || [],
-      language: data.contact.language.locale,
+      contactId: data.contact?.id,
+      portfolios: data.contact?.portfolios || [],
+      language: data.contact?.language.locale || "en-US",
       // all contact portfolios have same currency
       portfoliosCurrency:
-        data.contact.portfolios?.[0].currency.securityCode || "",
+        data.contact?.portfolios?.[0].currency.securityCode || "",
     },
   };
 };

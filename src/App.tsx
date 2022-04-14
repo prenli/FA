@@ -1,3 +1,5 @@
+import { ErrorBoundary } from "components/ErrorBoundary/ErrorBoundary";
+import { DetectedLanguageProvider } from "providers/DetectedLanguageProvider";
 import { KeycloakProvider } from "providers/KeycloakProvider";
 import { ToastContainer } from "react-toastify";
 import { keycloakService } from "services/keycloakService";
@@ -10,18 +12,20 @@ import "styles/fonts.css";
 
 function App() {
   return (
-    <div>
-      <KeycloakProvider keycloak={keycloakService}>
-        <PersistedApolloProvider>
-          <APILanguageProvider>
-            <ServiceWorkerRegistrationProvider>
-              <RootRoutes />
-            </ServiceWorkerRegistrationProvider>
-          </APILanguageProvider>
-        </PersistedApolloProvider>
-      </KeycloakProvider>
-      <ToastContainer />
-    </div>
+    <DetectedLanguageProvider>
+      <ErrorBoundary>
+        <KeycloakProvider keycloak={keycloakService}>
+          <PersistedApolloProvider>
+            <APILanguageProvider>
+              <ServiceWorkerRegistrationProvider>
+                <RootRoutes />
+              </ServiceWorkerRegistrationProvider>
+            </APILanguageProvider>
+          </PersistedApolloProvider>
+        </KeycloakProvider>
+        <ToastContainer />
+      </ErrorBoundary>
+    </DetectedLanguageProvider>
   );
 }
 
