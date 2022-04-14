@@ -47,11 +47,7 @@ const Overview = ({ data }: OverviewProps) => {
         {breakPortfolioInfoCard ? (
           <PortfolioSummary {...data.portfolioReport} />
         ) : (
-          <PortfolioInfoCard
-            {...data.portfolioReport}
-            name={data.name}
-            colorScheme="blue"
-          />
+          <PortfolioInfoCard {...data.portfolioReport} name={data.name} />
         )}
       </div>
       <div className="grid gap-4">
