@@ -53,16 +53,16 @@
   @apply font-semibold text-primary-600;
 }
 
-.formio-component-textfield input {
+.formio-component input.form-control {
   @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 !important;
 }
 
-.formio-component-select .form-control {
-  @apply bg-transparent border-0 ring-0 p-0;
+.formio-component-select .choices {
+  @apply px-0 flex items-center w-full h-10 text-lg font-bold text-gray-900 bg-gray-50 rounded-lg !important;
 }
 
-.formio-component-select .choices {
-  @apply flex items-center py-2.5 px-4 w-full h-10 text-lg font-bold text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:border-primary-500 focus:ring-primary-500 !important;
+.formio-component-select .choices .form-control {
+  @apply bg-transparent !important;
 }
 
 .formio-component-select .choices__list--dropdown {
@@ -93,6 +93,10 @@
   @apply align-bottom;
 }
 
+.formio-component-select .formio-select-autocomplete-input {
+  @apply p-0;
+}
+
 .formio-component .form-check-input:checked {
   @apply bg-primary-700 border-primary-700 !important;
 }
@@ -109,7 +113,7 @@
   @apply text-red-600 text-sm text-center leading-4 mt-2;
 }
 
-.formio-component input.is-invalid {
+.formio-component .form-control.is-invalid {
   @apply border-red-600 !important;
 }
 
