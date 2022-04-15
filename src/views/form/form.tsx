@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Form, Errors } from "@formio/react";
+import { Form } from "@formio/react";
 import { LoadingIndicator, Logo, UserMenu } from "components";
 import "./styles.css";
 import { useLocation } from "react-router-dom";
@@ -18,14 +17,10 @@ interface LocationProps {
   };
 }
 
-type FormError = unknown;
-
 export const FormView = ({
   header,
   initialData: propsInitialData = {},
 }: FormViewProps) => {
-  const [formErrors, setFormErrors] = useState<FormError>(null);
-
   const {
     formDefinition,
     initialData: apiInitialData = {},
@@ -68,13 +63,11 @@ export const FormView = ({
                   key={processData.taskId}
                   form={formDefinition}
                   onSubmit={submitData}
-                  onError={(errors: unknown) => setFormErrors(errors)}
                   submission={{
                     data: initialData,
                   }}
                 />
               )}
-              <Errors errors={formErrors} />
             </div>
           </div>
         </>
