@@ -97,8 +97,12 @@
   @apply p-0;
 }
 
+.formio-component-select .form-control.is-invalid {
+  background-position: right calc(1.375em + 0.1875rem) center;
+}
+
 .formio-component-tags .choices__inner {
-  @apply flex items-center py-0;
+  @apply flex items-center py-0 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
 }
 
 .formio-component-tags .choices__item.choices__item--selectable {
@@ -115,6 +119,30 @@
 
 .formio-component-tags .choices__item.choices__item--selectable {
   @apply px-2 py-1 rounded text-sm;
+}
+
+.formio-component-datetime .input-group {
+  @apply flex-nowrap items-stretch;
+}
+
+.formio-component-datetime .input-group-append {
+  @apply ml-[-10px] z-10 !important;
+}
+
+.formio-component-datetime .input-group-text {
+  @apply h-full;
+}
+
+.formio-component-day .row {
+  @apply grid grid-cols-3;
+}
+
+.formio-component-day select[name="month"] {
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
+}
+
+.formio-component-day .formio-select-autocomplete-input {
+  @apply p-0;
 }
 
 .formio-component .form-check-input:checked {
