@@ -27,8 +27,8 @@ interface FormData {
 }
 
 interface ProcessData {
-  taskId: string;
-  processInstanceId: string;
+  taskId: string | undefined;
+  processInstanceId: string | undefined;
 }
 
 const attachmentsObjectToList = (
@@ -43,17 +43,30 @@ export const useFormExecutor = () => {
   const [apiError, setApiError] = useState<boolean>(false);
   const resetApiError = () => setApiError(false);
 
-  const initForm = useCallback((initFormData: StartProcessTaskResponse) => {
-    setFormData({
-      formDefinition: JSON.parse(initFormData.formDefinition) as FormDefinition,
-      initialData: initFormData.data || {},
-      attachments: attachmentsObjectToList(initFormData.data?.attachments),
-    });
-    setProcessData({
-      taskId: initFormData.taskId,
-      processInstanceId: initFormData.processInstanceId,
-    });
-  }, []);
+  const initForm = useCallback(
+    (initFormData: StartProcessTaskResponse | undefined) => {
+      if (!initFormData) {
+        setProcessData({
+          taskId: undefined,
+          processInstanceId: undefined,
+        });
+        return;
+      }
+
+      setFormData({
+        formDefinition: JSON.parse(
+          initFormData.formDefinition
+        ) as FormDefinition,
+        initialData: initFormData.data || {},
+        attachments: attachmentsObjectToList(initFormData.data?.attachments),
+      });
+      setProcessData({
+        taskId: initFormData.taskId,
+        processInstanceId: initFormData.processInstanceId,
+      });
+    },
+    []
+  );
 
   useInitializeForm(initForm);
 
@@ -108,7 +121,7 @@ export const useFormExecutor = () => {
 };
 
 const useInitializeForm = (
-  onFormInitialization: (initData: StartProcessTaskResponse) => void
+  onFormInitialization: (initData: StartProcessTaskResponse | undefined) => void
 ) => {
   const { formKey } = useParams();
   const { startProcess } = useStartProcess(formKey);
@@ -116,7 +129,7 @@ const useInitializeForm = (
     let hookRunning = true;
     const initializeForm = async () => {
       const responseData = (await startProcess()).data?.startProcess;
-      if (hookRunning && responseData) {
+      if (hookRunning) {
         onFormInitialization(responseData);
       }
     };

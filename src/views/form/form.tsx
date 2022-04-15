@@ -4,6 +4,7 @@ import "./styles.css";
 import { useLocation } from "react-router-dom";
 import { ApiError } from "./components/ApiError";
 import { Attachments } from "./components/Attachments";
+import { ProcessNotFound } from "./components/ProcessNotFound";
 import { useFormExecutor } from "./useFormExecutor";
 
 interface FormViewProps {
@@ -72,12 +73,13 @@ export const FormView = ({
           </div>
         </>
       )}
-      {!formDefinition && !apiError && (
+      {!formDefinition && !apiError && !processData && (
         <div className="h-screen">
           <LoadingIndicator center />
         </div>
       )}
       {apiError && <ApiError resetApiError={resetApiError} />}
+      {processData && !processData.processInstanceId && <ProcessNotFound />}
     </>
   );
 };
