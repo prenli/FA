@@ -97,6 +97,26 @@
   @apply p-0;
 }
 
+.formio-component-tags .choices__inner {
+  @apply flex items-center py-0;
+}
+
+.formio-component-tags .choices__item.choices__item--selectable {
+  @apply mb-0;
+}
+
+.formio-component-tags .choices__input.choices__input--cloned {
+  @apply mb-0;
+}
+
+.formio-component-tags input:focus {
+  @apply ring-0;
+}
+
+.formio-component-tags .choices__item.choices__item--selectable {
+  @apply px-2 py-1 rounded text-sm;
+}
+
 .formio-component .form-check-input:checked {
   @apply bg-primary-700 border-primary-700 !important;
 }
@@ -115,6 +135,10 @@
 
 .formio-component .form-control.is-invalid {
   @apply border-red-600 !important;
+}
+
+.formio-component .choices [hidden] {
+  @apply hidden !important;
 }
 
 /* brings back tailwind class styling*/
