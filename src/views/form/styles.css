@@ -21,35 +21,35 @@
   @apply mb-2;
 }
 
-.formio-component .card {
+.formio-component-tabs .card {
   @apply bg-white rounded-lg border shadow-md !important;
 }
 
-.formio-component .card-header {
+.formio-component-tabs .card-header {
   @apply bg-transparent border-0 p-0 pt-2;
 }
 
-.formio-component .card-body {
+.formio-component-tabs .card-body {
   @apply pb-0 px-3 sm:px-4;
 }
 
-.formio-component .card-header ul.nav-tabs {
+.formio-component-tabs .card-header ul.nav-tabs {
   @apply mx-0 px-2 sm:px-4 border-b border-gray-200 shadow-md mt-2 overflow-y-auto lg:overflow-y-visible flex flex-nowrap scroll-hidden !important;
 }
 
-.formio-component .card-header ul.nav-tabs li {
+.formio-component-tabs .card-header ul.nav-tabs li {
   @apply border-current px-2 pb-2 whitespace-nowrap text-base border-b border-transparent !important;
 }
 
-.formio-component .card-header ul.nav-tabs li a {
+.formio-component-tabs .card-header ul.nav-tabs li a {
   @apply p-0 border-0 text-gray-600 font-normal;
 }
 
-.formio-component .card-header ul.nav-tabs li.active {
+.formio-component-tabs .card-header ul.nav-tabs li.active {
   @apply border-b border-primary-600 !important;
 }
 
-.formio-component .card-header ul.nav-tabs li.active a {
+.formio-component-tabs .card-header ul.nav-tabs li.active a {
   @apply font-semibold text-primary-600;
 }
 
