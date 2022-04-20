@@ -1,6 +1,6 @@
 import { Form } from "@formio/react";
 import { LoadingIndicator, Logo, UserMenu } from "components";
-import "./styles.css";
+import "./styles.scss";
 import { useLocation } from "react-router-dom";
 import { ApiError } from "./components/ApiError";
 import { Attachments } from "./components/Attachments";
@@ -42,8 +42,8 @@ export const FormView = ({
   return (
     <>
       {formDefinition && !apiError && (
-        <>
-          <div className="bg-white border-b border-gray-200 shadow-md ">
+        <div className="formio">
+          <div className="bg-white border-b border-gray-200 shadow-md">
             <div className="md:container flex gap-2 items-center p-2 md:mx-auto text-2xl font-bold">
               <div className="mr-2">
                 <Logo />
@@ -71,7 +71,7 @@ export const FormView = ({
               )}
             </div>
           </div>
-        </>
+        </div>
       )}
       {!formDefinition && !apiError && !processData && (
         <div className="h-screen">
