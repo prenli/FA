@@ -42,7 +42,7 @@ export const FormView = ({
   return (
     <>
       {formDefinition && !apiError && (
-        <div className="formio">
+        <div className="flex overflow-hidden flex-col h-full formio">
           <div className="bg-white border-b border-gray-200 shadow-md">
             <div className="md:container flex gap-2 items-center p-2 md:mx-auto text-2xl font-bold">
               <div className="mr-2">
@@ -54,21 +54,23 @@ export const FormView = ({
               </div>
             </div>
           </div>
-          <div className="py-3 mx-auto tw-container">
-            <div className="grid grid-cols-1 gap-4 px-2">
-              {attachments && attachments.length > 0 && (
-                <Attachments attachments={attachments} />
-              )}
-              {submitData && processData && (
-                <Form
-                  key={processData.taskId}
-                  form={formDefinition}
-                  onSubmit={submitData}
-                  submission={{
-                    data: initialData,
-                  }}
-                />
-              )}
+          <div className="overflow-y-scroll grow-1">
+            <div className="py-3 mx-auto h-full tw-container">
+              <div className="grid grid-cols-1 gap-4 px-2">
+                {attachments && attachments.length > 0 && (
+                  <Attachments attachments={attachments} />
+                )}
+                {submitData && processData && (
+                  <Form
+                    key={processData.taskId}
+                    form={formDefinition}
+                    onSubmit={submitData}
+                    submission={{
+                      data: initialData,
+                    }}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
