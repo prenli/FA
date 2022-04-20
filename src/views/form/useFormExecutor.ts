@@ -12,6 +12,7 @@ import {
 } from "api/flowable/useStartProcess";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
+import { useKeycloak } from "../../providers/KeycloakProvider";
 
 type FormDefinition = Record<string, unknown>;
 
@@ -36,6 +37,7 @@ const attachmentsObjectToList = (
 ) => (attachments ? Object.values(attachments) : []);
 
 export const useFormExecutor = () => {
+  const { userProfile } = useKeycloak();
   const [formData, setFormData] = useState<FormData>();
   const [processData, setProcessData] = useState<ProcessData>();
   const navigate = useNavigate();
@@ -113,7 +115,10 @@ export const useFormExecutor = () => {
     submitData,
     processData,
     formDefinition: formData?.formDefinition,
-    initialData: formData?.initialData,
+    initialData: {
+      ...userProfile,
+      ...formData?.initialData,
+    },
     attachments: formData?.attachments,
     apiError,
     resetApiError,
