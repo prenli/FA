@@ -54,7 +54,7 @@ export const FormView = ({
               </div>
             </div>
           </div>
-          <div className="overflow-y-scroll grow-1">
+          <div className="overflow-y-auto grow-1">
             <div className="py-3 mx-auto h-full tw-container">
               <div className="grid grid-cols-1 gap-4 px-2">
                 {attachments && attachments.length > 0 && (
