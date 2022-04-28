@@ -4,6 +4,7 @@ import "./styles.scss";
 import { useLocation } from "react-router-dom";
 import { ApiError } from "./components/ApiError";
 import { Attachments } from "./components/Attachments";
+import { FormNotFound } from "./components/FormNotFound";
 import { ProcessNotFound } from "./components/ProcessNotFound";
 import { useFormExecutor } from "./useFormExecutor";
 
@@ -84,6 +85,7 @@ export const FormView = ({
       )}
       {apiError && <ApiError resetApiError={resetApiError} />}
       {processData && !processData.processInstanceId && <ProcessNotFound />}
+      {processData && !formDefinition && <FormNotFound />}
     </>
   );
 };

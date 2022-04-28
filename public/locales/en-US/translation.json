@@ -112,7 +112,9 @@
     "submitErrorInstructions": "Something went wrong during form submission\nPlease go back and try again",
     "goBack": "Go back",
     "processNotFound": "Process not found",
-    "processNotFoundInfo": "Please check your URL \nor contact us if the problem persists"
+    "processNotFoundInfo": "Please check your URL \nor contact us if the problem persists",
+    "formNotFound": "Form not found",
+    "formNotFoundInfo": "Please check your URL \nor contact us if the problem persists"
   },
   "missingLinkedContactPage": {
     "followOnboardingInstructions": "Please follow onboarding process",
