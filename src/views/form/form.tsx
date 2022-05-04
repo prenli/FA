@@ -1,6 +1,6 @@
 import { Form } from "@formio/react";
 import { LoadingIndicator, Logo, UserMenu } from "components";
-import "./styles.scss";
+import "./styles.css";
 import { useLocation } from "react-router-dom";
 import { ApiError } from "./components/ApiError";
 import { Attachments } from "./components/Attachments";
@@ -56,7 +56,7 @@ export const FormView = ({
             </div>
           </div>
           <div className="overflow-y-auto grow-1">
-            <div className="py-3 mx-auto h-full tw-container">
+            <div className="container py-3 mx-auto h-full">
               <div className="grid grid-cols-1 gap-4 px-2">
                 {attachments && attachments.length > 0 && (
                   <Attachments attachments={attachments} />

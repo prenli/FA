@@ -1,11 +1,6 @@
-@import "~formiojs/dist/formio.full.css";
-
 .formio-form {
-  @import "~bootstrap/scss/bootstrap.scss";
-}
-
-.tw-container {
-  @apply container;
+  @import "node_modules/bootstrap/dist/css/bootstrap.min.css";
+  @import "node_modules/formiojs/dist/formio.form.min.css";
 }
 
 .formio-component {
