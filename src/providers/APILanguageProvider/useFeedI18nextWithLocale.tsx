@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { initI18n } from "i18n";
 
-export const useFeedI18nextWithLocale = (language: string | undefined) => {
+export const useFeedI18nextWithLocale = (locale: string | undefined) => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    if (language) {
-      initI18n(language.replace("_", "-"), () => {
+    if (locale) {
+      initI18n(locale.replace("_", "-"), () => {
         setIsReady(true);
       });
     }
-  }, [language]);
+  }, [locale]);
 
   return { isReady };
 };
