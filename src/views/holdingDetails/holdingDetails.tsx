@@ -1,6 +1,8 @@
 import { HoldingPosition, SecurityDetailsPosition } from "api/holdings/types";
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
-import { Card, GainLoseColoring, DetailsHeading } from "components";
+import { ReactComponent as MinusCircle } from "assets/minus-circle.svg";
+import { ReactComponent as PlusCircle } from "assets/plus-circle.svg";
+import { Card, GainLoseColoring, DetailsHeading, Button } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { PageLayout } from "layouts/PageLayout/PageLayout";
 import { useNavigate } from "react-router-dom";
@@ -50,7 +52,7 @@ export const HoldingDetails = ({
       <div className="overflow-y-auto grow-1">
         <PageLayout>
           <div className="grid gap-4 md:grid-cols-[300px_auto] lg:grid-cols-[400px_auto] xl:grid-cols-[500px_auto]">
-            <div className="md:col-start-2 md:row-start-1 lg:row-end-3">
+            <div className="md:col-start-2 md:row-start-1 md:row-end-3">
               <Card
                 header={
                   <LineChartHeader
@@ -134,32 +136,52 @@ export const HoldingDetails = ({
                 />
               </div>
             </Card>
-            <Card header={t("holdingsPage.security")}>
-              <div className="flex flex-col px-2 my-1 capitalize divide-y">
-                <DataRow
-                  label={t("holdingsPage.type")}
-                  value={getNameFromBackendTranslations(
-                    namesAsMap,
-                    typeCode.toLowerCase(),
-                    i18n.language
+            <div className="grid gap-4">
+              <Card header={t("holdingsPage.security")}>
+                <div className="flex flex-col px-2 my-1 capitalize divide-y">
+                  <DataRow
+                    label={t("holdingsPage.type")}
+                    value={getNameFromBackendTranslations(
+                      namesAsMap,
+                      typeCode.toLowerCase(),
+                      i18n.language
+                    )}
+                  />
+                  <DataRow
+                    label={t("holdingsPage.isinCode")}
+                    value={isinCode}
+                  />
+                  <DataRow
+                    label={t("holdingsPage.currency")}
+                    value={currency}
+                  />
+                  {url && (
+                    <DocumentRow
+                      label={t("holdingsPage.prospectus")}
+                      url={addProtocolToUrl(url)}
+                    />
                   )}
-                />
-                <DataRow label={t("holdingsPage.isinCode")} value={isinCode} />
-                <DataRow label={t("holdingsPage.currency")} value={currency} />
-                {url && (
-                  <DocumentRow
-                    label={t("holdingsPage.prospectus")}
-                    url={addProtocolToUrl(url)}
-                  />
-                )}
-                {url2 && (
-                  <DocumentRow
-                    label={t("holdingsPage.kiid")}
-                    url={addProtocolToUrl(url2)}
-                  />
-                )}
+                  {url2 && (
+                    <DocumentRow
+                      label={t("holdingsPage.kiid")}
+                      url={addProtocolToUrl(url2)}
+                    />
+                  )}
+                </div>
+              </Card>
+              <div className="grid grid-cols-2 gap-2">
+                <Button LeftIcon={PlusCircle} onClick={() => navigate("./buy")}>
+                  {t("holdingsPage.buy")}
+                </Button>
+                <Button
+                  LeftIcon={MinusCircle}
+                  onClick={() => navigate("./sell")}
+                  variant="Secondary"
+                >
+                  {t("holdingsPage.sell")}
+                </Button>
               </div>
-            </Card>
+            </div>
           </div>
         </PageLayout>
       </div>

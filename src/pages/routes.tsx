@@ -3,9 +3,9 @@ import { TranslationText } from "components";
 import { MainLayout } from "layouts/MainLayout/MainLayout";
 import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
 import { useRoutes, Navigate } from "react-router-dom";
+import { NotFoundView } from "views/notFoundView/notFoundView";
 import { NavTabLayout } from "../layouts/NavTabLayout/NavTabLayout";
 import { PortfolioNavigationHeaderLayout } from "../layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
-import { NotFoundView } from "../views/notFoundView/notFoundView";
 import { portfolioRoutes } from "./portfolio/routes";
 
 const Overview = lazy(() =>
@@ -17,6 +17,16 @@ const Holdings = lazy(() =>
 const Holding = lazy(() =>
   import("./holdings/[holdingId]").then((module) => ({
     default: module.HoldingPage,
+  }))
+);
+const HoldingBuy = lazy(() =>
+  import("./holdings/[holdingId]/buy").then((module) => ({
+    default: module.BuyPage,
+  }))
+);
+const HoldingSell = lazy(() =>
+  import("./holdings/[holdingId]/sell").then((module) => ({
+    default: module.SellPage,
   }))
 );
 const Transactions = lazy(() =>
@@ -102,6 +112,14 @@ const mainRoutes = [
   {
     path: "holdings/:holdingId",
     element: <Holding />,
+  },
+  {
+    path: "holdings/:holdingId/buy",
+    element: <HoldingBuy />,
+  },
+  {
+    path: "holdings/:holdingId/sell",
+    element: <HoldingSell />,
   },
   {
     path: "transactions/:transactionId",

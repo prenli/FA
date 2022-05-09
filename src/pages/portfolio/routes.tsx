@@ -12,8 +12,18 @@ const Holdings = lazy(() =>
   import("./holdings").then((module) => ({ default: module.HoldingsView }))
 );
 const Holding = lazy(() =>
-  import("./holdings/[holdingsId]").then((module) => ({
+  import("./holdings/[holdingId]").then((module) => ({
     default: module.HoldingPage,
+  }))
+);
+const HoldingBuy = lazy(() =>
+  import("./holdings/[holdingId]/buy").then((module) => ({
+    default: module.BuyPage,
+  }))
+);
+const HoldingSell = lazy(() =>
+  import("./holdings/[holdingId]/sell").then((module) => ({
+    default: module.SellPage,
   }))
 );
 const Transactions = lazy(() =>
@@ -102,6 +112,14 @@ export const portfolioRoutes = [
       {
         path: "holdings/:holdingId",
         element: <Holding />,
+      },
+      {
+        path: "holdings/:holdingId/buy",
+        element: <HoldingBuy />,
+      },
+      {
+        path: "holdings/:holdingId/sell",
+        element: <HoldingSell />,
       },
       {
         path: "transactions/:transactionId",

@@ -53,7 +53,9 @@
     "kiid": "KIID",
     "price": "Price",
     "security": "Security",
-    "noHoldings": "No holdings"
+    "noHoldings": "No holdings",
+    "buy": "BUY",
+    "sell": "SELL"
   },
   "ordersPage": {
     "header": "Order",
