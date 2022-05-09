@@ -1,11 +1,12 @@
-import { useGetPortfolioHoldingDetails } from "api/holdings/useGetPortfolioHoldingDetails";
+import { useGetAllPortfoliosHoldingDetails } from "api/holdings/useGetAllPortfoliosHoldingDetails";
 import { useGetSecurityDetails } from "api/holdings/useGetSecurityDetails";
 import { QueryLoadingWrapper } from "components";
 import { useParams } from "react-router-dom";
 import { HoldingDetails } from "views/holdingDetails/holdingDetails";
+import { NotFoundView } from "../../../views/notFoundView/notFoundView";
 
 export const HoldingPage = () => {
-  const { holdingId, portfolioId } = useParams();
+  const { holdingId } = useParams();
   const {
     loading: securityLoading,
     error: securityError,
@@ -15,19 +16,23 @@ export const HoldingPage = () => {
     loading: holdingLoading,
     error: holdingError,
     data: holdingData,
-  } = useGetPortfolioHoldingDetails(portfolioId, holdingId);
+  } = useGetAllPortfoliosHoldingDetails(holdingId);
   const mergedData = securityData &&
     holdingData && {
       ...holdingData,
       security: securityData,
     };
+  const isLoading = securityLoading || holdingLoading;
+  const isSecurityInPortfolio = isLoading || holdingData;
 
-  return (
+  return isSecurityInPortfolio ? (
     <QueryLoadingWrapper
-      loading={securityLoading || holdingLoading}
+      loading={isLoading}
       data={mergedData}
       error={securityError || holdingError}
       SuccessComponent={HoldingDetails}
     />
+  ) : (
+    <NotFoundView />
   );
 };

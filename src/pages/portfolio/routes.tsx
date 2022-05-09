@@ -12,7 +12,7 @@ const Holdings = lazy(() =>
   import("./holdings").then((module) => ({ default: module.HoldingsView }))
 );
 const Holding = lazy(() =>
-  import("./holdings/[holdingId]").then((module) => ({
+  import("./holdings/[holdingsId]").then((module) => ({
     default: module.HoldingPage,
   }))
 );
