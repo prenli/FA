@@ -8,6 +8,7 @@ import { PageLayout } from "layouts/PageLayout/PageLayout";
 import { useNavigate } from "react-router-dom";
 import { getNameFromBackendTranslations } from "utils/transactions";
 import { addProtocolToUrl } from "utils/url";
+import { CanTrade } from "../../services/permissions/CanTrade";
 import { DataRow } from "./components/DataRow";
 import { DocumentRow } from "./components/DocumentRow";
 import { HoldingHeader } from "./components/HoldingHeader";
@@ -169,18 +170,23 @@ export const HoldingDetails = ({
                   )}
                 </div>
               </Card>
-              <div className="grid grid-cols-2 gap-2">
-                <Button LeftIcon={PlusCircle} onClick={() => navigate("./buy")}>
-                  {t("holdingsPage.buy")}
-                </Button>
-                <Button
-                  LeftIcon={MinusCircle}
-                  onClick={() => navigate("./sell")}
-                  variant="Secondary"
-                >
-                  {t("holdingsPage.sell")}
-                </Button>
-              </div>
+              <CanTrade>
+                <div className="grid grid-cols-2 gap-2">
+                  <Button
+                    LeftIcon={PlusCircle}
+                    onClick={() => navigate("./buy")}
+                  >
+                    {t("holdingsPage.buy")}
+                  </Button>
+                  <Button
+                    LeftIcon={MinusCircle}
+                    onClick={() => navigate("./sell")}
+                    variant="Secondary"
+                  >
+                    {t("holdingsPage.sell")}
+                  </Button>
+                </div>
+              </CanTrade>
             </div>
           </div>
         </PageLayout>
