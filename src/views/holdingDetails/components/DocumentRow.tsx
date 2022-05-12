@@ -1,15 +1,11 @@
-import { ReactComponent as LinkIcon } from "assets/external-link.svg";
+import { HTMLAttributes } from "react";
+import { DownloadableDocument } from "components";
 
-interface DocumentRowProps {
+interface DocumentRowProps extends HTMLAttributes<HTMLAnchorElement> {
   label: string;
   url: string;
 }
 
-export const DocumentRow = ({ label, url }: DocumentRowProps) => (
-  <a href={url} target="_blank" rel="noopener noreferrer">
-    <div className="flex justify-between pt-3 pb-2 text-primary-600">
-      <div className="text-base font-semibold">{label}</div>
-      <LinkIcon className="stroke-primary-600" />
-    </div>
-  </a>
+export const DocumentRow = (props: DocumentRowProps) => (
+  <DownloadableDocument className="pt-3 pb-2" {...props} />
 );

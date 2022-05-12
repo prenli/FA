@@ -20,10 +20,12 @@ export const Button = ({
   isLoading = false,
   LeftIcon,
   size = "md",
+  disabled,
   ...props
 }: ButtonProps) => (
   <button
     {...props}
+    disabled={disabled}
     type="button"
     className={classNames(
       "box-border border-2 rounded-lg inline-flex items-center justify-center relative whitespace-nowrap align-middle",
@@ -37,6 +39,7 @@ export const Button = ({
         "w-full": isFullWidth,
         "text-sm font-medium py-2.5 px-5": size === "md",
         "text-xs font-medium py-1 px-2": size === "xs",
+        "opacity-50 cursor-not-allowed": disabled,
       }
     )}
   >

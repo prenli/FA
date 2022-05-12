@@ -100,6 +100,14 @@
     "date": "Date",
     "download": "Download"
   },
+  "tradingPage": {
+    "securityName": "Security name",
+    "portfolio": "Portfolio",
+    "availableCash": "Available cash",
+    "tradeAmount": "Total trade amount",
+    "tradeAmountInputError": "You don't have enough cash",
+    "tradeAmountInputLabel": "Enter trade amount in {{currency}}"
+  },
   "contactPage": {
     "cardHeader": "Contact us"
   },

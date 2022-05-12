@@ -1,7 +1,9 @@
-import { UserMenu, Logo } from "components";
-import { Select } from "components/Select/Select";
-import { useGetCurrentPortfolio } from "./useGetCurrentPortfolio";
-import { useGetPortfolioOptions } from "./useGetPortfolioOptions";
+import { UserMenu, Logo, PortfolioSelect } from "components";
+import {
+  TOTAL_INVESTMENTS_OPTION_ID,
+  useGetPortfolioOptions,
+} from "hooks/useGetPortfolioOptions";
+import { useParams } from "react-router-dom";
 import { useNavigateToPortfolioTab } from "./useNavigateToPortfolioTab";
 import { useRedirectIfOnlyOnePortfolio } from "./useRedirectIfOnlyOnePortfolio";
 
@@ -13,7 +15,7 @@ export interface PortfolioOption {
 
 export const PortfolioNavigationHeader = () => {
   const portfolioOptions = useGetPortfolioOptions();
-  const currentPortfolio = useGetCurrentPortfolio(portfolioOptions);
+  const { portfolioId } = useParams();
   const navigateToPortfolioTab = useNavigateToPortfolioTab();
   useRedirectIfOnlyOnePortfolio();
   const onPortfolioChange = (selectedOption: PortfolioOption) => {
@@ -27,10 +29,13 @@ export const PortfolioNavigationHeader = () => {
         <div className="flex-1">
           {portfolioOptions.length > 1 ? (
             <div className="sm:min-w-[350px] sm:w-fit">
-              <Select
-                value={currentPortfolio}
+              <PortfolioSelect
+                portfolioId={
+                  portfolioId
+                    ? parseInt(portfolioId, 10)
+                    : TOTAL_INVESTMENTS_OPTION_ID
+                }
                 onChange={onPortfolioChange}
-                options={portfolioOptions}
               />
             </div>
           ) : (

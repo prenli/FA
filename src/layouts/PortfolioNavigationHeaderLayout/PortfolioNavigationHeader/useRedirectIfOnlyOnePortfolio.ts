@@ -1,6 +1,6 @@
 import { useEffect } from "react";
+import { useGetPortfolioOptions } from "hooks/useGetPortfolioOptions";
 import { useParams } from "react-router-dom";
-import { useGetPortfolioOptions } from "./useGetPortfolioOptions";
 import { useNavigateToPortfolioTab } from "./useNavigateToPortfolioTab";
 
 export const useRedirectIfOnlyOnePortfolio = () => {

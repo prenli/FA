@@ -1,3 +1,1 @@
-export const BuyPage = () => {
-  return <div>buy page</div>;
-};
+export { BuyView as BuyPage } from "views/trading/buy/buy";

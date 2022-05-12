@@ -14,16 +14,21 @@ interface SelectProps<T> {
   value: T | undefined;
   onChange: (option: T) => void;
   options: T[];
+  label?: string;
 }
 
 export const Select = <TOption extends Option>({
   options,
   value,
   onChange,
+  label,
 }: SelectProps<TOption>) => {
   const { t } = useModifiedTranslation();
   return (
-    <Listbox value={value} onChange={onChange}>
+    <Listbox as="div" value={value} onChange={onChange}>
+      {label && (
+        <Listbox.Label className="text-sm font-normal">{label}</Listbox.Label>
+      )}
       <Listbox.Button className="flex items-center py-2.5 px-4 w-full h-10 text-lg font-bold dark:placeholder-gray-400 text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-300 focus:border-primary-500 dark:border-gray-600 dark:focus:border-primary-500 focus:ring-primary-500 dark:focus:ring-primary-500">
         <div className="box-border flex flex-1 content-start leading-none">
           {value?.label ?? t("component.select.placeholder")}

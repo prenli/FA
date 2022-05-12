@@ -1,9 +1,11 @@
 import { useMemo } from "react";
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { PortfolioOption } from "./PortfolioNavigationHeader";
+import { PortfolioOption } from "../layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeader/PortfolioNavigationHeader";
 
-export const useGetPortfolioOptions = () => {
+export const TOTAL_INVESTMENTS_OPTION_ID = 0;
+
+export const useGetPortfolioOptions = (includeTotal = true) => {
   const { t } = useModifiedTranslation();
   const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
 
@@ -13,13 +15,23 @@ export const useGetPortfolioOptions = () => {
       return [getPortfolioOption(portfolio.id, portfolio.name)];
     }
 
+    const predefinedOptions = includeTotal
+      ? [
+          {
+            id: TOTAL_INVESTMENTS_OPTION_ID,
+            urlPrefix: "",
+            label: t("navTab.totalInvestments"),
+          },
+        ]
+      : [];
+
     return [
-      { id: 0, urlPrefix: "", label: t("navTab.totalInvestments") },
+      ...predefinedOptions,
       ...portfolios.map((portfolio) =>
         getPortfolioOption(portfolio.id, portfolio.name)
       ),
     ];
-  }, [portfolios, t]);
+  }, [portfolios, t, includeTotal]);
 
   return portfolioOptions;
 };

@@ -19,3 +19,6 @@ export { UserMenu } from "./UserMenu/UserMenu";
 export { Logo } from "./Logo/Logo";
 export { ErrorMessage } from "./ErrorMessage/ErrorMessage";
 export { NoPortfolios } from "./NoPortfolios/NoPortfolios";
+export { PortfolioSelect } from "./PortfolioSelect/PortfolioSelect";
+export { DownloadableDocument } from "./DownloadableDocument/DownloadableDocument";
+export { Input } from "./Input/Input";
