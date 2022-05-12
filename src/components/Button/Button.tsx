@@ -2,7 +2,7 @@ import { FunctionComponent, ComponentPropsWithoutRef, SVGProps } from "react";
 import { ReactComponent as Spinner } from "assets/spinner.svg";
 import classNames from "classnames";
 
-type Variant = "Primary" | "Dark" | "Secondary";
+type Variant = "Primary" | "Dark" | "Secondary" | "Red";
 type Size = "md" | "xs";
 
 interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
@@ -32,6 +32,8 @@ export const Button = ({
       {
         "bg-primary-600 border-primary-600 hover:bg-primary-800 focus:border-2 focus:border-primary-400 text-white fill-white":
           variant === "Primary",
+        "bg-red-600 border-red-600 hover:bg-red-800 focus:border-2 focus:border-red-400 text-white fill-white":
+          variant === "Red",
         "bg-white border-primary-600 hover:bg-primary-100 focus:border-2 focus:border-primary-400 text-primary-600 fill-primary-600":
           variant === "Secondary",
         "bg-gray-700 border-gray-700 hover:bg-gray-800 focus:border-2 focus:border-gray-300 text-white fill-white":

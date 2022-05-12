@@ -181,7 +181,7 @@ export const HoldingDetails = ({
                   <Button
                     LeftIcon={MinusCircle}
                     onClick={() => navigate("./sell")}
-                    variant="Secondary"
+                    variant="Red"
                   >
                     {t("holdingsPage.sell")}
                   </Button>
