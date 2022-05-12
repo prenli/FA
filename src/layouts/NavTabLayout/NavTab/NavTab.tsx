@@ -23,7 +23,7 @@ type NavTabType = typeof Tab & {
 const NavTab: NavTabType = (props, ref) => (
   <Tab
     className={({ selected }) =>
-      classNames("border-current p-2 whitespace-nowrap text-base ", {
+      classNames("p-2 whitespace-nowrap text-base ", {
         "border-b border-primary-600 font-semibold text-primary-600": selected,
         "border-b border-transparent text-gray-600 font-normal": !selected,
       })

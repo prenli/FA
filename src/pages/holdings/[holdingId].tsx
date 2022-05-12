@@ -3,7 +3,7 @@ import { useGetSecurityDetails } from "api/holdings/useGetSecurityDetails";
 import { QueryLoadingWrapper } from "components";
 import { useParams } from "react-router-dom";
 import { HoldingDetails } from "views/holdingDetails/holdingDetails";
-import { NotFoundView } from "../../../views/notFoundView/notFoundView";
+import { NotFoundView } from "views/notFoundView/notFoundView";
 
 export const HoldingPage = () => {
   const { holdingId } = useParams();

@@ -41,7 +41,7 @@ export const useGetAllPortfoliosHoldingDetails = (
   return {
     loading,
     error,
-    data: data?.contact.portfolioReport.holdingPositions.find(
+    data: data?.contact.portfolioReport.holdingPositions?.find(
       (holding) => holding.security.securityCode === securityCode
     ),
   };

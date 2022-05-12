@@ -2,12 +2,20 @@ import { HoldingPosition, SecurityDetailsPosition } from "api/holdings/types";
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
 import { ReactComponent as MinusCircle } from "assets/minus-circle.svg";
 import { ReactComponent as PlusCircle } from "assets/plus-circle.svg";
-import { Card, GainLoseColoring, DetailsHeading, Button } from "components";
+import {
+  Card,
+  GainLoseColoring,
+  DetailsHeading,
+  Button,
+  BuyModal,
+} from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { PageLayout } from "layouts/PageLayout/PageLayout";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getNameFromBackendTranslations } from "utils/transactions";
 import { addProtocolToUrl } from "utils/url";
+import { BuyModalInitialData } from "../../components/BuyModal/BuyModal";
+import { useModal } from "../../components/Modal/useModal";
 import { CanTrade } from "../../services/permissions/CanTrade";
 import { DataRow } from "./components/DataRow";
 import { DocumentRow } from "./components/DocumentRow";
@@ -41,9 +49,13 @@ export const HoldingDetails = ({
   },
 }: HoldingDetailsProps) => {
   const navigate = useNavigate();
+  const { holdingId } = useParams();
   const { i18n, t } = useModifiedTranslation();
   const { data: { portfoliosCurrency } = { portfoliosCurrency: "EUR" } } =
     useGetContactInfo();
+
+  const { Modal, onOpen, onClose, modalProps, contentProps } =
+    useModal<BuyModalInitialData>();
 
   return (
     <div className="flex overflow-hidden flex-col h-full">
@@ -174,18 +186,19 @@ export const HoldingDetails = ({
                 <div className="grid grid-cols-2 gap-2">
                   <Button
                     LeftIcon={PlusCircle}
-                    onClick={() => navigate("./buy")}
+                    onClick={() =>
+                      onOpen({ holdingId, securityName: name, url2 })
+                    }
                   >
                     {t("holdingsPage.buy")}
                   </Button>
-                  <Button
-                    LeftIcon={MinusCircle}
-                    onClick={() => navigate("./sell")}
-                    variant="Red"
-                  >
+                  <Button LeftIcon={MinusCircle} variant="Red">
                     {t("holdingsPage.sell")}
                   </Button>
                 </div>
+                <Modal {...modalProps}>
+                  <BuyModal {...contentProps} onClose={onClose} />
+                </Modal>
               </CanTrade>
             </div>
           </div>

@@ -6,6 +6,10 @@
   html {
     -webkit-tap-highlight-color: transparent;
   }
+
+  *:focus {
+    @apply outline-primary-400;
+  }
 }
 
 /* chart styles from flowbite */

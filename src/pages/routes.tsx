@@ -2,12 +2,10 @@ import { lazy } from "react";
 import { TranslationText } from "components";
 import { MainLayout } from "layouts/MainLayout/MainLayout";
 import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
-import { Outlet } from "react-router-dom";
 import { useRoutes, Navigate } from "react-router-dom";
 import { NotFoundView } from "views/notFoundView/notFoundView";
 import { NavTabLayout } from "../layouts/NavTabLayout/NavTabLayout";
 import { PortfolioNavigationHeaderLayout } from "../layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
-import { CanTrade } from "../services/permissions/CanTrade";
 import { portfolioRoutes } from "./portfolio/routes";
 
 const Overview = lazy(() =>
@@ -19,16 +17,6 @@ const Holdings = lazy(() =>
 const Holding = lazy(() =>
   import("./holdings/[holdingId]").then((module) => ({
     default: module.HoldingPage,
-  }))
-);
-const HoldingBuy = lazy(() =>
-  import("./holdings/[holdingId]/buy").then((module) => ({
-    default: module.BuyPage,
-  }))
-);
-const HoldingSell = lazy(() =>
-  import("./holdings/[holdingId]/sell").then((module) => ({
-    default: module.SellPage,
   }))
 );
 const Transactions = lazy(() =>
@@ -114,24 +102,6 @@ const mainRoutes = [
   {
     path: "holdings/:holdingId",
     element: <Holding />,
-  },
-  {
-    path: "holdings/:holdingId",
-    element: (
-      <CanTrade fallbackNode={<Navigate to="./" replace />}>
-        <Outlet />
-      </CanTrade>
-    ),
-    children: [
-      {
-        path: "buy",
-        element: <HoldingBuy />,
-      },
-      {
-        path: "sell",
-        element: <HoldingSell />,
-      },
-    ],
   },
   {
     path: "transactions/:transactionId",

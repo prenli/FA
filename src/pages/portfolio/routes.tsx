@@ -3,8 +3,7 @@ import { TranslationText } from "components";
 import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
 import { NavTabLayout } from "layouts/NavTabLayout/NavTabLayout";
 import { PortfolioNavigationHeaderLayout } from "layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
-import { Navigate, Outlet } from "react-router-dom";
-import { CanTrade } from "../../services/permissions/CanTrade";
+import { Navigate } from "react-router-dom";
 
 const Overview = lazy(() =>
   import("./overview").then((module) => ({ default: module.OverviewPage }))
@@ -15,16 +14,6 @@ const Holdings = lazy(() =>
 const Holding = lazy(() =>
   import("./holdings/[holdingId]").then((module) => ({
     default: module.HoldingPage,
-  }))
-);
-const HoldingBuy = lazy(() =>
-  import("./holdings/[holdingId]/buy").then((module) => ({
-    default: module.BuyPage,
-  }))
-);
-const HoldingSell = lazy(() =>
-  import("./holdings/[holdingId]/sell").then((module) => ({
-    default: module.SellPage,
   }))
 );
 const Transactions = lazy(() =>
@@ -113,24 +102,6 @@ export const portfolioRoutes = [
       {
         path: "holdings/:holdingId",
         element: <Holding />,
-      },
-      {
-        path: "holdings/:holdingId",
-        element: (
-          <CanTrade fallbackNode={<Navigate to="./" replace />}>
-            <Outlet />
-          </CanTrade>
-        ),
-        children: [
-          {
-            path: "buy",
-            element: <HoldingBuy />,
-          },
-          {
-            path: "sell",
-            element: <HoldingSell />,
-          },
-        ],
       },
       {
         path: "transactions/:transactionId",

@@ -1,16 +1,22 @@
-import { Fragment, ReactNode } from "react";
+import { Fragment, MutableRefObject, ReactNode } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
-interface ModalProps {
+export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
+  modalInitialFocusRef: MutableRefObject<null>;
 }
 
-export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+export const Modal = ({
+  isOpen,
+  onClose,
+  children,
+  modalInitialFocusRef,
+}: ModalProps) => {
   return (
     <Transition show={isOpen} as={Fragment}>
-      <Dialog onClose={onClose}>
+      <Dialog onClose={onClose} initialFocus={modalInitialFocusRef}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
