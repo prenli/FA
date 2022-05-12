@@ -22,3 +22,4 @@ export { NoPortfolios } from "./NoPortfolios/NoPortfolios";
 export { PortfolioSelect } from "./PortfolioSelect/PortfolioSelect";
 export { DownloadableDocument } from "./DownloadableDocument/DownloadableDocument";
 export { Input } from "./Input/Input";
+export { Modal } from "./Modal/Modal";
