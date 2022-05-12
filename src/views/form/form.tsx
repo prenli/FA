@@ -6,7 +6,7 @@ import { ApiError } from "./components/ApiError";
 import { Attachments } from "./components/Attachments";
 import { FormNotFound } from "./components/FormNotFound";
 import { ProcessNotFound } from "./components/ProcessNotFound";
-import { useFormExecutor } from "./useFormExecutor";
+import { useProcessExecutor } from "./useProcessExecutor";
 
 interface FormViewProps {
   header?: string;
@@ -23,26 +23,13 @@ export const FormView = ({
   header,
   initialData: propsInitialData = {},
 }: FormViewProps) => {
-  const {
-    formDefinition,
-    initialData: apiInitialData = {},
-    submitData,
-    processData,
-    attachments,
-    apiError,
-    resetApiError,
-  } = useFormExecutor();
+  const processState = useProcessExecutor();
 
   const { state: locationState } = useLocation() as unknown as LocationProps;
-  const initialData = {
-    ...locationState?.initialData,
-    ...propsInitialData,
-    ...apiInitialData,
-  };
 
   return (
     <>
-      {formDefinition && !apiError && (
+      {processState.executorState === "READY" && processState.formDefinition && (
         <div className="flex overflow-hidden flex-col h-full">
           <div className="bg-white border-b border-gray-200 shadow-md">
             <div className="md:container flex gap-2 items-center p-2 md:mx-auto text-2xl font-bold">
@@ -58,34 +45,44 @@ export const FormView = ({
           <div className="overflow-y-auto grow-1">
             <div className="container py-3 mx-auto h-full">
               <div className="grid grid-cols-1 gap-4 px-2">
-                {attachments && attachments.length > 0 && (
-                  <Attachments attachments={attachments} />
+                {processState.attachments.length > 0 && (
+                  <Attachments attachments={processState.attachments} />
                 )}
-                {submitData && processData && (
-                  <div className="formio-form">
-                    <Form
-                      key={processData.taskId}
-                      form={formDefinition}
-                      onSubmit={submitData}
-                      submission={{
-                        data: initialData,
-                      }}
-                    />
-                  </div>
-                )}
+                <div className="formio-form">
+                  <Form
+                    key={processState.taskId}
+                    form={processState.formDefinition}
+                    onSubmit={processState.submitData}
+                    submission={{
+                      data: {
+                        ...locationState?.initialData,
+                        ...propsInitialData,
+                        ...processState.initialData,
+                      },
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
       )}
-      {!formDefinition && !apiError && !processData && (
+      {processState.executorState === "READY" &&
+        !processState.formDefinition && <FormNotFound />}
+      {processState.executorState === "LOADING" && (
         <div className="h-screen">
           <LoadingIndicator center />
         </div>
       )}
-      {apiError && <ApiError resetApiError={resetApiError} />}
-      {processData && !processData.processInstanceId && <ProcessNotFound />}
-      {processData && !formDefinition && <FormNotFound />}
+      {processState.executorState === "SUBMITTING" && (
+        <div className="h-screen">
+          <LoadingIndicator center />
+        </div>
+      )}
+      {processState.executorState === "SUBMIT_ERROR" && (
+        <ApiError resetApiError={processState.resetApiError} />
+      )}
+      {processState.executorState === "PROCESS_ERROR" && <ProcessNotFound />}
     </>
   );
 };

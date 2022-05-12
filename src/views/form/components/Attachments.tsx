@@ -2,7 +2,7 @@ import { ReactComponent as DownloadIcon } from "assets/download.svg";
 import { Button, Card } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { downloadFileFromUrl } from "utils/file";
-import { Attachment } from "../useFormExecutor";
+import { Attachment } from "../useProcessExecutor";
 
 interface AttachmentsProps {
   attachments: Attachment[];
