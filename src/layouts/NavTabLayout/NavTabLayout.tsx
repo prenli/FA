@@ -20,18 +20,18 @@ export const NavTabLayout = ({ routes }: NavTabTemplateLayoutProps) => {
           {routes.map((route, index) => (
             <NavTab.NavTab
               key={`NavTab_${index}`}
-              ref={(el: HTMLDivElement) => (tabsRef.current[index] = el)}
+              ref={(el: HTMLButtonElement) => (tabsRef.current[index] = el)}
             >
               {route.tabLabel}
             </NavTab.NavTab>
           ))}
         </NavTab.List>
         <Suspense fallback={<LoadingIndicator center />}>
-          <NavTab.Panels {...panelsProps}>
+          <NavTab.CarouselPanels {...panelsProps}>
             {routes.map((route, index) => (
               <NavTab.Panel key={index}>{route.tabComponent}</NavTab.Panel>
             ))}
-          </NavTab.Panels>
+          </NavTab.CarouselPanels>
         </Suspense>
       </NavTab.Group>
     </div>
