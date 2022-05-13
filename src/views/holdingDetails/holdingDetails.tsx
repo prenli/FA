@@ -7,16 +7,16 @@ import {
   GainLoseColoring,
   DetailsHeading,
   Button,
-  BuyModal,
+  BuyModalContent,
 } from "components";
+import { BuyModalInitialData } from "components/BuyModalContent/BuyModalContent";
+import { useModal } from "components/Modal/useModal";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { PageLayout } from "layouts/PageLayout/PageLayout";
 import { useNavigate, useParams } from "react-router-dom";
+import { CanTrade } from "services/permissions/CanTrade";
 import { getNameFromBackendTranslations } from "utils/transactions";
 import { addProtocolToUrl } from "utils/url";
-import { BuyModalInitialData } from "../../components/BuyModal/BuyModal";
-import { useModal } from "../../components/Modal/useModal";
-import { CanTrade } from "../../services/permissions/CanTrade";
 import { DataRow } from "./components/DataRow";
 import { DocumentRow } from "./components/DocumentRow";
 import { HoldingHeader } from "./components/HoldingHeader";
@@ -54,7 +54,7 @@ export const HoldingDetails = ({
   const { data: { portfoliosCurrency } = { portfoliosCurrency: "EUR" } } =
     useGetContactInfo();
 
-  const { Modal, onOpen, onClose, modalProps, contentProps } =
+  const { Modal, onOpen, modalProps, contentProps } =
     useModal<BuyModalInitialData>();
 
   return (
@@ -196,8 +196,11 @@ export const HoldingDetails = ({
                     {t("holdingsPage.sell")}
                   </Button>
                 </div>
-                <Modal {...modalProps}>
-                  <BuyModal {...contentProps} onClose={onClose} />
+                <Modal
+                  {...modalProps}
+                  header={t("tradingModal.buyModalHeader")}
+                >
+                  <BuyModalContent {...contentProps} />
                 </Modal>
               </CanTrade>
             </div>

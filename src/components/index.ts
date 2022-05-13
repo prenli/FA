@@ -23,4 +23,4 @@ export { PortfolioSelect } from "./PortfolioSelect/PortfolioSelect";
 export { DownloadableDocument } from "./DownloadableDocument/DownloadableDocument";
 export { Input } from "./Input/Input";
 export { Modal } from "./Modal/Modal";
-export { BuyModal } from "./BuyModal/BuyModal";
+export { BuyModalContent } from "./BuyModalContent/BuyModalContent";

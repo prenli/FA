@@ -1,11 +1,13 @@
 import { Fragment, MutableRefObject, ReactNode } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { ReactComponent as CloseIcon } from "assets/close.svg";
 
 export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
   modalInitialFocusRef: MutableRefObject<null>;
+  header?: string;
 }
 
 export const Modal = ({
@@ -13,6 +15,7 @@ export const Modal = ({
   onClose,
   children,
   modalInitialFocusRef,
+  header,
 }: ModalProps) => {
   return (
     <Transition show={isOpen} as={Fragment}>
@@ -39,7 +42,23 @@ export const Modal = ({
         >
           <div className="flex fixed inset-0 justify-center items-center p-4">
             <div className="flex justify-center items-center min-h-full">
-              <Dialog.Panel>{isOpen && children}</Dialog.Panel>
+              <Dialog.Panel>
+                <div className="grid overflow-hidden w-full h-full bg-white rounded-lg border shadow-lg">
+                  {!!header && (
+                    <div className="flex justify-between items-center p-4 md:px-6 text-2xl font-bold bg-gray-200">
+                      <div>{header}</div>
+                      <button
+                        type="button"
+                        onClick={onClose}
+                        className="rounded-lg border-2 border-transparent focus:border-primary-500 cursor-pointer outline-none hover:bg-primary-500/10"
+                      >
+                        <CloseIcon className="w-8 h-8" />
+                      </button>
+                    </div>
+                  )}
+                  <div className="p-4 md:px-6">{isOpen && children}</div>
+                </div>
+              </Dialog.Panel>
             </div>
           </div>
         </Transition.Child>
