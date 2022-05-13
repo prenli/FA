@@ -10,6 +10,7 @@ import {
 import { useGetPortfolioOptions } from "hooks/useGetPortfolioOptions";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useParams } from "react-router-dom";
+import { Slide, toast } from "react-toastify";
 
 export interface BuyModalInitialData {
   holdingId?: string;
@@ -20,6 +21,8 @@ export interface BuyModalInitialData {
 interface BuyModalProps extends BuyModalInitialData {
   modalInitialFocusRef: MutableRefObject<null>;
 }
+
+const BUY_MODAL_ERROR_TOAST_ID = "BUY_MODAL_ERROR_TOAST_ID";
 
 export const BuyModalContent = ({
   holdingId,
@@ -33,12 +36,26 @@ export const BuyModalContent = ({
   const [portfolioId, setPortfolioId] = useState(
     urlPortfolioId ? parseInt(urlPortfolioId, 10) : portfolioOptions[0].id
   );
-  const { loading, data: { availableCash = 0, currency = "EUR" } = {} } =
-    useGetBuyData(portfolioId.toString());
+  const {
+    loading,
+    error,
+    data: { availableCash = 0, currency = "EUR" } = {},
+  } = useGetBuyData(portfolioId.toString());
 
   const [tradeAmount, setTradeAmount] = useState(0);
 
   const isTradeAmountCorrect = availableCash && tradeAmount <= availableCash;
+
+  if (error) {
+    toast.error(t("tradingModal.queryErrorWarning"), {
+      toastId: BUY_MODAL_ERROR_TOAST_ID,
+      position: toast.POSITION.BOTTOM_CENTER,
+      hideProgressBar: true,
+      theme: "colored",
+      transition: Slide,
+      autoClose: false,
+    });
+  }
 
   return (
     <div className="grid gap-2">
