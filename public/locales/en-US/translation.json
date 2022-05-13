@@ -100,13 +100,17 @@
     "date": "Date",
     "download": "Download"
   },
-  "tradingPage": {
+  "tradingModal": {
     "securityName": "Security name",
     "portfolio": "Portfolio",
     "availableCash": "Available cash",
     "tradeAmount": "Total trade amount",
     "tradeAmountInputError": "You don't have enough cash",
-    "tradeAmountInputLabel": "Enter trade amount in {{currency}}"
+    "tradeAmountInputLabel": "Enter trade amount in {{currency}}",
+    "buyHeader": "Buy",
+    "buyButtonLabel": "Buy",
+    "kiid": "KIID",
+    "buyDisclaimer": "Past performance is not a guide to future performance. When investing in financial instruments, the investor may lose all or part of the investments."
   },
   "contactPage": {
     "cardHeader": "Contact us"

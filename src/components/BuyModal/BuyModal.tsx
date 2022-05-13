@@ -46,7 +46,7 @@ export const BuyModal = ({
   return (
     <div className="grid overflow-hidden w-full h-full bg-white rounded-lg border shadow-lg">
       <div className="flex justify-between items-center p-4 md:px-6 text-2xl font-bold bg-gray-200">
-        <div>Buy</div>
+        <div>{t("tradingModal.buyHeader")}</div>
         <button
           type="button"
           onClick={onClose}
@@ -57,24 +57,24 @@ export const BuyModal = ({
       </div>
       <div className="grid gap-2 p-4 md:px-6">
         <LabeledDiv
-          label={t("tradingPage.securityName")}
+          label={t("tradingModal.securityName")}
           className="text-2xl font-semibold"
         >
           {securityName}
         </LabeledDiv>
         {url2 && (
           <div className="w-fit">
-            <DownloadableDocument url={url2} label="KIID" />
+            <DownloadableDocument url={url2} label={t("tradingModal.kiid")} />
           </div>
         )}
         <PortfolioSelect
           portfolioId={portfolioId}
           onChange={(newPortfolio) => setPortfolioId(newPortfolio.id)}
           includeTotal={false}
-          label={t("tradingPage.portfolio")}
+          label={t("tradingModal.portfolio")}
         />
         <LabeledDiv
-          label={t("tradingPage.availableCash")}
+          label={t("tradingModal.availableCash")}
           className="text-xl font-semibold text-gray-700"
         >
           {currency &&
@@ -89,13 +89,13 @@ export const BuyModal = ({
           onChange={(event) => {
             setTradeAmount(Number(event.currentTarget.value));
           }}
-          label={t("tradingPage.tradeAmountInputLabel", {
+          label={t("tradingModal.tradeAmountInputLabel", {
             currency: currency,
           })}
           type="number"
           error={
             !isTradeAmountCorrect && !loading
-              ? t("tradingPage.tradeAmountInputError")
+              ? t("tradingModal.tradeAmountInputError")
               : undefined
           }
         />
@@ -103,7 +103,7 @@ export const BuyModal = ({
         <div className="flex flex-col gap-4 items-stretch ">
           <div className="text-3xl font-semibold text-center">
             <div className="text-base font-normal">
-              {t("tradingPage.tradeAmount")}
+              {t("tradingModal.tradeAmount")}
             </div>
             {t("numberWithCurrency", {
               value: isTradeAmountCorrect ? tradeAmount : 0,
@@ -113,14 +113,12 @@ export const BuyModal = ({
           <Button
             disabled={tradeAmount === 0 || loading || !isTradeAmountCorrect}
           >
-            Buy
+            {t("tradingModal.buyButtonLabel")}
           </Button>
         </div>
         <hr className="my-1" />
         <div className="text-xs text-center text-gray-600 max-w-[375px]">
-          Past performance is not a guide to future performance. When investing
-          in financial instruments, the investor may lose all or part of the
-          investments.
+          {t("tradingModal.buyDisclaimer")}
         </div>
       </div>
     </div>
