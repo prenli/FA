@@ -14,7 +14,7 @@ export const useModal = <TInitialData,>() => {
   }, []);
   const onClose = useCallback(() => {
     setIsOpen(false);
-    modalInitialDataRef.current = undefined;
+    //modalInitialDataRef.current = undefined;
   }, []);
 
   return {

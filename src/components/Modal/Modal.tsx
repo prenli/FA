@@ -56,7 +56,7 @@ export const Modal = ({
                       </button>
                     </div>
                   )}
-                  <div className="p-4 md:px-6">{isOpen && children}</div>
+                  <div className="p-4 md:px-6">{children}</div>
                 </div>
               </Dialog.Panel>
             </div>
