@@ -1,4 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
+import { fallbackLanguage } from "i18n";
 import { useKeycloak } from "providers/KeycloakProvider";
 import { getFetchPolicyOptions } from "../utils";
 
@@ -54,7 +55,7 @@ export const useGetContactInfo = () => {
     data: data && {
       contactId: data.contact?.id,
       portfolios: data.contact?.portfolios || [],
-      locale: data.contact?.language?.locale || "en-US",
+      locale: data.contact?.language?.locale || fallbackLanguage,
       // all contact portfolios have same currency
       portfoliosCurrency:
         data.contact?.portfolios?.[0].currency.securityCode || "",
