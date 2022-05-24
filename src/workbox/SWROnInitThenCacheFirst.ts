@@ -11,7 +11,7 @@ export class SWROnInitThenCacheFirst extends Strategy {
     let fetchAndCachePromise;
 
     let response = await handler.cacheMatch(request);
-    if (!calledChachesInThisInit[this.cacheName]) {
+    if (!calledChachesInThisInit[request.url]) {
       fetchAndCachePromise = this.fetchAndCachePut(request, handler).catch(
         () => {
           // Swallow this error because a 'no-response' error will be thrown in
@@ -43,7 +43,7 @@ export class SWROnInitThenCacheFirst extends Strategy {
         })
       );
     }
-    calledChachesInThisInit[this.cacheName] = true;
+    calledChachesInThisInit[request.url] = true;
 
     return response;
   }
