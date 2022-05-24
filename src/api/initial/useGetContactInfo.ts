@@ -54,7 +54,7 @@ export const useGetContactInfo = () => {
     data: data && {
       contactId: data.contact?.id,
       portfolios: data.contact?.portfolios || [],
-      language: data.contact?.language.locale || "en-US",
+      locale: data.contact?.language?.locale || "en-US",
       // all contact portfolios have same currency
       portfoliosCurrency:
         data.contact?.portfolios?.[0].currency.securityCode || "",

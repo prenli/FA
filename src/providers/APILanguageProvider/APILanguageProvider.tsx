@@ -10,7 +10,7 @@ export const APILanguageProvider = ({
   children,
 }: UserSettingsProviderProps) => {
   const { data, error } = useGetContactInfo();
-  const { isReady } = useFeedI18nextWithLocale(data?.language);
+  const { isReady } = useFeedI18nextWithLocale(data?.locale);
 
   if (error && !data) {
     return <QueryError />;
