@@ -29,7 +29,7 @@ export const Modal = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/25" />
+          <div className="fixed inset-0 bg-black/25" aria-hidden="true" />
         </Transition.Child>
         <Transition.Child
           as={Fragment}
@@ -40,24 +40,22 @@ export const Modal = ({
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          <div className="flex fixed inset-0 justify-center items-center p-4">
+          <div className="flex overflow-auto fixed inset-0 justify-center items-baseline p-4">
             <div className="flex justify-center items-center min-h-full">
-              <Dialog.Panel>
-                <div className="grid overflow-hidden w-full h-full bg-white rounded-lg border shadow-lg">
-                  {!!header && (
-                    <div className="flex justify-between items-center p-4 md:px-6 text-2xl font-bold bg-gray-200">
-                      <div>{header}</div>
-                      <button
-                        type="button"
-                        onClick={onClose}
-                        className="rounded-lg border-2 border-transparent focus:border-primary-500 cursor-pointer outline-none hover:bg-primary-500/10"
-                      >
-                        <CloseIcon className="w-8 h-8" />
-                      </button>
-                    </div>
-                  )}
-                  <div className="p-4 md:px-6">{children}</div>
-                </div>
+              <Dialog.Panel className="grid overflow-auto w-full bg-white rounded-lg border shadow-lg">
+                {!!header && (
+                  <div className="flex justify-between items-center p-4 md:px-6 text-2xl font-bold bg-gray-200">
+                    <div>{header}</div>
+                    <button
+                      type="button"
+                      onClick={onClose}
+                      className="rounded-lg border-2 border-transparent focus:border-primary-500 cursor-pointer outline-none hover:bg-primary-500/10"
+                    >
+                      <CloseIcon className="w-8 h-8" />
+                    </button>
+                  </div>
+                )}
+                <div className="p-4 md:px-6">{children}</div>
               </Dialog.Panel>
             </div>
           </div>
