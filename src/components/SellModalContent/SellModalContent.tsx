@@ -1,55 +1,68 @@
 import { HTMLAttributes, MutableRefObject, ReactNode, useState } from "react";
-import { useGetBuyData } from "api/trading/useGetBuyData";
+import { useGetPortfolioHoldingDetails } from "api/holdings/useGetPortfolioHoldingDetails";
+import { useGetContactInfo } from "api/initial/useGetContactInfo";
 import classNames from "classnames";
 import {
   PortfolioSelect,
   DownloadableDocument,
   Button,
   Input,
+  HorizontalRadio,
 } from "components/index";
 import { useGetPortfolioOptions } from "hooks/useGetPortfolioOptions";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useParams } from "react-router-dom";
 import { Slide, toast } from "react-toastify";
+import { useTradeAmountInput } from "./useTradeAmountInput";
 
-export interface BuyModalInitialData {
+export interface SellModalInitialData {
   holdingId?: string;
   securityName?: string;
   url2?: string;
 }
 
-interface BuyModalProps extends BuyModalInitialData {
+interface SellModalProps extends SellModalInitialData {
   modalInitialFocusRef: MutableRefObject<null>;
 }
 
-const BUY_MODAL_ERROR_TOAST_ID = "BUY_MODAL_ERROR_TOAST_ID";
+const SELL_MODAL_ERROR_TOAST_ID = "SELL_MODAL_ERROR_TOAST_ID";
 
-export const BuyModalContent = ({
+export const SellModalContent = ({
   holdingId,
   securityName,
   url2,
   modalInitialFocusRef,
-}: BuyModalProps) => {
+}: SellModalProps) => {
   const { t } = useModifiedTranslation();
   const { portfolioId: urlPortfolioId } = useParams();
   const portfolioOptions = useGetPortfolioOptions(false);
   const [portfolioId, setPortfolioId] = useState(
     urlPortfolioId ? parseInt(urlPortfolioId, 10) : portfolioOptions[0].id
   );
+
+  const { data: { portfoliosCurrency: currency = "EUR" } = {} } =
+    useGetContactInfo();
   const {
     loading,
     error,
-    data: { availableCash = 0, currency = "EUR" } = {},
-  } = useGetBuyData(portfolioId.toString());
+    data: { marketValue = 0 } = {},
+  } = useGetPortfolioHoldingDetails(portfolioId.toString(), holdingId);
 
-  const [tradeAmount, setTradeAmount] = useState(0);
-
-  const isTradeAmountCorrect =
-    !isNaN(availableCash) && tradeAmount >= 0 && tradeAmount <= availableCash;
+  const {
+    inputValue,
+    setInputState,
+    inputModesOptions,
+    inputMode,
+    isTradeAmountCorrect,
+    tradeAmount,
+    setTradeAmountToAll,
+    setTradeAmountToHalf,
+    onInputModeChange,
+  } = useTradeAmountInput(marketValue, currency);
 
   if (error) {
     toast.error(t("tradingModal.queryErrorWarning"), {
-      toastId: BUY_MODAL_ERROR_TOAST_ID,
+      toastId: SELL_MODAL_ERROR_TOAST_ID,
       position: toast.POSITION.BOTTOM_CENTER,
       hideProgressBar: true,
       theme: "colored",
@@ -78,23 +91,26 @@ export const BuyModalContent = ({
         label={t("tradingModal.portfolio")}
       />
       <LabeledDiv
-        label={t("tradingModal.availableCash")}
+        label={t("tradingModal.currentMarketValue")}
         className="text-xl font-semibold text-gray-700"
       >
         {currency &&
           t("numberWithCurrency", {
-            value: availableCash,
+            value: marketValue,
             currency: currency,
           })}
       </LabeledDiv>
       <Input
         ref={modalInitialFocusRef}
-        value={tradeAmount || ""}
+        value={inputValue || ""}
         onChange={(event) => {
-          setTradeAmount(Number(event.currentTarget.value));
+          setInputState((previousState) => ({
+            ...previousState,
+            inputValue: Number(event.currentTarget.value),
+          }));
         }}
         label={t("tradingModal.tradeAmountInputLabel", {
-          currency: currency,
+          currency: inputMode.label,
         })}
         type="number"
         error={
@@ -103,6 +119,21 @@ export const BuyModalContent = ({
             : undefined
         }
       />
+      <div className="flex justify-between">
+        <div className="flex gap-1 items-center">
+          <Button size="xs" variant="Secondary" onClick={setTradeAmountToAll}>
+            Sell all
+          </Button>
+          <Button size="xs" variant="Secondary" onClick={setTradeAmountToHalf}>
+            Sell half
+          </Button>
+        </div>
+        <HorizontalRadio
+          options={inputModesOptions}
+          value={inputMode}
+          onChange={onInputModeChange}
+        />
+      </div>
       <hr className="my-2" />
       <div className="flex flex-col gap-4 items-stretch ">
         <div className="text-3xl font-semibold text-center">
@@ -117,12 +148,8 @@ export const BuyModalContent = ({
         <Button
           disabled={tradeAmount === 0 || loading || !isTradeAmountCorrect}
         >
-          {t("tradingModal.buyButtonLabel")}
+          {t("tradingModal.sellModalHeader")}
         </Button>
-      </div>
-      <hr className="my-1" />
-      <div className="text-xs text-center text-gray-600 max-w-[375px]">
-        {t("tradingModal.buyDisclaimer")}
       </div>
     </div>
   );

@@ -8,9 +8,11 @@ import {
   DetailsHeading,
   Button,
   BuyModalContent,
+  SellModalContent,
 } from "components";
 import { BuyModalInitialData } from "components/BuyModalContent/BuyModalContent";
 import { useModal } from "components/Modal/useModal";
+import { SellModalInitialData } from "components/SellModalContent/SellModalContent";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { PageLayout } from "layouts/PageLayout/PageLayout";
 import { useNavigate, useParams } from "react-router-dom";
@@ -54,8 +56,18 @@ export const HoldingDetails = ({
   const { data: { portfoliosCurrency } = { portfoliosCurrency: "EUR" } } =
     useGetContactInfo();
 
-  const { Modal, onOpen, modalProps, contentProps } =
-    useModal<BuyModalInitialData>();
+  const {
+    Modal,
+    onOpen: onBuyModalOpen,
+    modalProps: buyModalProps,
+    contentProps: buyModalContentProps,
+  } = useModal<BuyModalInitialData>();
+
+  const {
+    onOpen: onSellModalOpen,
+    modalProps: sellModalProps,
+    contentProps: sellModalContentProps,
+  } = useModal<SellModalInitialData>();
 
   return (
     <div className="flex overflow-hidden flex-col h-full">
@@ -187,20 +199,32 @@ export const HoldingDetails = ({
                   <Button
                     LeftIcon={PlusCircle}
                     onClick={() =>
-                      onOpen({ holdingId, securityName: name, url2 })
+                      onBuyModalOpen({ holdingId, securityName: name, url2 })
                     }
                   >
                     {t("holdingsPage.buy")}
                   </Button>
-                  <Button LeftIcon={MinusCircle} variant="Red">
+                  <Button
+                    LeftIcon={MinusCircle}
+                    variant="Red"
+                    onClick={() =>
+                      onSellModalOpen({ holdingId, securityName: name, url2 })
+                    }
+                  >
                     {t("holdingsPage.sell")}
                   </Button>
                 </div>
                 <Modal
-                  {...modalProps}
+                  {...buyModalProps}
                   header={t("tradingModal.buyModalHeader")}
                 >
-                  <BuyModalContent {...contentProps} />
+                  <BuyModalContent {...buyModalContentProps} />
+                </Modal>
+                <Modal
+                  {...sellModalProps}
+                  header={t("tradingModal.sellModalHeader")}
+                >
+                  <SellModalContent {...sellModalContentProps} />
                 </Modal>
               </CanTrade>
             </div>

@@ -24,3 +24,5 @@ export { DownloadableDocument } from "./DownloadableDocument/DownloadableDocumen
 export { Input } from "./Input/Input";
 export { Modal } from "./Modal/Modal";
 export { BuyModalContent } from "./BuyModalContent/BuyModalContent";
+export { SellModalContent } from "./SellModalContent/SellModalContent";
+export { HorizontalRadio } from "./HorizontalRadio/HorizontalRadio";
