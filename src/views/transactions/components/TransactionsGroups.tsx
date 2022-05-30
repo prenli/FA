@@ -6,7 +6,7 @@ interface TransactionsListProps {
   transactions: Transaction[];
 }
 
-export const TransactionsList = ({ transactions }: TransactionsListProps) => {
+export const TransactionsGroups = ({ transactions }: TransactionsListProps) => {
   const splitData = useSplitByMonth(transactions);
 
   return (

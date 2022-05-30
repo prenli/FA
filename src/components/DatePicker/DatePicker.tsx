@@ -54,7 +54,6 @@ const usePositionElementToOtherElement = () => {
       if (!node || !targetNode) {
         return;
       }
-      console.log(targetNode, node);
       createPopper(targetNode, node, {
         placement: "bottom-start",
       });
