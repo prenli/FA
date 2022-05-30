@@ -14,8 +14,8 @@ export const DetailsHeading = ({
   const showLogoAndUserMenu = useMatchesBreakpoint("md");
 
   return (
-    <div className="mt-2 bg-white border-b border-gray-200 shadow-md">
-      <div className="md:container flex gap-2 items-center p-2 md:mx-auto text-2xl font-bold">
+    <div className="bg-white border-b border-gray-200 shadow-md">
+      <div className="md:container flex gap-2 items-center p-2 md:mx-auto text-2xl font-bold leading-none">
         {showLogoAndUserMenu && (
           <div className="mr-2">
             <Logo />
