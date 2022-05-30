@@ -1,6 +1,6 @@
 import { Transaction } from "api/transactions/types";
 import { NoTransactions } from "./NoTransactions";
-import { TransactionsList } from "./TransactionsList";
+import { TransactionsGroups } from "./TransactionsGroups";
 
 export interface TransactionsContainerProps {
   data: {
@@ -16,5 +16,5 @@ export const TransactionsContainer = ({
   if (!transactions || transactions.length === 0) {
     return <NoTransactions startDate={startDate} endDate={endDate} />;
   }
-  return <TransactionsList transactions={transactions} />;
+  return <TransactionsGroups transactions={transactions} />;
 };
