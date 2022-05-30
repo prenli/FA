@@ -4,15 +4,7 @@ const theme = require("./theme.config.js");
 
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/contact.html"],
-  safelist: [
-    "md:grid-cols-1",
-    "md:grid-cols-2",
-    "md:grid-cols-3",
-    "md:grid-cols-4",
-    "md:grid-cols-5",
-    "md:grid-cols-6",
-    "md:grid-cols-7",
-  ],
+  safelist: [],
   theme: {
     extend: {
       colors: {

@@ -22,7 +22,7 @@ export interface AllocationByType {
     marketValue: number;
     tradeAmount: number;
   };
-  allocationBySecurity: AllocationBySecurity[];
+  allocationsBySecurity: AllocationBySecurity[];
 }
 
 export interface AllPortfoliosHoldingsQuery {
