@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 import { Slide, toast } from "react-toastify";
 
 export interface BuyModalInitialData {
-  holdingId?: string;
+  holdingId?: string | number;
   securityName?: string;
   url2?: string;
 }

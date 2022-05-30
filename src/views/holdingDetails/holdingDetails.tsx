@@ -139,7 +139,7 @@ export const HoldingDetails = ({
                             maximumFractionDigits: 2,
                           },
                         },
-                      })} %`}
+                      })}%`}
                     </GainLoseColoring>
                   }
                 />

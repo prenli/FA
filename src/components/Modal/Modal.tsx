@@ -29,7 +29,7 @@ export const Modal = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/25" aria-hidden="true" />
+          <div className="fixed inset-0 z-30 bg-black/25" aria-hidden="true" />
         </Transition.Child>
         <Transition.Child
           as={Fragment}
@@ -40,7 +40,7 @@ export const Modal = ({
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          <div className="flex overflow-auto fixed inset-0 justify-center items-baseline p-4">
+          <div className="flex overflow-auto fixed inset-0 z-30 justify-center items-baseline p-4">
             <div className="flex justify-center items-center min-h-full">
               <Dialog.Panel className="grid overflow-auto w-full bg-white rounded-lg border shadow-lg">
                 {!!header && (

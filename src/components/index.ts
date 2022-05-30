@@ -26,3 +26,4 @@ export { Modal } from "./Modal/Modal";
 export { BuyModalContent } from "./BuyModalContent/BuyModalContent";
 export { SellModalContent } from "./SellModalContent/SellModalContent";
 export { HorizontalRadio } from "./HorizontalRadio/HorizontalRadio";
+export { Grid } from "./Grid/Grid";

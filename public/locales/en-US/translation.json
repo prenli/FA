@@ -100,6 +100,20 @@
     "date": "Date",
     "download": "Download"
   },
+  "tradingList": {
+    "header": "Trading",
+    "buyButton": "Buy",
+    "gridHeader": {
+      "currency": "Currency",
+      "performance1Y": "1Y",
+      "performance3Y": "3Y",
+      "performance5Y": "5Y",
+      "name": "Name",
+      "isinCode": "ISIN Code"
+    },
+    "kiid": "KIID",
+    "prospectus": "Prospectus"
+  },
   "tradingModal": {
     "securityName": "Security name",
     "portfolio": "Portfolio",
