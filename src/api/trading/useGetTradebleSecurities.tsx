@@ -12,6 +12,7 @@ const TRADABLE_SECURITIES_QUERY = gql`
       country {
         id
         name
+        code
       }
       currency {
         id
@@ -29,6 +30,9 @@ export interface TradableSecurity {
   url2: string;
   currency: {
     securityCode: string;
+  };
+  country?: {
+    code: string;
   };
 }
 

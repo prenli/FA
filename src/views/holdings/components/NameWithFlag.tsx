@@ -1,18 +1,18 @@
 import { CountryFlag } from "components";
 
 interface NameWithFlagProps {
-  countryCode: string;
+  countryCode: string | undefined;
   name: string;
-  showFlag: boolean;
+  showFlag?: boolean;
 }
 
 export const NameWithFlag = ({
   countryCode,
   name,
-  showFlag,
+  showFlag = true,
 }: NameWithFlagProps) => {
   return (
-    <div className="text-lg md:text-base font-semibold leading-5 text-gray-900">
+    <div className="text-lg md:text-base font-semibold leading-5 text-left text-gray-900">
       <span>{name}</span>
       {showFlag && (
         <CountryFlag

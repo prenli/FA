@@ -5,6 +5,7 @@ import { ReactComponent as ChevronUp } from "assets/chevron-up.svg";
 import classNames from "classnames";
 import { Button, DownloadableDocument, Grid } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
+import { NameWithFlag } from "../../holdings/components/NameWithFlag";
 import { Performance } from "./Performance";
 import {
   performance1Y,
@@ -46,6 +47,7 @@ const TradableSecurityBase = ({
   url,
   url2,
   onBuyModalOpen,
+  country,
 }: TradableSecuritySized) => {
   const { t } = useModifiedTranslation();
   const [expanded, toggleExpanded] = useReducer((state) => !state, false);
@@ -57,9 +59,7 @@ const TradableSecurityBase = ({
         onClick={toggleExpanded}
       >
         <div className="flex col-span-4 gap-2 justify-between items-center">
-          <div className="text-lg font-semibold leading-5 text-gray-900 truncate">
-            {name}
-          </div>
+          <NameWithFlag name={name} countryCode={country?.code} />
           <div>
             {expanded ? (
               <ChevronUp className="ml-auto text-gray-600 stroke-gray-500 w-[20px] h-[20px]" />

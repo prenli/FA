@@ -1,5 +1,6 @@
 import { Button, DownloadableDocument, Grid } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
+import { NameWithFlag } from "../../holdings/components/NameWithFlag";
 import { Performance } from "./Performance";
 import {
   performance1Y,
@@ -46,13 +47,14 @@ const TradableSecurityMd = ({
   url2,
   isinCode,
   onBuyModalOpen,
+  country,
 }: TradableSecuritySized) => {
   const { t } = useModifiedTranslation();
   return (
     <>
       <Grid.Row key={id} className="py-2 border-t">
-        <div className=" text-lg font-semibold leading-5 text-gray-900 truncate">
-          {name}
+        <div>
+          <NameWithFlag name={name} countryCode={country?.code} />
         </div>
         <div className="text-xs md:text-base font-light">{isinCode ?? "-"}</div>
         <div className="pl-2 text-base text-gray-700">{currency}</div>

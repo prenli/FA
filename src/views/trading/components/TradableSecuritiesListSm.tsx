@@ -4,6 +4,7 @@ import { ReactComponent as ChevronDown } from "assets/chevron-down.svg";
 import { ReactComponent as ChevronUp } from "assets/chevron-up.svg";
 import { Button, DownloadableDocument, Grid } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
+import { NameWithFlag } from "../../holdings/components/NameWithFlag";
 import { Performance } from "./Performance";
 import {
   performance1Y,
@@ -47,14 +48,15 @@ const TradableSecurityMd = ({
   url2,
   isinCode,
   onBuyModalOpen,
+  country,
 }: TradableSecuritySized) => {
   const { t } = useModifiedTranslation();
   const [expanded, toggleExpanded] = useReducer((state) => !state, false);
   return (
     <>
       <Grid.Row key={id} className="py-2 border-t" onClick={toggleExpanded}>
-        <div className="text-lg font-semibold leading-5 text-gray-900 truncate">
-          {name}
+        <div>
+          <NameWithFlag name={name} countryCode={country?.code} />
         </div>
         <div className="text-base text-gray-700">{currency}</div>
         <div>
