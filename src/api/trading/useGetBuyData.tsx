@@ -8,9 +8,12 @@ const TRANSACTIONS_QUERY = gql`
       currency {
         securityCode
       }
-      portfolioReport {
+      portfolioReport(
+        adjustPositionsBasedOnOpenTradeOrders: true
+        calculateExpectedAmountBasedOpenTradeOrders: true
+      ) {
         portfolioId
-        accountBalance
+        accountBalanceAdjustedWithOpenTradeOrders: accountBalance
       }
     }
   }
@@ -22,7 +25,7 @@ interface PortfolioTransactionsQuery {
       securityCode: string;
     };
     portfolioReport: {
-      accountBalance: number;
+      accountBalanceAdjustedWithOpenTradeOrders: number;
     };
   };
 }
@@ -42,7 +45,9 @@ export const useGetBuyData = (portfolioId: string | undefined) => {
     loading,
     error,
     data: data && {
-      availableCash: data.portfolio.portfolioReport.accountBalance,
+      availableCash:
+        data.portfolio.portfolioReport
+          .accountBalanceAdjustedWithOpenTradeOrders,
       currency: data.portfolio.currency.securityCode,
     },
   };
