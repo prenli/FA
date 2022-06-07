@@ -26,11 +26,12 @@ const authMiddleware = setContext(async (operation, { headers }) => {
 
 const cache = new InMemoryCache({
   typePolicies: {
-    PortfolioReport: {
-      keyFields: ["portfolioId"],
+    Portfolio: {
       fields: {
-        portfolioReportItems: {
-          merge: false,
+        portfolioReport: {
+          merge: (existing, incoming) => {
+            return { ...existing, ...incoming };
+          },
         },
       },
     },
