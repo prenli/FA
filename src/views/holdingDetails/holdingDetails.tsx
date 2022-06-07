@@ -10,9 +10,9 @@ import {
   BuyModalContent,
   SellModalContent,
 } from "components";
-import { BuyModalInitialData } from "components/BuyModalContent/BuyModalContent";
 import { useModal } from "components/Modal/useModal";
-import { SellModalInitialData } from "components/SellModalContent/SellModalContent";
+import { BuyModalInitialData } from "components/TradingModals/BuyModalContent/BuyModalContent";
+import { SellModalInitialData } from "components/TradingModals/SellModalContent/SellModalContent";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { PageLayout } from "layouts/PageLayout/PageLayout";
 import { useNavigate, useParams } from "react-router-dom";
@@ -167,9 +167,9 @@ export const HoldingDetails = ({
                   <DataRow
                     label={t("holdingsPage.type")}
                     value={getNameFromBackendTranslations(
-                      namesAsMap,
                       typeCode.toLowerCase(),
-                      i18n.language
+                      i18n.language,
+                      namesAsMap
                     )}
                   />
                   <DataRow

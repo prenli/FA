@@ -16,6 +16,7 @@ export const TRADE_ORDERS_DETAILS = gql`
     transactionDate
     tradeAmountInPortfolioCurrency
     parentPortfolio {
+      id
       name
       currency {
         securityCode

@@ -1,10 +1,23 @@
 import { useGetPortfolioTradeOrders } from "api/orders/useGetPortfolioTradeOrders";
+import { useTradingState } from "hooks/useTradingState";
 import { useParams } from "react-router-dom";
 import { Orders } from "views/orders/orders";
 
 export const OrdersPage = () => {
   const { portfolioId } = useParams();
   const queryData = useGetPortfolioTradeOrders(portfolioId);
+  const { getUnhandledOrdersForDateRange } = useTradingState();
+  const { data, startDate, endDate } = queryData;
+  const unhandledOrdersFromLocalStorage = getUnhandledOrdersForDateRange(
+    data,
+    startDate,
+    endDate,
+    portfolioId
+  );
+  const localAndAPIOrders = data && [
+    ...data,
+    ...unhandledOrdersFromLocalStorage,
+  ];
 
-  return <Orders {...queryData} />;
+  return <Orders {...queryData} data={localAndAPIOrders} />;
 };

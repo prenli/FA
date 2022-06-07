@@ -1,4 +1,7 @@
+import { LocalTradeOrderStatus } from "hooks/useTradingState";
+
 export const ORDER_STATUS = {
+  Pending: LocalTradeOrderStatus, // local storage state
   Executable: "1",
   Executed: "2",
   Cancelled: "3",

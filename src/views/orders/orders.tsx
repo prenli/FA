@@ -3,9 +3,10 @@ import { TradeOrder } from "api/orders/types";
 import { QueryData } from "api/types";
 import { Card, DatePicker, QueryLoadingWrapper } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
+import { LocalOrder } from "hooks/useTradingState";
 import { OrdersContainer } from "./components/OrdersContainer";
 
-interface OrdersProps extends QueryData<TradeOrder[]> {
+interface OrdersProps extends QueryData<(TradeOrder | LocalOrder)[]> {
   startDate: Date;
   setStartDate: Dispatch<SetStateAction<Date>>;
   endDate: Date;

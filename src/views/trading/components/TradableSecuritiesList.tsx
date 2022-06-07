@@ -1,7 +1,7 @@
 import { TradableSecurity as TradableSecurityInterface } from "api/trading/useGetTradebleSecurities";
 import { BuyModalContent, Card } from "components";
-import { BuyModalInitialData } from "components/BuyModalContent/BuyModalContent";
 import { useModal } from "components/Modal/useModal";
+import { BuyModalInitialData } from "components/TradingModals/BuyModalContent/BuyModalContent";
 import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { TradableSecuritiesListBase } from "./TradableSecuritiesListBase";

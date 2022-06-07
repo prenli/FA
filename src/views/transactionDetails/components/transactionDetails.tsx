@@ -55,9 +55,9 @@ export const TransactionDetails = ({
             <InfoCard
               label={t("transactionsPage.type")}
               value={getNameFromBackendTranslations(
-                typeNamesAsMap,
                 typeName,
-                i18n.language
+                i18n.language,
+                typeNamesAsMap
               )}
               colorScheme={getTransactionColor(amountEffect, cashFlowEffect)}
             />
@@ -175,7 +175,7 @@ export const TransactionDetails = ({
                   },
                 })}
               />
-              <div></div>
+              <div />
             </div>
           </Card>
         </div>

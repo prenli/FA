@@ -13,6 +13,7 @@ import { useGetPortfolioOptions } from "hooks/useGetPortfolioOptions";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useParams } from "react-router-dom";
 import { Slide, toast } from "react-toastify";
+import { useTrade } from "../useTrade";
 import { useTradeAmountInput } from "./useTradeAmountInput";
 
 export interface SellModalInitialData {
@@ -23,6 +24,7 @@ export interface SellModalInitialData {
 
 interface SellModalProps extends SellModalInitialData {
   modalInitialFocusRef: MutableRefObject<null>;
+  onClose: () => void;
 }
 
 const SELL_MODAL_ERROR_TOAST_ID = "SELL_MODAL_ERROR_TOAST_ID";
@@ -32,6 +34,7 @@ export const SellModalContent = ({
   securityName,
   url2,
   modalInitialFocusRef,
+  onClose,
 }: SellModalProps) => {
   const { t } = useModifiedTranslation();
   const { portfolioId: urlPortfolioId } = useParams();
@@ -59,6 +62,15 @@ export const SellModalContent = ({
     setTradeAmountToHalf,
     onInputModeChange,
   } = useTradeAmountInput(marketValue, currency);
+
+  const handleSell = useTrade("sell", onClose, {
+    portfolio: portfolioOptions.find(
+      (portfolio) => portfolio.id === portfolioId
+    ),
+    securityName,
+    currency,
+    tradeAmount,
+  });
 
   if (error) {
     toast.error(t("tradingModal.queryErrorWarning"), {
@@ -147,6 +159,7 @@ export const SellModalContent = ({
         </div>
         <Button
           disabled={tradeAmount === 0 || loading || !isTradeAmountCorrect}
+          onClick={handleSell}
         >
           {t("tradingModal.sellModalHeader")}
         </Button>

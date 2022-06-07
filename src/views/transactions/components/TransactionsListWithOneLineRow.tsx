@@ -1,7 +1,6 @@
 import { Badge, Grid } from "components";
 import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import { dateFromYYYYMMDD } from "utils/date";
 import { getGridColsClass } from "utils/tailwindClasses";
@@ -9,7 +8,7 @@ import {
   getNameFromBackendTranslations,
   getTransactionColor,
 } from "utils/transactions";
-import { getNavigationPath } from "../../transactionDetails/transactionDetailsView";
+import { useNavigateToDetails } from "../useNavigateToDetails";
 import { TransactionProps, TransactionsListProps } from "./TransactionsGroup";
 
 export const TransactionsListWithOneLineRow = ({
@@ -19,7 +18,7 @@ export const TransactionsListWithOneLineRow = ({
   const { portfolioId } = useParams();
   const showPortfolioLabel = !portfolioId;
   const { t } = useModifiedTranslation();
-  const navigate = useNavigate();
+  const navigate = useNavigateToDetails(type);
 
   const isLgVersion = useMatchesBreakpoint("lg");
 
@@ -45,7 +44,7 @@ export const TransactionsListWithOneLineRow = ({
           }
           if (index === headersList.length - 2) {
             return (
-              <div>
+              <div key={index}>
                 <div className="mx-auto w-max">{header}</div>
               </div>
             );
@@ -58,9 +57,7 @@ export const TransactionsListWithOneLineRow = ({
           {...transaction}
           key={transaction.id}
           showPortfolioLabel={showPortfolioLabel}
-          onClick={() =>
-            navigate(`${getNavigationPath(type)}/${transaction.id}`)
-          }
+          onClick={() => navigate(transaction.id)}
         />
       ))}
     </div>
@@ -96,7 +93,7 @@ const Transaction = ({
         </div>
         {isLgVersion && (
           <div className="text-base font-medium">
-            {t("number", { value: amount })}
+            {amount != null ? t("number", { value: amount }) : "-"}
           </div>
         )}
         <div>
@@ -105,9 +102,9 @@ const Transaction = ({
               colorScheme={getTransactionColor(amountEffect, cashFlowEffect)}
             >
               {getNameFromBackendTranslations(
-                typeNamesAsMap,
                 typeName.toLowerCase(),
-                i18n.language
+                i18n.language,
+                typeNamesAsMap
               )}
             </Badge>
           </div>

@@ -61,6 +61,7 @@
     "header": "Order",
     "noOrders": "No orders are available\n for this period",
     "noOrdersInfo": "Try filtering with other dates",
+    "pending": "Pending",
     "inExecution": "In execution",
     "open": "Open",
     "accepted": "Accepted",
@@ -124,8 +125,10 @@
     "tradeAmountInputLabel": "Enter trade amount in {{currency}}",
     "buyModalHeader": "Buy",
     "buyButtonLabel": "Buy",
+    "buyStatus": "Buy",
     "sellModalHeader": "Sell",
     "sellButtonLabel": "Sell",
+    "sellStatus": "Sell",
     "kiid": "KIID",
     "buyDisclaimer": "Past performance is not a guide to future performance. When investing in financial instruments, the investor may lose all or part of the investments.",
     "queryErrorWarning": "Server error occurred"

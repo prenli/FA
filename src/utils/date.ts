@@ -13,3 +13,12 @@ export const dateFromYYYYMMDD = (stringDate: string) => {
   const dateArray = stringDate.split("-").map((period) => parseInt(period));
   return new Date(dateArray[0], dateArray[1] - 1, dateArray[2]);
 };
+
+export const dateToYYYYMMDD = (date: Date) => {
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+};
+
+export const isDateInRange = (date: Date, startDate: Date, endDate: Date) => {
+  const dateTime = date.getTime();
+  return dateTime >= startDate.getTime() && dateTime <= endDate.getTime();
+};

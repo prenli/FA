@@ -2,8 +2,10 @@ import { useMemo } from "react";
 import { ORDER_STATUS } from "api/orders/enums";
 import { OrderStatus, TradeOrder } from "api/orders/types";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
+import { assertUnreachable } from "../../../utils/type";
 
 const ORDER_STATUSES_TO_DISPLAY = [
+  ORDER_STATUS.Pending,
   ORDER_STATUS.Open,
   ORDER_STATUS.Accepted,
   ORDER_STATUS["In execution"],
@@ -18,12 +20,11 @@ const isOrderStatusToDisplayType = (
   return (ORDER_STATUSES_TO_DISPLAY as readonly string[]).includes(status);
 };
 
-const assertUnreachable = (_x: never): never => {
-  throw new Error("Didn't expect to get here");
-};
-
 const getOrderStatusLabelKey = (orderStatus: OrderStatusToDisplayType) => {
   switch (orderStatus) {
+    case ORDER_STATUS.Pending: {
+      return "ordersPage.pending";
+    }
     case ORDER_STATUS.Open: {
       return "ordersPage.open";
     }

@@ -15,6 +15,7 @@ export const TRANSACTION_FIELDS = gql`
     tradeAmountInPortfolioCurrency
     securityName
     parentPortfolio {
+      id
       name
       currency {
         securityCode

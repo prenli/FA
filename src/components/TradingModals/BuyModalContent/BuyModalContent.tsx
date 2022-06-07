@@ -11,6 +11,7 @@ import { useGetPortfolioOptions } from "hooks/useGetPortfolioOptions";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useParams } from "react-router-dom";
 import { Slide, toast } from "react-toastify";
+import { useTrade } from "../useTrade";
 
 export interface BuyModalInitialData {
   holdingId?: string | number;
@@ -20,6 +21,7 @@ export interface BuyModalInitialData {
 
 interface BuyModalProps extends BuyModalInitialData {
   modalInitialFocusRef: MutableRefObject<null>;
+  onClose: () => void;
 }
 
 const BUY_MODAL_ERROR_TOAST_ID = "BUY_MODAL_ERROR_TOAST_ID";
@@ -29,6 +31,7 @@ export const BuyModalContent = ({
   securityName,
   url2,
   modalInitialFocusRef,
+  onClose,
 }: BuyModalProps) => {
   const { t } = useModifiedTranslation();
   const { portfolioId: urlPortfolioId } = useParams();
@@ -43,6 +46,15 @@ export const BuyModalContent = ({
   } = useGetBuyData(portfolioId.toString());
 
   const [tradeAmount, setTradeAmount] = useState(0);
+
+  const handleBuy = useTrade("buy", onClose, {
+    portfolio: portfolioOptions.find(
+      (portfolio) => portfolio.id === portfolioId
+    ),
+    securityName,
+    currency,
+    tradeAmount,
+  });
 
   const isTradeAmountCorrect =
     !isNaN(availableCash) && tradeAmount >= 0 && tradeAmount <= availableCash;
@@ -116,6 +128,7 @@ export const BuyModalContent = ({
         </div>
         <Button
           disabled={tradeAmount === 0 || loading || !isTradeAmountCorrect}
+          onClick={handleBuy}
         >
           {t("tradingModal.buyButtonLabel")}
         </Button>
