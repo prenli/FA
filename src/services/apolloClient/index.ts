@@ -35,6 +35,15 @@ const cache = new InMemoryCache({
         },
       },
     },
+    Contact: {
+      fields: {
+        portfolioReport: {
+          merge: (existing, incoming) => {
+            return { ...existing, ...incoming };
+          },
+        },
+      },
+    },
     PortfolioReportItem: {
       keyFields: ["portfolioId", "security", ["id"]],
     },
