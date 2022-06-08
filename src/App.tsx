@@ -13,18 +13,18 @@ import "styles/fonts.css";
 function App() {
   return (
     <InitialLanguageProvider>
-      <ErrorBoundary>
-        <KeycloakProvider keycloak={keycloakService}>
-          <PersistedApolloProvider>
-            <APILanguageProvider>
-              <ServiceWorkerRegistrationProvider>
+      <ServiceWorkerRegistrationProvider>
+        <ErrorBoundary>
+          <KeycloakProvider keycloak={keycloakService}>
+            <PersistedApolloProvider>
+              <APILanguageProvider>
                 <RootRoutes />
-              </ServiceWorkerRegistrationProvider>
-            </APILanguageProvider>
-          </PersistedApolloProvider>
-        </KeycloakProvider>
-        <ToastContainer />
-      </ErrorBoundary>
+              </APILanguageProvider>
+            </PersistedApolloProvider>
+          </KeycloakProvider>
+          <ToastContainer />
+        </ErrorBoundary>
+      </ServiceWorkerRegistrationProvider>
     </InitialLanguageProvider>
   );
 }
