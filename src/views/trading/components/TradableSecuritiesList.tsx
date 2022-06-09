@@ -1,5 +1,5 @@
 import { TradableSecurity as TradableSecurityInterface } from "api/trading/useGetTradebleSecurities";
-import { BuyModalContent, Card } from "components";
+import { BuyModalContent, Card, ErrorMessage } from "components";
 import { useModal } from "components/Modal/useModal";
 import { BuyModalInitialData } from "components/TradingModals/BuyModalContent/BuyModalContent";
 import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
@@ -38,6 +38,14 @@ export const TradableSecuritiesList = (props: TradableSecuritiesListProps) => {
     modalProps: buyModalProps,
     contentProps: buyModalContentProps,
   } = useModal<BuyModalInitialData>();
+
+  if (props.data.length === 0) {
+    return (
+      <ErrorMessage header={t("tradingList.noHoldings")}>
+        {t("tradingList.noHoldingsInfo")}
+      </ErrorMessage>
+    );
+  }
 
   return (
     <>

@@ -1,5 +1,5 @@
+import { ErrorMessage } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { ErrorMessage } from "../../../components";
 
 export const NoHoldings = () => {
   const { t } = useModifiedTranslation();

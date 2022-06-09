@@ -112,8 +112,14 @@
       "name": "Name",
       "isinCode": "ISIN Code"
     },
+    "noHoldings": "No securities",
+    "noHoldingsInfo": "No securities found matching the given filters criteria",
     "kiid": "KIID",
-    "prospectus": "Prospectus"
+    "prospectus": "Prospectus",
+    "filters": {
+      "country": "Country",
+      "type": "Security type"
+    }
   },
   "tradingModal": {
     "securityName": "Security name",
