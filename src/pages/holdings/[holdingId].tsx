@@ -17,22 +17,21 @@ export const HoldingPage = () => {
     error: holdingError,
     data: holdingData,
   } = useGetAllPortfoliosHoldingDetails(holdingId);
-  const mergedData = securityData &&
-    holdingData && {
-      ...holdingData,
-      security: securityData,
-    };
+  const mergedData = securityData && {
+    holding: holdingData,
+    security: securityData,
+  };
   const isLoading = securityLoading || holdingLoading;
-  const isSecurityInPortfolio = isLoading || holdingData;
+  const securityDoesNotExist = !isLoading && !securityData;
 
-  return isSecurityInPortfolio ? (
+  return securityDoesNotExist ? (
+    <NotFoundView />
+  ) : (
     <QueryLoadingWrapper
       loading={isLoading}
       data={mergedData}
       error={securityError || holdingError}
       SuccessComponent={HoldingDetails}
     />
-  ) : (
-    <NotFoundView />
   );
 };

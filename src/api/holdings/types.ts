@@ -56,6 +56,14 @@ export interface MarketHistoryDataPoint {
   date: string;
 }
 
+export type SecurityCode =
+  | "STOCK"
+  | "FUND"
+  | "ETFs"
+  | "PE"
+  | "BOND"
+  | "CURRENCY";
+
 export interface SecurityDetailsPosition {
   id: number;
   name: string;
@@ -71,7 +79,7 @@ export interface SecurityDetailsPosition {
     date: string;
   };
   type: {
-    code: "STOCK" | "FUND" | "ETFs" | "PE" | "BOND" | "CURRENCY";
+    code: SecurityCode;
     namesAsMap: Record<string, string>;
   };
 }
