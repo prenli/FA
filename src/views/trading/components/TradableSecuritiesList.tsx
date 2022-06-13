@@ -21,11 +21,6 @@ export interface TradableSecuritySized extends TradableSecurityInterface {
   onBuyModalOpen: (initialData: BuyModalInitialData) => void;
 }
 
-// random numbers for demonstration purposes
-export const performance1Y = 40 * (0.5 - Math.random());
-export const performance3Y = 40 * (0.5 - Math.random());
-export const performance5Y = 40 * (0.5 - Math.random());
-
 export const TradableSecuritiesList = (props: TradableSecuritiesListProps) => {
   const { t } = useModifiedTranslation();
 

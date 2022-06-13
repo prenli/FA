@@ -5,12 +5,10 @@ import { ReactComponent as ChevronUp } from "assets/chevron-up.svg";
 import classNames from "classnames";
 import { Button, DownloadableDocument, Grid } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
+import { useNavigate } from "react-router";
+import { dateFromYYYYMMDD } from "../../../utils/date";
 import { NameWithFlag } from "../../holdings/components/NameWithFlag";
-import { Performance } from "./Performance";
 import {
-  performance1Y,
-  performance3Y,
-  performance5Y,
   TradableSecuritiesListSized,
   TradableSecuritySized,
 } from "./TradableSecuritiesList";
@@ -23,10 +21,10 @@ export const TradableSecuritiesListBase = ({
   return (
     <div className="grid grid-cols-4 items-center">
       <Grid.Header>
-        <span>{t("tradingList.gridHeader.currency")}</span>
-        <span>{t("tradingList.gridHeader.performance1Y")}</span>
-        <span>{t("tradingList.gridHeader.performance3Y")}</span>
-        <span>{t("tradingList.gridHeader.performance5Y")}</span>
+        <span className="col-span-2">
+          {t("tradingList.gridHeader.isinCode")}
+        </span>
+        <span className="col-span-2"> {t("tradingList.gridHeader.price")}</span>
       </Grid.Header>
       {securities.map((security) => (
         <TradableSecurityBase
@@ -43,6 +41,8 @@ const TradableSecurityBase = ({
   id,
   name,
   isinCode,
+  securityCode,
+  latestMarketData,
   currency: { securityCode: currency },
   url,
   url2,
@@ -50,6 +50,7 @@ const TradableSecurityBase = ({
   country,
 }: TradableSecuritySized) => {
   const { t } = useModifiedTranslation();
+  const navigate = useNavigate();
   const [expanded, toggleExpanded] = useReducer((state) => !state, false);
   return (
     <>
@@ -74,15 +75,19 @@ const TradableSecurityBase = ({
         className={classNames({ "pb-2": !expanded })}
         onClick={toggleExpanded}
       >
-        <div className=" text-base text-gray-700">{currency}</div>
-        <div>
-          <Performance value={performance1Y} />
-        </div>
-        <div>
-          <Performance value={performance3Y} />
-        </div>
-        <div>
-          <Performance value={performance5Y} />
+        <div className="col-span-2 text-base font-light">{isinCode}</div>
+        <div className="col-span-2">
+          <div className="text-base font-semibold leading-none">
+            {latestMarketData &&
+              t("numberWithCurrency", {
+                value: latestMarketData?.price,
+                currency,
+              })}
+          </div>
+          <div className="text-xs font-medium text-gray-500">
+            {latestMarketData &&
+              t("date", { date: dateFromYYYYMMDD(latestMarketData.date) })}
+          </div>
         </div>
       </Grid.Row>
       <Transition
@@ -95,7 +100,6 @@ const TradableSecurityBase = ({
         className="grid col-span-4 grid-flow-col auto-cols-fr gap-2 items-center px-2 pt-1 pb-2 border-t-transparent"
         show={expanded}
       >
-        <div className="col-span-2 text-base font-light">{isinCode}</div>
         <div className="sm:flex col-span-2 justify-around">
           <div className="w-fit">
             {url2 && (
@@ -111,16 +115,28 @@ const TradableSecurityBase = ({
             )}
           </div>
         </div>
-        <div className="text-right">
-          <Button
-            isFullWidth
-            size="md"
-            onClick={() =>
-              onBuyModalOpen({ holdingId: id, securityName: name, url2 })
-            }
-          >
-            {t("tradingList.buyButton")}
-          </Button>
+        <div className="flex gap-2 justify-end">
+          <div className="text-right">
+            <Button
+              isFullWidth
+              size="md"
+              variant="Secondary"
+              onClick={() => navigate(`holdings/${securityCode}`)}
+            >
+              {t("tradingList.detailsButton")}
+            </Button>
+          </div>
+          <div className="text-right">
+            <Button
+              isFullWidth
+              size="md"
+              onClick={() =>
+                onBuyModalOpen({ holdingId: id, securityName: name, url2 })
+              }
+            >
+              {t("tradingList.buyButton")}
+            </Button>
+          </div>
         </div>
       </Transition>
     </>

@@ -61,6 +61,7 @@
     "header": "Order",
     "noOrders": "No orders are available\n for this period",
     "noOrdersInfo": "Try filtering with other dates",
+    "pending": "Pending",
     "inExecution": "In execution",
     "open": "Open",
     "accepted": "Accepted",
@@ -100,15 +101,40 @@
     "date": "Date",
     "download": "Download"
   },
+  "tradingList": {
+    "header": "Trading",
+    "buyButton": "Buy",
+    "detailsButton": "Details",
+    "gridHeader": {
+      "currency": "Currency",
+      "name": "Name",
+      "price": "Price",
+      "asFor": "As for",
+      "isinCode": "ISIN Code"
+    },
+    "noHoldings": "No securities",
+    "noHoldingsInfo": "No securities found matching the given filters criteria",
+    "kiid": "KIID",
+    "prospectus": "Prospectus",
+    "filters": {
+      "country": "Country",
+      "type": "Security type"
+    }
+  },
   "tradingModal": {
     "securityName": "Security name",
     "portfolio": "Portfolio",
     "availableCash": "Available cash",
+    "currentMarketValue": "Current market value",
     "tradeAmount": "Total trade amount",
-    "tradeAmountInputError": "You don't have enough cash",
+    "tradeAmountInputError": "Entered value is not correct",
     "tradeAmountInputLabel": "Enter trade amount in {{currency}}",
     "buyModalHeader": "Buy",
     "buyButtonLabel": "Buy",
+    "buyStatus": "Buy",
+    "sellModalHeader": "Sell",
+    "sellButtonLabel": "Sell",
+    "sellStatus": "Sell",
     "kiid": "KIID",
     "buyDisclaimer": "Past performance is not a guide to future performance. When investing in financial instruments, the investor may lose all or part of the investments.",
     "queryErrorWarning": "Server error occurred"

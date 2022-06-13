@@ -33,7 +33,7 @@ export const Button = ({
         "bg-primary-600 hover:bg-primary-800 text-white fill-white":
           variant === "Primary",
         "bg-red-600 hover:bg-red-800 text-white fill-white": variant === "Red",
-        "bg-white border-2 border-primary-600 hover:bg-primary-100 text-primary-600 fill-primary-600":
+        "bg-white border-2 border-primary-600 hover:bg-primary-100 text-primary-600 fill-primary-600 leading-tight":
           variant === "Secondary",
         "bg-gray-700 hover:bg-gray-800 text-white fill-white":
           variant === "Dark",

@@ -4,12 +4,10 @@ import { ReactComponent as ChevronDown } from "assets/chevron-down.svg";
 import { ReactComponent as ChevronUp } from "assets/chevron-up.svg";
 import { Button, DownloadableDocument, Grid } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
+import { useNavigate } from "react-router";
+import { dateFromYYYYMMDD } from "../../../utils/date";
 import { NameWithFlag } from "../../holdings/components/NameWithFlag";
-import { Performance } from "./Performance";
 import {
-  performance1Y,
-  performance3Y,
-  performance5Y,
   TradableSecuritiesListSized,
   TradableSecuritySized,
 } from "./TradableSecuritiesList";
@@ -24,9 +22,9 @@ export const TradableSecuritiesListSm = ({
       <Grid.Header>
         <span>{t("tradingList.gridHeader.name")}</span>
         <span>{t("tradingList.gridHeader.currency")}</span>
-        <span>{t("tradingList.gridHeader.performance1Y")}</span>
-        <span>{t("tradingList.gridHeader.performance3Y")}</span>
-        <span>{t("tradingList.gridHeader.performance5Y")}</span>
+        <span>{t("tradingList.gridHeader.isinCode")}</span>
+        <span>{t("tradingList.gridHeader.price")}</span>
+        <span>{t("tradingList.gridHeader.asFor")}</span>
         <span>&nbsp;</span>
       </Grid.Header>
       {securities.map((security) => (
@@ -43,14 +41,17 @@ export const TradableSecuritiesListSm = ({
 const TradableSecurityMd = ({
   id,
   name,
+  securityCode,
   currency: { securityCode: currency },
   url,
   url2,
   isinCode,
   onBuyModalOpen,
   country,
+  latestMarketData,
 }: TradableSecuritySized) => {
   const { t } = useModifiedTranslation();
+  const navigate = useNavigate();
   const [expanded, toggleExpanded] = useReducer((state) => !state, false);
   return (
     <>
@@ -59,16 +60,19 @@ const TradableSecurityMd = ({
           <NameWithFlag name={name} countryCode={country?.code} />
         </div>
         <div className="text-base text-gray-700">{currency}</div>
-        <div>
-          <Performance value={performance1Y} />
+        <div className="text-base font-light">{isinCode}</div>
+        <div className="text-base font-semibold">
+          {latestMarketData &&
+            t("numberWithCurrency", {
+              value: latestMarketData?.price,
+              currency,
+            })}
         </div>
-        <div>
-          <Performance value={performance3Y} />
+        <div className="text-base font-medium text-gray-500">
+          {latestMarketData &&
+            t("date", { date: dateFromYYYYMMDD(latestMarketData.date) })}
         </div>
-        <div>
-          <Performance value={performance5Y} />
-        </div>
-        <div>
+        <div className="grid items-center">
           {expanded ? (
             <ChevronUp className="ml-auto text-gray-600 stroke-gray-500 w-[20px] h-[20px]" />
           ) : (
@@ -87,7 +91,6 @@ const TradableSecurityMd = ({
         show={expanded}
       >
         <div className="text-base font-light">{isinCode}</div>
-
         <div className="mx-auto ">
           {url2 && (
             <DownloadableDocument url={url2} label={t("tradingList.kiid")} />
@@ -101,13 +104,27 @@ const TradableSecurityMd = ({
             />
           )}
         </div>
-        <div
-          className="text-right"
-          onClick={() =>
-            onBuyModalOpen({ holdingId: id, securityName: name, url2 })
-          }
-        >
-          <Button size="md">{t("tradingList.buyButton")}</Button>
+        <div className="flex gap-2 justify-end">
+          <div className="text-right">
+            <Button
+              isFullWidth
+              size="md"
+              variant="Secondary"
+              onClick={() => navigate(`holdings/${securityCode}`)}
+            >
+              {t("tradingList.detailsButton")}
+            </Button>
+          </div>
+          <div className="text-right">
+            <Button
+              size="md"
+              onClick={() =>
+                onBuyModalOpen({ holdingId: id, securityName: name, url2 })
+              }
+            >
+              {t("tradingList.buyButton")}
+            </Button>
+          </div>
         </div>
       </Transition>
     </>

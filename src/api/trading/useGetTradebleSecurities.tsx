@@ -12,6 +12,7 @@ const TRADABLE_SECURITIES_QUERY = gql`
     ) {
       id
       name
+      securityCode
       isinCode
       url
       url2
@@ -19,6 +20,11 @@ const TRADABLE_SECURITIES_QUERY = gql`
         id
         name
         code
+      }
+      latestMarketData {
+        id
+        date: obsDate
+        price: closeView
       }
       type {
         id
@@ -36,9 +42,14 @@ const TRADABLE_SECURITIES_QUERY = gql`
 export interface TradableSecurity {
   id: number;
   name: string;
+  securityCode: string;
   isinCode: string;
   url: string;
   url2: string;
+  latestMarketData?: {
+    price: number;
+    date: string;
+  };
   currency: {
     securityCode: string;
   };

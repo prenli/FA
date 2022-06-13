@@ -104,12 +104,12 @@
   "tradingList": {
     "header": "Trading",
     "buyButton": "Buy",
+    "detailsButton": "Details",
     "gridHeader": {
       "currency": "Currency",
-      "performance1Y": "1Y",
-      "performance3Y": "3Y",
-      "performance5Y": "5Y",
       "name": "Name",
+      "price": "Price",
+      "asFor": "As for",
       "isinCode": "ISIN Code"
     },
     "noHoldings": "No securities",
