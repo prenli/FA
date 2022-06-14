@@ -41,7 +41,6 @@ const TradableSecurityBase = ({
   id,
   name,
   isinCode,
-  securityCode,
   latestMarketData,
   currency: { securityCode: currency },
   url,
@@ -121,7 +120,7 @@ const TradableSecurityBase = ({
               isFullWidth
               size="md"
               variant="Secondary"
-              onClick={() => navigate(`holdings/${securityCode}`)}
+              onClick={() => navigate(`holdings/${id}`)}
             >
               {t("tradingList.detailsButton")}
             </Button>

@@ -36,7 +36,6 @@ export const PORTFOLIO_REPORT_HOLDINGS_DETAILS_FIELDS = gql`
       portfolioId
       security {
         id
-        securityCode
       }
       amount
       accruedInterest
@@ -67,7 +66,6 @@ export const ALL_PORTFOLIOS_REPORT_HOLDINGS_DETAILS_FIELDS = gql`
       }
       security {
         id
-        securityCode
       }
       amount
       accruedInterest

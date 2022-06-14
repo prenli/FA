@@ -41,7 +41,6 @@ export const TradableSecuritiesListSm = ({
 const TradableSecurityMd = ({
   id,
   name,
-  securityCode,
   currency: { securityCode: currency },
   url,
   url2,
@@ -110,7 +109,7 @@ const TradableSecurityMd = ({
               isFullWidth
               size="md"
               variant="Secondary"
-              onClick={() => navigate(`holdings/${securityCode}`)}
+              onClick={() => navigate(`holdings/${id}`)}
             >
               {t("tradingList.detailsButton")}
             </Button>

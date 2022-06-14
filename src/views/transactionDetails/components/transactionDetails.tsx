@@ -91,7 +91,7 @@ export const TransactionDetails = ({
                   </div>
                 }
                 onClick={() =>
-                  !!security && navigate(`../holdings/${security.securityCode}`)
+                  !!security && navigate(`../holdings/${security.id}`)
                 }
               />
             </div>

@@ -1,4 +1,4 @@
-import { HoldingPosition, SecurityCode } from "api/holdings/types";
+import { HoldingPosition, SecurityTypeType } from "api/holdings/types";
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
 import { Card, GainLoseColoring } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
@@ -6,7 +6,7 @@ import { DataRow } from "./DataRow";
 import { HoldingHeader } from "./HoldingHeader";
 
 type HoldingDataProps = Omit<HoldingPosition, "security"> & {
-  typeCode: SecurityCode;
+  typeCode: SecurityTypeType;
 };
 
 export const HoldingData = ({

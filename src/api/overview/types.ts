@@ -20,7 +20,7 @@ export interface SecurityPosition {
   valueChangeAbsolute: number;
   amount: number;
   security: {
-    securityCode: string;
+    id: number;
     name: string;
   };
 }

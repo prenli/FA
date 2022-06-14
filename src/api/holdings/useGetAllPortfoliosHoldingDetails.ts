@@ -23,7 +23,7 @@ const HOLDING_DETAILS_QUERY = gql`
 `;
 
 export const useGetAllPortfoliosHoldingDetails = (
-  securityCode: string | undefined
+  securityId: string | undefined
 ) => {
   const { linkedContact } = useKeycloak();
   const { loading, error, data } = useQuery<AllPortfoliosHoldingDetailsQuery>(
@@ -42,7 +42,7 @@ export const useGetAllPortfoliosHoldingDetails = (
     loading,
     error,
     data: data?.contact.portfolioReport.holdingPositions?.find(
-      (holding) => holding.security.securityCode === securityCode
+      (holding) => holding.security.id.toString() === securityId
     ),
   };
 };

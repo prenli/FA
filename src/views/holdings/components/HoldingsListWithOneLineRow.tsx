@@ -40,9 +40,10 @@ export const HoldingsListWithOneLineRow = ({
       {securities.map((security) => (
         <HoldingLg
           {...security}
-          key={security.code}
+          key={security.security.id}
           onClick={() =>
-            groupCode !== "CURRENCY" && navigate(`holdings/${security.code}`)
+            groupCode !== "CURRENCY" &&
+            navigate(`holdings/${security.security.id}`)
           }
           currency={currency}
           showFlag={groupCode !== "CURRENCY"}

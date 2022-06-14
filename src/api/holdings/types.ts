@@ -2,6 +2,7 @@ export interface AllocationBySecurity {
   code: string;
   name: string;
   security: {
+    id: number;
     isinCode: string;
     countryCode: string;
     currencyCode: string;
@@ -56,7 +57,7 @@ export interface MarketHistoryDataPoint {
   date: string;
 }
 
-export type SecurityCode =
+export type SecurityTypeType =
   | "STOCK"
   | "FUND"
   | "ETFs"
@@ -68,7 +69,6 @@ export interface SecurityDetailsPosition {
   id: number;
   name: string;
   isinCode: string;
-  securityCode: string;
   url: string;
   url2: string;
   currency: {
@@ -79,13 +79,13 @@ export interface SecurityDetailsPosition {
     date: string;
   };
   type: {
-    code: SecurityCode;
+    code: SecurityTypeType;
     namesAsMap: Record<string, string>;
   };
 }
 
 export interface SecurityDetailsQuery {
-  securities: SecurityDetailsPosition[];
+  security: SecurityDetailsPosition;
 }
 
 export interface SecurityMarketDataHistory {
@@ -93,12 +93,12 @@ export interface SecurityMarketDataHistory {
 }
 
 export interface SecurityMarketDataHistoryQuery {
-  securities: SecurityMarketDataHistory[];
+  security: SecurityMarketDataHistory;
 }
 
 export interface HoldingPosition {
   security: {
-    securityCode: string;
+    id: number;
   };
   amount: number;
   accruedInterest: number;

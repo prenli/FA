@@ -3,12 +3,11 @@ import { getFetchPolicyOptions } from "api/utils";
 import { SecurityDetailsQuery } from "./types";
 
 const SECURITY_DETAILS_QUERY = gql`
-  query GetSecurityDetails($securityCode: String) {
-    securities(securityCode: $securityCode) {
+  query GetSecurityDetails($securityId: Long) {
+    security(id: $securityId) {
       id
       name
       isinCode
-      securityCode
       url
       url2
       currency {
@@ -27,20 +26,20 @@ const SECURITY_DETAILS_QUERY = gql`
   }
 `;
 
-export const useGetSecurityDetails = (securityCode: string | undefined) => {
+export const useGetSecurityDetails = (securityId: string | undefined) => {
   const { loading, error, data } = useQuery<SecurityDetailsQuery>(
     SECURITY_DETAILS_QUERY,
     {
       variables: {
-        securityCode,
+        securityId: securityId,
       },
-      ...getFetchPolicyOptions(`useGetSecurityDetails.${securityCode}`),
+      ...getFetchPolicyOptions(`useGetSecurityDetails.${securityId}`),
     }
   );
 
   return {
     loading,
     error,
-    data: data?.securities[0],
+    data: data?.security,
   };
 };

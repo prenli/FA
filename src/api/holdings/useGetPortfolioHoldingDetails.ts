@@ -18,7 +18,7 @@ const HOLDING_DETAILS_QUERY = gql`
 
 export const useGetPortfolioHoldingDetails = (
   portfolioId: string | undefined,
-  securityCode: string | undefined
+  securityId: string | undefined
 ) => {
   const { loading, error, data } = useQuery<PortfolioHoldingDetailsQuery>(
     HOLDING_DETAILS_QUERY,
@@ -34,7 +34,7 @@ export const useGetPortfolioHoldingDetails = (
     loading,
     error,
     data: data?.portfolio.portfolioReport.holdingPositions?.find(
-      (holding) => holding.security.securityCode === securityCode
+      (holding) => holding.security.id.toString() === securityId
     ),
   };
 };
