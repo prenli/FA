@@ -8,6 +8,7 @@ import {
   getNameFromBackendTranslations,
   getTransactionColor,
 } from "utils/transactions";
+import { isLocalOrder } from "../../../hooks/useTradingState";
 import { useNavigateToDetails } from "../useNavigateToDetails";
 import { TransactionProps, TransactionsListProps } from "./TransactionsGroup";
 
@@ -55,7 +56,9 @@ export const TransactionsListWithOneLineRow = ({
       {transactions.map((transaction) => (
         <Transaction
           {...transaction}
-          key={transaction.id}
+          key={
+            isLocalOrder(transaction) ? transaction.referenceId : transaction.id
+          }
           showPortfolioLabel={showPortfolioLabel}
           onClick={() => navigate(transaction.id)}
         />
@@ -81,7 +84,7 @@ const Transaction = ({
 
   return (
     <>
-      <Grid.Row key={id} className="py-2 border-t" onClick={onClick}>
+      <Grid.Row className="py-2 border-t" onClick={onClick}>
         <div className="col-span-2 text-base font-semibold">{securityName}</div>
         {showPortfolioLabel && (
           <div className="text-sm md:text-base text-gray-500">

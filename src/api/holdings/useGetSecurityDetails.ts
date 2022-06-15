@@ -19,6 +19,7 @@ const SECURITY_DETAILS_QUERY = gql`
         price: closeView
       }
       type {
+        id
         code
         namesAsMap
       }

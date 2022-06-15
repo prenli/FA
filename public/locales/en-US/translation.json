@@ -54,6 +54,9 @@
     "price": "Price",
     "security": "Security",
     "noHoldings": "No holdings",
+    "performance1Y": "1Y performance",
+    "performance3Y": "3Y performance",
+    "performance5Y": "5Y performance",
     "buy": "BUY",
     "sell": "SELL"
   },

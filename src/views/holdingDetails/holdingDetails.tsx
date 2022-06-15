@@ -22,6 +22,7 @@ import { DocumentRow } from "./components/DocumentRow";
 import { HoldingData } from "./components/HoldingData";
 import { HoldingHistoryDataChart } from "./components/HoldingHistoryDataChart";
 import { LineChartHeader } from "./components/LineChartHeader";
+import { PerformanceRows } from "./components/PerformanceRows";
 
 interface HoldingDetailsProps {
   data: {
@@ -106,6 +107,7 @@ export const HoldingDetails = ({
                     label={t("holdingsPage.currency")}
                     value={currency}
                   />
+                  <PerformanceRows />
                   {url && (
                     <DocumentRow
                       label={t("holdingsPage.prospectus")}

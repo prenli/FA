@@ -47,9 +47,6 @@ const cache = new InMemoryCache({
     PortfolioReportItem: {
       keyFields: ["portfolioId", "security", ["id"]],
     },
-    AnalysisDTO: {
-      keyFields: ["allocationTopLevel", ["portfolio", ["id"]]],
-    },
     Document: {
       keyFields: ["identifier"],
     },
