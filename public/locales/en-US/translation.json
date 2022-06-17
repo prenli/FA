@@ -10,8 +10,12 @@
       "placeholder": "Please select"
     }
   },
-  "navTab": {
+  "userMenu": {
     "logout": "Logout",
+    "deposit": "Deposit money",
+    "withdraw": "Withdraw money"
+  },
+  "navTab": {
     "totalInvestments": "Total investments",
     "tabs": {
       "overview": "Overview",
