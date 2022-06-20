@@ -1,17 +1,16 @@
-import { HTMLAttributes, MutableRefObject, ReactNode, useState } from "react";
+import { MutableRefObject } from "react";
 import { useGetPortfolioHoldingDetails } from "api/holdings/useGetPortfolioHoldingDetails";
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
-import classNames from "classnames";
 import {
   PortfolioSelect,
   DownloadableDocument,
   Button,
   Input,
   HorizontalRadio,
+  LabeledDiv,
 } from "components/index";
-import { useGetPortfolioOptions } from "hooks/useGetPortfolioOptions";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { useParams } from "react-router-dom";
+import { usePortfolioSelect } from "hooks/usePortfolioSelect";
 import { Slide, toast } from "react-toastify";
 import { useTrade } from "../useTrade";
 import { useTradeAmountInput } from "./useTradeAmountInput";
@@ -37,11 +36,8 @@ export const SellModalContent = ({
   onClose,
 }: SellModalProps) => {
   const { t } = useModifiedTranslation();
-  const { portfolioId: urlPortfolioId } = useParams();
-  const portfolioOptions = useGetPortfolioOptions(false);
-  const [portfolioId, setPortfolioId] = useState(
-    urlPortfolioId ? parseInt(urlPortfolioId, 10) : portfolioOptions[0].id
-  );
+  const { portfolioId, setPortfolioId, portfolioOptions } =
+    usePortfolioSelect();
 
   const { data: { portfoliosCurrency: currency = "EUR" } = {} } =
     useGetContactInfo();
@@ -97,9 +93,9 @@ export const SellModalContent = ({
         </div>
       )}
       <PortfolioSelect
+        portfolioOptions={portfolioOptions}
         portfolioId={portfolioId}
         onChange={(newPortfolio) => setPortfolioId(newPortfolio.id)}
-        includeTotal={false}
         label={t("tradingModal.portfolio")}
       />
       <LabeledDiv
@@ -167,20 +163,3 @@ export const SellModalContent = ({
     </div>
   );
 };
-
-interface LabeledDivProps extends HTMLAttributes<HTMLDivElement> {
-  label: string;
-  children: ReactNode;
-}
-
-const LabeledDiv = ({
-  label,
-  children,
-  className,
-  ...rest
-}: LabeledDivProps) => (
-  <div className={classNames(className, "leading-7")} {...rest}>
-    <div className="text-sm font-normal">{label}</div>
-    {children}
-  </div>
-);

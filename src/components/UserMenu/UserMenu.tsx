@@ -7,6 +7,9 @@ import { ReactComponent as WithdrawalIcon } from "assets/withdrawal.svg";
 import classNames from "classnames";
 import { TranslationText } from "components";
 import { keycloakService } from "services/keycloakService";
+import { useModifiedTranslation } from "../../hooks/useModifiedTranslation";
+import { useModal } from "../Modal/useModal";
+import { DepositModalContent } from "../MoneyModals/DepositModalContent/DepositModalContent";
 
 interface MenuActions {
   logout: () => void;
@@ -33,35 +36,49 @@ const getMenuItems = (menuActions: MenuActions) => [
 ];
 
 export const UserMenu = () => {
+  const { t } = useModifiedTranslation();
+
+  const {
+    Modal,
+    onOpen: onDepositModalOpen,
+    modalProps: depositModalProps,
+    contentProps: depositModalContentProps,
+  } = useModal();
+
   const menuActions = {
     logout: () => keycloakService.onAuthLogout(),
-    deposit: () => null,
+    deposit: () => onDepositModalOpen(),
     withdraw: () => null,
   };
 
   return (
-    <Menu as="div" className="grid relative items-center">
-      <Menu.Button>
-        <div className="w-8 h-8 rounded cursor-pointer">
-          <UserCircleIcon className="h-full text-gray-900" />
-        </div>
-      </Menu.Button>
-      <Transition
-        enter="transition duration-100 ease-out"
-        enterFrom="transform scale-95 opacity-0"
-        enterTo="transform scale-100 opacity-100"
-        leave="transition duration-75 ease-out"
-        leaveFrom="transform scale-100 opacity-100"
-        leaveTo="transform scale-95 opacity-0"
-        as={Fragment}
-      >
-        <Menu.Items className="absolute top-full right-0 z-10 py-1 bg-white rounded-md divide-y divide-gray-100 ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none">
-          {getMenuItems(menuActions).map((item, index) => (
-            <MenuItem key={index} {...item} />
-          ))}
-        </Menu.Items>
-      </Transition>
-    </Menu>
+    <>
+      <Menu as="div" className="grid relative items-center">
+        <Menu.Button>
+          <div className="w-8 h-8 rounded cursor-pointer">
+            <UserCircleIcon className="h-full text-gray-900" />
+          </div>
+        </Menu.Button>
+        <Transition
+          enter="transition duration-100 ease-out"
+          enterFrom="transform scale-95 opacity-0"
+          enterTo="transform scale-100 opacity-100"
+          leave="transition duration-75 ease-out"
+          leaveFrom="transform scale-100 opacity-100"
+          leaveTo="transform scale-95 opacity-0"
+          as={Fragment}
+        >
+          <Menu.Items className="absolute top-full right-0 z-10 py-1 bg-white rounded-md divide-y divide-gray-100 ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none">
+            {getMenuItems(menuActions).map((item, index) => (
+              <MenuItem key={index} {...item} />
+            ))}
+          </Menu.Items>
+        </Transition>
+      </Menu>
+      <Modal {...depositModalProps} header={t("moneyModal.depositModalHeader")}>
+        <DepositModalContent {...depositModalContentProps} />
+      </Modal>
+    </>
   );
 };
 

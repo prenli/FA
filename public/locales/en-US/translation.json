@@ -128,6 +128,17 @@
       "type": "Security type"
     }
   },
+  "moneyModal": {
+    "depositModalHeader": "Deposit",
+    "toAccount": "To account",
+    "currentBalance": "Current balance",
+    "availableBalance": "Available balance",
+    "amountInputLabel": "Enter deposit amount in {{currency}}",
+    "amountInputError": "Entered value is not correct",
+    "depositButtonLabel": "Deposit",
+    "depositDisclaimer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur ullamcorper ipsum vitae accumsan. Ut pulvinar erat non felis porta bibendum.",
+    "portfolio": "Portfolio"
+  },
   "tradingModal": {
     "securityName": "Security name",
     "portfolio": "Portfolio",
