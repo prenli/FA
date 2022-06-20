@@ -27,8 +27,7 @@ export const DepositModalContent = ({
 
   const [amount, setAmount] = useState(0);
 
-  const isAmountCorrect =
-    !isNaN(availableBalance) && amount >= 0 && amount <= availableBalance;
+  const isAmountCorrect = !isNaN(availableBalance) && amount >= 0;
 
   const handleDeposit = () => {
     return;
