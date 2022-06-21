@@ -3,6 +3,7 @@ import { ReactComponent as RefreshIcon } from "assets/refresh.svg";
 import { Button, Center } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { Slide, toast } from "react-toastify";
+import { persistor } from "services/apolloClient";
 import * as serviceWorkerRegistration from "../serviceWorkerRegistration";
 
 interface ServiceWorkerRegistrationProviderProps {
@@ -58,6 +59,8 @@ const RefreshToast = ({ registration }: RefreshToastProps) => {
     (await caches.keys()).forEach((cacheName) => {
       if (cachesToClearOnUpdate.includes(cacheName)) caches.delete(cacheName);
     });
+    // clear apollo's local storage cache
+    await persistor.purge();
     window.location.reload();
     setLoading(false);
   };

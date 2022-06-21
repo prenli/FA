@@ -30,6 +30,7 @@ export const PortfolioNavigationHeader = () => {
           {portfolioOptions.length > 1 ? (
             <div className="sm:min-w-[350px] sm:w-fit">
               <PortfolioSelect
+                portfolioOptions={portfolioOptions}
                 portfolioId={
                   portfolioId
                     ? parseInt(portfolioId, 10)

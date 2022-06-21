@@ -10,8 +10,12 @@
       "placeholder": "Please select"
     }
   },
-  "navTab": {
+  "userMenu": {
     "logout": "Logout",
+    "deposit": "Deposit money",
+    "withdraw": "Withdraw money"
+  },
+  "navTab": {
     "totalInvestments": "Total investments",
     "tabs": {
       "overview": "Overview",
@@ -54,6 +58,9 @@
     "price": "Price",
     "security": "Security",
     "noHoldings": "No holdings",
+    "performance1Y": "1Y performance",
+    "performance3Y": "3Y performance",
+    "performance5Y": "5Y performance",
     "buy": "BUY",
     "sell": "SELL"
   },
@@ -120,6 +127,23 @@
       "country": "Country",
       "type": "Security type"
     }
+  },
+  "moneyModal": {
+    "depositModalHeader": "Deposit",
+    "withdrawModalHeader": "Withdrawal",
+    "toAccount": "To account",
+    "fromAccount": "From account",
+    "currentBalance": "Current balance",
+    "availableBalance": "Available balance",
+    "depositAmountInputLabel": "Enter deposit amount in {{currency}}",
+    "withdrawAmountInputLabel": "Enter withdraw amount in {{currency}}",
+    "amountInputError": "Entered value is not correct",
+    "depositButtonLabel": "Deposit",
+    "withdrawButtonLabel": "Withdraw",
+    "missingExternalAccountMessage": "You don't have any External accounts defined",
+    "depositDisclaimer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur ullamcorper ipsum vitae accumsan. Ut pulvinar erat non felis porta bibendum.",
+    "withdrawDisclaimer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur ullamcorper ipsum vitae accumsan. Ut pulvinar erat non felis porta bibendum.",
+    "portfolio": "Portfolio"
   },
   "tradingModal": {
     "securityName": "Security name",
