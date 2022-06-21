@@ -7,20 +7,32 @@ import i18n from "i18next";
 import { dateToYYYYMMDD } from "utils/date";
 import { assertUnreachable } from "utils/type";
 
-type TradeType = "sell" | "buy";
+type TradeType = "sell" | "buy" | "withdrawal" | "deposit";
 
 const getOrderType = (type: TradeType) => {
   switch (type) {
     case "buy":
       return {
-        typeName: i18n.t("tradingModal.buyStatus"),
+        typeName: i18n.t("ordersPage.buyStatus"),
         amountEffect: 1,
         cashFlowEffect: -1,
       };
     case "sell":
       return {
-        typeName: i18n.t("tradingModal.sellStatus"),
+        typeName: i18n.t("ordersPage.sellStatus"),
         amountEffect: -1,
+        cashFlowEffect: 1,
+      };
+    case "withdrawal":
+      return {
+        typeName: i18n.t("ordersPage.withdrawStatus"),
+        amountEffect: 0,
+        cashFlowEffect: -1,
+      };
+    case "deposit":
+      return {
+        typeName: i18n.t("ordersPage.depositStatus"),
+        amountEffect: 0,
         cashFlowEffect: 1,
       };
     default:
@@ -43,7 +55,7 @@ interface TradeDetails {
   tradeAmount?: number;
 }
 
-export const useTrade = (
+export const useLocalTradeOrders = (
   type: TradeType,
   callback: () => void,
   tradeDetails: TradeDetails

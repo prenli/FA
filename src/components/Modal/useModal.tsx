@@ -6,7 +6,7 @@ export const useModal = <TInitialData,>() => {
   const modalInitialFocusRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const onOpen = useCallback((initialData: TInitialData) => {
+  const onOpen = useCallback((initialData?: TInitialData) => {
     if (initialData) {
       modalInitialDataRef.current = initialData;
     }
