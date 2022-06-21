@@ -10,7 +10,7 @@ import {
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { usePortfolioSelect } from "hooks/usePortfolioSelect";
 import { Slide, toast } from "react-toastify";
-import { useTrade } from "../useTrade";
+import { useLocalTradeOrders } from "../../../hooks/useLocalTradeOrders";
 
 export interface BuyModalInitialData {
   holdingId?: string | number;
@@ -43,7 +43,7 @@ export const BuyModalContent = ({
 
   const [tradeAmount, setTradeAmount] = useState(0);
 
-  const handleBuy = useTrade("buy", onClose, {
+  const handleBuy = useLocalTradeOrders("buy", onClose, {
     portfolio: portfolioOptions.find(
       (portfolio) => portfolio.id === portfolioId
     ),

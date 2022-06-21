@@ -2,6 +2,7 @@ import { MutableRefObject, useState } from "react";
 import { Select, Input, Button } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { usePortfolioSelect } from "hooks/usePortfolioSelect";
+import { useLocalTradeOrders } from "../../../hooks/useLocalTradeOrders";
 import { CashAccountSelect } from "../components/CashAccountSelect";
 import { usePortfoliosAccountsState } from "../usePortfoliosAccountsState";
 
@@ -16,6 +17,7 @@ export const WithdrawModalContent = ({
 }: WithdrawModalProps) => {
   const { t } = useModifiedTranslation();
   const portfolioSelectProps = usePortfolioSelect();
+  const { portfolioId, portfolioOptions } = portfolioSelectProps;
 
   const {
     accountsLoading,
@@ -25,7 +27,7 @@ export const WithdrawModalContent = ({
     ...cashAccountSelectProps
   } = usePortfoliosAccountsState(portfolioSelectProps.portfolioId);
   const {
-    currentCashAccount: { availableBalance = 0, currency = "EUR" } = {},
+    currentCashAccount: { availableBalance = 0, currency = "EUR", label } = {},
   } = cashAccountSelectProps;
 
   const [amount, setAmount] = useState(0);
@@ -33,9 +35,14 @@ export const WithdrawModalContent = ({
   const isAmountCorrect =
     !isNaN(availableBalance) && amount >= 0 && amount <= availableBalance;
 
-  const handleWithdraw = () => {
-    return;
-  };
+  const handleWithdraw = useLocalTradeOrders("withdrawal", onClose, {
+    portfolio: portfolioOptions.find(
+      (portfolio) => portfolio.id === portfolioId
+    ),
+    securityName: label,
+    currency,
+    tradeAmount: amount,
+  });
 
   return (
     <div className="grid gap-2 min-w-[min(84vw,_375px)]">

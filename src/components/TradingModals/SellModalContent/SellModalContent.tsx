@@ -12,7 +12,7 @@ import {
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { usePortfolioSelect } from "hooks/usePortfolioSelect";
 import { Slide, toast } from "react-toastify";
-import { useTrade } from "../useTrade";
+import { useLocalTradeOrders } from "../../../hooks/useLocalTradeOrders";
 import { useTradeAmountInput } from "./useTradeAmountInput";
 
 export interface SellModalInitialData {
@@ -59,7 +59,7 @@ export const SellModalContent = ({
     onInputModeChange,
   } = useTradeAmountInput(marketValue, currency);
 
-  const handleSell = useTrade("sell", onClose, {
+  const handleSell = useLocalTradeOrders("sell", onClose, {
     portfolio: portfolioOptions.find(
       (portfolio) => portfolio.id === portfolioId
     ),

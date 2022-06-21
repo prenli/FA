@@ -73,6 +73,10 @@
     "open": "Open",
     "accepted": "Accepted",
     "cancelled": "Cancelled",
+    "buyStatus": "Buy",
+    "sellStatus": "Sell",
+    "depositStatus": "Deposit",
+    "withdrawStatus": "Withdrawal",
     "downloadFileButtonLabel": "Download order note"
   },
   "transactionsPage": {
@@ -155,10 +159,8 @@
     "tradeAmountInputLabel": "Enter trade amount in {{currency}}",
     "buyModalHeader": "Buy",
     "buyButtonLabel": "Buy",
-    "buyStatus": "Buy",
     "sellModalHeader": "Sell",
     "sellButtonLabel": "Sell",
-    "sellStatus": "Sell",
     "kiid": "KIID",
     "buyDisclaimer": "Past performance is not a guide to future performance. When investing in financial instruments, the investor may lose all or part of the investments.",
     "queryErrorWarning": "Server error occurred"
