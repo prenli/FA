@@ -10,6 +10,7 @@ import { keycloakService } from "services/keycloakService";
 import { useModifiedTranslation } from "../../hooks/useModifiedTranslation";
 import { useModal } from "../Modal/useModal";
 import { DepositModalContent } from "../MoneyModals/DepositModalContent/DepositModalContent";
+import { WithdrawModalContent } from "../MoneyModals/WithdrawModalContent/WithdrawModalContent";
 
 interface MenuActions {
   logout: () => void;
@@ -45,10 +46,16 @@ export const UserMenu = () => {
     contentProps: depositModalContentProps,
   } = useModal();
 
+  const {
+    onOpen: onWithdrawModalOpen,
+    modalProps: withdrawModalProps,
+    contentProps: withdrawModalContentProps,
+  } = useModal();
+
   const menuActions = {
     logout: () => keycloakService.onAuthLogout(),
     deposit: () => onDepositModalOpen(),
-    withdraw: () => null,
+    withdraw: () => onWithdrawModalOpen(),
   };
 
   return (
@@ -77,6 +84,12 @@ export const UserMenu = () => {
       </Menu>
       <Modal {...depositModalProps} header={t("moneyModal.depositModalHeader")}>
         <DepositModalContent {...depositModalContentProps} />
+      </Modal>
+      <Modal
+        {...withdrawModalProps}
+        header={t("moneyModal.withdrawModalHeader")}
+      >
+        <WithdrawModalContent {...withdrawModalContentProps} />
       </Modal>
     </>
   );

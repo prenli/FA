@@ -1,19 +1,19 @@
 import { MutableRefObject, useState } from "react";
-import { Input, Button } from "components";
+import { Select, Input, Button } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { usePortfolioSelect } from "hooks/usePortfolioSelect";
 import { CashAccountSelect } from "../components/CashAccountSelect";
 import { usePortfoliosAccountsState } from "../usePortfoliosAccountsState";
 
-interface DepositModalProps {
+interface WithdrawModalProps {
   modalInitialFocusRef: MutableRefObject<null>;
   onClose: () => void;
 }
 
-export const DepositModalContent = ({
+export const WithdrawModalContent = ({
   onClose,
   modalInitialFocusRef,
-}: DepositModalProps) => {
+}: WithdrawModalProps) => {
   const { t } = useModifiedTranslation();
   const portfolioSelectProps = usePortfolioSelect();
 
@@ -30,9 +30,10 @@ export const DepositModalContent = ({
 
   const [amount, setAmount] = useState(0);
 
-  const isAmountCorrect = !isNaN(availableBalance) && amount >= 0;
+  const isAmountCorrect =
+    !isNaN(availableBalance) && amount >= 0 && amount <= availableBalance;
 
-  const handleDeposit = () => {
+  const handleWithdraw = () => {
     return;
   };
 
@@ -42,7 +43,19 @@ export const DepositModalContent = ({
         {...cashAccountSelectProps}
         {...portfolioSelectProps}
       />
-      <hr className="mb-2" />
+      <hr />
+      {currentExternalAccount ? (
+        <Select
+          value={currentExternalAccount}
+          onChange={setCurrentExternalAccount}
+          options={externalAccounts}
+          label={t("moneyModal.toAccount")}
+        />
+      ) : (
+        <div className="my-2 text-sm text-red-600">
+          {t("moneyModal.missingExternalAccountMessage")}
+        </div>
+      )}
       <div className="flex flex-col gap-4 items-stretch ">
         <Input
           ref={modalInitialFocusRef}
@@ -50,8 +63,8 @@ export const DepositModalContent = ({
           onChange={(event) => {
             setAmount(Number(event.currentTarget.value));
           }}
-          label={t("moneyModal.depositAmountInputLabel", {
-            currency: currency,
+          label={t("moneyModal.withdrawAmountInputLabel", {
+            currency,
           })}
           type="number"
           error={
@@ -61,15 +74,20 @@ export const DepositModalContent = ({
           }
         />
         <Button
-          disabled={amount === 0 || accountsLoading || !isAmountCorrect}
-          onClick={handleDeposit}
+          disabled={
+            amount === 0 ||
+            accountsLoading ||
+            !isAmountCorrect ||
+            !currentExternalAccount
+          }
+          onClick={handleWithdraw}
         >
-          {t("moneyModal.depositButtonLabel")}
+          {t("moneyModal.withdrawButtonLabel")}
         </Button>
       </div>
       <hr className="my-1" />
       <div className="text-xs text-center text-gray-600 max-w-[375px]">
-        {t("moneyModal.depositDisclaimer")}
+        {t("moneyModal.withdrawDisclaimer")}
       </div>
     </div>
   );

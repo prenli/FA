@@ -130,13 +130,19 @@
   },
   "moneyModal": {
     "depositModalHeader": "Deposit",
+    "withdrawModalHeader": "Withdrawal",
     "toAccount": "To account",
+    "fromAccount": "From account",
     "currentBalance": "Current balance",
     "availableBalance": "Available balance",
-    "amountInputLabel": "Enter deposit amount in {{currency}}",
+    "depositAmountInputLabel": "Enter deposit amount in {{currency}}",
+    "withdrawAmountInputLabel": "Enter withdraw amount in {{currency}}",
     "amountInputError": "Entered value is not correct",
     "depositButtonLabel": "Deposit",
+    "withdrawButtonLabel": "Withdraw",
+    "missingExternalAccountMessage": "You don't have any External accounts defined",
     "depositDisclaimer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur ullamcorper ipsum vitae accumsan. Ut pulvinar erat non felis porta bibendum.",
+    "withdrawDisclaimer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur ullamcorper ipsum vitae accumsan. Ut pulvinar erat non felis porta bibendum.",
     "portfolio": "Portfolio"
   },
   "tradingModal": {
