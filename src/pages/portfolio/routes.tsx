@@ -4,6 +4,7 @@ import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
 import { NavTabLayout } from "layouts/NavTabLayout/NavTabLayout";
 import { PortfolioNavigationHeaderLayout } from "layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
 import { Navigate } from "react-router-dom";
+import { canTrade } from "../../services/permissions/CanTrade";
 
 const Overview = lazy(() =>
   import("./overview").then((module) => ({ default: module.OverviewPage }))
@@ -75,12 +76,16 @@ export const portfolioTabRoutes: NavTabPath[] = [
     tabComponent: <Documents />,
     element: null,
   },
-  {
-    path: "trading",
-    tabLabel: <TranslationText translationKey="navTab.tabs.trading" />,
-    tabComponent: <Trading />,
-    element: null,
-  },
+  ...(canTrade
+    ? [
+        {
+          path: "trading",
+          tabLabel: <TranslationText translationKey="navTab.tabs.trading" />,
+          tabComponent: <Trading />,
+          element: null,
+        },
+      ]
+    : []),
   {
     path: "contact",
     tabLabel: <TranslationText translationKey="navTab.tabs.contact" />,

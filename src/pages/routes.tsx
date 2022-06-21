@@ -6,6 +6,7 @@ import { useRoutes, Navigate } from "react-router-dom";
 import { NotFoundView } from "views/notFoundView/notFoundView";
 import { NavTabLayout } from "../layouts/NavTabLayout/NavTabLayout";
 import { PortfolioNavigationHeaderLayout } from "../layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
+import { canTrade } from "../services/permissions/CanTrade";
 import { portfolioRoutes } from "./portfolio/routes";
 
 const Overview = lazy(() =>
@@ -78,12 +79,16 @@ export const mainTabRoutes: NavTabPath[] = [
     tabComponent: <Documents />,
     element: null,
   },
-  {
-    path: "trading",
-    tabLabel: <TranslationText translationKey="navTab.tabs.trading" />,
-    tabComponent: <Trading />,
-    element: null,
-  },
+  ...(canTrade
+    ? [
+        {
+          path: "trading",
+          tabLabel: <TranslationText translationKey="navTab.tabs.trading" />,
+          tabComponent: <Trading />,
+          element: null,
+        },
+      ]
+    : []),
   {
     path: "contact",
     tabLabel: <TranslationText translationKey="navTab.tabs.contact" />,
