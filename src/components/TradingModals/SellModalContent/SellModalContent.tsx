@@ -65,7 +65,7 @@ export const SellModalContent = ({
     ),
     securityName,
     currency,
-    tradeAmount,
+    amount: tradeAmount,
   });
 
   if (error) {

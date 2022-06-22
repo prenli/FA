@@ -37,17 +37,18 @@ export const TradableSecuritiesListBase = ({
   );
 };
 
-const TradableSecurityBase = ({
-  id,
-  name,
-  isinCode,
-  latestMarketData,
-  currency: { securityCode: currency },
-  url,
-  url2,
-  onBuyModalOpen,
-  country,
-}: TradableSecuritySized) => {
+const TradableSecurityBase = (security: TradableSecuritySized) => {
+  const {
+    id,
+    name,
+    isinCode,
+    latestMarketData,
+    currency: { securityCode: currency },
+    url,
+    url2,
+    onBuyModalOpen,
+    country,
+  } = security;
   const { t } = useModifiedTranslation();
   const navigate = useNavigate();
   const [expanded, toggleExpanded] = useReducer((state) => !state, false);
@@ -129,9 +130,7 @@ const TradableSecurityBase = ({
             <Button
               isFullWidth
               size="md"
-              onClick={() =>
-                onBuyModalOpen({ holdingId: id, securityName: name, url2 })
-              }
+              onClick={() => onBuyModalOpen(security)}
             >
               {t("tradingList.buyButton")}
             </Button>

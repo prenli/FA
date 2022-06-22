@@ -1,10 +1,16 @@
 import { useReducer } from "react";
 import { gql, useQuery } from "@apollo/client";
 import { Option } from "../../components/Select/Select";
+import { SecurityTypeCode } from "../holdings/types";
+import { useGetContactInfo } from "../initial/useGetContactInfo";
 import { getFetchPolicyOptions } from "../utils";
 
 const TRADABLE_SECURITIES_QUERY = gql`
-  query GetTradableSecurities($countryCode: String, $securityType: String) {
+  query GetTradableSecurities(
+    $currency: String
+    $countryCode: String
+    $securityType: String
+  ) {
     securities(
       tags: "Tradeable"
       countryCode: $countryCode
@@ -13,6 +19,7 @@ const TRADABLE_SECURITIES_QUERY = gql`
       id
       name
       isinCode
+      securityCode
       url
       url2
       country {
@@ -34,6 +41,7 @@ const TRADABLE_SECURITIES_QUERY = gql`
         id
         securityCode
       }
+      fxRate(quoteCurrency: $currency)
     }
   }
 `;
@@ -41,6 +49,7 @@ const TRADABLE_SECURITIES_QUERY = gql`
 export interface TradableSecurity {
   id: number;
   name: string;
+  securityCode: string;
   isinCode: string;
   url: string;
   url2: string;
@@ -56,9 +65,10 @@ export interface TradableSecurity {
     name: string;
   };
   type?: {
-    code: string;
+    code: SecurityTypeCode;
     name: string;
   };
+  fxRate: number;
 }
 
 export interface TradableSecuritiesQuery {
@@ -132,6 +142,8 @@ const filtersOptions = {
 };
 
 export const useGetTradebleSecurities = () => {
+  const { data: { portfoliosCurrency } = { portfoliosCurrency: "EUR" } } =
+    useGetContactInfo();
   const [filters, setFilters] = useReducer(filtersReducer, initialFilters);
 
   const { loading, error, data } = useQuery<TradableSecuritiesQuery>(
@@ -140,6 +152,7 @@ export const useGetTradebleSecurities = () => {
       variables: {
         countryCode: filters.country.id,
         securityType: filters.type.id,
+        currency: portfoliosCurrency,
       },
       ...getFetchPolicyOptions(
         `useGetTradebleSecurities.${filters.country.id}.${filters.type.id}`

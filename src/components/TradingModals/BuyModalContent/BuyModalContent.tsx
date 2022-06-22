@@ -1,4 +1,5 @@
 import { MutableRefObject, useState } from "react";
+import { SecurityTypeCode } from "api/holdings/types";
 import { useGetBuyData } from "api/trading/useGetBuyData";
 import {
   PortfolioSelect,
@@ -7,15 +8,22 @@ import {
   Input,
   LabeledDiv,
 } from "components/index";
+import { useLocalTradeOrders } from "hooks/useLocalTradeOrders";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { usePortfolioSelect } from "hooks/usePortfolioSelect";
 import { Slide, toast } from "react-toastify";
-import { useLocalTradeOrders } from "../../../hooks/useLocalTradeOrders";
 
 export interface BuyModalInitialData {
-  holdingId?: string | number;
-  securityName?: string;
+  name?: string;
   url2?: string;
+  securityCode?: string;
+  type?: {
+    code: SecurityTypeCode;
+  };
+  latestMarketData?: {
+    price: number;
+  };
+  fxRate: number;
 }
 
 interface BuyModalProps extends BuyModalInitialData {
@@ -25,10 +33,28 @@ interface BuyModalProps extends BuyModalInitialData {
 
 const BUY_MODAL_ERROR_TOAST_ID = "BUY_MODAL_ERROR_TOAST_ID";
 
+// buying non-Collective investment should be defined in units instead of trade amount
+const isTransactionAmountDefinedAsUnits = (
+  securityType: SecurityTypeCode | undefined
+) => securityType !== "C";
+
+const getTradeAmount = (
+  amount: number,
+  securityType: SecurityTypeCode | undefined,
+  price = 1,
+  fxRate = 1
+) =>
+  isTransactionAmountDefinedAsUnits(securityType)
+    ? amount * price * fxRate
+    : amount;
+
 export const BuyModalContent = ({
-  holdingId,
-  securityName,
+  name: securityName,
   url2,
+  securityCode,
+  type,
+  latestMarketData,
+  fxRate,
   modalInitialFocusRef,
   onClose,
 }: BuyModalProps) => {
@@ -41,7 +67,7 @@ export const BuyModalContent = ({
     data: { availableCash = 0, currency = "EUR" } = {},
   } = useGetBuyData(portfolioId.toString());
 
-  const [tradeAmount, setTradeAmount] = useState(0);
+  const [amount, setAmount] = useState(0);
 
   const handleBuy = useLocalTradeOrders("buy", onClose, {
     portfolio: portfolioOptions.find(
@@ -49,11 +75,11 @@ export const BuyModalContent = ({
     ),
     securityName,
     currency,
-    tradeAmount,
+    amount,
   });
 
   const isTradeAmountCorrect =
-    !isNaN(availableCash) && tradeAmount >= 0 && tradeAmount <= availableCash;
+    !isNaN(availableCash) && amount >= 0 && amount <= availableCash;
 
   if (error) {
     toast.error(t("tradingModal.queryErrorWarning"), {
@@ -97,13 +123,17 @@ export const BuyModalContent = ({
       </LabeledDiv>
       <Input
         ref={modalInitialFocusRef}
-        value={tradeAmount || ""}
+        value={amount || ""}
         onChange={(event) => {
-          setTradeAmount(Number(event.currentTarget.value));
+          setAmount(Number(event.currentTarget.value));
         }}
-        label={t("tradingModal.tradeAmountInputLabel", {
-          currency: currency,
-        })}
+        label={
+          isTransactionAmountDefinedAsUnits(type?.code)
+            ? t("tradingModal.unitsInputLabel")
+            : t("tradingModal.tradeAmountInputLabel", {
+                currency: currency,
+              })
+        }
         type="number"
         error={
           !isTradeAmountCorrect && !loading
@@ -118,12 +148,19 @@ export const BuyModalContent = ({
             {t("tradingModal.tradeAmount")}
           </div>
           {t("numberWithCurrency", {
-            value: isTradeAmountCorrect ? tradeAmount : 0,
+            value: isTradeAmountCorrect
+              ? getTradeAmount(
+                  amount,
+                  type?.code,
+                  latestMarketData?.price,
+                  fxRate
+                )
+              : 0,
             currency,
           })}
         </div>
         <Button
-          disabled={tradeAmount === 0 || loading || !isTradeAmountCorrect}
+          disabled={amount === 0 || loading || !isTradeAmountCorrect}
           onClick={handleBuy}
         >
           {t("tradingModal.buyButtonLabel")}

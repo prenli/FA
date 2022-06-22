@@ -57,17 +57,19 @@ export interface MarketHistoryDataPoint {
   date: string;
 }
 
-export type SecurityTypeType =
+export type SecurityTypeCode =
   | "STOCK"
   | "FUND"
   | "ETFs"
   | "PE"
   | "BOND"
+  | "C" // Collective investment
   | "CURRENCY";
 
 export interface SecurityDetailsPosition {
   id: number;
   name: string;
+  securityCode: string;
   isinCode: string;
   url: string;
   url2: string;
@@ -79,9 +81,10 @@ export interface SecurityDetailsPosition {
     date: string;
   };
   type: {
-    code: SecurityTypeType;
+    code: SecurityTypeCode;
     namesAsMap: Record<string, string>;
   };
+  fxRate: number;
 }
 
 export interface SecurityDetailsQuery {

@@ -1,8 +1,6 @@
 {
   "number": "{{value, number}}",
   "numberRounded": "{{value, number(maximumFractionDigits: 0)}}",
-  "numberWithCurrency": "{{value, currency(currency: currency )}}",
-  "numberWithCurrencyRounded": "{{value, currency(maximumFractionDigits: 0; currency: currency )}}",
   "date": "{{date, datetime(day: 2-digit; month: 2-digit; year: numeric)}}",
   "dateCustom": "{{date, datetime}}",
   "component": {
@@ -73,6 +71,10 @@
     "open": "Open",
     "accepted": "Accepted",
     "cancelled": "Cancelled",
+    "buyStatus": "Buy",
+    "sellStatus": "Sell",
+    "depositStatus": "Deposit",
+    "withdrawStatus": "Withdrawal",
     "downloadFileButtonLabel": "Download order note"
   },
   "transactionsPage": {
@@ -153,12 +155,11 @@
     "tradeAmount": "Total trade amount",
     "tradeAmountInputError": "Entered value is not correct",
     "tradeAmountInputLabel": "Enter trade amount in {{currency}}",
+    "unitsInputLabel": "Enter number of units",
     "buyModalHeader": "Buy",
     "buyButtonLabel": "Buy",
-    "buyStatus": "Buy",
     "sellModalHeader": "Sell",
     "sellButtonLabel": "Sell",
-    "sellStatus": "Sell",
     "kiid": "KIID",
     "buyDisclaimer": "Past performance is not a guide to future performance. When investing in financial instruments, the investor may lose all or part of the investments.",
     "queryErrorWarning": "Server error occurred"

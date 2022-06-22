@@ -38,17 +38,18 @@ export const TradableSecuritiesListSm = ({
   );
 };
 
-const TradableSecurityMd = ({
-  id,
-  name,
-  currency: { securityCode: currency },
-  url,
-  url2,
-  isinCode,
-  onBuyModalOpen,
-  country,
-  latestMarketData,
-}: TradableSecuritySized) => {
+const TradableSecurityMd = (security: TradableSecuritySized) => {
+  const {
+    id,
+    name,
+    currency: { securityCode: currency },
+    url,
+    url2,
+    isinCode,
+    onBuyModalOpen,
+    country,
+    latestMarketData,
+  } = security;
   const { t } = useModifiedTranslation();
   const navigate = useNavigate();
   const [expanded, toggleExpanded] = useReducer((state) => !state, false);
@@ -115,12 +116,7 @@ const TradableSecurityMd = ({
             </Button>
           </div>
           <div className="text-right">
-            <Button
-              size="md"
-              onClick={() =>
-                onBuyModalOpen({ holdingId: id, securityName: name, url2 })
-              }
-            >
+            <Button size="md" onClick={() => onBuyModalOpen(security)}>
               {t("tradingList.buyButton")}
             </Button>
           </div>

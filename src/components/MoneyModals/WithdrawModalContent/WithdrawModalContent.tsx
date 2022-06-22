@@ -41,7 +41,7 @@ export const WithdrawModalContent = ({
     ),
     securityName: label,
     currency,
-    tradeAmount: amount,
+    amount: amount,
   });
 
   return (

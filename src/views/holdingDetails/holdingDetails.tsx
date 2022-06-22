@@ -32,19 +32,17 @@ interface HoldingDetailsProps {
 }
 
 export const HoldingDetails = ({
-  data: {
-    security: {
-      name,
-      isinCode,
-      type: { namesAsMap, code: typeCode },
-      latestMarketData,
-      currency: { securityCode: currency },
-      url,
-      url2,
-    },
-    holding,
-  },
+  data: { security, holding },
 }: HoldingDetailsProps) => {
+  const {
+    name,
+    isinCode,
+    type: { namesAsMap, code: typeCode },
+    latestMarketData,
+    currency: { securityCode: currency },
+    url,
+    url2,
+  } = security;
   const navigate = useNavigate();
   const { holdingId } = useParams();
   const { i18n, t } = useModifiedTranslation();
@@ -126,9 +124,7 @@ export const HoldingDetails = ({
                 <div className="grid grid-flow-col gap-2">
                   <Button
                     LeftIcon={PlusCircle}
-                    onClick={() =>
-                      onBuyModalOpen({ holdingId, securityName: name, url2 })
-                    }
+                    onClick={() => onBuyModalOpen(security)}
                   >
                     {t("holdingsPage.buy")}
                   </Button>

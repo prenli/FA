@@ -52,7 +52,7 @@ interface TradeDetails {
   };
   securityName?: string;
   currency?: string;
-  tradeAmount?: number;
+  amount?: number;
 }
 
 export const useLocalTradeOrders = (
@@ -62,13 +62,13 @@ export const useLocalTradeOrders = (
 ) => {
   const { placeOrder } = useTradingState();
 
-  const { portfolio, securityName, tradeAmount, currency } = tradeDetails;
+  const { portfolio, securityName, amount, currency } = tradeDetails;
 
   return async () => {
     if (
       portfolio == null ||
       securityName == null ||
-      tradeAmount == null ||
+      amount == null ||
       currency == null
     ) {
       return;
@@ -79,7 +79,7 @@ export const useLocalTradeOrders = (
       securityName: securityName,
       type: getOrderType(type),
       transactionDate: dateToYYYYMMDD(new Date()),
-      tradeAmountInPortfolioCurrency: tradeAmount,
+      tradeAmountInPortfolioCurrency: amount,
       parentPortfolio: {
         id: portfolio.id,
         name: portfolio.label,

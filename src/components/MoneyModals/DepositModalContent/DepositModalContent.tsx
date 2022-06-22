@@ -40,7 +40,7 @@ export const DepositModalContent = ({
     ),
     securityName: label,
     currency,
-    tradeAmount: amount,
+    amount: amount,
   });
 
   return (

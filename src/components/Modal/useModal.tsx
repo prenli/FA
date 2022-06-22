@@ -28,8 +28,8 @@ export const useModal = <TInitialData,>() => {
     },
     contentProps: {
       modalInitialFocusRef,
-      ...modalInitialDataRef.current,
       onClose,
+      ...(modalInitialDataRef.current as TInitialData),
     },
   };
 };
