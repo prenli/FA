@@ -17,7 +17,7 @@ export interface TradeOrder {
   securityName: string;
   type: TradeOrderType;
   transactionDate: string;
-  tradeAmountInPortfolioCurrency: number;
+  tradeAmountInPortfolioCurrency?: number;
   parentPortfolio: {
     id: number;
     name: string;
@@ -25,6 +25,7 @@ export interface TradeOrder {
       securityCode: string;
     };
   };
+  reference?: string;
 }
 
 export interface AllTradeOrdersQuery {

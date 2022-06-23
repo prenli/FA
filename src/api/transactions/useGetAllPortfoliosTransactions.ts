@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
-import { getFetchPolicyOptions } from "api/utils";
 import { useKeycloak } from "providers/KeycloakProvider";
 import { toShortISOString, startOfMonth } from "utils/date";
 import { TRANSACTION_FIELDS } from "./fragments";
@@ -46,9 +45,7 @@ export const useGetAllPortfoliosTransactions = () => {
         endDate: toShortISOString(endDate),
         contactId: linkedContact,
       },
-      ...getFetchPolicyOptions(
-        `useGetAllPortfoliosTransactions.${linkedContact}.${startDate}.${endDate}`
-      ),
+      fetchPolicy: "cache-and-network",
     }
   );
 

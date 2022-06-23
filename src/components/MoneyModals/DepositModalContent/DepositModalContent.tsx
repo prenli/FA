@@ -34,14 +34,15 @@ export const DepositModalContent = ({
 
   const isAmountCorrect = !isNaN(availableBalance) && amount >= 0;
 
-  const handleDeposit = useLocalTradeOrders("deposit", onClose, {
-    portfolio: portfolioOptions.find(
-      (portfolio) => portfolio.id === portfolioId
-    ),
-    securityName: label,
-    currency,
-    amount: amount,
-  });
+  const handleDeposit = () => null;
+  // const handleDeposit = useLocalTradeOrders("deposit", onClose, {
+  //   portfolio: portfolioOptions.find(
+  //     (portfolio) => portfolio.id === portfolioId
+  //   ),
+  //   securityName: label,
+  //   currency,
+  //   amount: amount,
+  // });
 
   return (
     <div className="grid gap-2 min-w-[min(84vw,_375px)]">

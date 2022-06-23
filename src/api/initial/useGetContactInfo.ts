@@ -13,6 +13,7 @@ const CONTACT_INFO_QUERY = gql`
       portfolios {
         id
         name
+        shortName
         currency {
           securityCode
         }
@@ -30,6 +31,7 @@ export interface ContactInfoQuery {
     portfolios?: {
       id: number;
       name: string;
+      shortName: string;
       currency: {
         securityCode: string;
       };

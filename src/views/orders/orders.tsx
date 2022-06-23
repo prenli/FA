@@ -3,7 +3,7 @@ import { TradeOrder } from "api/orders/types";
 import { QueryData } from "api/types";
 import { Card, DatePicker, QueryLoadingWrapper } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { LocalOrder } from "hooks/useTradingState";
+import { LocalOrder } from "hooks/useTradingStorage";
 import { OrdersContainer } from "./components/OrdersContainer";
 
 interface OrdersProps extends QueryData<(TradeOrder | LocalOrder)[]> {

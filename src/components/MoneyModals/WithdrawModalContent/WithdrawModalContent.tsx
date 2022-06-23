@@ -35,14 +35,15 @@ export const WithdrawModalContent = ({
   const isAmountCorrect =
     !isNaN(availableBalance) && amount >= 0 && amount <= availableBalance;
 
-  const handleWithdraw = useLocalTradeOrders("withdrawal", onClose, {
-    portfolio: portfolioOptions.find(
-      (portfolio) => portfolio.id === portfolioId
-    ),
-    securityName: label,
-    currency,
-    amount: amount,
-  });
+  const handleWithdraw = () => null;
+  // const handleWithdraw = useLocalTradeOrders("withdrawal", onClose, {
+  //   portfolio: portfolioOptions.find(
+  //     (portfolio) => portfolio.id === portfolioId
+  //   ),
+  //   securityName: label,
+  //   currency,
+  //   amount: amount,
+  // });
 
   return (
     <div className="grid gap-2 min-w-[min(84vw,_375px)]">

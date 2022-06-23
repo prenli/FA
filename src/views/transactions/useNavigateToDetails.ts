@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { LocalTradeOrderId } from "../../hooks/useTradingState";
+import { LocalTradeOrderId } from "../../hooks/useTradingStorage";
 import {
   getNavigationPath,
   TransactionType,

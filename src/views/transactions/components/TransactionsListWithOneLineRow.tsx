@@ -8,7 +8,7 @@ import {
   getNameFromBackendTranslations,
   getTransactionColor,
 } from "utils/transactions";
-import { isLocalOrder } from "../../../hooks/useTradingState";
+import { isLocalOrder } from "../../../hooks/useTradingStorage";
 import { useNavigateToDetails } from "../useNavigateToDetails";
 import { TransactionProps, TransactionsListProps } from "./TransactionsGroup";
 
@@ -57,7 +57,7 @@ export const TransactionsListWithOneLineRow = ({
         <Transaction
           {...transaction}
           key={
-            isLocalOrder(transaction) ? transaction.referenceId : transaction.id
+            isLocalOrder(transaction) ? transaction.reference : transaction.id
           }
           showPortfolioLabel={showPortfolioLabel}
           onClick={() => navigate(transaction.id)}
@@ -68,7 +68,6 @@ export const TransactionsListWithOneLineRow = ({
 };
 
 const Transaction = ({
-  id,
   transactionDate,
   amount,
   type: { typeName, cashFlowEffect, amountEffect, typeNamesAsMap },

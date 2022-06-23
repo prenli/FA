@@ -1,6 +1,8 @@
 import { MutableRefObject, useState } from "react";
 import { SecurityTypeCode } from "api/holdings/types";
+import { useGetContactInfo } from "api/initial/useGetContactInfo";
 import { useGetBuyData } from "api/trading/useGetBuyData";
+import { useTrade } from "api/trading/useTrade";
 import {
   PortfolioSelect,
   DownloadableDocument,
@@ -8,15 +10,17 @@ import {
   Input,
   LabeledDiv,
 } from "components/index";
-import { useLocalTradeOrders } from "hooks/useLocalTradeOrders";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { usePortfolioSelect } from "hooks/usePortfolioSelect";
-import { Slide, toast } from "react-toastify";
+import { Slide, toast, ToastContainer } from "react-toastify";
 
 export interface BuyModalInitialData {
-  name?: string;
+  name: string;
   url2?: string;
-  securityCode?: string;
+  currency: {
+    securityCode: string;
+  };
+  securityCode: string;
   type?: {
     code: SecurityTypeCode;
   };
@@ -31,12 +35,13 @@ interface BuyModalProps extends BuyModalInitialData {
   onClose: () => void;
 }
 
-const BUY_MODAL_ERROR_TOAST_ID = "BUY_MODAL_ERROR_TOAST_ID";
-
 // buying non-Collective investment should be defined in units instead of trade amount
 const isTransactionAmountDefinedAsUnits = (
   securityType: SecurityTypeCode | undefined
 ) => securityType !== "C";
+
+const getTradeType = (securityType: SecurityTypeCode | undefined) =>
+  isTransactionAmountDefinedAsUnits(securityType) ? "buy" : "subscription";
 
 const getTradeAmount = (
   amount: number,
@@ -48,49 +53,51 @@ const getTradeAmount = (
     ? amount * price * fxRate
     : amount;
 
+const getTradeAmountArgs = (
+  amount: number,
+  securityType: SecurityTypeCode | undefined
+) =>
+  isTransactionAmountDefinedAsUnits(securityType)
+    ? { units: amount }
+    : { tradeAmount: amount };
+
 export const BuyModalContent = ({
-  name: securityName,
-  url2,
-  securityCode,
-  type,
-  latestMarketData,
-  fxRate,
   modalInitialFocusRef,
   onClose,
+  ...security
 }: BuyModalProps) => {
+  const {
+    name: securityName,
+    url2,
+    type: { code: securityType } = {},
+    latestMarketData,
+    fxRate,
+  } = security;
   const { t } = useModifiedTranslation();
+  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
   const { portfolioId, setPortfolioId, portfolioOptions } =
     usePortfolioSelect();
   const {
     loading,
     error,
-    data: { availableCash = 0, currency = "EUR" } = {},
+    data: { availableCash = 0, currency: portfolioCurrency = "EUR" } = {},
   } = useGetBuyData(portfolioId.toString());
 
   const [amount, setAmount] = useState(0);
 
-  const handleBuy = useLocalTradeOrders("buy", onClose, {
-    portfolio: portfolioOptions.find(
-      (portfolio) => portfolio.id === portfolioId
-    ),
+  const { handleTrade: handleBuy, submitting } = useTrade({
+    tradeType: getTradeType(securityType),
+    portfolio:
+      portfolios.find((portfolio) => portfolio.id === portfolioId) ||
+      portfolios[0],
     securityName,
-    currency,
-    amount,
+    ...getTradeAmountArgs(amount, securityType),
+    ...security,
+    currency: security.currency.securityCode,
   });
 
   const isTradeAmountCorrect =
     !isNaN(availableCash) && amount >= 0 && amount <= availableCash;
-
-  if (error) {
-    toast.error(t("tradingModal.queryErrorWarning"), {
-      toastId: BUY_MODAL_ERROR_TOAST_ID,
-      position: toast.POSITION.BOTTOM_CENTER,
-      hideProgressBar: true,
-      theme: "colored",
-      transition: Slide,
-      autoClose: false,
-    });
-  }
 
   return (
     <div className="grid gap-2 min-w-[min(84vw,_375px)]">
@@ -115,10 +122,10 @@ export const BuyModalContent = ({
         label={t("tradingModal.availableCash")}
         className="text-xl font-semibold text-gray-700"
       >
-        {currency &&
+        {portfolioCurrency &&
           t("numberWithCurrency", {
             value: availableCash,
-            currency: currency,
+            currency: portfolioCurrency,
           })}
       </LabeledDiv>
       <Input
@@ -128,10 +135,10 @@ export const BuyModalContent = ({
           setAmount(Number(event.currentTarget.value));
         }}
         label={
-          isTransactionAmountDefinedAsUnits(type?.code)
+          isTransactionAmountDefinedAsUnits(securityType)
             ? t("tradingModal.unitsInputLabel")
             : t("tradingModal.tradeAmountInputLabel", {
-                currency: currency,
+                currency: portfolioCurrency,
               })
         }
         type="number"
@@ -151,17 +158,23 @@ export const BuyModalContent = ({
             value: isTradeAmountCorrect
               ? getTradeAmount(
                   amount,
-                  type?.code,
+                  securityType,
                   latestMarketData?.price,
                   fxRate
                 )
               : 0,
-            currency,
+            currency: portfolioCurrency,
           })}
         </div>
         <Button
           disabled={amount === 0 || loading || !isTradeAmountCorrect}
-          onClick={handleBuy}
+          isLoading={submitting}
+          onClick={async () => {
+            const response = await handleBuy();
+            if (response) {
+              onClose();
+            }
+          }}
         >
           {t("tradingModal.buyButtonLabel")}
         </Button>
@@ -170,6 +183,17 @@ export const BuyModalContent = ({
       <div className="text-xs text-center text-gray-600 max-w-[375px]">
         {t("tradingModal.buyDisclaimer")}
       </div>
+      {error && (
+        <ToastContainer
+          position={toast.POSITION.BOTTOM_CENTER}
+          hideProgressBar
+          theme="colored"
+          transition={Slide}
+          autoClose={false}
+        >
+          {t("tradingModal.queryErrorWarning")}
+        </ToastContainer>
+      )}
     </div>
   );
 };
