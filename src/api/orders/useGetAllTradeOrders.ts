@@ -7,7 +7,7 @@ import { AllTradeOrdersQuery } from "./types";
 
 const TRADE_ORDERS_QUERY = gql`
   ${TRADE_ORDERS_DETAILS}
-  query GetContactTradeOrders(
+  query GetAllPortfoliosTradeOrders(
     $contactId: Long
     $startDate: String
     $endDate: String

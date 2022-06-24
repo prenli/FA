@@ -7,58 +7,56 @@ import {
 import { Slide, toast } from "react-toastify";
 import { useUniqueReference } from "../../hooks/useUniqueReference";
 
-const IMPORT_TRADE_ORDER_MUTATION = gql`
-  mutation ImportTradeOrder(
-    $portfolioShortName: String
-    $transactionDate: String
-    $securityCode: String
-    $transactionTypeCode: String
-    $units: String
+const IMPORT_MONEY_TRADE_MUTATION = gql`
+  mutation ImportTransaction(
     $tradeAmount: String
     $currency: String
     $reference: String
+    $transactionDate: String
+    $transactionTypeCode: String
+    $portfolioShortName: String
+    $account: String
   ) {
-    importTradeOrder(
-      tradeOrder: {
-        parentPortfolio: $portfolioShortName
-        transactionDate: $transactionDate
-        security: $securityCode
-        type: $transactionTypeCode
-        status: "4"
-        amount: $units
-        tradeAmount: $tradeAmount
-        unitPrice: "AUTO"
-        currency: $currency
-        reference: $reference
-      }
+    importTransactions(
+      transactionList: [
+        {
+          tradeAmount: $tradeAmount
+          currency: $currency
+          reference: $reference
+          transactionDate: $transactionDate
+          type: $transactionTypeCode
+          parentPortfolio: $portfolioShortName
+          account: $account
+          status: "4"
+        }
+      ]
     )
   }
 `;
 
-interface ImportTradeOrderQueryVariables {
-  portfolioShortName: string;
-  transactionDate: Date;
-  securityCode: string;
-  transactionTypeCode: string;
+interface ImportTransactionQueryVariables {
   currency: string;
+  portfolioShortName: string;
   reference: string;
-  units?: number;
-  tradeAmount?: number;
+  account: string;
+  tradeAmount: number;
+  transactionDate: Date;
+  transactionTypeCode: string;
 }
 
 const errorStatus = "ERROR" as const;
 
-interface ImportTradeOrderQueryResponse {
-  importTradeOrder: ({
+interface ImportTransactionQueryResponse {
+  importTransactions: ({
     importStatus: "OK" | typeof errorStatus;
   } & unknown)[];
 }
 
-export type TradeType = "sell" | "buy" | "redemption" | "subscription";
+export type TradeType = "withdrawal" | "deposit";
 
-export const useTrade = (
-  newTradeOrder: Omit<
-    ImportTradeOrderQueryVariables,
+export const useMoneyTrade = (
+  newTransaction: Omit<
+    ImportTransactionQueryVariables,
     | "transactionTypeCode"
     | "transactionDate"
     | "reference"
@@ -70,10 +68,13 @@ export const useTrade = (
 ) => {
   const [submitting, setSubmitting] = useState(false);
   const [handleAPITrade] = useMutation<
-    ImportTradeOrderQueryResponse,
-    ImportTradeOrderQueryVariables
-  >(IMPORT_TRADE_ORDER_MUTATION, {
-    refetchQueries: ["GetAllPortfoliosTradeOrders", "GetPortfolioTradeOrders"],
+    ImportTransactionQueryResponse,
+    ImportTransactionQueryVariables
+  >(IMPORT_MONEY_TRADE_MUTATION, {
+    refetchQueries: [
+      "GetAllPortfoliosTransactions",
+      "GetPortfolioTransactions",
+    ],
   });
 
   const saveToLocalTradeOrders = useLocalTradeOrders();
@@ -82,15 +83,15 @@ export const useTrade = (
   const handleTrade = async () => {
     setSubmitting(true);
     try {
-      const { tradeType, portfolio } = newTradeOrder;
-      if (!portfolio) {
+      const { tradeType, portfolio, account } = newTransaction;
+      if (!portfolio || !account) {
         return;
       }
       const transactionReference = getUniqueReference();
 
       const apiResponse = await handleAPITrade({
         variables: {
-          ...newTradeOrder,
+          ...newTransaction,
           transactionDate: new Date(),
           transactionTypeCode: getTradeTypeForAPI(tradeType),
           reference: transactionReference,
@@ -101,7 +102,7 @@ export const useTrade = (
       handleBadAPIResponse(apiResponse);
 
       await saveToLocalTradeOrders({
-        ...newTradeOrder,
+        ...newTransaction,
         reference: transactionReference,
       });
 
@@ -127,18 +128,18 @@ export const useTrade = (
 
 const handleBadAPIResponse = (
   apiResponse: FetchResult<
-    ImportTradeOrderQueryResponse,
+    ImportTransactionQueryResponse,
     Record<string, unknown>,
     Record<string, unknown>
   >
 ) => {
-  if (!apiResponse.data || !apiResponse.data.importTradeOrder?.[0]) {
+  if (!apiResponse.data || !apiResponse.data.importTransactions?.[0]) {
     throw new Error("Empty response");
   }
 
-  if (apiResponse.data.importTradeOrder[0].importStatus === errorStatus) {
+  if (apiResponse.data.importTransactions[0].importStatus === errorStatus) {
     let errorMessage = "Bad request: \n";
-    Object.entries(apiResponse.data.importTradeOrder[0]).forEach(
+    Object.entries(apiResponse.data.importTransactions[0]).forEach(
       ([key, value]) => {
         if (value.includes("ERROR") && key !== "importStatus") {
           errorMessage += `${key}: ${value}; \n`;
@@ -151,20 +152,14 @@ const handleBadAPIResponse = (
 
 const getTradeTypeForAPI = (tradeType: TradeType) => {
   switch (tradeType) {
-    case "buy": {
-      return "B";
+    case "withdrawal": {
+      return "WD";
     }
-    case "sell": {
-      return "S";
-    }
-    case "subscription": {
-      return "SUB";
-    }
-    case "redemption": {
-      return "RED";
+    case "deposit": {
+      return "DEP";
     }
     default: {
-      throw new Error("Impossible API trade type");
+      throw new Error("Impossible API money trade type");
     }
   }
 };

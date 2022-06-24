@@ -6,7 +6,7 @@ import { PortfolioTransactionsQuery } from "./types";
 
 const TRANSACTIONS_QUERY = gql`
   ${TRANSACTION_FIELDS}
-  query GetTransactions(
+  query GetPortfolioTransactions(
     $startDate: String
     $endDate: String
     $portfolioId: Long

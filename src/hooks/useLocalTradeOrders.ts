@@ -1,3 +1,4 @@
+import { TradeType as MoneyTradeType } from "api/money/useMoneyTrade";
 import { TradeType as SecurityTradeType } from "api/trading/useTrade";
 import {
   LocalTradeOrderId,
@@ -8,7 +9,7 @@ import i18n from "i18next";
 import { dateToYYYYMMDD } from "utils/date";
 import { assertUnreachable } from "utils/type";
 
-export type TradeType = SecurityTradeType | "withdrawal" | "deposit";
+export type TradeType = SecurityTradeType | MoneyTradeType;
 
 const getOrderType = (type: TradeType) => {
   switch (type) {
