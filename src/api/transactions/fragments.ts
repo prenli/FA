@@ -21,6 +21,7 @@ export const TRANSACTION_FIELDS = gql`
         securityCode
       }
     }
+    reference
   }
 `;
 

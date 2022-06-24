@@ -6,13 +6,12 @@ import { Orders } from "views/orders/orders";
 export const OrdersPage = () => {
   const { portfolioId } = useParams();
   const queryData = useGetPortfolioTradeOrders(portfolioId);
-  const { getUnhandledOrdersForDateRange } = useTradingStorage();
+  const { getUnhandledOrdersForDateRange } = useTradingStorage(portfolioId);
   const { data, startDate, endDate } = queryData;
   const unhandledOrdersFromLocalStorage = getUnhandledOrdersForDateRange(
     data,
     startDate,
-    endDate,
-    portfolioId
+    endDate
   );
   const localAndAPIOrders = data && [
     ...data,

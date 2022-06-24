@@ -16,6 +16,7 @@ export interface Transaction {
       securityCode: string;
     };
   };
+  reference: string;
 }
 
 export interface PortfolioTransactionsQuery {

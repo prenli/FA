@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql, QueryHookOptions, useQuery } from "@apollo/client";
 import { startOfMonth, toShortISOString } from "utils/date";
 import { useDateRange } from "../useDateRange";
 import { TRADE_ORDERS_DETAILS } from "./fragments";
@@ -29,7 +29,10 @@ const initialRange = {
   end: now,
 };
 
-export const useGetPortfolioTradeOrders = (portfolioId: string | undefined) => {
+export const useGetPortfolioTradeOrders = (
+  portfolioId: string | undefined,
+  options?: QueryHookOptions
+) => {
   const dateRangeProps = useDateRange(initialRange);
   const { startDate, endDate } = dateRangeProps;
 
@@ -42,6 +45,7 @@ export const useGetPortfolioTradeOrders = (portfolioId: string | undefined) => {
         portfolioId,
       },
       fetchPolicy: "cache-and-network",
+      ...options,
     }
   );
 

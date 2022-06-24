@@ -4,8 +4,8 @@ import {
   LocalTradeOrderDetails,
   useLocalTradeOrders,
 } from "hooks/useLocalTradeOrders";
+import { useUniqueReference } from "hooks/useUniqueReference";
 import { Slide, toast } from "react-toastify";
-import { useUniqueReference } from "../../hooks/useUniqueReference";
 
 const IMPORT_MONEY_TRADE_MUTATION = gql`
   mutation ImportTransaction(

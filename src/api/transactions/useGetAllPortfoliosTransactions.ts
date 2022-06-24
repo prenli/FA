@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { gql, QueryHookOptions, useQuery } from "@apollo/client";
 import { useKeycloak } from "providers/KeycloakProvider";
 import { toShortISOString, startOfMonth } from "utils/date";
 import { TRANSACTION_FIELDS } from "./fragments";
@@ -27,7 +27,7 @@ const initialRange = {
   end: now,
 };
 
-export const useGetAllPortfoliosTransactions = () => {
+export const useGetAllPortfoliosTransactions = (options?: QueryHookOptions) => {
   const { linkedContact } = useKeycloak();
   const [startDate, setStartDate] = useState<Date>(initialRange.start);
   const [endDate, setEndDate] = useState<Date>(initialRange.end);
@@ -46,6 +46,7 @@ export const useGetAllPortfoliosTransactions = () => {
         contactId: linkedContact,
       },
       fetchPolicy: "cache-and-network",
+      ...options,
     }
   );
 
