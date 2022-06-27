@@ -128,10 +128,11 @@
     "error": "Something went wrong",
     "queryErrorWarning": "Server error, your data may be outdated.",
     "queryError": "Server error",
+    "noPortfoliosInfo": "You do not have any portfolios at this time",
+    "problemResolveInstructions": "Try refreshing the browser\n or contact us if the problem persists",
     "noPortfolios": "No portfolios are available",
     "noCachedData": "No cached data",
     "authorisationError": "Authorisation server error",
-    "problemResolveInstructions": "Try refreshing the browser\n or contact us if the problem persists",
     "refreshPage": "Refresh page",
     "noCachedDataInfo": "Right now we can't get data from server.\n Come back here later."
   }
