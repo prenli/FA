@@ -7,6 +7,7 @@ import {
 import { useUniqueReference } from "hooks/useUniqueReference";
 import { Slide, toast } from "react-toastify";
 
+// temporary we use importTradeOrder mutation, in the future it will be done with importTransaction
 const IMPORT_MONEY_TRADE_MUTATION = gql`
   mutation ImportTransaction(
     $tradeAmount: String
@@ -17,19 +18,17 @@ const IMPORT_MONEY_TRADE_MUTATION = gql`
     $portfolioShortName: String
     $account: String
   ) {
-    importTransactions(
-      transactionList: [
-        {
-          tradeAmount: $tradeAmount
-          currency: $currency
-          reference: $reference
-          transactionDate: $transactionDate
-          type: $transactionTypeCode
-          parentPortfolio: $portfolioShortName
-          account: $account
-          status: "4"
-        }
-      ]
+    importTradeOrder(
+      tradeOrder: {
+        tradeAmount: $tradeAmount
+        currency: $currency
+        reference: $reference
+        transactionDate: $transactionDate
+        type: $transactionTypeCode
+        parentPortfolio: $portfolioShortName
+        account: $account
+        status: "4"
+      }
     )
   }
 `;
@@ -47,7 +46,7 @@ interface ImportTransactionQueryVariables {
 const errorStatus = "ERROR" as const;
 
 interface ImportTransactionQueryResponse {
-  importTransactions: ({
+  importTradeOrder: ({
     importStatus: "OK" | typeof errorStatus;
   } & unknown)[];
 }
@@ -71,10 +70,7 @@ export const useMoneyTrade = (
     ImportTransactionQueryResponse,
     ImportTransactionQueryVariables
   >(IMPORT_MONEY_TRADE_MUTATION, {
-    refetchQueries: [
-      "GetAllPortfoliosTransactions",
-      "GetPortfolioTransactions",
-    ],
+    refetchQueries: ["GetAllPortfoliosTradeOrders", "GetPortfolioTradeOrders"],
   });
 
   const saveToLocalTradeOrders = useLocalTradeOrders();
@@ -133,13 +129,13 @@ const handleBadAPIResponse = (
     Record<string, unknown>
   >
 ) => {
-  if (!apiResponse.data || !apiResponse.data.importTransactions?.[0]) {
+  if (!apiResponse.data || !apiResponse.data.importTradeOrder?.[0]) {
     throw new Error("Empty response");
   }
 
-  if (apiResponse.data.importTransactions[0].importStatus === errorStatus) {
+  if (apiResponse.data.importTradeOrder[0].importStatus === errorStatus) {
     let errorMessage = "Bad request: \n";
-    Object.entries(apiResponse.data.importTransactions[0]).forEach(
+    Object.entries(apiResponse.data.importTradeOrder[0]).forEach(
       ([key, value]) => {
         if (value.includes("ERROR") && key !== "importStatus") {
           errorMessage += `${key}: ${value}; \n`;
