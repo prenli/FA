@@ -1,9 +1,9 @@
 import { MutableRefObject, useState } from "react";
-import { Select, Input, Button } from "components";
+import { useGetContactInfo } from "api/initial/useGetContactInfo";
+import { useMoneyTrade } from "api/money/useMoneyTrade";
+import { Input, Button } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { usePortfolioSelect } from "hooks/usePortfolioSelect";
-import { useGetContactInfo } from "../../../api/initial/useGetContactInfo";
-import { useMoneyTrade } from "../../../api/money/useMoneyTrade";
 import { CashAccountSelect } from "../components/CashAccountSelect";
 import { usePortfoliosAccountsState } from "../usePortfoliosAccountsState";
 
@@ -59,19 +59,7 @@ export const WithdrawModalContent = ({
         {...cashAccountSelectProps}
         {...portfolioSelectProps}
       />
-      <hr />
-      {currentExternalAccount ? (
-        <Select
-          value={currentExternalAccount}
-          onChange={setCurrentExternalAccount}
-          options={externalAccounts}
-          label={t("moneyModal.toAccount")}
-        />
-      ) : (
-        <div className="my-2 text-sm text-red-600">
-          {t("moneyModal.missingExternalAccountMessage")}
-        </div>
-      )}
+      <hr className="mb-2" />
       <div className="flex flex-col gap-4 items-stretch ">
         <Input
           ref={modalInitialFocusRef}

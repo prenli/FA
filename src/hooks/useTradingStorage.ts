@@ -23,7 +23,7 @@ export const LocalTradeOrderStatus = "-1";
 
 export const useTradingStorage = (portfolioId?: string) => {
   const [orders, setOrders] = useLocalStorageState<LocalOrder[]>(
-    "tradingState",
+    "tradingStorage",
     []
   );
 

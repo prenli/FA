@@ -135,10 +135,10 @@ export const SellModalContent = ({
       <div className="flex justify-between">
         <div className="flex gap-1 items-center">
           <Button size="xs" variant="Secondary" onClick={setTradeAmountToAll}>
-            Sell all
+            {t("tradingModal.sellAll")}
           </Button>
           <Button size="xs" variant="Secondary" onClick={setTradeAmountToHalf}>
-            Sell half
+            {t("tradingModal.sellHalf")}
           </Button>
         </div>
         <HorizontalRadio
