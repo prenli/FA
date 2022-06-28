@@ -60,7 +60,7 @@ export const useGetContactInfo = () => {
       locale: data.contact?.language?.locale || fallbackLanguage,
       // all contact portfolios have same currency
       portfoliosCurrency:
-        data.contact?.portfolios?.[0].currency.securityCode || "",
+        data.contact?.portfolios?.[0]?.currency.securityCode || "",
     },
   };
 };

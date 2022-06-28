@@ -28,7 +28,7 @@ export const Button = ({
     disabled={disabled || isLoading}
     type="button"
     className={classNames(
-      "box-border rounded-lg inline-flex items-center justify-center relative whitespace-nowrap align-middle",
+      "box-border rounded-lg inline-flex items-center justify-center relative whitespace-nowrap align-middle cursor-pointer",
       {
         "bg-primary-600 hover:bg-primary-800 text-white fill-white":
           variant === "Primary",

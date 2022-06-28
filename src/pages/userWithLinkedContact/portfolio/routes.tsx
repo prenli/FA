@@ -4,7 +4,7 @@ import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
 import { NavTabLayout } from "layouts/NavTabLayout/NavTabLayout";
 import { PortfolioNavigationHeaderLayout } from "layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
 import { Navigate } from "react-router-dom";
-import { canTrade } from "../../services/permissions/CanTrade";
+import { canTrade } from "services/permissions/CanTrade";
 
 const Overview = lazy(() =>
   import("./overview").then((module) => ({ default: module.OverviewPage }))

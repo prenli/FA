@@ -2,11 +2,12 @@ import { lazy } from "react";
 import { TranslationText } from "components";
 import { MainLayout } from "layouts/MainLayout/MainLayout";
 import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
-import { useRoutes, Navigate } from "react-router-dom";
+import { NavTabLayout } from "layouts/NavTabLayout/NavTabLayout";
+import { PortfolioNavigationHeaderLayout } from "layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
+import { Navigate, useRoutes } from "react-router-dom";
+import { canTrade } from "services/permissions/CanTrade";
 import { NotFoundView } from "views/notFoundView/notFoundView";
-import { NavTabLayout } from "../layouts/NavTabLayout/NavTabLayout";
-import { PortfolioNavigationHeaderLayout } from "../layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
-import { canTrade } from "../services/permissions/CanTrade";
+import { authUserMainRoutes } from "../authUser/routes";
 import { portfolioRoutes } from "./portfolio/routes";
 
 const Overview = lazy(() =>
@@ -97,7 +98,7 @@ export const mainTabRoutes: NavTabPath[] = [
   },
 ];
 
-const mainRoutes = [
+const linkedContactMainRoutes = [
   {
     path: "",
     element: <Navigate to="overview" replace />,
@@ -127,13 +128,14 @@ const mainRoutes = [
   },
 ];
 
-const rootRoutes = [
+export const userWithLinkedContactRoutes = [
   {
     path: "",
     element: <MainLayout />,
     children: [
-      ...mainRoutes,
+      ...linkedContactMainRoutes,
       ...portfolioRoutes,
+      ...authUserMainRoutes,
       {
         path: "*",
         element: <NotFoundView />,
@@ -142,4 +144,5 @@ const rootRoutes = [
   },
 ];
 
-export const RootRoutes = () => useRoutes(rootRoutes);
+export const UserWithLinkedContactRoutes = () =>
+  useRoutes(userWithLinkedContactRoutes);

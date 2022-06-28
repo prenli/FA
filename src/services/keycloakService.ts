@@ -40,17 +40,19 @@ type FAKeycloakInstance = Omit<
 
 type SubscribeFunctionType = () => void;
 
-export type KeycloakServiceStateType = {
+export interface KeycloakServiceStateType {
   initialized: boolean;
   authenticated: boolean;
   error?: boolean;
   linkedContact: string | undefined;
-};
+  userProfile: KeycloakProfile | undefined;
+}
 
 export const keycloakServiceInitialState = {
   initialized: false,
   authenticated: false,
   linkedContact: undefined,
+  userProfile: undefined,
 };
 
 class KeycloakService {
@@ -160,12 +162,17 @@ class KeycloakService {
         this.state = {
           ...this.state,
           linkedContact: linkedContact,
+          userProfile: profile,
         };
       }
     }
   }
 
   getLinkedContactFromProfile(profile: FAKeycloakProfile) {
+    return profile?.attributes?.linked_contact?.[0];
+  }
+
+  getUserProfile(profile: FAKeycloakProfile) {
     return profile?.attributes?.linked_contact?.[0];
   }
 
