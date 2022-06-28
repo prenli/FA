@@ -10,6 +10,9 @@
       "placeholder": "Please select"
     }
   },
+  "userMenu": {
+    "logout": "Logout"
+  },
   "navTab": {
     "logout": "Logout",
     "totalInvestments": "Total investments",
@@ -106,6 +109,23 @@
     "info": "Sorry, the page you were\n looking for couldn't be found",
     "return": "Return to previous page"
   },
+  "formPage": {
+    "attachments": "Attachments",
+    "submitError": "Error occurred",
+    "submitErrorInstructions": "Something went wrong during form submission\nPlease go back and try again",
+    "goBack": "Go back",
+    "processNotFound": "Process not found",
+    "processNotFoundInfo": "Please check your URL \nor contact us if the problem persists",
+    "formNotFound": "Form not found",
+    "formNotFoundInfo": "Please check your URL \nor contact us if the problem persists"
+  },
+  "missingLinkedContactPage": {
+    "followOnboardingInstructions": "Please follow onboarding process",
+    "followOnboardingHeader": "Missing linked contact",
+    "startOnboarding": "Start onboarding",
+    "noOnboardingProcessHeader": "Missing linked contact",
+    "noOnboardingProcessMessage": "Please contact us if the problem persists"
+  },
   "messages": {
     "noDataAvailable": "No data available.",
     "notAvailable": "not available",
@@ -113,11 +133,12 @@
     "error": "Something went wrong",
     "queryErrorWarning": "Server error, your data may be outdated.",
     "queryError": "Server error",
-    "noPortfolios": "No portfolios are available",
+    "noPortfoliosInfo": "You do not have any portfolios at this time",
     "problemResolveInstructions": "Try refreshing the browser\n or contact us if the problem persists",
+    "noPortfolios": "No portfolios are available",
     "noCachedData": "No cached data",
     "authorisationError": "Authorisation server error",
-    "missingLinkedContact": "Missing linked contact",
+    "refreshPage": "Refresh page",
     "noCachedDataInfo": "Right now we can't get data from server.\n Come back here later."
   }
 }

@@ -2,6 +2,21 @@ const cracoServiceWorkerConfig = require("./cracoServiceWorkerConfig");
 
 module.exports = {
   plugins: process.env.WITH_SW ? [{ plugin: cracoServiceWorkerConfig }] : [],
+  style: {
+    postcss: {
+      // CRA 5 do not read postcss.config.js, this is workaround inspired by
+      // https://github.com/gsoft-inc/craco/issues/378#issuecomment-1025069357
+      // keep eye on https://github.com/gsoft-inc/craco/issues/385
+      loaderOptions: (postcssLoaderOptions) => {
+        postcssLoaderOptions.postcssOptions.plugins = [
+          ...postcssLoaderOptions.postcssOptions.plugins,
+          "postcss-nested-import",
+          "postcss-nested",
+        ];
+        return postcssLoaderOptions;
+      },
+    },
+  },
   babel: {
     plugins: ["preval"],
   },

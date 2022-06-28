@@ -3,7 +3,7 @@ import { InitialLanguageProvider } from "providers/InitialLanguageProvider";
 import { KeycloakProvider } from "providers/KeycloakProvider";
 import { ToastContainer } from "react-toastify";
 import { keycloakService } from "services/keycloakService";
-import { RootRoutes } from "./pages/routes";
+import { UserWithLinkedContactRoutes } from "./pages/userWithLinkedContact/routes";
 import { APILanguageProvider } from "./providers/APILanguageProvider/APILanguageProvider";
 import { PersistedApolloProvider } from "./providers/PersistedApolloProvider";
 import { ServiceWorkerRegistrationProvider } from "./providers/ServiceWorkerRegistrationProvider";
@@ -18,7 +18,7 @@ function App() {
           <PersistedApolloProvider>
             <APILanguageProvider>
               <ServiceWorkerRegistrationProvider>
-                <RootRoutes />
+                <UserWithLinkedContactRoutes />
               </ServiceWorkerRegistrationProvider>
             </APILanguageProvider>
           </PersistedApolloProvider>

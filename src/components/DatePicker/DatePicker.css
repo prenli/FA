@@ -92,7 +92,11 @@
 }
 
 .react-date-picker__calendar--closed {
-  display: none;
+  visibility: hidden;
+}
+
+.react-date-picker__inputGroup input[name="date"] {
+  max-width: 0;
 }
 
 .react-date-picker__inputGroup input[name="date"] {
