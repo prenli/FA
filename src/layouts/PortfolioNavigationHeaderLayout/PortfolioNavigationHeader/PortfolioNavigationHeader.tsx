@@ -23,7 +23,7 @@ export const PortfolioNavigationHeader = () => {
   };
 
   return (
-    <div className="pt-2 bg-white">
+    <div className="z-20 pt-2 bg-white">
       <div className="container flex gap-2 items-center p-2 mx-auto">
         <Logo />
         <div className="flex-1">
