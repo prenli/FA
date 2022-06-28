@@ -1,6 +1,6 @@
 import { Badge, Grid } from "components";
+import { isLocalOrder } from "hooks/useLocalTradeStorageState";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { isLocalOrder } from "hooks/useTradingStorage";
 import { useParams } from "react-router-dom";
 import { dateFromYYYYMMDD } from "utils/date";
 import {

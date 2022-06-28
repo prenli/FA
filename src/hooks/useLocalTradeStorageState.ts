@@ -8,7 +8,7 @@ import { useGetAllTradeOrders } from "../api/orders/useGetAllTradeOrders";
 import { useGetPortfolioTradeOrders } from "../api/orders/useGetPortfolioTradeOrders";
 import { useGetAllPortfoliosTransactions } from "../api/transactions/useGetAllPortfoliosTransactions";
 import { useGetPortfolioTransactions } from "../api/transactions/useGetPortfolioTransactions";
-import { useLocalStorageState } from "./useLocalStorageState";
+import { useLocalStorageStore } from "./useLocalStorageStore";
 
 export type LocalOrder = TradeOrder;
 
@@ -21,24 +21,26 @@ export const isLocalOrder = (
 export const LocalTradeOrderId = -1;
 export const LocalTradeOrderStatus = "-1";
 
-export const useTradingStorage = (portfolioId?: string) => {
-  const [orders, setOrders] = useLocalStorageState<LocalOrder[]>(
-    "tradingStorage",
-    []
-  );
+export const useLocalTradeStorageState = (
+  portfolioId?: string,
+  startDate?: Date,
+  endDate?: Date
+) => {
+  const [orders, setOrders] = useLocalStorageStore();
 
-  const { transactions: apiTransactions, tradeOrders: apiTradeorders } =
+  const { transactions: apiTransactions, tradeOrders: apiTradeOrders } =
     useGetTradeOrdersAndTransactions(portfolioId);
 
   useEffect(() => {
     // check API if some orders are already handled and if they are, remove them from local storage
     let storageChanged = false;
+
     const filteredOrders = orders.filter((order) => {
       const isHandled =
         apiTransactions.some(
           (transaction) => transaction.reference === order.reference
         ) ||
-        apiTradeorders.some(
+        apiTradeOrders.some(
           (tradeOrder) => tradeOrder.reference === order.reference
         );
       if (isHandled) {
@@ -50,35 +52,17 @@ export const useTradingStorage = (portfolioId?: string) => {
     if (storageChanged) {
       setOrders(filteredOrders);
     }
-  }, [apiTransactions, apiTradeorders, orders, setOrders]);
+  }, [apiTransactions, apiTradeOrders, orders, setOrders]);
 
-  const placeOrder = async (order: TradeOrder) => {
-    setOrders([...orders, order]);
-  };
-
-  const getOrdersForDateRange = (startDate: Date, endDate: Date) => {
-    return orders.filter((order) => {
-      if (portfolioId && order.parentPortfolio.id !== parseInt(portfolioId)) {
-        return false;
-      }
-
-      const orderDate = dateFromYYYYMMDD(order.transactionDate);
-      return isDateInRange(orderDate, startDate, endDate);
-    });
-  };
-
-  const getUnhandledOrdersForDateRange = (
-    handledOrders: TradeOrder[] | undefined,
-    startDate: Date,
-    endDate: Date
-  ) => {
-    if (!handledOrders) {
-      return [];
+  const ordersInRange = orders.filter((order) => {
+    if (portfolioId && order.parentPortfolio.id !== parseInt(portfolioId)) {
+      return false;
     }
-    return getOrdersForDateRange(startDate, endDate);
-  };
+    const orderDate = dateFromYYYYMMDD(order.transactionDate);
+    return isDateInRange(orderDate, startDate, endDate);
+  });
 
-  return { orders, placeOrder, getUnhandledOrdersForDateRange };
+  return { orders: ordersInRange };
 };
 
 const useGetTradeOrdersAndTransactions = (portfolioId?: string) => {

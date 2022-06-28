@@ -3,11 +3,12 @@ import { TradeType as SecurityTradeType } from "api/trading/useTrade";
 import {
   LocalTradeOrderId,
   LocalTradeOrderStatus,
-  useTradingStorage,
-} from "hooks/useTradingStorage";
+} from "hooks/useLocalTradeStorageState";
 import i18n from "i18next";
 import { dateToYYYYMMDD } from "utils/date";
 import { assertUnreachable } from "utils/type";
+import { TradeOrder } from "../api/orders/types";
+import { useLocalStorageStore } from "./useLocalStorageStore";
 
 export type TradeType = SecurityTradeType | MoneyTradeType;
 
@@ -73,8 +74,12 @@ export interface LocalTradeOrderDetails {
   tradeAmount?: number;
 }
 
-export const useLocalTradeOrders = () => {
-  const { placeOrder } = useTradingStorage();
+export const useLocalTradeStorageMutation = () => {
+  const [orders, setOrders] = useLocalStorageStore();
+
+  const placeOrder = async (order: TradeOrder) => {
+    setOrders([...orders, order]);
+  };
 
   return async (tradeDetails: LocalTradeOrderDetails) => {
     const {

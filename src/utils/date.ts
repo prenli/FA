@@ -18,7 +18,14 @@ export const dateToYYYYMMDD = (date: Date) => {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 };
 
-export const isDateInRange = (date: Date, startDate: Date, endDate: Date) => {
+export const isDateInRange = (
+  date: Date,
+  startDate: Date | undefined,
+  endDate: Date | undefined
+) => {
   const dateTime = date.getTime();
-  return dateTime >= startDate.getTime() && dateTime <= endDate.getTime();
+  const isOlder = !startDate || dateTime >= startDate.getTime();
+  const isYounger = !endDate || dateTime <= endDate.getTime();
+
+  return isOlder && isYounger;
 };

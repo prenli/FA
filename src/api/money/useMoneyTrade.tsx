@@ -2,8 +2,8 @@ import { useState } from "react";
 import { ApolloError, FetchResult, gql, useMutation } from "@apollo/client";
 import {
   LocalTradeOrderDetails,
-  useLocalTradeOrders,
-} from "hooks/useLocalTradeOrders";
+  useLocalTradeStorageMutation,
+} from "hooks/useLocalTradeStorageMutation";
 import { useUniqueReference } from "hooks/useUniqueReference";
 import { Slide, toast } from "react-toastify";
 
@@ -73,7 +73,7 @@ export const useMoneyTrade = (
     refetchQueries: ["GetAllPortfoliosTradeOrders", "GetPortfolioTradeOrders"],
   });
 
-  const saveToLocalTradeOrders = useLocalTradeOrders();
+  const saveToLocalTradeOrders = useLocalTradeStorageMutation();
   const getUniqueReference = useUniqueReference();
 
   const handleTrade = async () => {

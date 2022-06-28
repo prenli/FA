@@ -8,7 +8,7 @@ import {
   getNameFromBackendTranslations,
   getTransactionColor,
 } from "utils/transactions";
-import { isLocalOrder } from "../../../hooks/useTradingStorage";
+import { isLocalOrder } from "../../../hooks/useLocalTradeStorageState";
 import { useNavigateToDetails } from "../useNavigateToDetails";
 import { TransactionProps, TransactionsListProps } from "./TransactionsGroup";
 
