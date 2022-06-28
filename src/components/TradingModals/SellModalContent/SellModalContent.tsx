@@ -1,6 +1,8 @@
 import { MutableRefObject } from "react";
+import { SecurityTypeCode } from "api/holdings/types";
 import { useGetPortfolioHoldingDetails } from "api/holdings/useGetPortfolioHoldingDetails";
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
+import { useTrade } from "api/trading/useTrade";
 import {
   PortfolioSelect,
   DownloadableDocument,
@@ -11,14 +13,20 @@ import {
 } from "components/index";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { usePortfolioSelect } from "hooks/usePortfolioSelect";
-import { Slide, toast } from "react-toastify";
-import { useLocalTradeOrders } from "../../../hooks/useLocalTradeOrders";
+import { useParams } from "react-router-dom";
+import { Slide, toast, ToastContainer } from "react-toastify";
 import { useTradeAmountInput } from "./useTradeAmountInput";
 
 export interface SellModalInitialData {
-  holdingId?: string;
-  securityName?: string;
+  name: string;
+  securityCode: string;
   url2?: string;
+  currency: {
+    securityCode: string;
+  };
+  type?: {
+    code: SecurityTypeCode;
+  };
 }
 
 interface SellModalProps extends SellModalInitialData {
@@ -26,16 +34,22 @@ interface SellModalProps extends SellModalInitialData {
   onClose: () => void;
 }
 
-const SELL_MODAL_ERROR_TOAST_ID = "SELL_MODAL_ERROR_TOAST_ID";
+const getTradeType = (securityType: SecurityTypeCode | undefined) =>
+  securityType === "C" ? "redemption" : "sell";
 
 export const SellModalContent = ({
-  holdingId,
-  securityName,
-  url2,
   modalInitialFocusRef,
   onClose,
+  ...security
 }: SellModalProps) => {
+  const {
+    name: securityName,
+    url2,
+    type: { code: securityType } = {},
+  } = security;
+  const { holdingId } = useParams();
   const { t } = useModifiedTranslation();
+  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
   const { portfolioId, setPortfolioId, portfolioOptions } =
     usePortfolioSelect();
 
@@ -59,25 +73,16 @@ export const SellModalContent = ({
     onInputModeChange,
   } = useTradeAmountInput(marketValue, currency);
 
-  const handleSell = useLocalTradeOrders("sell", onClose, {
-    portfolio: portfolioOptions.find(
-      (portfolio) => portfolio.id === portfolioId
-    ),
+  const { handleTrade: handleSell, submitting } = useTrade({
+    tradeType: getTradeType(securityType),
+    portfolio:
+      portfolios.find((portfolio) => portfolio.id === portfolioId) ||
+      portfolios[0],
     securityName,
+    tradeAmount,
+    ...security,
     currency,
-    amount: tradeAmount,
   });
-
-  if (error) {
-    toast.error(t("tradingModal.queryErrorWarning"), {
-      toastId: SELL_MODAL_ERROR_TOAST_ID,
-      position: toast.POSITION.BOTTOM_CENTER,
-      hideProgressBar: true,
-      theme: "colored",
-      transition: Slide,
-      autoClose: false,
-    });
-  }
 
   return (
     <div className="grid gap-2 min-w-[min(84vw,_375px)]">
@@ -155,11 +160,28 @@ export const SellModalContent = ({
         </div>
         <Button
           disabled={tradeAmount === 0 || loading || !isTradeAmountCorrect}
-          onClick={handleSell}
+          isLoading={submitting}
+          onClick={async () => {
+            const response = await handleSell();
+            if (response) {
+              onClose();
+            }
+          }}
         >
           {t("tradingModal.sellModalHeader")}
         </Button>
       </div>
+      {error && (
+        <ToastContainer
+          position={toast.POSITION.BOTTOM_CENTER}
+          hideProgressBar
+          theme="colored"
+          transition={Slide}
+          autoClose={false}
+        >
+          {t("tradingModal.queryErrorWarning")}
+        </ToastContainer>
+      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { Badge, Grid } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { isLocalOrder } from "hooks/useTradingState";
+import { isLocalOrder } from "hooks/useTradingStorage";
 import { useParams } from "react-router-dom";
 import { dateFromYYYYMMDD } from "utils/date";
 import {
@@ -21,7 +21,7 @@ export const TransactionsListWithTwoLinesRow = ({
         <Transaction
           {...transaction}
           key={
-            isLocalOrder(transaction) ? transaction.referenceId : transaction.id
+            isLocalOrder(transaction) ? transaction.reference : transaction.id
           }
           onClick={() => navigate(transaction.id)}
         />
@@ -31,7 +31,6 @@ export const TransactionsListWithTwoLinesRow = ({
 };
 
 const Transaction = ({
-  id,
   transactionDate,
   type: { typeName, cashFlowEffect, amountEffect, typeNamesAsMap },
   tradeAmountInPortfolioCurrency,

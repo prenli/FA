@@ -13,7 +13,7 @@ import { BuyModalInitialData } from "components/TradingModals/BuyModalContent/Bu
 import { SellModalInitialData } from "components/TradingModals/SellModalContent/SellModalContent";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { PageLayout } from "layouts/PageLayout/PageLayout";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CanTrade } from "services/permissions/CanTrade";
 import { getNameFromBackendTranslations } from "utils/transactions";
 import { addProtocolToUrl } from "utils/url";
@@ -44,7 +44,6 @@ export const HoldingDetails = ({
     url2,
   } = security;
   const navigate = useNavigate();
-  const { holdingId } = useParams();
   const { i18n, t } = useModifiedTranslation();
 
   const {
@@ -132,9 +131,7 @@ export const HoldingDetails = ({
                     <Button
                       LeftIcon={MinusCircle}
                       variant="Red"
-                      onClick={() =>
-                        onSellModalOpen({ holdingId, securityName: name, url2 })
-                      }
+                      onClick={() => onSellModalOpen(security)}
                     >
                       {t("holdingsPage.sell")}
                     </Button>

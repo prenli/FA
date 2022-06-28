@@ -1,10 +1,10 @@
 import { useGetAllTradeOrders } from "api/orders/useGetAllTradeOrders";
-import { useTradingState } from "hooks/useTradingState";
+import { useTradingStorage } from "hooks/useTradingStorage";
 import { Orders } from "views/orders/orders";
 
 export const OrdersPage = () => {
   const queryData = useGetAllTradeOrders();
-  const { getUnhandledOrdersForDateRange } = useTradingState();
+  const { getUnhandledOrdersForDateRange } = useTradingStorage();
   const { data, startDate, endDate } = queryData;
   const unhandledOrdersFromLocalStorage = getUnhandledOrdersForDateRange(
     data,

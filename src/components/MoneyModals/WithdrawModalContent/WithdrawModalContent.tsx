@@ -2,7 +2,8 @@ import { MutableRefObject, useState } from "react";
 import { Select, Input, Button } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { usePortfolioSelect } from "hooks/usePortfolioSelect";
-import { useLocalTradeOrders } from "../../../hooks/useLocalTradeOrders";
+import { useGetContactInfo } from "../../../api/initial/useGetContactInfo";
+import { useMoneyTrade } from "../../../api/money/useMoneyTrade";
 import { CashAccountSelect } from "../components/CashAccountSelect";
 import { usePortfoliosAccountsState } from "../usePortfoliosAccountsState";
 
@@ -16,8 +17,9 @@ export const WithdrawModalContent = ({
   modalInitialFocusRef,
 }: WithdrawModalProps) => {
   const { t } = useModifiedTranslation();
+  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
   const portfolioSelectProps = usePortfolioSelect();
-  const { portfolioId, portfolioOptions } = portfolioSelectProps;
+  const { portfolioId } = portfolioSelectProps;
 
   const {
     accountsLoading,
@@ -25,9 +27,14 @@ export const WithdrawModalContent = ({
     setCurrentExternalAccount,
     externalAccounts,
     ...cashAccountSelectProps
-  } = usePortfoliosAccountsState(portfolioSelectProps.portfolioId);
+  } = usePortfoliosAccountsState(portfolioId);
   const {
-    currentCashAccount: { availableBalance = 0, currency = "EUR", label } = {},
+    currentCashAccount: {
+      availableBalance = 0,
+      currency = "EUR",
+      label = "",
+      number = "",
+    } = {},
   } = cashAccountSelectProps;
 
   const [amount, setAmount] = useState(0);
@@ -35,13 +42,15 @@ export const WithdrawModalContent = ({
   const isAmountCorrect =
     !isNaN(availableBalance) && amount >= 0 && amount <= availableBalance;
 
-  const handleWithdraw = useLocalTradeOrders("withdrawal", onClose, {
-    portfolio: portfolioOptions.find(
-      (portfolio) => portfolio.id === portfolioId
-    ),
+  const { handleTrade: handleWithdraw, submitting } = useMoneyTrade({
+    tradeType: "withdrawal",
+    portfolio:
+      portfolios.find((portfolio) => portfolio.id === portfolioId) ||
+      portfolios[0],
+    tradeAmount: amount,
     securityName: label,
+    account: number,
     currency,
-    amount: amount,
   });
 
   return (
@@ -87,7 +96,13 @@ export const WithdrawModalContent = ({
             !isAmountCorrect ||
             !currentExternalAccount
           }
-          onClick={handleWithdraw}
+          isLoading={submitting}
+          onClick={async () => {
+            const response = await handleWithdraw();
+            if (response) {
+              onClose();
+            }
+          }}
         >
           {t("moneyModal.withdrawButtonLabel")}
         </Button>

@@ -1,5 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
-import { getFetchPolicyOptions } from "api/utils";
+import { gql, QueryHookOptions, useQuery } from "@apollo/client";
 import { toShortISOString, startOfMonth } from "utils/date";
 import { useDateRange } from "../useDateRange";
 import { TRANSACTION_FIELDS } from "./fragments";
@@ -7,7 +6,7 @@ import { PortfolioTransactionsQuery } from "./types";
 
 const TRANSACTIONS_QUERY = gql`
   ${TRANSACTION_FIELDS}
-  query GetTransactions(
+  query GetPortfolioTransactions(
     $startDate: String
     $endDate: String
     $portfolioId: Long
@@ -28,7 +27,8 @@ const initialRange = {
 };
 
 export const useGetPortfolioTransactions = (
-  portfolioId: string | undefined
+  portfolioId: string | undefined,
+  options?: QueryHookOptions
 ) => {
   const dateRangeProps = useDateRange(initialRange);
   const { startDate, endDate } = dateRangeProps;
@@ -41,9 +41,8 @@ export const useGetPortfolioTransactions = (
         endDate: toShortISOString(endDate),
         portfolioId,
       },
-      ...getFetchPolicyOptions(
-        `useGetPortfolioTransactions.${portfolioId}.${startDate}.${endDate}`
-      ),
+      fetchPolicy: "cache-and-network",
+      ...options,
     }
   );
 

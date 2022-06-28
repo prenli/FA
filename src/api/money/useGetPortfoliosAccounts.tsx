@@ -21,6 +21,7 @@ const CASH_ACCOUNTS_QUERY = gql`
           accountId
           amountAfterOpenTradeOrders
           balance
+          number: key
         }
       }
     }
@@ -35,6 +36,7 @@ interface APICashAccount {
   accountId: number;
   amountAfterOpenTradeOrders: number;
   balance: number;
+  number: string;
 }
 
 interface APIAccount {
@@ -58,6 +60,7 @@ interface PortfolioCashAccountsQuery {
 export interface CashAccount {
   id: number;
   label: string;
+  number: string;
   currency: string;
   currentBalance: number;
   availableBalance: number;
@@ -68,6 +71,7 @@ export type ExternalAccount = APIAccount;
 const mapCashAccount = (account: APICashAccount): CashAccount => ({
   id: account.accountId,
   label: account.accountName,
+  number: account.number,
   currency: account.currency.securityCode,
   currentBalance: account.balance,
   availableBalance: account.amountAfterOpenTradeOrders,

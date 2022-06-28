@@ -73,6 +73,8 @@
     "cancelled": "Cancelled",
     "buyStatus": "Buy",
     "sellStatus": "Sell",
+    "subscriptionStatus": "Subscription",
+    "redemptionStatus": "Redemption",
     "depositStatus": "Deposit",
     "withdrawStatus": "Withdrawal",
     "downloadFileButtonLabel": "Download order note"

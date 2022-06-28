@@ -1,13 +1,15 @@
+import { TradeType as MoneyTradeType } from "api/money/useMoneyTrade";
+import { TradeType as SecurityTradeType } from "api/trading/useTrade";
 import {
   LocalTradeOrderId,
   LocalTradeOrderStatus,
-  useTradingState,
-} from "hooks/useTradingState";
+  useTradingStorage,
+} from "hooks/useTradingStorage";
 import i18n from "i18next";
 import { dateToYYYYMMDD } from "utils/date";
 import { assertUnreachable } from "utils/type";
 
-type TradeType = "sell" | "buy" | "withdrawal" | "deposit";
+export type TradeType = SecurityTradeType | MoneyTradeType;
 
 const getOrderType = (type: TradeType) => {
   switch (type) {
@@ -20,6 +22,18 @@ const getOrderType = (type: TradeType) => {
     case "sell":
       return {
         typeName: i18n.t("ordersPage.sellStatus"),
+        amountEffect: -1,
+        cashFlowEffect: 1,
+      };
+    case "subscription":
+      return {
+        typeName: i18n.t("ordersPage.subscriptionStatus"),
+        amountEffect: 1,
+        cashFlowEffect: -1,
+      };
+    case "redemption":
+      return {
+        typeName: i18n.t("ordersPage.redemptionStatus"),
         amountEffect: -1,
         cashFlowEffect: 1,
       };
@@ -45,49 +59,48 @@ const getOrderType = (type: TradeType) => {
   }
 };
 
-interface TradeDetails {
-  portfolio?: {
+export interface LocalTradeOrderDetails {
+  portfolio: {
     id: number;
-    label: string;
+    name: string;
+    shortName: string;
   };
-  securityName?: string;
-  currency?: string;
-  amount?: number;
+  securityName: string;
+  currency: string;
+  tradeType: TradeType;
+  reference: string;
+  units?: number;
+  tradeAmount?: number;
 }
 
-export const useLocalTradeOrders = (
-  type: TradeType,
-  callback: () => void,
-  tradeDetails: TradeDetails
-) => {
-  const { placeOrder } = useTradingState();
+export const useLocalTradeOrders = () => {
+  const { placeOrder } = useTradingStorage();
 
-  const { portfolio, securityName, amount, currency } = tradeDetails;
+  return async (tradeDetails: LocalTradeOrderDetails) => {
+    const {
+      portfolio,
+      securityName,
+      tradeAmount,
+      units,
+      currency,
+      tradeType,
+      reference,
+    } = tradeDetails;
 
-  return async () => {
-    if (
-      portfolio == null ||
-      securityName == null ||
-      amount == null ||
-      currency == null
-    ) {
-      return;
-    }
     await placeOrder({
       id: LocalTradeOrderId,
       orderStatus: LocalTradeOrderStatus,
       securityName: securityName,
-      type: getOrderType(type),
+      type: getOrderType(tradeType),
       transactionDate: dateToYYYYMMDD(new Date()),
-      tradeAmountInPortfolioCurrency: amount,
+      tradeAmountInPortfolioCurrency: tradeAmount,
+      amount: units,
       parentPortfolio: {
         id: portfolio.id,
-        name: portfolio.label,
-        currency: {
-          securityCode: currency,
-        },
+        name: portfolio.name,
+        currency: { securityCode: currency },
       },
+      reference,
     });
-    callback();
   };
 };

@@ -22,5 +22,6 @@ export const TRADE_ORDERS_DETAILS = gql`
         securityCode
       }
     }
+    reference
   }
 `;

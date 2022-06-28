@@ -25,7 +25,7 @@ export const Button = ({
 }: ButtonProps) => (
   <button
     {...props}
-    disabled={disabled}
+    disabled={disabled || isLoading}
     type="button"
     className={classNames(
       "box-border rounded-lg inline-flex items-center justify-center relative whitespace-nowrap align-middle",
