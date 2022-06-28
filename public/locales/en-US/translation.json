@@ -118,8 +118,10 @@
   },
   "missingLinkedContactPage": {
     "followOnboardingInstructions": "Please follow onboarding process",
+    "followOnboardingHeader": "Missing linked contact",
     "startOnboarding": "Start onboarding",
-    "missingLinkedContact": "Missing linked contact"
+    "noOnboardingProcessHeader": "Missing linked contact",
+    "noOnboardingProcessMessage": "Please contact us if the problem persists"
   },
   "messages": {
     "noDataAvailable": "No data available.",

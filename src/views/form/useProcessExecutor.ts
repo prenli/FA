@@ -160,7 +160,11 @@ const useInitializeForm = (
 
   const initForm = useCallback(
     (initFormData: StartProcessTaskResponse | undefined) => {
-      if (!initFormData || (initFormData && !initFormData.processInstanceId)) {
+      if (
+        !initFormData ||
+        (initFormData && !initFormData.processInstanceId) ||
+        !initFormData.formDefinition
+      ) {
         dispatchProcessStateAction({
           type: "SET_DATA",
           payload: {
@@ -169,11 +173,12 @@ const useInitializeForm = (
         });
         return;
       }
+
       dispatchProcessStateAction({
         type: "UPDATE_DATA",
         payload: {
           formDefinition: JSON.parse(
-            initFormData.formDefinition || ""
+            initFormData.formDefinition
           ) as FormDefinition,
           initialData: initFormData.data || {},
           attachments: attachmentsObjectToList(initFormData.data?.attachments),

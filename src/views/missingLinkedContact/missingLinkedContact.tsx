@@ -1,26 +1,31 @@
-import { ErrorMessage } from "components";
-import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { useNavigate } from "react-router";
+import {
+  Process,
+  useGetContactProcesses,
+} from "api/flowable/useGetContactProcesses";
+import { QueryLoadingWrapper } from "components";
+import { Navigate } from "react-router";
+import { NoOnboardingProcess } from "./components/NoOnboardingProcess";
 
-export const MissingLinkedContact = () => {
-  const { t } = useModifiedTranslation();
-  const navigate = useNavigate();
+export const MissingLinkedContactWrapper = () => {
+  const queryData = useGetContactProcesses("ONBOARDING");
 
   return (
-    <ErrorMessage header={t("missingLinkedContactPage.missingLinkedContact")}>
-      <div className="mb-2">
-        {t("missingLinkedContactPage.followOnboardingInstructions")}
-      </div>
-      <div
-        onClick={() =>
-          navigate("/form/onboarding_2", {
-            state: { header: "Client onboarding" },
-          })
-        }
-        className="font-semibold text-primary-500 cursor-pointer"
-      >
-        {t("missingLinkedContactPage.startOnboarding")}
-      </div>
-    </ErrorMessage>
+    <QueryLoadingWrapper
+      {...queryData}
+      SuccessComponent={MissingLinkedContact}
+    />
   );
+};
+
+interface MissingLinkedContactProps {
+  data: Process[];
+}
+
+const MissingLinkedContact = ({ data }: MissingLinkedContactProps) => {
+  if (data.length !== 0) {
+    const { key, name } = data[0];
+    return <Navigate to={`/form/${key}`} state={{ header: name }} />;
+  }
+
+  return <NoOnboardingProcess />;
 };

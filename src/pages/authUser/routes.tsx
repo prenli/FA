@@ -1,7 +1,7 @@
 import { lazy } from "react";
 import { MainLayout } from "layouts/MainLayout/MainLayout";
 import { Navigate, useRoutes } from "react-router-dom";
-import { MissingLinkedContact } from "views/missingLinkedContact/missingLinkedContact";
+import { MissingLinkedContactWrapper as MissingLinkedContact } from "views/missingLinkedContact/missingLinkedContact";
 
 const Form = lazy(() =>
   import("./form").then((module) => ({ default: module.FormPage }))
