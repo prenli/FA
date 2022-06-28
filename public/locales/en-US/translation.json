@@ -10,6 +10,9 @@
       "placeholder": "Please select"
     }
   },
+  "userMenu": {
+    "logout": "Logout"
+  },
   "navTab": {
     "logout": "Logout",
     "totalInvestments": "Total investments",
