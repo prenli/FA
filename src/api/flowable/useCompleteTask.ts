@@ -1,5 +1,4 @@
 import { useMutation, gql } from "@apollo/client";
-import { FLOWABLE_API_NAME } from "services/apolloClient";
 import { Attachment } from "../../views/form/useProcessExecutor";
 
 const COMPLETE_TASK = gql`
@@ -29,9 +28,7 @@ export interface TaskResponse {
 export const useCompleteTask = () => {
   const [completeTask, { data, loading, error, reset }] = useMutation<{
     completeTask: TaskResponse;
-  }>(COMPLETE_TASK, {
-    context: { apiName: FLOWABLE_API_NAME },
-  });
+  }>(COMPLETE_TASK);
 
   return {
     loading,

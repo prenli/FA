@@ -1,10 +1,4 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  HttpLink,
-  from,
-  ApolloLink,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, HttpLink, from } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { LocalStorageWrapper, CachePersistor } from "apollo3-cache-persist";
 import { API_URL } from "config";
@@ -18,20 +12,6 @@ const mainLink = new HttpLink({
     mode: "cors",
   },
 });
-
-export const FLOWABLE_API_NAME = "flowableAPIName";
-const flowableLink = new HttpLink({
-  uri: `${API_URL}/graphql`,
-  fetchOptions: {
-    mode: "cors",
-  },
-});
-
-const combinedLink = ApolloLink.split(
-  (operation) => operation.getContext().apiName === FLOWABLE_API_NAME,
-  flowableLink,
-  mainLink
-);
 
 const authMiddleware = setContext(async (operation, { headers }) => {
   const token = await keycloakService.getToken();
@@ -90,7 +70,7 @@ export const getPersistedApolloClient = async () => {
   }
 
   return new ApolloClient({
-    link: from([authMiddleware, combinedLink]),
+    link: from([authMiddleware, mainLink]),
     cache,
   });
 };

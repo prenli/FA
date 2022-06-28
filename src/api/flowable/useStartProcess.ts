@@ -1,5 +1,4 @@
 import { useMutation, gql } from "@apollo/client";
-import { FLOWABLE_API_NAME } from "services/apolloClient";
 import { TaskResponse } from "./useCompleteTask";
 
 const START_PROCESS = gql`
@@ -22,7 +21,6 @@ export const useStartProcess = (key: string | undefined) => {
     variables: {
       key,
     },
-    context: { apiName: FLOWABLE_API_NAME },
   });
 
   return {
