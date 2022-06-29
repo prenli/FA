@@ -17,10 +17,16 @@ export const HoldingPage = () => {
     error: holdingError,
     data: holdingData,
   } = useGetPortfolioHoldingDetails(portfolioId, holdingId);
-  const mergedData = securityData && {
-    holding: holdingData,
-    security: securityData,
-  };
+  // marge data are ready when:
+  // 1) there are securityData (cached or fresh) and
+  // 2) holdingData finishes loading or we have cached holdingData
+  const mergedData =
+    (!holdingLoading || holdingData) && securityData
+      ? {
+          holding: holdingData,
+          security: securityData,
+        }
+      : undefined;
   const isLoading = securityLoading || holdingLoading;
   const securityDoesNotExist = !isLoading && !securityData;
 
