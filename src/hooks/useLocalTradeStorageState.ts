@@ -65,6 +65,8 @@ export const useLocalTradeStorageState = (
   return { orders: ordersInRange };
 };
 
+// startDate and endDate is not needed because we use global storage in useGetAllTradeOrders and useGetPortfolioTradeOrders
+// without date range global storage we need pass those dates to useGetAllTradeOrders and useGetPortfolioTradeOrders
 const useGetTradeOrdersAndTransactions = (portfolioId?: string) => {
   const { data: allPortfoliosTradeOrders = [] } = useGetAllTradeOrders({
     fetchPolicy: "cache-first",

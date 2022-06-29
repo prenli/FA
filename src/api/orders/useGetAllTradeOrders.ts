@@ -1,7 +1,7 @@
 import { gql, QueryHookOptions, useQuery } from "@apollo/client";
+import { useGlobalDateRange } from "hooks/useGlobalDateRange";
 import { useKeycloak } from "providers/KeycloakProvider";
-import { startOfMonth, toShortISOString } from "utils/date";
-import { useDateRange } from "../useDateRange";
+import { toShortISOString } from "utils/date";
 import { TRADE_ORDERS_DETAILS } from "./fragments";
 import { AllTradeOrdersQuery } from "./types";
 
@@ -24,14 +24,8 @@ const TRADE_ORDERS_QUERY = gql`
   }
 `;
 
-const now = new Date();
-const initialRange = {
-  start: startOfMonth(now),
-  end: now,
-};
-
 export const useGetAllTradeOrders = (options?: QueryHookOptions) => {
-  const dateRangeProps = useDateRange(initialRange);
+  const dateRangeProps = useGlobalDateRange();
   const { startDate, endDate } = dateRangeProps;
 
   const { linkedContact } = useKeycloak();

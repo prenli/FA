@@ -1,6 +1,6 @@
 import { gql, QueryHookOptions, useQuery } from "@apollo/client";
-import { toShortISOString, startOfMonth } from "utils/date";
-import { useDateRange } from "../useDateRange";
+import { useGlobalDateRange } from "hooks/useGlobalDateRange";
+import { toShortISOString } from "utils/date";
 import { TRANSACTION_FIELDS } from "./fragments";
 import { PortfolioTransactionsQuery } from "./types";
 
@@ -20,17 +20,11 @@ const TRANSACTIONS_QUERY = gql`
   }
 `;
 
-const now = new Date();
-const initialRange = {
-  start: startOfMonth(now),
-  end: now,
-};
-
 export const useGetPortfolioTransactions = (
   portfolioId: string | undefined,
   options?: QueryHookOptions
 ) => {
-  const dateRangeProps = useDateRange(initialRange);
+  const dateRangeProps = useGlobalDateRange();
   const { startDate, endDate } = dateRangeProps;
 
   const { loading, error, data } = useQuery<PortfolioTransactionsQuery>(

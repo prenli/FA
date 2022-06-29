@@ -1,39 +1,19 @@
 import { useEffect, useReducer } from "react";
+import { ReactSubscriber } from "utils/ReactSubscriber";
 import { LocalOrder } from "./useLocalTradeStorageState";
 
 type StorageState = LocalOrder[];
 
-type SubscribeFunctionType = () => void;
-
-class LocalTradingStorage {
+class LocalTradingStorage extends ReactSubscriber<StorageState> {
   private key = "tradingStorage";
-  private state: StorageState;
-  subscribeFunctions: SubscribeFunctionType[] = [];
 
   constructor() {
+    super([]);
     const valueInLocalStorage = window.localStorage.getItem(this.key);
     if (valueInLocalStorage == null) {
-      this.state = [];
       return;
     }
     this.state = JSON.parse(valueInLocalStorage) as StorageState;
-  }
-
-  subscribe(subscribeFunction: SubscribeFunctionType) {
-    this.subscribeFunctions.push(subscribeFunction);
-    return this.subscribeFunctions.length - 1;
-  }
-
-  unsubscribe(index: number) {
-    this.subscribeFunctions[index] = () => null;
-  }
-
-  updateState() {
-    this.subscribeFunctions.forEach((fn) => fn());
-  }
-
-  get State() {
-    return this.state;
   }
 
   setState(state: StorageState) {

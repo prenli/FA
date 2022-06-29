@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import { TradeOrder } from "api/orders/types";
 import { QueryData } from "api/types";
 import { Card, DatePicker, QueryLoadingWrapper } from "components";
@@ -8,9 +7,9 @@ import { OrdersContainer } from "./components/OrdersContainer";
 
 interface OrdersProps extends QueryData<(TradeOrder | LocalOrder)[]> {
   startDate: Date;
-  setStartDate: Dispatch<SetStateAction<Date>>;
+  setStartDate: (newDate: Date) => void;
   endDate: Date;
-  setEndDate: Dispatch<SetStateAction<Date>>;
+  setEndDate: (newDate: Date) => void;
 }
 
 export const Orders = ({

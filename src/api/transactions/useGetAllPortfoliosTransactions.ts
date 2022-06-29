@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import { gql, QueryHookOptions, useQuery } from "@apollo/client";
+import { useGlobalDateRange } from "hooks/useGlobalDateRange";
 import { useKeycloak } from "providers/KeycloakProvider";
-import { toShortISOString, startOfMonth } from "utils/date";
+import { toShortISOString } from "utils/date";
 import { TRANSACTION_FIELDS } from "./fragments";
 import { AllPortfoliosTransactionsQuery } from "./types";
 
@@ -21,21 +21,10 @@ const TRANSACTIONS_QUERY = gql`
   }
 `;
 
-const now = new Date();
-const initialRange = {
-  start: startOfMonth(now),
-  end: now,
-};
-
 export const useGetAllPortfoliosTransactions = (options?: QueryHookOptions) => {
   const { linkedContact } = useKeycloak();
-  const [startDate, setStartDate] = useState<Date>(initialRange.start);
-  const [endDate, setEndDate] = useState<Date>(initialRange.end);
-
-  useEffect(() => {
-    initialRange.start = startDate;
-    initialRange.end = endDate;
-  }, [startDate, endDate]);
+  const dateRangeProps = useGlobalDateRange();
+  const { startDate, endDate } = dateRangeProps;
 
   const { loading, error, data } = useQuery<AllPortfoliosTransactionsQuery>(
     TRANSACTIONS_QUERY,
@@ -54,9 +43,6 @@ export const useGetAllPortfoliosTransactions = (options?: QueryHookOptions) => {
     loading,
     error,
     data: data?.contact.transactions,
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
+    ...dateRangeProps,
   };
 };
