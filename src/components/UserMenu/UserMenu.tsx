@@ -41,15 +41,6 @@ const getMenuItems = (
     ];
   }
   return [
-    ...processes.map((process) => ({
-      label: process.name,
-      action: () =>
-        menuActions.process(`/form/${process.key}`, {
-          state: { header: process.name },
-        }),
-      Icon: ProcessIcon,
-      color: "text-primary-600",
-    })),
     {
       label: i18n.t("userMenu.deposit"),
       action: menuActions.deposit,
@@ -60,6 +51,14 @@ const getMenuItems = (
       action: menuActions.withdraw,
       Icon: WithdrawalIcon,
     },
+    ...processes.map((process) => ({
+      label: process.name,
+      action: () =>
+        menuActions.process(`/form/${process.key}`, {
+          state: { header: process.name },
+        }),
+      Icon: ProcessIcon,
+    })),
     {
       label: i18n.t("userMenu.logout"),
       action: menuActions.logout,
@@ -135,18 +134,15 @@ interface MenuItemProps {
   label: ReactNode;
   action: () => void;
   Icon: ReactElementType;
-  color?: string;
 }
 
-const MenuItem = ({ action, label, Icon, color }: MenuItemProps) => {
+const MenuItem = ({ action, label, Icon }: MenuItemProps) => {
   return (
     <Menu.Item>
       {({ active }) => (
         <button
           className={classNames(
-            `p-2 pr-4 flex gap-2 items-center w-full text-base font-medium text-gray-900 ${
-              color ? color : ""
-            }`,
+            `p-2 pr-4 flex gap-2 items-center w-full text-base font-medium text-gray-900`,
             {
               "bg-primary-50": active,
             }
