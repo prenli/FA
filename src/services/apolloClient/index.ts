@@ -60,6 +60,7 @@ export const persistor = new CachePersistor({
   storage: new LocalStorageWrapper(window.localStorage),
   maxSize: 20971520, // 20 MB
   persistenceMapper: persistenceMapper,
+  key: "fa-client-cache-persist",
 });
 
 export const getPersistedApolloClient = async () => {
