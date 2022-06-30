@@ -12,15 +12,15 @@ import {
   TradableSecuritySized,
 } from "./TradableSecuritiesList";
 
-export const TradableSecuritiesListSm = ({
+export const TradableSecuritiesListMd = ({
   data: securities,
   onBuyModalOpen,
 }: TradableSecuritiesListSized) => {
   const { t } = useModifiedTranslation();
   return (
-    <div className="grid items-stretch grid-cols-[repeat(6,_auto)]">
+    <div className="grid grid-cols-7 items-stretch">
       <Grid.Header>
-        <span>{t("tradingList.gridHeader.name")}</span>
+        <span className="col-span-2">{t("tradingList.gridHeader.name")}</span>
         <span>{t("tradingList.gridHeader.currency")}</span>
         <span>{t("tradingList.gridHeader.isinCode")}</span>
         <span>{t("tradingList.gridHeader.price")}</span>
@@ -56,7 +56,7 @@ const TradableSecurityMd = (security: TradableSecuritySized) => {
   return (
     <>
       <Grid.Row key={id} className="py-2 border-t" onClick={toggleExpanded}>
-        <div>
+        <div className="col-span-2">
           <NameWithFlag name={name} countryCode={country?.code} />
         </div>
         <div className="text-base text-gray-700">{currency}</div>
@@ -87,7 +87,7 @@ const TradableSecurityMd = (security: TradableSecuritySized) => {
         leave="transition duration-75 ease-out"
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
-        className="grid col-span-6 grid-flow-col auto-cols-fr gap-2 items-center px-2 pb-2 border-t-transparent"
+        className="grid col-span-7 grid-flow-col auto-cols-fr gap-2 items-center px-2 pb-2 border-t-transparent"
         show={expanded}
       >
         <div className="text-base font-light">{isinCode}</div>

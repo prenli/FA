@@ -1,11 +1,14 @@
-import { TradableSecurity as TradableSecurityInterface } from "api/trading/useGetTradebleSecurities";
+import {
+  TradableSecurity,
+  TradableSecurity as TradableSecurityInterface,
+} from "api/trading/useGetTradebleSecurities";
 import { BuyModalContent, Card, ErrorMessage } from "components";
 import { useModal } from "components/Modal/useModal";
 import { BuyModalInitialData } from "components/TradingModals/BuyModalContent/BuyModalContent";
 import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { TradableSecuritiesListBase } from "./TradableSecuritiesListBase";
-import { TradableSecuritiesListSm } from "./TradableSecuritiesListSm";
+import { TradableSecuritiesListMd } from "./TradableSecuritiesListMd";
 import { TradableSecuritiesListXl } from "./TradableSecuritiesListXl";
 
 interface TradableSecuritiesListProps {
@@ -21,10 +24,12 @@ export interface TradableSecuritySized extends TradableSecurityInterface {
   onBuyModalOpen: (initialData: BuyModalInitialData) => void;
 }
 
-export const TradableSecuritiesList = (props: TradableSecuritiesListProps) => {
+export const TradableSecuritiesList = ({
+  data: securities,
+}: TradableSecuritiesListProps) => {
   const { t } = useModifiedTranslation();
 
-  const isSmVersion = useMatchesBreakpoint("sm");
+  const isSmVersion = useMatchesBreakpoint("md");
   const isXlVersion = useMatchesBreakpoint("xl");
 
   const {
@@ -34,7 +39,7 @@ export const TradableSecuritiesList = (props: TradableSecuritiesListProps) => {
     contentProps: buyModalContentProps,
   } = useModal<BuyModalInitialData>();
 
-  if (props.data.length === 0) {
+  if (securities.length === 0) {
     return (
       <ErrorMessage header={t("tradingList.noHoldings")}>
         {t("tradingList.noHoldingsInfo")}
@@ -42,29 +47,38 @@ export const TradableSecuritiesList = (props: TradableSecuritiesListProps) => {
     );
   }
 
+  const TradableSecuritiesListSized = isXlVersion
+    ? TradableSecuritiesListXl
+    : isSmVersion
+    ? TradableSecuritiesListMd
+    : TradableSecuritiesListBase;
+
   return (
     <>
-      <Card header={t("tradingList.header")}>
-        {isXlVersion ? (
-          <TradableSecuritiesListXl
-            {...props}
+      {groupSecuritiesByType(securities).map(([groupName, groupSecurities]) => (
+        <Card header={groupName} key={groupName}>
+          <TradableSecuritiesListSized
+            data={groupSecurities}
             onBuyModalOpen={onBuyModalOpen}
           />
-        ) : isSmVersion ? (
-          <TradableSecuritiesListSm
-            {...props}
-            onBuyModalOpen={onBuyModalOpen}
-          />
-        ) : (
-          <TradableSecuritiesListBase
-            {...props}
-            onBuyModalOpen={onBuyModalOpen}
-          />
-        )}
-      </Card>
+        </Card>
+      ))}
       <Modal {...buyModalProps} header={t("tradingModal.buyModalHeader")}>
         <BuyModalContent {...buyModalContentProps} />
       </Modal>
     </>
   );
+};
+
+const groupSecuritiesByType = (securities: TradableSecurityInterface[]) => {
+  return Object.entries(
+    securities.reduce((result: Record<string, TradableSecurity[]>, current) => {
+      const currentType = current.type?.name ?? "";
+      if (!result[currentType]) {
+        result[currentType] = [];
+      }
+      result[currentType].push(current);
+      return result;
+    }, {})
+  ).sort(([group1Name], [group2Name]) => (group1Name > group2Name ? 1 : -1));
 };

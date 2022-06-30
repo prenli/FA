@@ -14,9 +14,9 @@ export const TradableSecuritiesListXl = ({
 }: TradableSecuritiesListSized) => {
   const { t } = useModifiedTranslation();
   return (
-    <div className="grid items-stretch grid-cols-[repeat(8,_auto)]">
+    <div className="grid grid-cols-10 items-stretch">
       <Grid.Header>
-        <span>{t("tradingList.gridHeader.name")}</span>
+        <span className="col-span-3">{t("tradingList.gridHeader.name")}</span>
         <span>{t("tradingList.gridHeader.isinCode")}</span>
         <span>{t("tradingList.gridHeader.currency")}</span>
         <span>{t("tradingList.gridHeader.price")}</span>
@@ -53,7 +53,7 @@ const TradableSecurityMd = (security: TradableSecuritySized) => {
   return (
     <>
       <Grid.Row key={id} className="py-2 border-t">
-        <div>
+        <div className="col-span-3">
           <NameWithFlag name={name} countryCode={country?.code} />
         </div>
         <div className="text-xs md:text-base font-light">{isinCode ?? "-"}</div>
@@ -71,7 +71,7 @@ const TradableSecurityMd = (security: TradableSecuritySized) => {
         </div>
         <div>{url2 ? <DownloadableDocument url={url2} label="" /> : "-"}</div>
         <div>{url ? <DownloadableDocument url={url} label="" /> : "-"}</div>
-        <div className="flex gap-2 justify-end ml-4">
+        <div className="flex gap-2 justify-end items-start pl-4">
           <Button
             isFullWidth
             size="xs"
