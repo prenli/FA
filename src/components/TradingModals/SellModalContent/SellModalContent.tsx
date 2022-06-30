@@ -15,6 +15,7 @@ import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { usePortfolioSelect } from "hooks/usePortfolioSelect";
 import { useParams } from "react-router-dom";
 import { Slide, toast, ToastContainer } from "react-toastify";
+import { round } from "../../../utils/number";
 import { useTradeAmountInput } from "./useTradeAmountInput";
 
 export interface SellModalInitialData {
@@ -59,7 +60,7 @@ export const SellModalContent = ({
     error,
     data: { marketValue = 0, marketFxRate = 1 } = {},
   } = useGetPortfolioHoldingDetails(portfolioId.toString(), holdingId);
-  const marketValueInSecurityCurrency = marketValue * marketFxRate;
+  const marketValueInSecurityCurrency = round(marketValue * marketFxRate, 2);
 
   const {
     inputValue,
