@@ -109,6 +109,7 @@ export interface HoldingPosition {
   marketValue: number;
   valueChangeAbsolute: number;
   valueChangeRelative: number;
+  marketFxRate: number;
 }
 
 export interface AllPortfoliosHoldingDetailsQuery {

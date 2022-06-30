@@ -44,6 +44,7 @@ export const SellModalContent = ({
 }: SellModalProps) => {
   const {
     name: securityName,
+    currency: { securityCode: currency },
     url2,
     type: { code: securityType } = {},
   } = security;
@@ -53,13 +54,12 @@ export const SellModalContent = ({
   const { portfolioId, setPortfolioId, portfolioOptions } =
     usePortfolioSelect();
 
-  const { data: { portfoliosCurrency: currency = "EUR" } = {} } =
-    useGetContactInfo();
   const {
     loading,
     error,
-    data: { marketValue = 0 } = {},
+    data: { marketValue = 0, marketFxRate = 1 } = {},
   } = useGetPortfolioHoldingDetails(portfolioId.toString(), holdingId);
+  const marketValueInSecurityCurrency = marketValue * marketFxRate;
 
   const {
     inputValue,
@@ -71,7 +71,7 @@ export const SellModalContent = ({
     setTradeAmountToAll,
     setTradeAmountToHalf,
     onInputModeChange,
-  } = useTradeAmountInput(marketValue, currency);
+  } = useTradeAmountInput(marketValueInSecurityCurrency, currency);
 
   const { handleTrade: handleSell, submitting } = useTrade({
     tradeType: getTradeType(securityType),
@@ -109,7 +109,7 @@ export const SellModalContent = ({
       >
         {currency &&
           t("numberWithCurrency", {
-            value: marketValue,
+            value: marketValueInSecurityCurrency,
             currency: currency,
           })}
       </LabeledDiv>

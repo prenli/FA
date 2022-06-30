@@ -77,7 +77,7 @@ export const useTradeAmountInput = (marketValue: number, currency: string) => {
     } else if (inputMode.id === INPUT_MODE.CURRENCY) {
       setInputState((previousState) => ({
         ...previousState,
-        inputValue: marketValue,
+        inputValue: round(marketValue, 2),
       }));
     }
   };

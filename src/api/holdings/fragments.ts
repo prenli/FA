@@ -43,6 +43,7 @@ export const PORTFOLIO_REPORT_HOLDINGS_DETAILS_FIELDS = gql`
       marketValue
       valueChangeAbsolute
       valueChangeRelative
+      marketFxRate
     }
   }
 `;
