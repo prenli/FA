@@ -13,7 +13,7 @@ export interface TransactionsListProps {
 }
 
 export type TransactionProps = (TradeOrder | Transaction) & {
-  onClick: () => void;
+  onClick?: () => void;
   showPortfolioLabel?: boolean;
 };
 

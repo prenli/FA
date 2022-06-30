@@ -60,7 +60,7 @@ export const TransactionsListWithOneLineRow = ({
             isLocalOrder(transaction) ? transaction.reference : transaction.id
           }
           showPortfolioLabel={showPortfolioLabel}
-          onClick={() => navigate(transaction.id)}
+          onClick={navigate(transaction.id)}
         />
       ))}
     </div>

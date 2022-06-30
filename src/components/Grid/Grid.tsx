@@ -60,11 +60,15 @@ const GridHeader = ({ children }: GridHeaderProps) => (
 );
 Grid.Header = GridHeader;
 
-const GridRow = ({ children, ...rest }: GridProps) => (
+const GridRow = ({ children, onClick, className, ...rest }: GridProps) => (
   <Grid
     firstChildClassName="ml-2 text-left"
     middleChildClassName="text-right pl-2"
     lastChildClassName="text-right mr-2"
+    onClick={onClick}
+    className={
+      (className ? className : "") + (onClick ? " cursor-pointer" : "")
+    }
     {...rest}
   >
     {children}

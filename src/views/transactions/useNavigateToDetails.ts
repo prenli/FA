@@ -9,8 +9,9 @@ export const useNavigateToDetails = (type: TransactionType) => {
   const navigate = useNavigate();
 
   return (transactionId: number) => {
-    if (transactionId !== LocalTradeOrderId) {
-      navigate(`${getNavigationPath(type)}/${transactionId}`);
+    if (transactionId === LocalTradeOrderId) {
+      return undefined;
     }
+    return () => navigate(`${getNavigationPath(type)}/${transactionId}`);
   };
 };

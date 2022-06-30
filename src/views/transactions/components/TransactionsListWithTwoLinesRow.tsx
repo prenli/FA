@@ -23,7 +23,7 @@ export const TransactionsListWithTwoLinesRow = ({
           key={
             isLocalOrder(transaction) ? transaction.reference : transaction.id
           }
-          onClick={() => navigate(transaction.id)}
+          onClick={navigate(transaction.id)}
         />
       ))}
     </div>
