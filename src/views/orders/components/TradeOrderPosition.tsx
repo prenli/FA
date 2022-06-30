@@ -36,7 +36,7 @@ export const TradeOrderPosition = ({
         }`}</div>
         <Badge colorScheme={getTransactionColor(amountEffect, cashFlowEffect)}>
           {getNameFromBackendTranslations(
-            typeName.toLowerCase(),
+            typeName,
             i18n.language,
             typeNamesAsMap
           )}

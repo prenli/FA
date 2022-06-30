@@ -69,7 +69,7 @@ const Transaction = ({
                 colorScheme={getTransactionColor(amountEffect, cashFlowEffect)}
               >
                 {getNameFromBackendTranslations(
-                  typeName.toLowerCase(),
+                  typeName,
                   i18n.language,
                   typeNamesAsMap
                 )}

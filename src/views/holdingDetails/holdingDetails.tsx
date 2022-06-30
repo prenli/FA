@@ -37,7 +37,7 @@ export const HoldingDetails = ({
   const {
     name,
     isinCode,
-    type: { namesAsMap, code: typeCode },
+    type: { namesAsMap, code: typeCode, name: typeName },
     latestMarketData,
     currency: { securityCode: currency },
     url,
@@ -91,7 +91,7 @@ export const HoldingDetails = ({
                   <DataRow
                     label={t("holdingsPage.type")}
                     value={getNameFromBackendTranslations(
-                      typeCode.toLowerCase(),
+                      typeName,
                       i18n.language,
                       namesAsMap
                     )}

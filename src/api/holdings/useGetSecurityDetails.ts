@@ -24,6 +24,7 @@ const SECURITY_DETAILS_QUERY = gql`
         id
         code
         namesAsMap
+        name
       }
       fxRate(quoteCurrency: $currency)
     }

@@ -83,6 +83,7 @@ export interface SecurityDetailsPosition {
   type: {
     code: SecurityTypeCode;
     namesAsMap: Record<string, string>;
+    name: string;
   };
   fxRate: number;
 }
