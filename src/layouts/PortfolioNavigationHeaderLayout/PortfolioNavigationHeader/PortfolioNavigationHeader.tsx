@@ -3,7 +3,7 @@ import {
   TOTAL_INVESTMENTS_OPTION_ID,
   useGetPortfolioOptions,
 } from "hooks/useGetPortfolioOptions";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { useNavigateToPortfolioTab } from "./useNavigateToPortfolioTab";
 import { useRedirectIfOnlyOnePortfolio } from "./useRedirectIfOnlyOnePortfolio";
 
@@ -21,6 +21,17 @@ export const PortfolioNavigationHeader = () => {
   const onPortfolioChange = (selectedOption: PortfolioOption) => {
     navigateToPortfolioTab(selectedOption.urlPrefix);
   };
+  const currentPortfolio = portfolioId
+    ? parseInt(portfolioId, 10)
+    : TOTAL_INVESTMENTS_OPTION_ID;
+
+  // redirect to root when portfolioId does not match available portfolios
+  if (
+    currentPortfolio !== TOTAL_INVESTMENTS_OPTION_ID &&
+    !portfolioOptions.some((option) => option.id === currentPortfolio)
+  ) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div className="z-20 pt-2 bg-white">
@@ -31,11 +42,7 @@ export const PortfolioNavigationHeader = () => {
             <div className="sm:min-w-[350px] sm:w-fit">
               <PortfolioSelect
                 portfolioOptions={portfolioOptions}
-                portfolioId={
-                  portfolioId
-                    ? parseInt(portfolioId, 10)
-                    : TOTAL_INVESTMENTS_OPTION_ID
-                }
+                portfolioId={currentPortfolio}
                 onChange={onPortfolioChange}
               />
             </div>
