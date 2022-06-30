@@ -4,6 +4,7 @@ import Keycloak, {
   KeycloakProfile,
   KeycloakPromise,
 } from "keycloak-js";
+import { persistor } from "./apolloClient";
 import {
   getLastUsedLinkedContact,
   isStandalone,
@@ -158,6 +159,11 @@ class KeycloakService {
       const profile = await this.keycloak.loadUserProfile();
       const linkedContact = this.getLinkedContactFromProfile(profile);
       if (linkedContact !== this.state.linkedContact) {
+        const lastUsedLinkedContact = getLastUsedLinkedContact();
+        if (linkedContact !== lastUsedLinkedContact) {
+          // clear apollo's local storage cache to make sure that different contacts' data won't mix
+          await persistor.purge();
+        }
         setLastUsedLinkedContact(linkedContact);
         this.state = {
           ...this.state,
@@ -166,6 +172,8 @@ class KeycloakService {
         };
       }
     }
+    // // clear apollo's local storage cache
+    // await persistor.purge();
   }
 
   getLinkedContactFromProfile(profile: FAKeycloakProfile) {
