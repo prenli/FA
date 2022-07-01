@@ -68,7 +68,7 @@ export const WithdrawModalContent = ({
           onChange={(event) => {
             setAmount(Number(event.currentTarget.value));
           }}
-          label={t("moneyModal.withdrawAmountInputLabel", {
+          label={t("moneyModal.withdrawalAmountInputLabel", {
             currency,
           })}
           type="number"

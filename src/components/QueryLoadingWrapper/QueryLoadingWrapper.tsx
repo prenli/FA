@@ -5,7 +5,7 @@ import { Card } from "../Card/Card";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import { LoadingIndicator } from "../LoadingIndicator/LoadingIndicator";
 
-interface QueryLoadingWrapperProps<T> extends QueryData<T> {
+export interface QueryLoadingWrapperProps<T> extends QueryData<T> {
   SuccessComponent: (props: { data: T }) => JSX.Element;
 }
 

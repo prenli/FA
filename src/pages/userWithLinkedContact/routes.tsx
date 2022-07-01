@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { TranslationText } from "components";
+import { PortfolioGuard, TranslationText } from "components";
 import { MainLayout } from "layouts/MainLayout/MainLayout";
 import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
 import { NavTabLayout } from "layouts/NavTabLayout/NavTabLayout";
@@ -53,25 +53,41 @@ export const mainTabRoutes: NavTabPath[] = [
   {
     path: "overview",
     tabLabel: <TranslationText translationKey="navTab.tabs.overview" />,
-    tabComponent: <Overview />,
+    tabComponent: (
+      <PortfolioGuard>
+        <Overview />
+      </PortfolioGuard>
+    ),
     element: null,
   },
   {
     path: "holdings",
     tabLabel: <TranslationText translationKey="navTab.tabs.holdings" />,
-    tabComponent: <Holdings />,
+    tabComponent: (
+      <PortfolioGuard>
+        <Holdings />
+      </PortfolioGuard>
+    ),
     element: null,
   },
   {
     path: "transactions",
     tabLabel: <TranslationText translationKey="navTab.tabs.transactions" />,
-    tabComponent: <Transactions />,
+    tabComponent: (
+      <PortfolioGuard>
+        <Transactions />
+      </PortfolioGuard>
+    ),
     element: null,
   },
   {
     path: "orders",
     tabLabel: <TranslationText translationKey="navTab.tabs.orders" />,
-    tabComponent: <Orders />,
+    tabComponent: (
+      <PortfolioGuard>
+        <Orders />
+      </PortfolioGuard>
+    ),
     element: null,
   },
   {
@@ -85,7 +101,11 @@ export const mainTabRoutes: NavTabPath[] = [
         {
           path: "trading",
           tabLabel: <TranslationText translationKey="navTab.tabs.trading" />,
-          tabComponent: <Trading />,
+          tabComponent: (
+            <PortfolioGuard>
+              <Trading />
+            </PortfolioGuard>
+          ),
           element: null,
         },
       ]

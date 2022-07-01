@@ -14,6 +14,7 @@ import i18n from "i18next";
 import { useKeycloak } from "providers/KeycloakProvider";
 import { useNavigate, To, NavigateOptions } from "react-router";
 import { keycloakService } from "services/keycloakService";
+import { useGetContactInfo } from "../../api/initial/useGetContactInfo";
 import { useModifiedTranslation } from "../../hooks/useModifiedTranslation";
 import { useModal } from "../Modal/useModal";
 import { DepositModalContent } from "../MoneyModals/DepositModalContent/DepositModalContent";
@@ -29,6 +30,7 @@ interface MenuActions {
 const getMenuItems = (
   menuActions: MenuActions,
   hasLinkedContact: boolean,
+  canTradeMoney: boolean,
   processes: Process[]
 ) => {
   if (!hasLinkedContact) {
@@ -41,16 +43,20 @@ const getMenuItems = (
     ];
   }
   return [
-    {
-      label: i18n.t("userMenu.deposit"),
-      action: menuActions.deposit,
-      Icon: DepositIcon,
-    },
-    {
-      label: i18n.t("userMenu.withdraw"),
-      action: menuActions.withdraw,
-      Icon: WithdrawalIcon,
-    },
+    ...(canTradeMoney
+      ? [
+          {
+            label: i18n.t("userMenu.deposit"),
+            action: menuActions.deposit,
+            Icon: DepositIcon,
+          },
+          {
+            label: i18n.t("userMenu.withdraw"),
+            action: menuActions.withdraw,
+            Icon: WithdrawalIcon,
+          },
+        ]
+      : []),
     ...processes.map((process) => ({
       label: process.name,
       action: () =>
@@ -72,6 +78,7 @@ export const UserMenu = () => {
   const { linkedContact } = useKeycloak();
   const navigate = useNavigate();
   const { data: processes = [] } = useGetContactProcesses();
+  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
   const {
     Modal,
     onOpen: onDepositModalOpen,
@@ -109,11 +116,14 @@ export const UserMenu = () => {
           as={Fragment}
         >
           <Menu.Items className="absolute top-full right-0 z-10 py-1 bg-white rounded-md divide-y divide-gray-100 ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none min-w-[120px]">
-            {getMenuItems(menuActions, !!linkedContact, processes).map(
-              (item, index) => (
-                <MenuItem key={index} {...item} />
-              )
-            )}
+            {getMenuItems(
+              menuActions,
+              !!linkedContact,
+              portfolios.length > 0,
+              processes
+            ).map((item, index) => (
+              <MenuItem key={index} {...item} />
+            ))}
           </Menu.Items>
         </Transition>
       </Menu>

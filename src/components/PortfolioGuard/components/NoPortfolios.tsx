@@ -1,5 +1,5 @@
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
+import { ErrorMessage } from "../../ErrorMessage/ErrorMessage";
 
 export const NoPortfolios = () => {
   const { t } = useModifiedTranslation();

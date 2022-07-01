@@ -15,15 +15,16 @@ export const useGetPortfolioOptions = (includeTotal = true) => {
       return [getPortfolioOption(portfolio.id, portfolio.name)];
     }
 
-    const predefinedOptions = includeTotal
-      ? [
-          {
-            id: TOTAL_INVESTMENTS_OPTION_ID,
-            urlPrefix: "",
-            label: t("navTab.totalInvestments"),
-          },
-        ]
-      : [];
+    const predefinedOptions =
+      includeTotal && portfolios.length !== 0
+        ? [
+            {
+              id: TOTAL_INVESTMENTS_OPTION_ID,
+              urlPrefix: "",
+              label: t("navTab.totalInvestments"),
+            },
+          ]
+        : [];
 
     return [
       ...predefinedOptions,

@@ -46,10 +46,12 @@ export const PortfolioNavigationHeader = () => {
                 onChange={onPortfolioChange}
               />
             </div>
-          ) : (
+          ) : portfolioOptions.length === 1 ? (
             <div className="flex items-center ml-3 h-10 text-2xl font-bold text-gray-900">
               {portfolioOptions[0].label}
             </div>
+          ) : (
+            <div />
           )}
         </div>
         <div className="px-2">
