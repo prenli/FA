@@ -11,6 +11,7 @@ interface CashAccountSelectProps {
   currentCashAccount: CashAccount | undefined;
   setCurrentCashAccount: Dispatch<SetStateAction<CashAccount | undefined>>;
   cashAccounts: CashAccount[];
+  accountSelectLabel: string;
 }
 
 export const CashAccountSelect = ({
@@ -20,6 +21,7 @@ export const CashAccountSelect = ({
   currentCashAccount,
   setCurrentCashAccount,
   cashAccounts,
+  accountSelectLabel,
 }: CashAccountSelectProps) => {
   const { t } = useModifiedTranslation();
   const {
@@ -42,7 +44,7 @@ export const CashAccountSelect = ({
         value={currentCashAccount}
         onChange={setCurrentCashAccount}
         options={cashAccounts}
-        label={t("moneyModal.fromAccount")}
+        label={accountSelectLabel}
       />
       <div className="grid grid-cols-2 divide-x">
         <LabeledDiv

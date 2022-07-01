@@ -52,6 +52,7 @@ export const DepositModalContent = ({
       <CashAccountSelect
         {...cashAccountSelectProps}
         {...portfolioSelectProps}
+        accountSelectLabel={t("moneyModal.toAccount")}
       />
       <hr className="mb-2" />
       <div className="flex flex-col gap-4 items-stretch ">

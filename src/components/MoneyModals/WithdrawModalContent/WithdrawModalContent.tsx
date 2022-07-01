@@ -58,6 +58,7 @@ export const WithdrawModalContent = ({
       <CashAccountSelect
         {...cashAccountSelectProps}
         {...portfolioSelectProps}
+        accountSelectLabel={t("moneyModal.fromAccount")}
       />
       <hr className="mb-2" />
       <div className="flex flex-col gap-4 items-stretch ">
