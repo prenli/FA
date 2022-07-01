@@ -140,7 +140,7 @@
     "currentBalance": "Current balance",
     "availableBalance": "Available balance",
     "depositAmountInputLabel": "Enter deposit amount in {{currency}}",
-    "withdrawAmountInputLabel": "Enter withdraw amount in {{currency}}",
+    "withdrawalAmountInputLabel": "Enter withdrawal amount in {{currency}}",
     "amountInputError": "Entered value is not correct",
     "depositButtonLabel": "Deposit",
     "withdrawButtonLabel": "Withdraw",
