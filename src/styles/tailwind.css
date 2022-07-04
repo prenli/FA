@@ -37,3 +37,7 @@
 .apexcharts-xaxistooltip:after {
   @apply border-0 !important;
 }
+
+.Toastify__toast-theme--colored.Toastify__toast--success {
+  @apply bg-green-500 !important;
+}

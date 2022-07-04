@@ -6,6 +6,7 @@ import {
 } from "hooks/useLocalTradeStorageMutation";
 import { useUniqueReference } from "hooks/useUniqueReference";
 import { toast } from "react-toastify";
+import { useModifiedTranslation } from "../../hooks/useModifiedTranslation";
 
 // temporary we use importTradeOrder mutation, in the future it will be done with importTransaction
 const IMPORT_MONEY_TRADE_MUTATION = gql`
@@ -65,6 +66,7 @@ export const useMoneyTrade = (
       tradeType: TradeType;
     }
 ) => {
+  const { t } = useModifiedTranslation();
   const [submitting, setSubmitting] = useState(false);
   const [handleAPITrade] = useMutation<
     ImportTransactionQueryResponse,
@@ -103,6 +105,14 @@ export const useMoneyTrade = (
       });
 
       setSubmitting(false);
+      toast.success(
+        t(
+          tradeType === "deposit"
+            ? "moneyModal.depositSuccess"
+            : "moneyModal.withdrawalSuccess"
+        ),
+        { autoClose: 3000 }
+      );
       return apiResponse;
     } catch (e: unknown) {
       const error = e as Error | ApolloError;
