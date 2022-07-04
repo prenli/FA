@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { LoadingIndicator } from "components";
+import { Outlet } from "react-router-dom";
 import { NavTab } from "./NavTab/NavTab";
 import { NavTabPath } from "./NavTab/types";
 import { useNavTab } from "./NavTab/useNavTab";
@@ -34,6 +35,7 @@ export const NavTabLayout = ({ routes }: NavTabTemplateLayoutProps) => {
           </NavTab.CarouselPanels>
         </Suspense>
       </NavTab.Group>
+      <Outlet />
     </div>
   );
 };

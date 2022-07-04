@@ -1,10 +1,9 @@
 import { lazy } from "react";
 import { TranslationText } from "components";
+import { NavTabRoutes } from "layouts/NavTabLayout/NavTab/NavTabRoutes";
 import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
-import { NavTabLayout } from "layouts/NavTabLayout/NavTabLayout";
 import { PortfolioNavigationHeaderLayout } from "layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
-import { Navigate } from "react-router-dom";
-import { canTrade } from "services/permissions/CanTrade";
+import { Navigate, useRoutes } from "react-router-dom";
 
 const Overview = lazy(() =>
   import("./overview").then((module) => ({ default: module.OverviewPage }))
@@ -76,16 +75,12 @@ export const portfolioTabRoutes: NavTabPath[] = [
     tabComponent: <Documents />,
     element: null,
   },
-  ...(canTrade
-    ? [
-        {
-          path: "trading",
-          tabLabel: <TranslationText translationKey="navTab.tabs.trading" />,
-          tabComponent: <Trading />,
-          element: null,
-        },
-      ]
-    : []),
+  {
+    path: "trading",
+    tabLabel: <TranslationText translationKey="navTab.tabs.trading" />,
+    tabComponent: <Trading />,
+    element: null,
+  },
   {
     path: "contact",
     tabLabel: <TranslationText translationKey="navTab.tabs.contact" />,
@@ -96,35 +91,33 @@ export const portfolioTabRoutes: NavTabPath[] = [
 
 export const portfolioRoutes = [
   {
-    path: "portfolio/:portfolioId",
+    path: "",
+    element: <Navigate to="overview" replace />,
+  },
+  {
+    path: "",
+    element: <PortfolioNavigationHeaderLayout />,
     children: [
       {
-        path: "",
-        element: <Navigate to="overview" replace />,
-      },
-      {
-        path: "",
-        element: <PortfolioNavigationHeaderLayout />,
-        children: [
-          {
-            path: "",
-            element: <NavTabLayout routes={portfolioTabRoutes} />,
-            children: portfolioTabRoutes,
-          },
-        ],
-      },
-      {
-        path: "holdings/:holdingId",
-        element: <Holding />,
-      },
-      {
-        path: "transactions/:transactionId",
-        element: <TransactionDetails />,
-      },
-      {
-        path: "orders/:orderId",
-        element: <OrderDetails />,
+        path: "*",
+        element: <NavTabRoutes routes={portfolioTabRoutes} />,
       },
     ],
   },
+  {
+    path: "holdings/:holdingId",
+    element: <Holding />,
+  },
+  {
+    path: "transactions/:transactionId",
+    element: <TransactionDetails />,
+  },
+  {
+    path: "orders/:orderId",
+    element: <OrderDetails />,
+  },
 ];
+
+export const PortfolioRoutes = () => {
+  return useRoutes(portfolioRoutes);
+};

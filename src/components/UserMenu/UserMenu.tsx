@@ -7,7 +7,7 @@ import {
 import { ReactComponent as DepositIcon } from "assets/deposit.svg";
 import { ReactComponent as ProcessIcon } from "assets/external-link.svg";
 import { ReactComponent as LogoutIcon } from "assets/logout.svg";
-import { ReactComponent as UserCircleIcon } from "assets/user-circle.svg";
+import { ReactComponent as MenuIcon } from "assets/view-list.svg";
 import { ReactComponent as WithdrawalIcon } from "assets/withdrawal.svg";
 import classNames from "classnames";
 import i18n from "i18next";
@@ -103,7 +103,7 @@ export const UserMenu = () => {
       <Menu as="div" className="grid relative items-center">
         <Menu.Button>
           <div className="w-8 h-8 rounded cursor-pointer">
-            <UserCircleIcon className="h-full text-gray-900" />
+            <MenuIcon className="h-full text-gray-900" />
           </div>
         </Menu.Button>
         <Transition

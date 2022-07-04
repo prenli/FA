@@ -1,14 +1,13 @@
 import { lazy } from "react";
 import { PortfolioGuard, TranslationText } from "components";
 import { MainLayout } from "layouts/MainLayout/MainLayout";
+import { NavTabRoutes } from "layouts/NavTabLayout/NavTab/NavTabRoutes";
 import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
-import { NavTabLayout } from "layouts/NavTabLayout/NavTabLayout";
 import { PortfolioNavigationHeaderLayout } from "layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
 import { Navigate, useRoutes } from "react-router-dom";
-import { canTrade } from "services/permissions/CanTrade";
 import { NotFoundView } from "views/notFoundView/notFoundView";
 import { authUserMainRoutes } from "../authUser/routes";
-import { portfolioRoutes } from "./portfolio/routes";
+import { PortfolioRoutes } from "./portfolio/routes";
 
 const Overview = lazy(() =>
   import("./overview").then((module) => ({ default: module.OverviewPage }))
@@ -96,20 +95,16 @@ export const mainTabRoutes: NavTabPath[] = [
     tabComponent: <Documents />,
     element: null,
   },
-  ...(canTrade
-    ? [
-        {
-          path: "trading",
-          tabLabel: <TranslationText translationKey="navTab.tabs.trading" />,
-          tabComponent: (
-            <PortfolioGuard>
-              <Trading />
-            </PortfolioGuard>
-          ),
-          element: null,
-        },
-      ]
-    : []),
+  {
+    path: "trading",
+    tabLabel: <TranslationText translationKey="navTab.tabs.trading" />,
+    tabComponent: (
+      <PortfolioGuard>
+        <Trading />
+      </PortfolioGuard>
+    ),
+    element: null,
+  },
   {
     path: "contact",
     tabLabel: <TranslationText translationKey="navTab.tabs.contact" />,
@@ -128,9 +123,8 @@ const linkedContactMainRoutes = [
     element: <PortfolioNavigationHeaderLayout />,
     children: [
       {
-        path: "",
-        element: <NavTabLayout routes={mainTabRoutes} />,
-        children: mainTabRoutes,
+        path: "*",
+        element: <NavTabRoutes routes={mainTabRoutes} />,
       },
     ],
   },
@@ -154,7 +148,10 @@ export const userWithLinkedContactRoutes = [
     element: <MainLayout />,
     children: [
       ...linkedContactMainRoutes,
-      ...portfolioRoutes,
+      {
+        path: "portfolio/:portfolioId/*",
+        element: <PortfolioRoutes />,
+      },
       ...authUserMainRoutes,
       {
         path: "*",

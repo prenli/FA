@@ -14,7 +14,7 @@ import { SellModalInitialData } from "components/TradingModals/SellModalContent/
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { PageLayout } from "layouts/PageLayout/PageLayout";
 import { useNavigate } from "react-router-dom";
-import { CanTrade } from "services/permissions/CanTrade";
+import { CanTrade } from "services/permissions/trade";
 import { getNameFromBackendTranslations } from "utils/transactions";
 import { addProtocolToUrl } from "utils/url";
 import { DataRow } from "./components/DataRow";
