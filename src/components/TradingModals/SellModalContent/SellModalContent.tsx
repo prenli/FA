@@ -14,7 +14,6 @@ import {
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { usePortfolioSelect } from "hooks/usePortfolioSelect";
 import { useParams } from "react-router-dom";
-import { Slide, toast, ToastContainer } from "react-toastify";
 import { round } from "../../../utils/number";
 import { useTradeAmountInput } from "./useTradeAmountInput";
 
@@ -55,11 +54,8 @@ export const SellModalContent = ({
   const { portfolioId, setPortfolioId, portfolioOptions } =
     usePortfolioSelect();
 
-  const {
-    loading,
-    error,
-    data: { marketValue = 0, marketFxRate = 1 } = {},
-  } = useGetPortfolioHoldingDetails(portfolioId.toString(), holdingId);
+  const { loading, data: { marketValue = 0, marketFxRate = 1 } = {} } =
+    useGetPortfolioHoldingDetails(portfolioId.toString(), holdingId);
   const marketValueInSecurityCurrency = round(marketValue * marketFxRate, 2);
 
   const {
@@ -172,17 +168,6 @@ export const SellModalContent = ({
           {t("tradingModal.sellModalHeader")}
         </Button>
       </div>
-      {error && (
-        <ToastContainer
-          position={toast.POSITION.BOTTOM_CENTER}
-          hideProgressBar
-          theme="colored"
-          transition={Slide}
-          autoClose={false}
-        >
-          {t("tradingModal.queryErrorWarning")}
-        </ToastContainer>
-      )}
     </div>
   );
 };

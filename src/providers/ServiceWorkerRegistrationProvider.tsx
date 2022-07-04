@@ -2,7 +2,7 @@ import { ReactNode, useCallback, useEffect, useState } from "react";
 import { ReactComponent as RefreshIcon } from "assets/refresh.svg";
 import { Button, Center } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { Slide, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { persistor } from "services/apolloClient";
 import * as serviceWorkerRegistration from "../serviceWorkerRegistration";
 
@@ -17,11 +17,7 @@ export const ServiceWorkerRegistrationProvider = ({
     (registration: ServiceWorkerRegistration) => {
       toast.info(<RefreshToast registration={registration} />, {
         toastId: "newVersionToast",
-        position: toast.POSITION.BOTTOM_CENTER,
-        hideProgressBar: true,
-        autoClose: false,
         theme: "light",
-        transition: Slide,
         icon: false,
       });
     },

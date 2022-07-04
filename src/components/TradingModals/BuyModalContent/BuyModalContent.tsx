@@ -12,7 +12,6 @@ import {
 } from "components/index";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { usePortfolioSelect } from "hooks/usePortfolioSelect";
-import { Slide, toast, ToastContainer } from "react-toastify";
 
 export interface BuyModalInitialData {
   name: string;
@@ -79,7 +78,6 @@ export const BuyModalContent = ({
     usePortfolioSelect();
   const {
     loading,
-    error,
     data: { availableCash = 0, currency: portfolioCurrency = "EUR" } = {},
   } = useGetBuyData(portfolioId.toString());
 
@@ -183,17 +181,6 @@ export const BuyModalContent = ({
       <div className="text-xs text-center text-gray-600 max-w-[375px]">
         {t("tradingModal.buyDisclaimer")}
       </div>
-      {error && (
-        <ToastContainer
-          position={toast.POSITION.BOTTOM_CENTER}
-          hideProgressBar
-          theme="colored"
-          transition={Slide}
-          autoClose={false}
-        >
-          {t("tradingModal.queryErrorWarning")}
-        </ToastContainer>
-      )}
     </div>
   );
 };

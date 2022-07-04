@@ -4,7 +4,7 @@ import {
   LocalTradeOrderDetails,
   useLocalTradeStorageMutation,
 } from "hooks/useLocalTradeStorageMutation";
-import { Slide, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useUniqueReference } from "../../hooks/useUniqueReference";
 
 const IMPORT_TRADE_ORDER_MUTATION = gql`
@@ -110,11 +110,6 @@ export const useTrade = (
     } catch (e: unknown) {
       const error = e as Error | ApolloError;
       toast.error(error.message, {
-        position: toast.POSITION.BOTTOM_CENTER,
-        hideProgressBar: true,
-        theme: "colored",
-        transition: Slide,
-        autoClose: false,
         style: { whiteSpace: "pre-line" },
       });
       setSubmitting(false);
