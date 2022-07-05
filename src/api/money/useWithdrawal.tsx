@@ -4,13 +4,12 @@ import {
   LocalTradeOrderDetails,
   useLocalTradeStorageMutation,
 } from "hooks/useLocalTradeStorageMutation";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useUniqueReference } from "hooks/useUniqueReference";
 import { toast } from "react-toastify";
-import { useModifiedTranslation } from "../../hooks/useModifiedTranslation";
 
-// temporary we use importTradeOrder mutation, in the future it will be done with importTransaction
-const IMPORT_MONEY_TRADE_MUTATION = gql`
-  mutation ImportTransaction(
+const IMPORT_WITHDRAWAL_MUTATION = gql`
+  mutation ImportWithdrawal(
     $tradeAmount: String
     $currency: String
     $reference: String
@@ -52,9 +51,9 @@ interface ImportTransactionQueryResponse {
   } & unknown)[];
 }
 
-export type TradeType = "withdrawal" | "deposit";
+export const withdrawalType = "withdrawal" as const;
 
-export const useMoneyTrade = (
+export const useWithdrawal = (
   newTransaction: Omit<
     ImportTransactionQueryVariables,
     | "transactionTypeCode"
@@ -62,16 +61,14 @@ export const useMoneyTrade = (
     | "reference"
     | "portfolioShortName"
   > &
-    Omit<LocalTradeOrderDetails, "tradeType" | "reference"> & {
-      tradeType: TradeType;
-    }
+    Omit<LocalTradeOrderDetails, "tradeType" | "reference">
 ) => {
   const { t } = useModifiedTranslation();
   const [submitting, setSubmitting] = useState(false);
   const [handleAPITrade] = useMutation<
     ImportTransactionQueryResponse,
     ImportTransactionQueryVariables
-  >(IMPORT_MONEY_TRADE_MUTATION, {
+  >(IMPORT_WITHDRAWAL_MUTATION, {
     refetchQueries: ["GetAllPortfoliosTradeOrders", "GetPortfolioTradeOrders"],
   });
 
@@ -81,7 +78,7 @@ export const useMoneyTrade = (
   const handleTrade = async () => {
     setSubmitting(true);
     try {
-      const { tradeType, portfolio, account } = newTransaction;
+      const { portfolio, account } = newTransaction;
       if (!portfolio || !account) {
         return;
       }
@@ -91,7 +88,7 @@ export const useMoneyTrade = (
         variables: {
           ...newTransaction,
           transactionDate: new Date(),
-          transactionTypeCode: getTradeTypeForAPI(tradeType),
+          transactionTypeCode: "WD",
           reference: transactionReference,
           portfolioShortName: portfolio.shortName,
         },
@@ -101,18 +98,12 @@ export const useMoneyTrade = (
 
       await saveToLocalTradeOrders({
         ...newTransaction,
+        tradeType: withdrawalType,
         reference: transactionReference,
       });
 
       setSubmitting(false);
-      toast.success(
-        t(
-          tradeType === "deposit"
-            ? "moneyModal.depositSuccess"
-            : "moneyModal.withdrawalSuccess"
-        ),
-        { autoClose: 3000 }
-      );
+      toast.success(t("moneyModal.withdrawalSuccess"), { autoClose: 3000 });
       return apiResponse;
     } catch (e: unknown) {
       const error = e as Error | ApolloError;
@@ -148,19 +139,5 @@ const handleBadAPIResponse = (
       }
     );
     throw new Error(errorMessage);
-  }
-};
-
-const getTradeTypeForAPI = (tradeType: TradeType) => {
-  switch (tradeType) {
-    case "withdrawal": {
-      return "WD";
-    }
-    case "deposit": {
-      return "DEP";
-    }
-    default: {
-      throw new Error("Impossible API money trade type");
-    }
   }
 };

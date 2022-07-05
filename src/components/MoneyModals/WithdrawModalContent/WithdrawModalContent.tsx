@@ -1,6 +1,6 @@
 import { MutableRefObject, useState } from "react";
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
-import { useMoneyTrade } from "api/money/useMoneyTrade";
+import { useWithdrawal } from "api/money/useWithdrawal";
 import { Input, Button } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { usePortfolioSelect } from "hooks/usePortfolioSelect";
@@ -42,8 +42,7 @@ export const WithdrawModalContent = ({
   const isAmountCorrect =
     !isNaN(availableBalance) && amount >= 0 && amount <= availableBalance;
 
-  const { handleTrade: handleWithdraw, submitting } = useMoneyTrade({
-    tradeType: "withdrawal",
+  const { handleTrade: handleWithdraw, submitting } = useWithdrawal({
     portfolio:
       portfolios.find((portfolio) => portfolio.id === portfolioId) ||
       portfolios[0],

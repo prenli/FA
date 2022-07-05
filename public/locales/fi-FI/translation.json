@@ -147,6 +147,8 @@
     "missingExternalAccountMessage": "You don't have any External accounts defined",
     "depositDisclaimer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur ullamcorper ipsum vitae accumsan. Ut pulvinar erat non felis porta bibendum.",
     "withdrawDisclaimer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur ullamcorper ipsum vitae accumsan. Ut pulvinar erat non felis porta bibendum.",
+    "depositSuccess": "Your deposit request was created successfully",
+    "withdrawalSuccess": "Your withdrawal request was created successfully",
     "portfolio": "Portfolio"
   },
   "tradingModal": {
