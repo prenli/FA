@@ -21,13 +21,8 @@ export const WithdrawModalContent = ({
   const portfolioSelectProps = usePortfolioSelect();
   const { portfolioId } = portfolioSelectProps;
 
-  const {
-    accountsLoading,
-    currentExternalAccount,
-    setCurrentExternalAccount,
-    externalAccounts,
-    ...cashAccountSelectProps
-  } = usePortfoliosAccountsState(portfolioId);
+  const { accountsLoading, ...cashAccountSelectProps } =
+    usePortfoliosAccountsState(portfolioId);
   const {
     currentCashAccount: {
       availableBalance = 0,
@@ -78,12 +73,7 @@ export const WithdrawModalContent = ({
           }
         />
         <Button
-          disabled={
-            amount === 0 ||
-            accountsLoading ||
-            !isAmountCorrect ||
-            !currentExternalAccount
-          }
+          disabled={amount === 0 || accountsLoading || !isAmountCorrect}
           isLoading={submitting}
           onClick={async () => {
             const response = await handleWithdraw();

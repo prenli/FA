@@ -6,11 +6,6 @@ const CASH_ACCOUNTS_QUERY = gql`
   query GetCashAccounts($portfolioId: Long) {
     portfolio(id: $portfolioId) {
       id
-      accounts {
-        id
-        label: name
-        category
-      }
       portfolioReport {
         portfolioId
         accountItems {
@@ -39,15 +34,8 @@ interface APICashAccount {
   number: string;
 }
 
-interface APIAccount {
-  id: number;
-  label: string;
-  category: string;
-}
-
 interface PortfolioCashAccountsQuery {
   portfolio: {
-    accounts: APIAccount[];
     portfolioReport: {
       currency: {
         securityCode: string;
@@ -66,8 +54,6 @@ export interface CashAccount {
   availableBalance: number;
 }
 
-export type ExternalAccount = APIAccount;
-
 const mapCashAccount = (account: APICashAccount): CashAccount => ({
   id: account.accountId,
   label: account.accountName,
@@ -76,8 +62,6 @@ const mapCashAccount = (account: APICashAccount): CashAccount => ({
   currentBalance: account.balance,
   availableBalance: account.amountAfterOpenTradeOrders,
 });
-
-const EXTERNAL_CATEGORY_NAME = "External";
 
 export const useGetPortfoliosAccounts = (portfolioId: string | undefined) => {
   const { loading, error, data } = useQuery<PortfolioCashAccountsQuery>(
@@ -98,9 +82,6 @@ export const useGetPortfoliosAccounts = (portfolioId: string | undefined) => {
         data && {
           cashAccounts:
             data.portfolio.portfolioReport.accountItems?.map(mapCashAccount),
-          externalAccounts: data.portfolio.accounts.filter(
-            (account) => account.category === EXTERNAL_CATEGORY_NAME
-          ),
         },
       [data]
     ),
