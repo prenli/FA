@@ -156,6 +156,7 @@
     "portfolio": "Portfolio",
     "availableCash": "Available cash",
     "currentMarketValue": "Current market value",
+    "currentUnits": "Current position amount",
     "tradeAmount": "Total trade amount",
     "tradeAmountInputError": "Entered value is not correct",
     "tradeAmountInputLabel": "Enter trade amount in {{currency}}",
