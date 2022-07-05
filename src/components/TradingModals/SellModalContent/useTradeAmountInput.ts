@@ -81,12 +81,12 @@ export const useTradeAmountInput = (marketValue: number, currency: string) => {
       }));
     }
   };
-  const tradeAmount =
+  const amount =
     inputMode.id === INPUT_MODE.CURRENCY
       ? inputValue
       : round((inputValue * marketValue) / 100, 2);
   const isTradeAmountCorrect =
-    !isNaN(marketValue) && tradeAmount >= 0 && tradeAmount <= marketValue;
+    !isNaN(marketValue) && amount >= 0 && amount <= marketValue;
 
   return {
     inputValue,
@@ -94,7 +94,7 @@ export const useTradeAmountInput = (marketValue: number, currency: string) => {
     inputModesOptions,
     inputMode,
     isTradeAmountCorrect,
-    tradeAmount,
+    amount,
     setTradeAmountToAll,
     setTradeAmountToHalf,
     onInputModeChange,

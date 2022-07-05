@@ -63,6 +63,14 @@ const getTradeAmount = (
     ? tradeAmount * price
     : tradeAmount;
 
+const getTradeAmountArgs = (
+  amount: number,
+  securityType: SecurityTypeCode | undefined
+) =>
+  isTransactionAmountDefinedAsUnits(securityType)
+    ? { units: amount }
+    : { tradeAmount: amount };
+
 export const SellModalContent = ({
   modalInitialFocusRef,
   onClose,
@@ -83,11 +91,11 @@ export const SellModalContent = ({
 
   const {
     loading,
-    data: { marketValue = 0, marketFxRate = 1, amount = 0 } = {},
+    data: { marketValue = 0, marketFxRate = 1, amount: units = 0 } = {},
   } = useGetPortfolioHoldingDetails(portfolioId.toString(), holdingId);
   const currentAmount = getCurrentAmount(
     securityType,
-    amount,
+    units,
     marketValue,
     marketFxRate
   );
@@ -98,7 +106,7 @@ export const SellModalContent = ({
     inputModesOptions,
     inputMode,
     isTradeAmountCorrect,
-    tradeAmount,
+    amount,
     setTradeAmountToAll,
     setTradeAmountToHalf,
     onInputModeChange,
@@ -110,7 +118,7 @@ export const SellModalContent = ({
       portfolios.find((portfolio) => portfolio.id === portfolioId) ||
       portfolios[0],
     securityName,
-    tradeAmount,
+    ...getTradeAmountArgs(amount, securityType),
     ...security,
     currency,
   });
@@ -213,13 +221,13 @@ export const SellModalContent = ({
           </div>
           {t("numberWithCurrency", {
             value: isTradeAmountCorrect
-              ? getTradeAmount(securityType, tradeAmount, price)
+              ? getTradeAmount(securityType, amount, price)
               : 0,
             currency,
           })}
         </div>
         <Button
-          disabled={tradeAmount === 0 || loading || !isTradeAmountCorrect}
+          disabled={amount === 0 || loading || !isTradeAmountCorrect}
           isLoading={submitting}
           onClick={async () => {
             const response = await handleSell();
