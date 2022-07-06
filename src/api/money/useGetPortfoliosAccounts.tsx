@@ -13,6 +13,9 @@ const CASH_ACCOUNTS_QUERY = gql`
           currency {
             securityCode
           }
+          account {
+            cashAccount
+          }
           accountId
           amountAfterOpenTradeOrders
           balance
@@ -32,6 +35,9 @@ interface APICashAccount {
   amountAfterOpenTradeOrders: number;
   balance: number;
   number: string;
+  account: {
+    cashAccount: boolean;
+  };
 }
 
 interface PortfolioCashAccountsQuery {
@@ -80,10 +86,14 @@ export const useGetPortfoliosAccounts = (portfolioId: string | undefined) => {
     data: useMemo(
       () =>
         data && {
-          cashAccounts:
-            data.portfolio.portfolioReport.accountItems?.map(mapCashAccount),
+          cashAccounts: filterCashAccounts(
+            data.portfolio.portfolioReport.accountItems || []
+          ).map(mapCashAccount),
         },
       [data]
     ),
   };
 };
+
+const filterCashAccounts = (accounts: APICashAccount[]) =>
+  accounts.filter(({ account }) => account.cashAccount);
