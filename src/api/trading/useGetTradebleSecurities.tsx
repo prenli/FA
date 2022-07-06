@@ -11,12 +11,14 @@ const TRADABLE_SECURITIES_QUERY = gql`
     $currency: String
     $countryCode: String
     $securityType: String
+    $name: String
     $tradableTag: [String]
   ) {
     securities(
       tags: $tradableTag
       countryCode: $countryCode
       securityType: $securityType
+      name: $name
     ) {
       id
       name
@@ -80,6 +82,7 @@ export interface TradableSecuritiesQuery {
 interface TradableSecuritiesFilters {
   country: Option;
   type: Option;
+  name: string;
 }
 
 const filtersReducer = (
@@ -95,6 +98,7 @@ const noFilterOption = {
 const initialFilters = {
   country: noFilterOption,
   type: noFilterOption,
+  name: "",
 };
 
 // filters are temporary hardcoded, in future will be provided by API
@@ -154,11 +158,12 @@ export const useGetTradebleSecurities = () => {
       variables: {
         countryCode: filters.country.id,
         securityType: filters.type.id,
+        name: filters.name,
         currency: portfoliosCurrency,
         tradableTag,
       },
       ...getFetchPolicyOptions(
-        `useGetTradebleSecurities.${filters.country.id}.${filters.type.id}`
+        `useGetTradebleSecurities.${filters.country.id}.${filters.type.id}.${filters.name}`
       ),
     }
   );

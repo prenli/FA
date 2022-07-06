@@ -19,7 +19,7 @@ const InputPlain = (
     <input
       ref={ref}
       className={classNames(
-        "block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:border-primary-400 mt-1",
+        "h-10 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:border-primary-400",
         className,
         {
           "text-red-900 placeholder-red-700 bg-red-50 focus:border-red-500 border-red-500":

@@ -129,7 +129,8 @@
     "prospectus": "Prospectus",
     "filters": {
       "country": "Country",
-      "type": "Security type"
+      "type": "Security type",
+      "name": "Security name"
     }
   },
   "moneyModal": {
