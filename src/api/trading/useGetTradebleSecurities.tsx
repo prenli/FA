@@ -1,6 +1,7 @@
 import { useReducer } from "react";
 import { gql, useQuery } from "@apollo/client";
-import { Option } from "../../components/Select/Select";
+import { Option } from "components/Select/Select";
+import { tradableTag } from "services/permissions/trade";
 import { SecurityTypeCode } from "../holdings/types";
 import { useGetContactInfo } from "../initial/useGetContactInfo";
 import { getFetchPolicyOptions } from "../utils";
@@ -10,9 +11,10 @@ const TRADABLE_SECURITIES_QUERY = gql`
     $currency: String
     $countryCode: String
     $securityType: String
+    $tradableTag: [String]
   ) {
     securities(
-      tags: "Tradeable"
+      tags: $tradableTag
       countryCode: $countryCode
       securityType: $securityType
     ) {
@@ -153,6 +155,7 @@ export const useGetTradebleSecurities = () => {
         countryCode: filters.country.id,
         securityType: filters.type.id,
         currency: portfoliosCurrency,
+        tradableTag,
       },
       ...getFetchPolicyOptions(
         `useGetTradebleSecurities.${filters.country.id}.${filters.type.id}`

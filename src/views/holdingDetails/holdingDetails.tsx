@@ -14,7 +14,7 @@ import { SellModalInitialData } from "components/TradingModals/SellModalContent/
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { PageLayout } from "layouts/PageLayout/PageLayout";
 import { useNavigate } from "react-router-dom";
-import { CanTrade } from "services/permissions/trade";
+import { CanTrade, tradableTag } from "services/permissions/trade";
 import { getNameFromBackendTranslations } from "utils/transactions";
 import { addProtocolToUrl } from "utils/url";
 import { DataRow } from "./components/DataRow";
@@ -42,9 +42,12 @@ export const HoldingDetails = ({
     currency: { securityCode: currency },
     url,
     url2,
+    tagsAsSet,
   } = security;
   const navigate = useNavigate();
   const { i18n, t } = useModifiedTranslation();
+
+  const isTradable = tagsAsSet.includes(tradableTag);
 
   const {
     Modal,
@@ -119,37 +122,39 @@ export const HoldingDetails = ({
                   )}
                 </div>
               </Card>
-              <CanTrade>
-                <div className="grid grid-flow-col gap-2">
-                  <Button
-                    LeftIcon={PlusCircle}
-                    onClick={() => onBuyModalOpen(security)}
-                  >
-                    {t("holdingsPage.buy")}
-                  </Button>
-                  {userInvestedInThisHolding && (
+              {isTradable && (
+                <CanTrade>
+                  <div className="grid grid-flow-col gap-2">
                     <Button
-                      LeftIcon={MinusCircle}
-                      variant="Red"
-                      onClick={() => onSellModalOpen(security)}
+                      LeftIcon={PlusCircle}
+                      onClick={() => onBuyModalOpen(security)}
                     >
-                      {t("holdingsPage.sell")}
+                      {t("holdingsPage.buy")}
                     </Button>
-                  )}
-                </div>
-                <Modal
-                  {...buyModalProps}
-                  header={t("tradingModal.buyModalHeader")}
-                >
-                  <BuyModalContent {...buyModalContentProps} />
-                </Modal>
-                <Modal
-                  {...sellModalProps}
-                  header={t("tradingModal.sellModalHeader")}
-                >
-                  <SellModalContent {...sellModalContentProps} />
-                </Modal>
-              </CanTrade>
+                    {userInvestedInThisHolding && (
+                      <Button
+                        LeftIcon={MinusCircle}
+                        variant="Red"
+                        onClick={() => onSellModalOpen(security)}
+                      >
+                        {t("holdingsPage.sell")}
+                      </Button>
+                    )}
+                  </div>
+                  <Modal
+                    {...buyModalProps}
+                    header={t("tradingModal.buyModalHeader")}
+                  >
+                    <BuyModalContent {...buyModalContentProps} />
+                  </Modal>
+                  <Modal
+                    {...sellModalProps}
+                    header={t("tradingModal.sellModalHeader")}
+                  >
+                    <SellModalContent {...sellModalContentProps} />
+                  </Modal>
+                </CanTrade>
+              )}
             </div>
           </div>
         </PageLayout>

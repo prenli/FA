@@ -12,9 +12,9 @@ import {
   LabeledDiv,
 } from "components/index";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { usePortfolioSelect } from "hooks/usePortfolioSelect";
 import { useParams } from "react-router-dom";
 import { round } from "utils/number";
+import { useTradablePortfolioSelect } from "../useTradablePortfolioSelect";
 import { useTradeAmountInput } from "./useTradeAmountInput";
 
 export interface SellModalInitialData {
@@ -87,7 +87,7 @@ export const SellModalContent = ({
   const { t } = useModifiedTranslation();
   const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
   const { portfolioId, setPortfolioId, portfolioOptions } =
-    usePortfolioSelect();
+    useTradablePortfolioSelect();
 
   const {
     loading,

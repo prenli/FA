@@ -27,6 +27,7 @@ const SECURITY_DETAILS_QUERY = gql`
         name
       }
       fxRate(quoteCurrency: $currency)
+      tagsAsSet
     }
   }
 `;

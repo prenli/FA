@@ -30,21 +30,23 @@ interface PortfolioGroup {
   code: typeof TradePermissionGroup; // TODO: add deposit and withdrawal groups
 }
 
+export interface Portfolio {
+  id: number;
+  name: string;
+  shortName: string;
+  currency: {
+    securityCode: string;
+  };
+  portfolioGroups: PortfolioGroup[];
+}
+
 export interface ContactInfoQuery {
   contact?: {
     id: number;
     language: {
       locale: string;
     };
-    portfolios?: {
-      id: number;
-      name: string;
-      shortName: string;
-      currency: {
-        securityCode: string;
-      };
-      portfolioGroups: PortfolioGroup[];
-    }[];
+    portfolios?: Portfolio[];
   };
 }
 

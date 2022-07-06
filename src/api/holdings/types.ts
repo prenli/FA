@@ -86,6 +86,7 @@ export interface SecurityDetailsPosition {
     name: string;
   };
   fxRate: number;
+  tagsAsSet: string[];
 }
 
 export interface SecurityDetailsQuery {
