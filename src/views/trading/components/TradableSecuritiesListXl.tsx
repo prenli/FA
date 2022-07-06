@@ -69,8 +69,8 @@ const TradableSecurityMd = (security: TradableSecuritySized) => {
           {latestMarketData &&
             t("date", { date: dateFromYYYYMMDD(latestMarketData.date) })}
         </div>
-        <div>{url2 ? <DownloadableDocument url={url2} label="" /> : "-"}</div>
         <div>{url ? <DownloadableDocument url={url} label="" /> : "-"}</div>
+        <div>{url2 ? <DownloadableDocument url={url2} label="" /> : "-"}</div>
         <div className="flex gap-2 justify-end items-start pl-4">
           <Button
             isFullWidth
