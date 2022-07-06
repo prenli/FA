@@ -38,6 +38,10 @@ export const Select = <TOption extends Option>({
         requires: ["computeStyles"],
         effect: ({ state }) => {
           if (state.elements.reference instanceof Element) {
+            // fake scroll event to recalculate popper position in case there is animation
+            setTimeout(() => {
+              dispatchEvent(new CustomEvent("scroll"));
+            }, 500);
             state.elements.popper.style.width = `${state.elements.reference.clientWidth}px`;
           }
         },
