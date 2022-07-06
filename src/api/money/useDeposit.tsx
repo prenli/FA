@@ -18,19 +18,17 @@ const IMPORT_DEPOSIT_MUTATION = gql`
     $portfolioShortName: String
     $account: String
   ) {
-    importTransactions(
-      transactionList: [
-        {
-          tradeAmount: $tradeAmount
-          currency: $currency
-          reference: $reference
-          transactionDate: $transactionDate
-          type: $transactionTypeCode
-          parentPortfolio: $portfolioShortName
-          account: $account
-          status: "NF"
-        }
-      ]
+    importTransaction(
+      transaction: {
+        tradeAmount: $tradeAmount
+        currency: $currency
+        reference: $reference
+        transactionDate: $transactionDate
+        type: $transactionTypeCode
+        parentPortfolio: $portfolioShortName
+        account: $account
+        status: "NF"
+      }
     )
   }
 `;
@@ -48,7 +46,7 @@ interface ImportDepositQueryVariables {
 const errorStatus = "ERROR" as const;
 
 interface ImportDepositQueryResponse {
-  importTransactions: ({
+  importTransaction: ({
     importStatus: "OK" | typeof errorStatus;
   } & unknown)[];
 }
@@ -127,13 +125,13 @@ const handleBadAPIResponse = (
     Record<string, unknown>
   >
 ) => {
-  if (!apiResponse.data || !apiResponse.data.importTransactions?.[0]) {
+  if (!apiResponse.data || !apiResponse.data.importTransaction?.[0]) {
     throw new Error("Empty response");
   }
 
-  if (apiResponse.data.importTransactions[0].importStatus === errorStatus) {
+  if (apiResponse.data.importTransaction[0].importStatus === errorStatus) {
     let errorMessage = "Bad request: \n";
-    Object.entries(apiResponse.data.importTransactions[0]).forEach(
+    Object.entries(apiResponse.data.importTransaction[0]).forEach(
       ([key, value]) => {
         if (value.includes("ERROR") && key !== "importStatus") {
           errorMessage += `${key}: ${value}; \n`;
