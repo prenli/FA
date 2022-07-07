@@ -32,6 +32,11 @@ const cache = new InMemoryCache({
             return { ...existing, ...incoming };
           },
         },
+        portfolioGroups: {
+          merge: (existing, incoming) => {
+            return incoming;
+          },
+        },
       },
     },
     Contact: {

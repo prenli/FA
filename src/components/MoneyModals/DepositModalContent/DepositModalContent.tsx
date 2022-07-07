@@ -3,9 +3,9 @@ import { useGetContactInfo } from "api/initial/useGetContactInfo";
 import { useDeposit } from "api/money/useDeposit";
 import { Input, Button } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { usePortfolioSelect } from "hooks/usePortfolioSelect";
 import { CashAccountSelect } from "../components/CashAccountSelect";
 import { usePortfoliosAccountsState } from "../usePortfoliosAccountsState";
+import { useDepositablePortfolioSelect } from "./useDepositablePortfolioSelect";
 
 interface DepositModalProps {
   modalInitialFocusRef: MutableRefObject<null>;
@@ -18,7 +18,7 @@ export const DepositModalContent = ({
 }: DepositModalProps) => {
   const { t } = useModifiedTranslation();
   const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
-  const portfolioSelectProps = usePortfolioSelect();
+  const portfolioSelectProps = useDepositablePortfolioSelect();
   const { portfolioId } = portfolioSelectProps;
 
   const { accountsLoading, ...cashAccountSelectProps } =

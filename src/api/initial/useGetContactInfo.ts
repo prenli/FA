@@ -1,6 +1,10 @@
 import { gql, useQuery } from "@apollo/client";
 import { fallbackLanguage } from "i18n";
 import { useKeycloak } from "providers/KeycloakProvider";
+import {
+  DepositPermissionGroup,
+  WithdrawalPermissionGroup,
+} from "services/permissions/money";
 import { TradePermissionGroup } from "services/permissions/trade";
 
 const CONTACT_INFO_QUERY = gql`
@@ -27,7 +31,10 @@ const CONTACT_INFO_QUERY = gql`
 `;
 
 interface PortfolioGroup {
-  code: typeof TradePermissionGroup; // TODO: add deposit and withdrawal groups
+  code:
+    | typeof TradePermissionGroup
+    | typeof DepositPermissionGroup
+    | typeof WithdrawalPermissionGroup;
 }
 
 export interface Portfolio {

@@ -10,12 +10,12 @@ import { ReactComponent as LogoutIcon } from "assets/logout.svg";
 import { ReactComponent as MenuIcon } from "assets/view-list.svg";
 import { ReactComponent as WithdrawalIcon } from "assets/withdrawal.svg";
 import classNames from "classnames";
+import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import i18n from "i18next";
 import { useKeycloak } from "providers/KeycloakProvider";
 import { useNavigate, To, NavigateOptions } from "react-router";
 import { keycloakService } from "services/keycloakService";
-import { useGetContactInfo } from "../../api/initial/useGetContactInfo";
-import { useModifiedTranslation } from "../../hooks/useModifiedTranslation";
+import { useCanDeposit, useCanWithdraw } from "services/permissions/money";
 import { useModal } from "../Modal/useModal";
 import { DepositModalContent } from "../MoneyModals/DepositModalContent/DepositModalContent";
 import { WithdrawModalContent } from "../MoneyModals/WithdrawModalContent/WithdrawModalContent";
@@ -30,7 +30,8 @@ interface MenuActions {
 const getMenuItems = (
   menuActions: MenuActions,
   hasLinkedContact: boolean,
-  canTradeMoney: boolean,
+  canDeposit: boolean,
+  canWithdraw: boolean,
   processes: Process[]
 ) => {
   if (!hasLinkedContact) {
@@ -43,13 +44,17 @@ const getMenuItems = (
     ];
   }
   return [
-    ...(canTradeMoney
+    ...(canDeposit
       ? [
           {
             label: i18n.t("userMenu.deposit"),
             action: menuActions.deposit,
             Icon: DepositIcon,
           },
+        ]
+      : []),
+    ...(canWithdraw
+      ? [
           {
             label: i18n.t("userMenu.withdraw"),
             action: menuActions.withdraw,
@@ -78,7 +83,8 @@ export const UserMenu = () => {
   const { linkedContact } = useKeycloak();
   const navigate = useNavigate();
   const { data: processes = [] } = useGetContactProcesses();
-  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
+  const canDeposit = useCanDeposit();
+  const canWithdraw = useCanWithdraw();
   const {
     Modal,
     onOpen: onDepositModalOpen,
@@ -119,7 +125,8 @@ export const UserMenu = () => {
             {getMenuItems(
               menuActions,
               !!linkedContact,
-              portfolios.length > 0,
+              canDeposit,
+              canWithdraw,
               processes
             ).map((item, index) => (
               <MenuItem key={index} {...item} />
