@@ -1,24 +1,35 @@
 import { AllocationBySecurity, AllocationByType } from "api/holdings/types";
 import { Card, GainLoseColoring } from "components";
+import { BuyModalInitialData } from "components/TradingModals/BuyModalContent/BuyModalContent";
+import { SellModalInitialData } from "components/TradingModals/SellModalContent/SellModalContent";
 import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { HoldingsListWithOneLineRow } from "./HoldingsListWithOneLineRow";
 import { HoldingsListWithTwoLinesRow } from "./HoldingsListWithTwoLinesRow";
 
+interface TradeProps {
+  canTrade: boolean;
+  onBuyModalOpen: (initialData?: BuyModalInitialData) => void;
+  onSellModalOpen: (initialData?: SellModalInitialData) => void;
+}
+
 interface HoldingsGroupedByTypeProps extends AllocationByType {
   currency: string;
+  tradeProps: TradeProps;
 }
 
 export interface GroupedHoldings {
   securities: AllocationBySecurity[];
   groupCode: string;
   currency: string;
+  tradeProps: TradeProps;
 }
 
 export interface HoldingProps extends AllocationBySecurity {
   onClick: () => void;
   showFlag: boolean;
   currency: string;
+  tradeProps: TradeProps;
 }
 
 export const HoldingsGroupedByType = ({
@@ -27,6 +38,7 @@ export const HoldingsGroupedByType = ({
   allocationsBySecurity,
   currency,
   code: groupCode,
+  tradeProps,
 }: HoldingsGroupedByTypeProps) => {
   const hasOneLineRow = useMatchesBreakpoint("md");
 
@@ -49,6 +61,7 @@ export const HoldingsGroupedByType = ({
         securities={allocationsBySecurity}
         groupCode={groupCode}
         currency={currency}
+        tradeProps={tradeProps}
       />
     </Card>
   );

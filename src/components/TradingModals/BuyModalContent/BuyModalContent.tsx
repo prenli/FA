@@ -1,5 +1,6 @@
 import { MutableRefObject, useState } from "react";
 import { SecurityTypeCode } from "api/holdings/types";
+import { useGetSecurityDetails } from "api/holdings/useGetSecurityDetails";
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
 import { useGetBuyData } from "api/trading/useGetBuyData";
 import { useTrade } from "api/trading/useTrade";
@@ -14,19 +15,7 @@ import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useTradablePortfolioSelect } from "../useTradablePortfolioSelect";
 
 export interface BuyModalInitialData {
-  name: string;
-  url2?: string;
-  currency: {
-    securityCode: string;
-  };
-  securityCode: string;
-  type?: {
-    code: SecurityTypeCode;
-  };
-  latestMarketData?: {
-    price: number;
-  };
-  fxRate: number;
+  id: number;
 }
 
 interface BuyModalProps extends BuyModalInitialData {
@@ -63,15 +52,27 @@ const getTradeAmountArgs = (
 export const BuyModalContent = ({
   modalInitialFocusRef,
   onClose,
-  ...security
+  id: securityId,
 }: BuyModalProps) => {
   const {
+    data: security = {
+      name: "",
+      url2: undefined,
+      type: { code: undefined },
+      latestMarketData: undefined,
+      fxRate: 1,
+      securityCode: "",
+      currency: { securityCode: "" },
+    },
+  } = useGetSecurityDetails(securityId.toString());
+  const {
     name: securityName,
-    url2,
+    url2 = undefined,
     type: { code: securityType } = {},
     latestMarketData,
     fxRate,
   } = security;
+
   const { t } = useModifiedTranslation();
   const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
   const { portfolioId, setPortfolioId, portfolioOptions } =

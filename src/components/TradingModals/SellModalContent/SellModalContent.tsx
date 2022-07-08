@@ -14,22 +14,12 @@ import {
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useParams } from "react-router-dom";
 import { round } from "utils/number";
+import { useGetSecurityDetails } from "../../../api/holdings/useGetSecurityDetails";
 import { useTradablePortfolioSelect } from "../useTradablePortfolioSelect";
 import { useTradeAmountInput } from "./useTradeAmountInput";
 
 export interface SellModalInitialData {
-  name: string;
-  securityCode: string;
-  url2?: string;
-  latestMarketData?: {
-    price: number;
-  };
-  currency: {
-    securityCode: string;
-  };
-  type?: {
-    code: SecurityTypeCode;
-  };
+  id: number;
 }
 
 interface SellModalProps extends SellModalInitialData {
@@ -74,8 +64,19 @@ const getTradeAmountArgs = (
 export const SellModalContent = ({
   modalInitialFocusRef,
   onClose,
-  ...security
+  id: securityId,
 }: SellModalProps) => {
+  const {
+    data: security = {
+      name: "",
+      url2: undefined,
+      type: { code: undefined },
+      latestMarketData: undefined,
+      fxRate: 1,
+      securityCode: "",
+      currency: { securityCode: "" },
+    },
+  } = useGetSecurityDetails(securityId.toString());
   const {
     name: securityName,
     currency: { securityCode: currency },

@@ -17,6 +17,7 @@ export const ALLOCATION_BY_SECURITY_TYPE_FIELDS = gql`
           isinCode
           countryCode
           currencyCode
+          tagsAsList
         }
         figures: firstAnalysis {
           marketValue

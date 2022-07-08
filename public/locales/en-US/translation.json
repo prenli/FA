@@ -39,6 +39,8 @@
   },
   "holdingsPage": {
     "name": "Name",
+    "buyButton": "Buy",
+    "sellButton": "Sell",
     "unrealizedProfits": "Unrealised profits",
     "marketValue": "Market value",
     "holding": "Holding",

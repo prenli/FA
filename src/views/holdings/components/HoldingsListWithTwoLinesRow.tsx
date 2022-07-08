@@ -7,7 +7,7 @@ import { NameWithFlag } from "./NameWithFlag";
 export const HoldingsListWithTwoLinesRow = ({
   securities,
   groupCode,
-  currency,
+  ...rest
 }: GroupedHoldings) => {
   const { t } = useModifiedTranslation();
   const navigate = useNavigate();
@@ -25,8 +25,8 @@ export const HoldingsListWithTwoLinesRow = ({
             groupCode !== "CURRENCY" &&
             navigate(`holdings/${security.security.id}`)
           }
-          currency={currency}
           showFlag={groupCode !== "CURRENCY"}
+          {...rest}
         />
       ))}
     </div>

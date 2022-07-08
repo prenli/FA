@@ -6,6 +6,7 @@ export interface AllocationBySecurity {
     isinCode: string;
     countryCode: string;
     currencyCode: string;
+    tagsAsList: string[];
   };
   figures: {
     marketValue: number;
@@ -86,6 +87,7 @@ export interface SecurityDetailsPosition {
     name: string;
   };
   fxRate: number;
+  // misnamed on backend, should be tagsAsList
   tagsAsSet: string[];
 }
 
