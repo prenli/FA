@@ -1,7 +1,7 @@
 export const getNameFromBackendTranslations = (
-  backendTranslationsMap: Record<string, string>,
   fallbackTranslation: string,
-  locale: string
+  locale: string,
+  backendTranslationsMap: Record<string, string> = {}
 ) => {
   return (
     backendTranslationsMap[locale.replace("-", "_")] || fallbackTranslation

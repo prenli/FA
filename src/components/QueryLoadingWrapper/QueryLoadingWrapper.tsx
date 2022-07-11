@@ -1,11 +1,11 @@
 import { QueryData } from "api/types";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { Slide, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { Card } from "../Card/Card";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import { LoadingIndicator } from "../LoadingIndicator/LoadingIndicator";
 
-interface QueryLoadingWrapperProps<T> extends QueryData<T> {
+export interface QueryLoadingWrapperProps<T> extends QueryData<T> {
   SuccessComponent: (props: { data: T }) => JSX.Element;
 }
 
@@ -21,11 +21,6 @@ export const QueryLoadingWrapper = <TData,>({
   if (error) {
     toast.error(t("messages.queryErrorWarning"), {
       toastId: QUERY_ERROR_TOAST_ID,
-      position: toast.POSITION.BOTTOM_CENTER,
-      hideProgressBar: true,
-      theme: "colored",
-      transition: Slide,
-      autoClose: false,
     });
   }
   if (data) {

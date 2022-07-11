@@ -1,14 +1,17 @@
-import { gql, useQuery } from "@apollo/client";
-import { getFetchPolicyOptions } from "api/utils";
+import { gql, QueryHookOptions, useQuery } from "@apollo/client";
+import { useGlobalDateRange } from "hooks/useGlobalDateRange";
 import { useKeycloak } from "providers/KeycloakProvider";
-import { startOfMonth, toShortISOString } from "utils/date";
-import { useDateRange } from "../useDateRange";
+import { toShortISOString } from "utils/date";
 import { TRADE_ORDERS_DETAILS } from "./fragments";
 import { AllTradeOrdersQuery } from "./types";
 
 const TRADE_ORDERS_QUERY = gql`
   ${TRADE_ORDERS_DETAILS}
-  query GetContact($contactId: Long, $startDate: String, $endDate: String) {
+  query GetAllPortfoliosTradeOrders(
+    $contactId: Long
+    $startDate: String
+    $endDate: String
+  ) {
     contact(id: $contactId) {
       id
       tradeOrders(
@@ -21,14 +24,8 @@ const TRADE_ORDERS_QUERY = gql`
   }
 `;
 
-const now = new Date();
-const initialRange = {
-  start: startOfMonth(now),
-  end: now,
-};
-
-export const useGetAllTradeOrders = () => {
-  const dateRangeProps = useDateRange(initialRange);
+export const useGetAllTradeOrders = (options?: QueryHookOptions) => {
+  const dateRangeProps = useGlobalDateRange();
   const { startDate, endDate } = dateRangeProps;
 
   const { linkedContact } = useKeycloak();
@@ -40,9 +37,8 @@ export const useGetAllTradeOrders = () => {
         endDate: toShortISOString(endDate),
         contactId: linkedContact,
       },
-      ...getFetchPolicyOptions(
-        `useGetAllTradeOrders.${linkedContact}.${startDate}.${endDate}`
-      ),
+      fetchPolicy: "cache-and-network",
+      ...options,
     }
   );
 

@@ -2,9 +2,11 @@ export interface AllocationBySecurity {
   code: string;
   name: string;
   security: {
+    id: number;
     isinCode: string;
     countryCode: string;
     currencyCode: string;
+    tagsAsList: string[];
   };
   figures: {
     marketValue: number;
@@ -56,11 +58,20 @@ export interface MarketHistoryDataPoint {
   date: string;
 }
 
+export type SecurityTypeCode =
+  | "STOCK"
+  | "FUND"
+  | "ETFs"
+  | "PE"
+  | "BOND"
+  | "C" // Collective investment
+  | "CURRENCY";
+
 export interface SecurityDetailsPosition {
   id: number;
   name: string;
-  isinCode: string;
   securityCode: string;
+  isinCode: string;
   url: string;
   url2: string;
   currency: {
@@ -71,13 +82,17 @@ export interface SecurityDetailsPosition {
     date: string;
   };
   type: {
-    code: "STOCK" | "FUND" | "ETFs" | "PE" | "BOND" | "CURRENCY";
+    code: SecurityTypeCode;
     namesAsMap: Record<string, string>;
+    name: string;
   };
+  fxRate: number;
+  // misnamed on backend, should be tagsAsList
+  tagsAsSet: string[];
 }
 
 export interface SecurityDetailsQuery {
-  securities: SecurityDetailsPosition[];
+  security: SecurityDetailsPosition;
 }
 
 export interface SecurityMarketDataHistory {
@@ -85,12 +100,12 @@ export interface SecurityMarketDataHistory {
 }
 
 export interface SecurityMarketDataHistoryQuery {
-  securities: SecurityMarketDataHistory[];
+  security: SecurityMarketDataHistory;
 }
 
 export interface HoldingPosition {
   security: {
-    securityCode: string;
+    id: number;
   };
   amount: number;
   accruedInterest: number;
@@ -98,6 +113,7 @@ export interface HoldingPosition {
   marketValue: number;
   valueChangeAbsolute: number;
   valueChangeRelative: number;
+  marketFxRate: number;
 }
 
 export interface AllPortfoliosHoldingDetailsQuery {

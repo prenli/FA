@@ -1,7 +1,11 @@
 import { gql, useQuery } from "@apollo/client";
 import { fallbackLanguage } from "i18n";
 import { useKeycloak } from "providers/KeycloakProvider";
-import { getFetchPolicyOptions } from "../utils";
+import {
+  DepositPermissionGroup,
+  WithdrawalPermissionGroup,
+} from "services/permissions/money";
+import { TradePermissionGroup } from "services/permissions/trade";
 
 const CONTACT_INFO_QUERY = gql`
   query GetContactInfo($contactId: Long) {
@@ -13,13 +17,35 @@ const CONTACT_INFO_QUERY = gql`
       portfolios {
         id
         name
+        shortName
         currency {
           securityCode
+        }
+        portfolioGroups {
+          id
+          code
         }
       }
     }
   }
 `;
+
+interface PortfolioGroup {
+  code:
+    | typeof TradePermissionGroup
+    | typeof DepositPermissionGroup
+    | typeof WithdrawalPermissionGroup;
+}
+
+export interface Portfolio {
+  id: number;
+  name: string;
+  shortName: string;
+  currency: {
+    securityCode: string;
+  };
+  portfolioGroups: PortfolioGroup[];
+}
 
 export interface ContactInfoQuery {
   contact?: {
@@ -27,17 +53,11 @@ export interface ContactInfoQuery {
     language: {
       locale: string;
     };
-    portfolios?: {
-      id: number;
-      name: string;
-      currency: {
-        securityCode: string;
-      };
-    }[];
+    portfolios?: Portfolio[];
   };
 }
 
-export const useGetContactInfo = () => {
+export const useGetContactInfo = (callAPI = false) => {
   const { linkedContact } = useKeycloak();
   const { loading, error, data } = useQuery<ContactInfoQuery>(
     CONTACT_INFO_QUERY,
@@ -45,7 +65,7 @@ export const useGetContactInfo = () => {
       variables: {
         contactId: linkedContact,
       },
-      ...getFetchPolicyOptions(`useGetContactInfo.${linkedContact}`),
+      fetchPolicy: callAPI ? "cache-and-network" : "cache-first",
     }
   );
 

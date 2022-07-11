@@ -7,7 +7,7 @@ import { NameWithFlag } from "./NameWithFlag";
 export const HoldingsListWithTwoLinesRow = ({
   securities,
   groupCode,
-  currency,
+  ...rest
 }: GroupedHoldings) => {
   const { t } = useModifiedTranslation();
   const navigate = useNavigate();
@@ -20,12 +20,13 @@ export const HoldingsListWithTwoLinesRow = ({
       {securities.map((security) => (
         <HoldingBase
           {...security}
-          key={security.code}
+          key={security.security.id}
           onClick={() =>
-            groupCode !== "CURRENCY" && navigate(`holdings/${security.code}`)
+            groupCode !== "CURRENCY" &&
+            navigate(`holdings/${security.security.id}`)
           }
-          currency={currency}
           showFlag={groupCode !== "CURRENCY"}
+          {...rest}
         />
       ))}
     </div>

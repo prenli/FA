@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useState } from "react";
 
 interface CountryFlagProps extends React.SVGProps<SVGSVGElement> {
-  code: string;
+  code: string | undefined;
 }
 
 export const CountryFlag = ({ code, ...props }: CountryFlagProps) => {

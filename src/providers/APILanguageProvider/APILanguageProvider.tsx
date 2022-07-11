@@ -1,5 +1,5 @@
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
-import { LoadingIndicator, NoPortfolios, QueryError } from "components";
+import { LoadingIndicator, QueryError } from "components";
 import { useFeedI18nextWithLocale } from "./useFeedI18nextWithLocale";
 
 interface UserSettingsProviderProps {
@@ -9,7 +9,7 @@ interface UserSettingsProviderProps {
 export const APILanguageProvider = ({
   children,
 }: UserSettingsProviderProps) => {
-  const { data, error } = useGetContactInfo();
+  const { data, error } = useGetContactInfo(true);
   const { isReady } = useFeedI18nextWithLocale(data?.locale);
 
   if (error && !data) {
@@ -22,10 +22,6 @@ export const APILanguageProvider = ({
         <LoadingIndicator center />
       </div>
     );
-  }
-
-  if (data?.portfolios.length === 0) {
-    return <NoPortfolios />;
   }
 
   return children;

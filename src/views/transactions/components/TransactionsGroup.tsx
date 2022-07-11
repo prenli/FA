@@ -1,24 +1,25 @@
 import { TradeOrder } from "api/orders/types";
 import { Transaction } from "api/transactions/types";
 import { Card } from "components";
+import { LocalOrder } from "hooks/useLocalTradeStorageState";
 import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
 import { TransactionType } from "../../transactionDetails/transactionDetailsView";
 import { TransactionsListWithOneLineRow } from "./TransactionsListWithOneLineRow";
 import { TransactionsListWithTwoLinesRow } from "./TransactionsListWithTwoLinesRow";
 
 export interface TransactionsListProps {
-  transactions: TradeOrder[] | Transaction[];
+  transactions: (TradeOrder | LocalOrder)[] | Transaction[];
   type: TransactionType;
 }
 
 export type TransactionProps = (TradeOrder | Transaction) & {
-  onClick: () => void;
+  onClick?: () => void;
   showPortfolioLabel?: boolean;
 };
 
 interface TransactionsGroupProps {
   label: string;
-  transactions: TradeOrder[] | Transaction[];
+  transactions: (TradeOrder | LocalOrder)[] | Transaction[];
   type: TransactionType;
 }
 

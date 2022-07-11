@@ -40,7 +40,6 @@ const SECURITY_POSITIONS_FIELDS = gql`
     portfolioId
     security {
       id
-      securityCode
       name
     }
     valueChangeAbsolute

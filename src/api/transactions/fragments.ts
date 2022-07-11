@@ -15,11 +15,13 @@ export const TRANSACTION_FIELDS = gql`
     tradeAmountInPortfolioCurrency
     securityName
     parentPortfolio {
+      id
       name
       currency {
         securityCode
       }
     }
+    reference
   }
 `;
 
@@ -30,7 +32,6 @@ export const TRANSACTION_DETAILS_FIELDS = gql`
     security {
       id
       isinCode
-      securityCode
       country {
         code
       }

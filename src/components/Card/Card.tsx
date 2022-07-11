@@ -18,7 +18,7 @@ export const Card = ({ children, header, onClick }: CardProps) => (
     onClick={onClick}
   >
     {header && (
-      <div className="p-2 text-2xl font-bold bg-gray-200">{header}</div>
+      <div className="p-2 md:px-4 text-2xl font-bold bg-gray-200">{header}</div>
     )}
     {children}
   </div>

@@ -11,7 +11,10 @@ export const useModifiedTranslation = () => {
       if (key === "numberWithCurrency") {
         if (options?.currency) {
           const { currency, ...optionsWOCurrency } = options;
-          return `${t("number", optionsWOCurrency)}\xa0${currency}`;
+          return `${t("number", {
+            maximumFractionDigits: 2,
+            ...optionsWOCurrency,
+          })}\xa0${currency}`;
         }
       }
 

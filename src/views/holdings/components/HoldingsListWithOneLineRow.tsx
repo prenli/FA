@@ -1,8 +1,10 @@
-import { GainLoseColoring, Grid } from "components";
+import classNames from "classnames";
+import { Button, GainLoseColoring, Grid } from "components";
 import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useNavigate } from "react-router";
 import { getGridColsClass } from "utils/tailwindClasses";
+import { tradableTag } from "../../../services/permissions/trade";
 import { GroupedHoldings, HoldingProps } from "./HoldingsGroupedByType";
 import { NameWithFlag } from "./NameWithFlag";
 
@@ -10,7 +12,9 @@ export const HoldingsListWithOneLineRow = ({
   securities,
   groupCode,
   currency,
+  tradeProps,
 }: GroupedHoldings) => {
+  const { canTrade } = tradeProps;
   const { t } = useModifiedTranslation();
   const navigate = useNavigate();
 
@@ -32,20 +36,27 @@ export const HoldingsListWithOneLineRow = ({
     <div className={`grid ${getGridColsClass(headersList.length + 1)}`}>
       <Grid.Header>
         {headersList.map((header, index) => (
-          <span key={index} className={index === 0 ? "col-span-2" : ""}>
+          <div
+            key={index}
+            className={
+              index === 0 ? `col-span-2 ${canTrade ? "pl-[102px]" : ""}` : ""
+            }
+          >
             {header}
-          </span>
+          </div>
         ))}
       </Grid.Header>
       {securities.map((security) => (
         <HoldingLg
           {...security}
-          key={security.code}
+          key={security.security.id}
           onClick={() =>
-            groupCode !== "CURRENCY" && navigate(`holdings/${security.code}`)
+            groupCode !== "CURRENCY" &&
+            navigate(`holdings/${security.security.id}`)
           }
           currency={currency}
           showFlag={groupCode !== "CURRENCY"}
+          tradeProps={tradeProps}
         />
       ))}
     </div>
@@ -55,12 +66,16 @@ export const HoldingsListWithOneLineRow = ({
 const HoldingLg = ({
   name,
   code,
-  security: { isinCode, countryCode },
+  security,
   figures: { marketValue, tradeAmount, amount, purchaseTradeAmount },
   onClick,
   showFlag,
   currency,
+  tradeProps,
 }: HoldingProps) => {
+  const { isinCode, countryCode, tagsAsList } = security;
+  const { canTrade, onBuyModalOpen, onSellModalOpen } = tradeProps;
+  const isTradable = tagsAsList.includes(tradableTag);
   const { t } = useModifiedTranslation();
 
   const isLgVersion = useMatchesBreakpoint("lg");
@@ -70,7 +85,35 @@ const HoldingLg = ({
   return (
     <>
       <Grid.Row key={code} className="py-2 border-t" onClick={onClick}>
-        <div className="col-span-2">
+        <div
+          className={classNames("col-span-2", {
+            "grid gap-3 grid-cols-[84px_auto]": canTrade,
+          })}
+        >
+          {canTrade && isTradable && (
+            <div className="flex gap-2 items-start">
+              <Button
+                size="xs"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onBuyModalOpen(security);
+                }}
+              >
+                {t("holdingsPage.buyButton")}
+              </Button>
+              <Button
+                size="xs"
+                variant="Red"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSellModalOpen(security);
+                }}
+              >
+                {t("holdingsPage.sellButton")}
+              </Button>
+            </div>
+          )}
+          {canTrade && !isTradable && <div className="text-center grow">-</div>}
           <NameWithFlag
             name={name}
             countryCode={countryCode}

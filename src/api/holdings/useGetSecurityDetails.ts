@@ -1,14 +1,15 @@
 import { gql, useQuery } from "@apollo/client";
 import { getFetchPolicyOptions } from "api/utils";
+import { useGetContactInfo } from "../initial/useGetContactInfo";
 import { SecurityDetailsQuery } from "./types";
 
 const SECURITY_DETAILS_QUERY = gql`
-  query GetSecurityDetails($securityCode: String) {
-    securities(securityCode: $securityCode) {
+  query GetSecurityDetails($securityId: Long, $currency: String) {
+    security(id: $securityId) {
       id
       name
-      isinCode
       securityCode
+      isinCode
       url
       url2
       currency {
@@ -20,27 +21,34 @@ const SECURITY_DETAILS_QUERY = gql`
         price: closeView
       }
       type {
+        id
         code
         namesAsMap
+        name
       }
+      fxRate(quoteCurrency: $currency)
+      tagsAsSet
     }
   }
 `;
 
-export const useGetSecurityDetails = (securityCode: string | undefined) => {
+export const useGetSecurityDetails = (securityId: string | undefined) => {
+  const { data: { portfoliosCurrency } = { portfoliosCurrency: "EUR" } } =
+    useGetContactInfo();
   const { loading, error, data } = useQuery<SecurityDetailsQuery>(
     SECURITY_DETAILS_QUERY,
     {
       variables: {
-        securityCode,
+        securityId: securityId,
+        currency: portfoliosCurrency,
       },
-      ...getFetchPolicyOptions(`useGetSecurityDetails.${securityCode}`),
+      ...getFetchPolicyOptions(`useGetSecurityDetails.${securityId}`),
     }
   );
 
   return {
     loading,
     error,
-    data: data?.securities[0],
+    data: data?.security,
   };
 };

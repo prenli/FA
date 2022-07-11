@@ -3,10 +3,10 @@ import { SecurityMarketDataHistoryQuery } from "./types";
 
 const SECURITY_DETAILS_QUERY = gql`
   query GetSecurityMarketDataHistory(
-    $securityCode: String
+    $securityId: Long
     $timePeriodCode: String
   ) {
-    securities(securityCode: $securityCode) {
+    security(id: $securityId) {
       id
       marketDataHistory(timePeriodCode: $timePeriodCode) {
         id
@@ -18,14 +18,14 @@ const SECURITY_DETAILS_QUERY = gql`
 `;
 
 export const useGetSecurityMarketDataHistory = (
-  securityCode: string | undefined,
+  securityId: string | undefined,
   timePeriodCode: string
 ) => {
   const { loading, error, data } = useQuery<SecurityMarketDataHistoryQuery>(
     SECURITY_DETAILS_QUERY,
     {
       variables: {
-        securityCode,
+        securityId,
         timePeriodCode,
       },
       fetchPolicy: "cache-first",
@@ -35,6 +35,6 @@ export const useGetSecurityMarketDataHistory = (
   return {
     loading,
     error,
-    data: data?.securities[0],
+    data: data?.security,
   };
 };

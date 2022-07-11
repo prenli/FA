@@ -26,14 +26,14 @@ export const ListedSecuritiesCard = ({
       <div className="flex flex-col px-2 divide-y">
         {securities.map((security) => {
           const {
-            security: { name, securityCode },
+            security: { id: securityId, name },
             valueChangeAbsolute,
           } = security;
           return (
             <div
-              key={securityCode}
+              key={securityId}
               className="flex justify-between items-center py-2 cursor-pointer"
-              onClick={() => navigate(`holdings/${securityCode}`)}
+              onClick={() => navigate(`holdings/${securityId}`)}
             >
               <div className="text-base font-normal">{name}</div>
               <div className="whitespace-nowrap">

@@ -55,9 +55,9 @@ export const TransactionDetails = ({
             <InfoCard
               label={t("transactionsPage.type")}
               value={getNameFromBackendTranslations(
-                typeNamesAsMap,
                 typeName,
-                i18n.language
+                i18n.language,
+                typeNamesAsMap
               )}
               colorScheme={getTransactionColor(amountEffect, cashFlowEffect)}
             />
@@ -91,7 +91,7 @@ export const TransactionDetails = ({
                   </div>
                 }
                 onClick={() =>
-                  !!security && navigate(`../holdings/${security.securityCode}`)
+                  !!security && navigate(`../holdings/${security.id}`)
                 }
               />
             </div>
@@ -175,7 +175,7 @@ export const TransactionDetails = ({
                   },
                 })}
               />
-              <div></div>
+              <div />
             </div>
           </Card>
         </div>

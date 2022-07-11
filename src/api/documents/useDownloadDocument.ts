@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { saveAs } from "file-saver";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { toast, Slide } from "react-toastify";
+import { toast } from "react-toastify";
 import { useGetDocumentData } from "./useGetDocumentData";
 
 export const useDownloadDocument = () => {
@@ -22,14 +22,7 @@ export const useDownloadDocument = () => {
     }
     if (documentQueryResolvedPromise.error) {
       toast.error(
-        documentQueryResolvedPromise.error.message || t("messages.error"),
-        {
-          position: toast.POSITION.BOTTOM_CENTER,
-          hideProgressBar: true,
-          autoClose: 3000,
-          theme: "colored",
-          transition: Slide,
-        }
+        documentQueryResolvedPromise.error.message || t("messages.error")
       );
     }
     setDownloading(false);

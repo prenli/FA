@@ -1,11 +1,19 @@
 {
+  "number": "{{value, number}}",
+  "numberRounded": "{{value, number(maximumFractionDigits: 0)}}",
+  "date": "{{date, datetime(day: 2-digit; month: 2-digit; year: numeric)}}",
+  "dateCustom": "{{date, datetime}}",
   "component": {
     "select": {
       "placeholder": "Please select"
     }
   },
-  "navTab": {
+  "userMenu": {
     "logout": "Logout",
+    "deposit": "Deposit money",
+    "withdraw": "Withdraw money"
+  },
+  "navTab": {
     "totalInvestments": "Total investments",
     "tabs": {
       "overview": "Overview",
@@ -31,6 +39,8 @@
   },
   "holdingsPage": {
     "name": "Name",
+    "buyButton": "Buy",
+    "sellButton": "Sell",
     "unrealizedProfits": "Unrealised profits",
     "marketValue": "Market value",
     "holding": "Holding",
@@ -47,16 +57,28 @@
     "kiid": "KIID",
     "price": "Price",
     "security": "Security",
-    "noHoldings": "No holdings"
+    "noHoldings": "No holdings",
+    "performance1Y": "1Y performance",
+    "performance3Y": "3Y performance",
+    "performance5Y": "5Y performance",
+    "buy": "BUY",
+    "sell": "SELL"
   },
   "ordersPage": {
     "header": "Order",
     "noOrders": "No orders are available\n for this period",
     "noOrdersInfo": "Try filtering with other dates",
+    "pending": "Pending",
     "inExecution": "In execution",
     "open": "Open",
     "accepted": "Accepted",
     "cancelled": "Cancelled",
+    "buyStatus": "Buy",
+    "sellStatus": "Sell",
+    "subscriptionStatus": "Subscription",
+    "redemptionStatus": "Redemption",
+    "depositStatus": "Deposit",
+    "withdrawStatus": "Withdrawal",
     "downloadFileButtonLabel": "Download order note"
   },
   "transactionsPage": {
@@ -92,6 +114,66 @@
     "date": "Date",
     "download": "Download"
   },
+  "tradingList": {
+    "header": "Trading",
+    "buyButton": "Buy",
+    "detailsButton": "Details",
+    "gridHeader": {
+      "currency": "Currency",
+      "name": "Name",
+      "price": "Price",
+      "asFor": "As for",
+      "isinCode": "ISIN Code"
+    },
+    "noHoldings": "No securities",
+    "noHoldingsInfo": "No securities found matching the given filters criteria",
+    "kiid": "KIID",
+    "prospectus": "Prospectus",
+    "filters": {
+      "country": "Country",
+      "type": "Security type",
+      "name": "Security name"
+    }
+  },
+  "moneyModal": {
+    "depositModalHeader": "Deposit",
+    "withdrawModalHeader": "Withdrawal",
+    "toAccount": "To account",
+    "fromAccount": "From account",
+    "currentBalance": "Current balance",
+    "availableBalance": "Available balance",
+    "depositAmountInputLabel": "Enter deposit amount in {{currency}}",
+    "withdrawalAmountInputLabel": "Enter withdrawal amount in {{currency}}",
+    "amountInputError": "Entered value is not correct",
+    "depositButtonLabel": "Deposit",
+    "withdrawButtonLabel": "Withdraw",
+    "missingExternalAccountMessage": "You don't have any External accounts defined",
+    "depositDisclaimer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur ullamcorper ipsum vitae accumsan. Ut pulvinar erat non felis porta bibendum.",
+    "withdrawDisclaimer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur ullamcorper ipsum vitae accumsan. Ut pulvinar erat non felis porta bibendum.",
+    "depositSuccess": "Your deposit request was created successfully",
+    "withdrawalSuccess": "Your withdrawal request was created successfully",
+    "portfolio": "Portfolio"
+  },
+  "tradingModal": {
+    "securityName": "Security name",
+    "portfolio": "Portfolio",
+    "availableCash": "Available cash",
+    "currentMarketValue": "Current market value",
+    "currentUnits": "Current position amount",
+    "tradeAmount": "Total trade amount",
+    "tradeAmountInputError": "Entered value is not correct",
+    "tradeAmountInputLabel": "Enter trade amount in {{currency}}",
+    "unitsInputLabel": "Enter number of units",
+    "buyModalHeader": "Buy",
+    "buyButtonLabel": "Buy",
+    "sellModalHeader": "Sell",
+    "sellButtonLabel": "Sell",
+    "kiid": "KIID",
+    "sellHalf": "Sell half",
+    "sellAll": "Sell all",
+    "buyDisclaimer": "Past performance is not a guide to future performance. When investing in financial instruments, the investor may lose all or part of the investments.",
+    "queryErrorWarning": "Server error occurred"
+  },
   "contactPage": {
     "cardHeader": "Contact us"
   },
@@ -112,8 +194,10 @@
   },
   "missingLinkedContactPage": {
     "followOnboardingInstructions": "Please follow onboarding process",
+    "followOnboardingHeader": "Missing linked contact",
     "startOnboarding": "Start onboarding",
-    "missingLinkedContact": "Missing linked contact"
+    "noOnboardingProcessHeader": "Missing linked contact",
+    "noOnboardingProcessMessage": "Please contact us if the problem persists"
   },
   "messages": {
     "noDataAvailable": "No data available.",
@@ -122,10 +206,11 @@
     "error": "Something went wrong",
     "queryErrorWarning": "Server error, your data may be outdated.",
     "queryError": "Server error",
+    "noPortfoliosInfo": "You do not have any portfolios at this time",
+    "problemResolveInstructions": "Try refreshing the browser\n or contact us if the problem persists",
     "noPortfolios": "No portfolios are available",
     "noCachedData": "No cached data",
     "authorisationError": "Authorisation server error",
-    "problemResolveInstructions": "Try refreshing the browser\n or contact us if the problem persists",
     "refreshPage": "Refresh page",
     "noCachedDataInfo": "Right now we can't get data from server.\n Come back here later."
   }

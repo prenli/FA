@@ -42,7 +42,7 @@ export const useGetPortfolioHoldings = (portfolioId: string | undefined) => {
     HOLDINGS_QUERY,
     {
       variables: {
-        portfolioId: portfolioId,
+        portfolioId,
         locale: i18n.language,
       },
       ...getFetchPolicyOptions(`useGetPortfolioHoldings.${portfolioId}`),

@@ -1,7 +1,6 @@
 import { Badge, Grid } from "components";
 import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
-import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import { dateFromYYYYMMDD } from "utils/date";
 import { getGridColsClass } from "utils/tailwindClasses";
@@ -9,7 +8,8 @@ import {
   getNameFromBackendTranslations,
   getTransactionColor,
 } from "utils/transactions";
-import { getNavigationPath } from "../../transactionDetails/transactionDetailsView";
+import { isLocalOrder } from "../../../hooks/useLocalTradeStorageState";
+import { useNavigateToDetails } from "../useNavigateToDetails";
 import { TransactionProps, TransactionsListProps } from "./TransactionsGroup";
 
 export const TransactionsListWithOneLineRow = ({
@@ -19,7 +19,7 @@ export const TransactionsListWithOneLineRow = ({
   const { portfolioId } = useParams();
   const showPortfolioLabel = !portfolioId;
   const { t } = useModifiedTranslation();
-  const navigate = useNavigate();
+  const navigate = useNavigateToDetails(type);
 
   const isLgVersion = useMatchesBreakpoint("lg");
 
@@ -45,7 +45,7 @@ export const TransactionsListWithOneLineRow = ({
           }
           if (index === headersList.length - 2) {
             return (
-              <div>
+              <div key={index}>
                 <div className="mx-auto w-max">{header}</div>
               </div>
             );
@@ -56,11 +56,11 @@ export const TransactionsListWithOneLineRow = ({
       {transactions.map((transaction) => (
         <Transaction
           {...transaction}
-          key={transaction.id}
-          showPortfolioLabel={showPortfolioLabel}
-          onClick={() =>
-            navigate(`${getNavigationPath(type)}/${transaction.id}`)
+          key={
+            isLocalOrder(transaction) ? transaction.reference : transaction.id
           }
+          showPortfolioLabel={showPortfolioLabel}
+          onClick={navigate(transaction.id)}
         />
       ))}
     </div>
@@ -68,7 +68,6 @@ export const TransactionsListWithOneLineRow = ({
 };
 
 const Transaction = ({
-  id,
   transactionDate,
   amount,
   type: { typeName, cashFlowEffect, amountEffect, typeNamesAsMap },
@@ -84,7 +83,7 @@ const Transaction = ({
 
   return (
     <>
-      <Grid.Row key={id} className="py-2 border-t" onClick={onClick}>
+      <Grid.Row className="py-2 border-t" onClick={onClick}>
         <div className="col-span-2 text-base font-semibold">{securityName}</div>
         {showPortfolioLabel && (
           <div className="text-sm md:text-base text-gray-500">
@@ -96,7 +95,7 @@ const Transaction = ({
         </div>
         {isLgVersion && (
           <div className="text-base font-medium">
-            {t("number", { value: amount })}
+            {amount != null ? t("number", { value: amount }) : "-"}
           </div>
         )}
         <div>
@@ -105,9 +104,9 @@ const Transaction = ({
               colorScheme={getTransactionColor(amountEffect, cashFlowEffect)}
             >
               {getNameFromBackendTranslations(
-                typeNamesAsMap,
-                typeName.toLowerCase(),
-                i18n.language
+                typeName,
+                i18n.language,
+                typeNamesAsMap
               )}
             </Badge>
           </div>

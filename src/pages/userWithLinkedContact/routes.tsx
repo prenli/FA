@@ -1,13 +1,13 @@
 import { lazy } from "react";
-import { TranslationText } from "components";
+import { PortfolioGuard, TranslationText } from "components";
 import { MainLayout } from "layouts/MainLayout/MainLayout";
+import { NavTabRoutes } from "layouts/NavTabLayout/NavTab/NavTabRoutes";
 import { NavTabPath } from "layouts/NavTabLayout/NavTab/types";
-import { NavTabLayout } from "layouts/NavTabLayout/NavTabLayout";
 import { PortfolioNavigationHeaderLayout } from "layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeaderLayout";
 import { Navigate, useRoutes } from "react-router-dom";
-import { NotFoundView } from "../../views/notFoundView/notFoundView";
+import { NotFoundView } from "views/notFoundView/notFoundView";
 import { authUserMainRoutes } from "../authUser/routes";
-import { portfolioRoutes } from "./portfolio/routes";
+import { PortfolioRoutes } from "./portfolio/routes";
 
 const Overview = lazy(() =>
   import("./overview").then((module) => ({ default: module.OverviewPage }))
@@ -44,36 +44,65 @@ const Documents = lazy(() =>
 const Contact = lazy(() =>
   import("./contact").then((module) => ({ default: module.ContactPage }))
 );
+const Trading = lazy(() =>
+  import("./trading").then((module) => ({ default: module.TradingPage }))
+);
 
 export const mainTabRoutes: NavTabPath[] = [
   {
     path: "overview",
     tabLabel: <TranslationText translationKey="navTab.tabs.overview" />,
-    tabComponent: <Overview />,
+    tabComponent: (
+      <PortfolioGuard>
+        <Overview />
+      </PortfolioGuard>
+    ),
     element: null,
   },
   {
     path: "holdings",
     tabLabel: <TranslationText translationKey="navTab.tabs.holdings" />,
-    tabComponent: <Holdings />,
+    tabComponent: (
+      <PortfolioGuard>
+        <Holdings />
+      </PortfolioGuard>
+    ),
     element: null,
   },
   {
     path: "transactions",
     tabLabel: <TranslationText translationKey="navTab.tabs.transactions" />,
-    tabComponent: <Transactions />,
+    tabComponent: (
+      <PortfolioGuard>
+        <Transactions />
+      </PortfolioGuard>
+    ),
     element: null,
   },
   {
     path: "orders",
     tabLabel: <TranslationText translationKey="navTab.tabs.orders" />,
-    tabComponent: <Orders />,
+    tabComponent: (
+      <PortfolioGuard>
+        <Orders />
+      </PortfolioGuard>
+    ),
     element: null,
   },
   {
     path: "documents",
     tabLabel: <TranslationText translationKey="navTab.tabs.documents" />,
     tabComponent: <Documents />,
+    element: null,
+  },
+  {
+    path: "trading",
+    tabLabel: <TranslationText translationKey="navTab.tabs.trading" />,
+    tabComponent: (
+      <PortfolioGuard>
+        <Trading />
+      </PortfolioGuard>
+    ),
     element: null,
   },
   {
@@ -94,9 +123,8 @@ const linkedContactMainRoutes = [
     element: <PortfolioNavigationHeaderLayout />,
     children: [
       {
-        path: "",
-        element: <NavTabLayout routes={mainTabRoutes} />,
-        children: mainTabRoutes,
+        path: "*",
+        element: <NavTabRoutes routes={mainTabRoutes} />,
       },
     ],
   },
@@ -120,7 +148,10 @@ export const userWithLinkedContactRoutes = [
     element: <MainLayout />,
     children: [
       ...linkedContactMainRoutes,
-      ...portfolioRoutes,
+      {
+        path: "portfolio/:portfolioId/*",
+        element: <PortfolioRoutes />,
+      },
       ...authUserMainRoutes,
       {
         path: "*",

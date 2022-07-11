@@ -1,16 +1,16 @@
 import { gql, useQuery } from "@apollo/client";
 import { getFetchPolicyOptions } from "api/utils";
 import { useKeycloak } from "providers/KeycloakProvider";
-import { PORTFOLIO_REPORT_HOLDINGS_DETAILS_FIELDS } from "./fragments";
+import { ALL_PORTFOLIOS_REPORT_HOLDINGS_DETAILS_FIELDS } from "./fragments";
 import { AllPortfoliosHoldingDetailsQuery } from "./types";
 
 const HOLDING_DETAILS_QUERY = gql`
-  ${PORTFOLIO_REPORT_HOLDINGS_DETAILS_FIELDS}
+  ${ALL_PORTFOLIOS_REPORT_HOLDINGS_DETAILS_FIELDS}
   query GetAllPortfoliosHoldingDetails($contactId: Long) {
     contact(id: $contactId) {
       id
       portfolioReport {
-        ...PortfolioReportHoldingDetailsFields
+        ...AllPortfoliosReportHoldingDetailsFields
         portfolioId: portfolio {
           id
           contact {
@@ -23,7 +23,7 @@ const HOLDING_DETAILS_QUERY = gql`
 `;
 
 export const useGetAllPortfoliosHoldingDetails = (
-  securityCode: string | undefined
+  securityId: string | undefined
 ) => {
   const { linkedContact } = useKeycloak();
   const { loading, error, data } = useQuery<AllPortfoliosHoldingDetailsQuery>(
@@ -41,8 +41,8 @@ export const useGetAllPortfoliosHoldingDetails = (
   return {
     loading,
     error,
-    data: data?.contact.portfolioReport.holdingPositions.find(
-      (holding) => holding.security.securityCode === securityCode
+    data: data?.contact.portfolioReport.holdingPositions?.find(
+      (holding) => holding.security.id.toString() === securityId
     ),
   };
 };
