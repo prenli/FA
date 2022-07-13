@@ -90,7 +90,7 @@ export const HoldingDetails = ({
             )}
             <div className="grid gap-4">
               <Card header={t("holdingsPage.security")}>
-                <div className="flex flex-col px-2 my-1 capitalize divide-y">
+                <div className="flex flex-col px-2 my-1 divide-y">
                   <DataRow
                     label={t("holdingsPage.type")}
                     value={getNameFromBackendTranslations(
