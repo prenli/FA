@@ -8,12 +8,20 @@ export const useModifiedTranslation = () => {
   // for all languages currencies are displayed as ISO code at the end of value - business decision
   const modifiedT = useCallback(
     (key: string, options?: TOptions<StringMap>) => {
+      if (key === "number") {
+        return `${t("number", {
+          ...options,
+          maximumFractionDigits: 8,
+        })}`;
+      }
+
       if (key === "numberWithCurrency") {
         if (options?.currency) {
           const { currency, ...optionsWOCurrency } = options;
           return `${t("number", {
-            maximumFractionDigits: 2,
             ...optionsWOCurrency,
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
           })}\xa0${currency}`;
         }
       }
@@ -21,7 +29,11 @@ export const useModifiedTranslation = () => {
       if (key === "numberWithCurrencyRounded") {
         if (options?.currency) {
           const { currency, ...optionsWOCurrency } = options;
-          return `${t("numberRounded", optionsWOCurrency)}\xa0${currency}`;
+          return `${t("numberRounded", {
+            ...optionsWOCurrency,
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}\xa0${currency}`;
         }
       }
 
