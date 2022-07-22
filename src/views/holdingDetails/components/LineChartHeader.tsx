@@ -18,7 +18,7 @@ export const LineChartHeader = ({
       <div>{t("holdingsPage.price")}</div>
       <div className="text-right">
         <div className="text-base font-bold">
-          {t("numberWithCurrency", {
+          {t("number", {
             value: price,
             currency,
           })}

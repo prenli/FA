@@ -63,7 +63,7 @@ const TradableSecurityMd = (security: TradableSecuritySized) => {
         <div className="text-base font-light">{isinCode}</div>
         <div className="text-base font-semibold">
           {latestMarketData &&
-            t("numberWithCurrency", {
+            t("number", {
               value: latestMarketData?.price,
               currency,
             })}

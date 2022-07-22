@@ -60,7 +60,7 @@ const TradableSecurityMd = (security: TradableSecuritySized) => {
         <div className="pl-2 text-base text-gray-700">{currency}</div>
         <div className="text-base font-semibold">
           {latestMarketData &&
-            t("numberWithCurrency", {
+            t("number", {
               value: latestMarketData?.price,
               currency,
             })}

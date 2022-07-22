@@ -79,7 +79,7 @@ const TradableSecurityBase = (security: TradableSecuritySized) => {
         <div className="col-span-2">
           <div className="text-base font-semibold leading-none">
             {latestMarketData &&
-              t("numberWithCurrency", {
+              t("number", {
                 value: latestMarketData?.price,
                 currency,
               })}

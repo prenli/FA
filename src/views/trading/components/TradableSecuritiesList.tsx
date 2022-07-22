@@ -55,6 +55,7 @@ export const TradableSecuritiesList = ({
 
   return (
     <>
+      {console.log("securities", securities)}
       {groupSecuritiesByType(securities).map(([groupName, groupSecurities]) => (
         <Card header={groupName} key={groupName}>
           <TradableSecuritiesListSized
