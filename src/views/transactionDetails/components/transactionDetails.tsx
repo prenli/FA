@@ -1,4 +1,5 @@
 import { useDownloadDocument } from "api/documents/useDownloadDocument";
+import { useDownloadReport } from "api/report/useDownloadReport";
 import { TransactionDetails as TransactionDetailsType } from "api/transactions/types";
 import { ReactComponent as DocumentDownloadIcon } from "assets/document-download.svg";
 import { Button, Card, CountryFlag } from "components";
@@ -45,6 +46,9 @@ export const TransactionDetails = ({
 }: TransactionDetailsProps) => {
   const { t, i18n } = useModifiedTranslation();
   const { downloadDocument, downloading } = useDownloadDocument();
+  const { transactionId } = useParams<{ transactionId: string }>();
+  const { downloadReport, downloading: downloadingReport } =
+    useDownloadReport();
   const transactionType = useGetTransactionType();
   const navigate = useNavigate();
   return (
@@ -206,13 +210,21 @@ export const TransactionDetails = ({
             </p>
           </Card>
         </div>
-        {documents.length > 0 && (
+        {(documents.length > 0 || transactionId) && (
           <div className="md:col-start-1 md:row-start-2 lg:row-start-3">
             <Button
               isFullWidth
-              isLoading={downloading}
+              isLoading={
+                transactionType === "transaction"
+                  ? downloadingReport
+                  : downloading
+              }
               LeftIcon={DocumentDownloadIcon}
-              onClick={() => downloadDocument(documents[0].identifier)}
+              onClick={() =>
+                transactionType === "transaction" && transactionId
+                  ? downloadReport(transactionId, i18n.language)
+                  : downloadDocument(documents[0].identifier)
+              }
             >
               {transactionType === "transaction"
                 ? t("transactionsPage.downloadFileButtonLabel")

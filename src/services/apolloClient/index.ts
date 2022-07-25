@@ -54,6 +54,9 @@ const cache = new InMemoryCache({
     Document: {
       keyFields: ["identifier"],
     },
+    Report: {
+      keyFields: ["transactionId"],
+    },
     TransactionType: {
       keyFields: ["typeCode"],
     },
