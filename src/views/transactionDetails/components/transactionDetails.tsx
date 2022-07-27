@@ -210,21 +210,13 @@ export const TransactionDetails = ({
             </p>
           </Card>
         </div>
-        {(documents.length > 0 || transactionId) && (
+        {documents.length > 0 && (
           <div className="md:col-start-1 md:row-start-2 lg:row-start-3">
             <Button
               isFullWidth
-              isLoading={
-                transactionType === "transaction"
-                  ? downloadingReport
-                  : downloading
-              }
+              isLoading={downloading}
               LeftIcon={DocumentDownloadIcon}
-              onClick={() =>
-                transactionType === "transaction" && transactionId
-                  ? downloadReport(transactionId, i18n.language)
-                  : downloadDocument(documents[0].identifier)
-              }
+              onClick={() => downloadDocument(documents[0].identifier)}
             >
               {transactionType === "transaction"
                 ? t("transactionsPage.downloadFileButtonLabel")
