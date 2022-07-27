@@ -232,6 +232,18 @@ export const TransactionDetails = ({
             </Button>
           </div>
         )}
+        {documents.length === 0 && transactionId && (
+          <div className="md:col-start-1 md:row-start-2 lg:row-start-3">
+            <Button
+              isFullWidth
+              isLoading={downloadingReport}
+              LeftIcon={DocumentDownloadIcon}
+              onClick={() => downloadReport(transactionId, i18n.language)}
+            >
+              {t("transactionsPage.downloadFileButtonLabel")}
+            </Button>
+          </div>
+        )}
       </div>
     </PageLayout>
   );
