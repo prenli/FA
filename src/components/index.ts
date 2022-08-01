@@ -28,3 +28,4 @@ export { HorizontalRadio } from "./HorizontalRadio/HorizontalRadio";
 export { Grid } from "./Grid/Grid";
 export { Select } from "./Select/Select";
 export { Toast } from "./Toast/Toast";
+export { ButtonGroup } from "./ButtonGroup/ButtonGroup";

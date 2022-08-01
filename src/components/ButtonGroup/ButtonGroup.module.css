@@ -1,0 +1,19 @@
+.container {
+    width: 100%;
+    display: flex;
+    border-radius: 4px;
+}
+
+.button {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #e0e3e7;
+    color: #8787a4;
+}
+
+.active {
+    background-color: #e3effe;
+    color: #5267f4;
+}

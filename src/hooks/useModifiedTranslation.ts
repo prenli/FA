@@ -15,6 +15,15 @@ export const useModifiedTranslation = () => {
         })}`;
       }
 
+      if (key === "numberWithPercent") {
+        return `${
+          t("number", {
+            ...options,
+            maximumFractionDigits: 2,
+          }) + "%"
+        }`;
+      }
+
       if (key === "numberWithCurrency") {
         if (options?.currency) {
           const { currency, ...optionsWOCurrency } = options;
