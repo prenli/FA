@@ -75,11 +75,7 @@ export const LineChart = ({
   series,
   options,
   detailed = false,
-<<<<<<< HEAD
   isPerformanceChart = false,
-=======
-  hasPercentYaxis = false,
->>>>>>> develop
 }: LineChartProps) => {
   const { t } = useModifiedTranslation();
 
@@ -96,7 +92,6 @@ export const LineChart = ({
             yaxis: {
               labels: {
                 formatter: (value: number) =>
-<<<<<<< HEAD
                   isPerformanceChart
                     ? t("numberWithPercent", {
                         value,
@@ -106,10 +101,6 @@ export const LineChart = ({
                           },
                         },
                       })
-=======
-                  hasPercentYaxis
-                    ? t("numberWithPercent", { value })
->>>>>>> develop
                     : t("number", { value }),
                 style: {
                   fontSize: "14px",
