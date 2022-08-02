@@ -15,7 +15,7 @@ interface LineChartProps {
   series: Array<LineData>;
   options?: ApexOptions;
   detailed?: boolean;
-  hasPercentYaxis?: boolean;
+  isPerformanceChart?: boolean;
 }
 
 const lineChartColors = {
@@ -75,7 +75,11 @@ export const LineChart = ({
   series,
   options,
   detailed = false,
+<<<<<<< HEAD
+  isPerformanceChart = false,
+=======
   hasPercentYaxis = false,
+>>>>>>> develop
 }: LineChartProps) => {
   const { t } = useModifiedTranslation();
 
@@ -92,8 +96,20 @@ export const LineChart = ({
             yaxis: {
               labels: {
                 formatter: (value: number) =>
+<<<<<<< HEAD
+                  isPerformanceChart
+                    ? t("numberWithPercent", {
+                        value,
+                        formatParams: {
+                          value: {
+                            signDisplay: "always",
+                          },
+                        },
+                      })
+=======
                   hasPercentYaxis
                     ? t("numberWithPercent", { value })
+>>>>>>> develop
                     : t("number", { value }),
                 style: {
                   fontSize: "14px",
@@ -108,7 +124,21 @@ export const LineChart = ({
               fontFamily: "Inter, sans-serif",
             },
             y: {
-              formatter: (value: number) => t("number", { value }),
+              formatter: (value: number) =>
+                isPerformanceChart
+                  ? t("numberWithPercent", {
+                      value,
+                      formatParams: {
+                        value: {
+                          signDisplay: "always",
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        },
+                      },
+                    })
+                  : t("number", {
+                      value,
+                    }),
             },
           },
           ...options,

@@ -140,7 +140,7 @@ const Overview = ({ data }: OverviewProps) => {
               <LineChart
                 series={[
                   {
-                    name: "Price",
+                    name: "Return",
                     data:
                       performanceChartData &&
                       Array.isArray(performanceChartData?.dailyValue)
@@ -155,7 +155,7 @@ const Overview = ({ data }: OverviewProps) => {
                   },
                 ]}
                 detailed
-                hasPercentYaxis
+                isPerformanceChart
               />
             )}
           </div>
