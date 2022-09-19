@@ -19,7 +19,7 @@ export const useFilteredPortfolioSelect = (
     ) {
       return firstChoicePortfolioId;
     }
-    return filteredPortfolioOptions[0].id;
+    return filteredPortfolioOptions[0]?.id;
   });
 
   return {

@@ -1,5 +1,6 @@
 import { gql, QueryHookOptions, useQuery } from "@apollo/client";
 import { useGlobalDateRange } from "hooks/useGlobalDateRange";
+import { useGetContractIdData } from "providers/ContractIdProvider";
 import { useKeycloak } from "providers/KeycloakProvider";
 import { toShortISOString } from "utils/date";
 import { TRADE_ORDERS_DETAILS } from "./fragments";
@@ -29,13 +30,14 @@ export const useGetAllTradeOrders = (options?: QueryHookOptions) => {
   const { startDate, endDate } = dateRangeProps;
 
   const { linkedContact } = useKeycloak();
+  const { selectedContactId } = useGetContractIdData();
   const { loading, error, data } = useQuery<AllTradeOrdersQuery>(
     TRADE_ORDERS_QUERY,
     {
       variables: {
         startDate: toShortISOString(startDate),
         endDate: toShortISOString(endDate),
-        contactId: linkedContact,
+        contactId: selectedContactId || linkedContact,
       },
       fetchPolicy: "cache-and-network",
       ...options,

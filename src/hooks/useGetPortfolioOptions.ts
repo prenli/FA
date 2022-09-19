@@ -1,13 +1,15 @@
 import { useMemo } from "react";
 import { Portfolio, useGetContactInfo } from "api/initial/useGetContactInfo";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
+import { useGetContractIdData } from "providers/ContractIdProvider";
 import { PortfolioOption } from "../layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeader/PortfolioNavigationHeader";
 
 export const TOTAL_INVESTMENTS_OPTION_ID = 0;
 
 export const useGetPortfolioOptions = (includeTotal = true) => {
   const { t } = useModifiedTranslation();
-  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
+  const { selectedContactId } = useGetContractIdData();
+  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo(false, selectedContactId);
 
   const portfolioOptions: (PortfolioOption & { details?: Portfolio })[] =
     useMemo(() => {

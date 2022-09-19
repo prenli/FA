@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { CashAccount } from "api/money/useGetPortfoliosAccounts";
+import { ReactComponent as ExclamationIcon } from "assets/exclamation-circle.svg";
 import { PortfolioSelect, Select, LabeledDiv } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { PortfolioOption } from "layouts/PortfolioNavigationHeaderLayout/PortfolioNavigationHeader/PortfolioNavigationHeader";
@@ -32,6 +33,13 @@ export const CashAccountSelect = ({
 
   return (
     <>
+      {!portfolioId && 
+        <div className="flex w-full justify-center content-center border border-amber-600 bg-amber-50 rounded-lg p-4">
+          <ExclamationIcon className="mr-2 stroke-amber-600" />
+          <span className="text-amber-600">{t("moneyModal.noPortfolioAvailable")}</span>
+        </div>
+      }
+
       <PortfolioSelect
         portfolioOptions={portfolioOptions}
         portfolioId={portfolioId}

@@ -3,6 +3,7 @@ import { useGetContactInfo } from "api/initial/useGetContactInfo";
 import { useWithdrawal } from "api/money/useWithdrawal";
 import { Input, Button } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
+import { useGetContractIdData } from "providers/ContractIdProvider";
 import { CashAccountSelect } from "../components/CashAccountSelect";
 import { usePortfoliosAccountsState } from "../usePortfoliosAccountsState";
 import { useWithdrawablePortfolioSelect } from "./useWithdrawablePortfolioSelect";
@@ -17,7 +18,8 @@ export const WithdrawModalContent = ({
   modalInitialFocusRef,
 }: WithdrawModalProps) => {
   const { t } = useModifiedTranslation();
-  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
+  const { selectedContactId } = useGetContractIdData();
+  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo(false, selectedContactId);
   const portfolioSelectProps = useWithdrawablePortfolioSelect();
   const { portfolioId } = portfolioSelectProps;
 

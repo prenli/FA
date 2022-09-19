@@ -11,8 +11,37 @@ const CONTACT_INFO_QUERY = gql`
   query GetContactInfo($contactId: Long) {
     contact(id: $contactId) {
       id
+      contactId
+      name
       language {
         locale
+      }
+      representees(onlyDirectRepresentees: true) {
+        name
+        id
+        contactId
+        portfolios {
+          id
+          name
+          shortName
+          currency {
+            securityCode
+          }
+          portfolioGroups {
+            id
+            code
+          }
+        }
+        representees {
+          name
+          contactId
+        }
+      }
+      assetManagerPortfolios {
+        primaryContact {
+          contactId
+          name
+        }
       }
       portfolios {
         id
@@ -37,6 +66,21 @@ interface PortfolioGroup {
     | typeof WithdrawalPermissionGroup;
 }
 
+export interface Representee {
+  id: number;
+  name: string;
+  contactId: string;
+  portfolios: Portfolio[];
+  representees: [];
+}
+
+interface AssetManagerPortfolios {
+  primaryContact: {
+    contactId: string;
+    name: string;
+  };
+}
+
 export interface Portfolio {
   id: number;
   name: string;
@@ -50,6 +94,9 @@ export interface Portfolio {
 export interface ContactInfoQuery {
   contact?: {
     id: number;
+    name: string;
+    representees: Representee[];
+    assetManagerPortfolios: AssetManagerPortfolios[];
     language: {
       locale: string;
     };
@@ -57,21 +104,33 @@ export interface ContactInfoQuery {
   };
 }
 
-export const useGetContactInfo = (callAPI = false) => {
+export interface ContactsInfoQuery {
+  contacts?: {
+    name: string;
+    representees: Representee[];
+    assetManagerPortfolios: AssetManagerPortfolios[];
+  }[];
+}
+
+export const useGetContactInfo = (
+  callAPI = false,
+  selectedContactId?: string | number,
+  queryWithRepresentees?: boolean,
+) => {
   const { linkedContact } = useKeycloak();
   const { loading, error, data } = useQuery<ContactInfoQuery>(
     CONTACT_INFO_QUERY,
     {
       variables: {
-        contactId: linkedContact,
+        contactId: selectedContactId || linkedContact,
       },
       fetchPolicy: callAPI ? "cache-and-network" : "cache-first",
     }
   );
 
   return {
-    loading,
-    error,
+    loading: loading,
+    error: error,
     data: data && {
       contactId: data.contact?.id,
       portfolios: data.contact?.portfolios || [],
@@ -79,6 +138,9 @@ export const useGetContactInfo = (callAPI = false) => {
       // all contact portfolios have same currency
       portfoliosCurrency:
         data.contact?.portfolios?.[0]?.currency.securityCode || "",
+      representees: data?.contact?.representees,
+      assetManagerPortfolios: data?.contact?.assetManagerPortfolios,
+      name: data.contact?.name,
     },
   };
 };

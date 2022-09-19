@@ -69,13 +69,14 @@ const mapCashAccount = (account: APICashAccount): CashAccount => ({
   availableBalance: account.amountAfterOpenTradeOrders,
 });
 
-export const useGetPortfoliosAccounts = (portfolioId: string | undefined) => {
+export const useGetPortfoliosAccounts = (portfolioId?: string) => {
   const { loading, error, data } = useQuery<PortfolioCashAccountsQuery>(
     CASH_ACCOUNTS_QUERY,
     {
       variables: {
         portfolioId,
       },
+      skip: !portfolioId,
       ...getFetchPolicyOptions(`useGetCashAccounts.${portfolioId}`),
     }
   );

@@ -4,14 +4,18 @@ import {
   Process,
   useGetContactProcesses,
 } from "api/flowable/useGetContactProcesses";
+import { Representee, useGetContactInfo } from "api/initial/useGetContactInfo";
+import { ReactComponent as CheckIcon } from "assets/check.svg";
 import { ReactComponent as DepositIcon } from "assets/deposit.svg";
 import { ReactComponent as ProcessIcon } from "assets/external-link.svg";
 import { ReactComponent as LogoutIcon } from "assets/logout.svg";
+import { ReactComponent as UserIcon } from "assets/user-circle.svg";
 import { ReactComponent as MenuIcon } from "assets/view-list.svg";
 import { ReactComponent as WithdrawalIcon } from "assets/withdrawal.svg";
 import classNames from "classnames";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import i18n from "i18next";
+import { useGetContractIdData, SelectedContact } from "providers/ContractIdProvider";
 import { useKeycloak } from "providers/KeycloakProvider";
 import { useNavigate, To, NavigateOptions } from "react-router";
 import { keycloakService } from "services/keycloakService";
@@ -19,12 +23,12 @@ import { useCanDeposit, useCanWithdraw } from "services/permissions/money";
 import { useModal } from "../Modal/useModal";
 import { DepositModalContent } from "../MoneyModals/DepositModalContent/DepositModalContent";
 import { WithdrawModalContent } from "../MoneyModals/WithdrawModalContent/WithdrawModalContent";
-
 interface MenuActions {
   logout: () => void;
   deposit: () => void;
   withdraw: () => void;
   process: (to: To, options?: NavigateOptions) => void;
+  setSelectedContact: (contact: SelectedContact) => void;
 }
 
 const getMenuItems = (
@@ -32,7 +36,10 @@ const getMenuItems = (
   hasLinkedContact: boolean,
   canDeposit: boolean,
   canWithdraw: boolean,
-  processes: Process[]
+  processes: Process[],
+  representees: Representee[],
+  userProfile: SelectedContact,
+  selectedContactId: string | number,
 ) => {
   if (!hasLinkedContact) {
     return [
@@ -44,6 +51,24 @@ const getMenuItems = (
     ];
   }
   return [
+    {
+      label: userProfile?.userName,
+      action: () => {menuActions.setSelectedContact(userProfile)},
+      Icon: UserIcon,
+      selected: userProfile?.id === selectedContactId,
+    },
+    "separator",
+    ...(Array.isArray(representees)
+      ? representees.map((representee, index) => ({
+          label: representee?.name,
+          action: () => {menuActions.setSelectedContact({
+            id: representee.id, contactId: representee.contactId, userName: representee.name,
+          })}, 
+          Icon: UserIcon,
+          selected: representee?.id === selectedContactId,
+        }))
+      : []),
+    "separator",
     ...(canDeposit
       ? [
           {
@@ -53,6 +78,7 @@ const getMenuItems = (
           },
         ]
       : []),
+    "separator",
     ...(canWithdraw
       ? [
           {
@@ -62,6 +88,7 @@ const getMenuItems = (
           },
         ]
       : []),
+    "separator",
     ...processes.map((process) => ({
       label: process.name,
       action: () =>
@@ -70,6 +97,7 @@ const getMenuItems = (
         }),
       Icon: ProcessIcon,
     })),
+    "separator",
     {
       label: i18n.t("userMenu.logout"),
       action: menuActions.logout,
@@ -80,11 +108,12 @@ const getMenuItems = (
 
 export const UserMenu = () => {
   const { t } = useModifiedTranslation();
-  const { linkedContact } = useKeycloak();
+  const { linkedContact, userProfile } = useKeycloak();
   const navigate = useNavigate();
   const { data: processes = [] } = useGetContactProcesses();
   const canDeposit = useCanDeposit();
   const canWithdraw = useCanWithdraw();
+  const { data: contactData } = useGetContactInfo();
   const {
     Modal,
     onOpen: onDepositModalOpen,
@@ -98,11 +127,17 @@ export const UserMenu = () => {
     contentProps: withdrawModalContentProps,
   } = useModal();
 
+  const { selectedContactId, setSelectedContactId, setSelectedContact } = useGetContractIdData();
+
   const menuActions = {
     logout: () => keycloakService.onAuthLogout(),
     deposit: () => onDepositModalOpen(),
     withdraw: () => onWithdrawModalOpen(),
     process: (to: To, options?: NavigateOptions) => navigate(to, options),
+    setSelectedContact: (contact: SelectedContact) => {
+      setSelectedContact(contact);
+      setSelectedContactId(contact.id);
+    },
   };
   return (
     <>
@@ -121,15 +156,19 @@ export const UserMenu = () => {
           leaveTo="transform scale-95 opacity-0"
           as={Fragment}
         >
-          <Menu.Items className="absolute top-full right-0 z-10 py-1 bg-white rounded-md divide-y divide-gray-100 ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none min-w-[120px]">
+          <Menu.Items className="absolute top-full right-0 z-10 py-1 bg-white rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none min-w-[120px]">
             {getMenuItems(
               menuActions,
               !!linkedContact,
               canDeposit,
               canWithdraw,
-              processes
+              processes,
+              contactData?.representees || [],
+              { id: linkedContact || "", contactId: "", userName: `${userProfile?.firstName} ${userProfile?.lastName}`},
+              selectedContactId,
             ).map((item, index) => (
-              <MenuItem key={index} {...item} />
+              (typeof item === "string") ? <Separator key={index}/> :
+              (<MenuItem key={index} {...item} />)
             ))}
           </Menu.Items>
         </Transition>
@@ -151,9 +190,16 @@ interface MenuItemProps {
   label: ReactNode;
   action: () => void;
   Icon: ReactElementType;
+  selected?: boolean;
 }
 
-const MenuItem = ({ action, label, Icon }: MenuItemProps) => {
+const Separator = () => {
+  return (
+    <Menu.Item><hr /></Menu.Item>
+  );
+};
+
+const MenuItem = ({ action, label, Icon, selected = false }: MenuItemProps) => {
   return (
     <Menu.Item>
       {({ active }) => (
@@ -167,7 +213,10 @@ const MenuItem = ({ action, label, Icon }: MenuItemProps) => {
           onClick={action}
         >
           <Icon className="w-6 h-6" aria-hidden />
-          <span className="text-left whitespace-nowrap grow">{label}</span>
+          <div className="flex relative content-between items-center w-full text-left whitespace-nowrap grow">
+            <span>{label}</span>
+            <span className="absolute right-0">{selected && <CheckIcon className="mr-2"/>}</span>
+          </div>
         </button>
       )}
     </Menu.Item>

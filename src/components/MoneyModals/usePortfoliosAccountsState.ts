@@ -4,9 +4,10 @@ import {
   useGetPortfoliosAccounts,
 } from "api/money/useGetPortfoliosAccounts";
 
-export const usePortfoliosAccountsState = (portfolioId: number) => {
+export const usePortfoliosAccountsState = (portfolioId?: number) => {
   const { data: { cashAccounts = [] } = {}, loading } =
-    useGetPortfoliosAccounts(portfolioId.toString());
+    useGetPortfoliosAccounts(portfolioId?.toString());
+
   useEffect(() => {
     if (cashAccounts.length > 0) {
       setCurrentCashAccount(cashAccounts[0]);

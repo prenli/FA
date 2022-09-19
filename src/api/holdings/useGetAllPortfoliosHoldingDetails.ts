@@ -1,5 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { getFetchPolicyOptions } from "api/utils";
+import { useGetContractIdData } from "providers/ContractIdProvider";
 import { useKeycloak } from "providers/KeycloakProvider";
 import { ALL_PORTFOLIOS_REPORT_HOLDINGS_DETAILS_FIELDS } from "./fragments";
 import { AllPortfoliosHoldingDetailsQuery } from "./types";
@@ -26,14 +27,15 @@ export const useGetAllPortfoliosHoldingDetails = (
   securityId: string | undefined
 ) => {
   const { linkedContact } = useKeycloak();
+  const { selectedContactId } = useGetContractIdData();
   const { loading, error, data } = useQuery<AllPortfoliosHoldingDetailsQuery>(
     HOLDING_DETAILS_QUERY,
     {
       variables: {
-        contactId: linkedContact,
+        contactId: selectedContactId || linkedContact,
       },
       ...getFetchPolicyOptions(
-        `useGetAllPortfoliosHoldingDetails.${linkedContact}`
+        `useGetAllPortfoliosHoldingDetails.${selectedContactId || linkedContact}`
       ),
     }
   );

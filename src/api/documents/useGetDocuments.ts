@@ -1,4 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
+import { useGetContractIdData } from "providers/ContractIdProvider";
 import { useKeycloak } from "providers/KeycloakProvider";
 import { getFetchPolicyOptions } from "../utils";
 import { DOCUMENT_FIELDS } from "./fragments";
@@ -36,14 +37,15 @@ const filterTags: string[] = ["Online"];
 
 export const useGetDocuments = (portfolioId?: string | undefined) => {
   const { linkedContact } = useKeycloak();
+  const { selectedContactId } = useGetContractIdData();
   const { loading, error, data } = useQuery<AllDocumentsQuery>(
     ALL_DOCUMENTS_QUERY,
     {
       variables: {
-        contactId: linkedContact,
+        contactId: selectedContactId || linkedContact,
         filterTags,
       },
-      ...getFetchPolicyOptions(`useGetDocuments.${linkedContact}`),
+      ...getFetchPolicyOptions(`useGetDocuments.${selectedContactId || linkedContact}`),
     }
   );
 
