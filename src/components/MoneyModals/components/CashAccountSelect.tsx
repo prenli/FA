@@ -34,7 +34,7 @@ export const CashAccountSelect = ({
   return (
     <>
       {!portfolioId && 
-        <div className="flex w-full justify-center content-center border border-amber-600 bg-amber-50 rounded-lg p-4">
+        <div className="flex justify-center content-center p-4 w-full rounded-lg border border-amber-600 bg-amber-50">
           <ExclamationIcon className="mr-2 stroke-amber-600" />
           <span className="text-amber-600">{t("moneyModal.noPortfolioAvailable")}</span>
         </div>
