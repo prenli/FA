@@ -131,6 +131,4 @@ However, if you choose to run it in another context root, check the section *Con
 
 Then, run  _`yarn build`_ to build the deployable version. 
 
-In order to deploy the built application to your FA test environment, follow the instructions at https://documentation.fasolutions.com/en/customizing-fa-client-portal.html.FACF-51
-
-Updates to readme
+In order to deploy the built application to your FA test environment, follow the instructions at https://documentation.fasolutions.com/en/customizing-fa-client-portal.html.
