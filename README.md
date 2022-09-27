@@ -14,7 +14,6 @@ In order for you to get started with running and/or customizing FA Client Portal
 
 * FA Platform test environment
 * Enabling the access for the FA Client Portal to connect with your platform => request the access from FA Customer Support
-    * change fa-api access type to *public*
     * add *Valid Redirect URI* to be `http://localhost:3000/*`
     * set *Web Origin* set to `+`.
 * Development tools installed including git, npm, yarn...
@@ -24,22 +23,28 @@ In order for you to get started with running and/or customizing FA Client Portal
 
 #### Clone the project to your local computer
 
-Run the following in your 
+Run the following in your shell
 
     git clone https://bitbucket.org/fasolutions-ondemand/fa-client-app.git
 
 #### Modify the application settings to match your FA Platform test environment
 
-We now assume the addess for your FA Platform is 
+We now assume the address for your FA Platform is 
 
 https://mytestenv.fasolutions.com
 
 #### Point the authorization towards your test environment
 
-FA CLient Portal uses keycloak for authorization. Configuration file (*keycloak.json*) is located in *public* directory. Current file
+FA Client Portal uses Keycloak for authorization. Configuration file (*keycloak.json*) is located in *public* directory. Current file
 is customized for test environment. Change it to point to your FA Platform test environment. 
 
     "auth-server-url": "https://mytestenv.fasolutions.com/auth/",
+
+Furthermore, make sure the Keycloak client to be used is defined in the file under resource. The default setting is:
+    
+    "resource": "external-api",
+
+This default setting can be directly used, since the external-api client comes preconfigured with FA with public access type.
 
 #### CORS policy
 
@@ -126,10 +131,6 @@ However, if you choose to run it in another context root, check the section *Con
 
 Then, run  _`yarn build`_ to build the deployable version. 
 
-After building process finishes, copy contents of *build* directory to FA Platform test environment using FA FileManager in Admin Console. 
-If you do have have access to it, please contact our support.
+In order to deploy the built application to your FA test environment, follow the instructions at https://documentation.fasolutions.com/en/customizing-fa-client-portal.html.FACF-51
 
-Tip! Create first the folder structure in the FA FileManager. Then upload files for each folder separately. This is due to the limitation in FA FileManager.
-
-
-
+Updates to readme
