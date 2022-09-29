@@ -3,6 +3,7 @@ import {
   TOTAL_INVESTMENTS_OPTION_ID,
   useGetPortfolioOptions,
 } from "hooks/useGetPortfolioOptions";
+import { useGetContractIdData } from "providers/ContractIdProvider";
 import { Navigate, useParams } from "react-router-dom";
 import { useNavigateToPortfolioTab } from "./useNavigateToPortfolioTab";
 import { useRedirectIfOnlyOnePortfolio } from "./useRedirectIfOnlyOnePortfolio";
@@ -21,6 +22,8 @@ export const PortfolioNavigationHeader = () => {
   const onPortfolioChange = (selectedOption: PortfolioOption) => {
     navigateToPortfolioTab(selectedOption.urlPrefix);
   };
+  const { selectedContact } = useGetContractIdData();
+ 
   const currentPortfolio = portfolioId
     ? parseInt(portfolioId, 10)
     : TOTAL_INVESTMENTS_OPTION_ID;
@@ -38,7 +41,7 @@ export const PortfolioNavigationHeader = () => {
       <div className="container flex gap-2 items-center p-2 mx-auto">
         <Logo />
         <div className="flex-1">
-          {portfolioOptions.length > 1 ? (
+          {portfolioOptions.length > 0 ? (
             <div className="sm:min-w-[350px] sm:w-fit">
               <PortfolioSelect
                 portfolioOptions={portfolioOptions}
@@ -46,16 +49,15 @@ export const PortfolioNavigationHeader = () => {
                 onChange={onPortfolioChange}
               />
             </div>
-          ) : portfolioOptions.length === 1 ? (
-            <div className="flex items-center ml-3 h-10 text-2xl font-bold text-gray-900">
-              {portfolioOptions[0].label}
-            </div>
           ) : (
             <div />
           )}
         </div>
-        <div className="px-2">
-          <UserMenu />
+        <div className="flex justify-end pag-2">
+          <span className="self-center text-xl font-bold text-gray-500">{selectedContact.userName}</span>
+          <div className="px-2">
+            <UserMenu />
+          </div>
         </div>
       </div>
     </div>

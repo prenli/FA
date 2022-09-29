@@ -38,7 +38,7 @@ const getMenuItems = (
   canWithdraw: boolean,
   processes: Process[],
   representees: Representee[],
-  userProfile: SelectedContact,
+  contactData: SelectedContact,
   selectedContactId: string | number,
 ) => {
   if (!hasLinkedContact) {
@@ -50,12 +50,13 @@ const getMenuItems = (
       },
     ];
   }
+
   return [
     {
-      label: userProfile?.userName,
-      action: () => {menuActions.setSelectedContact(userProfile)},
+      label: contactData?.userName,
+      action: () => {menuActions.setSelectedContact(contactData)},
       Icon: UserIcon,
-      selected: userProfile?.id === selectedContactId,
+      selected: contactData?.id === selectedContactId,
     },
     "separator",
     ...(Array.isArray(representees)
@@ -107,8 +108,9 @@ const getMenuItems = (
 };
 
 export const UserMenu = () => {
+  const { selectedContactId, setSelectedContactId, setSelectedContact } = useGetContractIdData();
   const { t } = useModifiedTranslation();
-  const { linkedContact, userProfile } = useKeycloak();
+  const { linkedContact } = useKeycloak();
   const navigate = useNavigate();
   const { data: processes = [] } = useGetContactProcesses();
   const canDeposit = useCanDeposit();
@@ -127,8 +129,6 @@ export const UserMenu = () => {
     contentProps: withdrawModalContentProps,
   } = useModal();
 
-  const { selectedContactId, setSelectedContactId, setSelectedContact } = useGetContractIdData();
-
   const menuActions = {
     logout: () => keycloakService.onAuthLogout(),
     deposit: () => onDepositModalOpen(),
@@ -139,6 +139,7 @@ export const UserMenu = () => {
       setSelectedContactId(contact.id);
     },
   };
+
   return (
     <>
       <Menu as="div" className="grid relative items-center">
@@ -164,7 +165,7 @@ export const UserMenu = () => {
               canWithdraw,
               processes,
               contactData?.representees || [],
-              { id: linkedContact || "", contactId: "", userName: `${userProfile?.firstName} ${userProfile?.lastName}`},
+              { id: contactData?.contactId || "", contactId: contactData?.contactId || "", userName: contactData?.name || "-" },
               selectedContactId,
             ).map((item, index) => (
               (typeof item === "string") ? <Separator key={index}/> :

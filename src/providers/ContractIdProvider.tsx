@@ -34,8 +34,8 @@ useEffect(() => {
   linkedContact && setSelectedContactId(linkedContact);
   linkedContact && userProfile && setSelectedContact({
     id: linkedContact, 
-    contactId: "", // TODO: keybloak should provide contactId
-    userName: userProfile.username || "", 
+    contactId: "", // TODO: keycloak should provide contactId
+    userName: "", 
   });
 }, [linkedContact, userProfile]);
 

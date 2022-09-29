@@ -94,6 +94,7 @@ export interface Portfolio {
 export interface ContactInfoQuery {
   contact?: {
     id: number;
+    contactId: string;
     name: string;
     representees: Representee[];
     assetManagerPortfolios: AssetManagerPortfolios[];
@@ -133,6 +134,7 @@ export const useGetContactInfo = (
     error: error,
     data: data && {
       contactId: data.contact?.id,
+      _contactId: data.contact?.contactId,
       portfolios: data.contact?.portfolios || [],
       locale: data.contact?.language?.locale || fallbackLanguage,
       // all contact portfolios have same currency
