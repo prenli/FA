@@ -54,7 +54,7 @@ export const PortfolioNavigationHeader = () => {
           )}
         </div>
         <div className="flex justify-end pag-2">
-          <span className="self-center text-xl font-bold text-gray-500">{selectedContact.userName}</span>
+          <span className="self-center ml-4 text-xl font-bold text-gray-400">{selectedContact.initials}</span>
           <div className="px-2">
             <UserMenu />
           </div>

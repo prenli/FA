@@ -14,6 +14,7 @@ export type SelectedContact = {
   id: string | number;
   contactId: string | number;
   userName: string;
+  initials: string;
 }
 
 type ContextProps = {
@@ -36,6 +37,7 @@ useEffect(() => {
     id: linkedContact, 
     contactId: "", // TODO: keycloak should provide contactId
     userName: "", 
+    initials: "",
   });
 }, [linkedContact, userProfile]);
 
