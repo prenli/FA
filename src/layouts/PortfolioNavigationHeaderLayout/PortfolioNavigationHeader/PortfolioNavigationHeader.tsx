@@ -37,12 +37,12 @@ export const PortfolioNavigationHeader = () => {
   }
 
   return (
-    <div className="z-20 pt-2 bg-white">
-      <div className="container flex gap-2 items-center p-2 mx-auto">
+    <div className="z-20 pt-2 bg-white px-2">
+      <div className="container flex items-center justify-between gap-2 mx-auto">
         <Logo />
-        <div className="flex-1">
+        <div className="flex-auto flex-shrink justify-start w-1/2 sm:min-w-[350px]">
           {portfolioOptions.length > 0 ? (
-            <div className="sm:min-w-[350px] sm:w-fit">
+            <div className="max-w-[350px]">
               <PortfolioSelect
                 portfolioOptions={portfolioOptions}
                 portfolioId={currentPortfolio}
@@ -53,9 +53,9 @@ export const PortfolioNavigationHeader = () => {
             <div />
           )}
         </div>
-        <div className="flex justify-end pag-2">
-          <span className="self-center ml-4 text-xl font-bold text-gray-400">{selectedContact.initials}</span>
-          <div className="px-2">
+        <div className="flex justify-end">
+          <span className="self-center pl-2 pr-1 text-xl font-bold text-gray-400">{selectedContact.initials}</span>
+          <div className="">
             <UserMenu />
           </div>
         </div>
