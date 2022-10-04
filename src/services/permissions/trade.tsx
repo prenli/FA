@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { Portfolio, useGetContactInfo } from "api/initial/useGetContactInfo";
+import { useGetContractIdData } from "providers/ContractIdProvider";
 import { useParams } from "react-router-dom";
 
 export const tradableTag = "Tradeable";
@@ -13,7 +14,8 @@ export const isPortfolioTradable = (portfolio: Portfolio) =>
 
 export const useCanTrade = () => {
   const { portfolioId } = useParams();
-  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
+  const { selectedContactId } = useGetContractIdData();
+  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo(false, selectedContactId);
 
   return portfolios
     .filter(

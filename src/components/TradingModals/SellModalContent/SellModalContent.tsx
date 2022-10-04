@@ -12,6 +12,7 @@ import {
   LabeledDiv,
 } from "components/index";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
+import { useGetContractIdData } from "providers/ContractIdProvider";
 import { useParams } from "react-router-dom";
 import { round } from "utils/number";
 import { useGetSecurityDetails } from "../../../api/holdings/useGetSecurityDetails";
@@ -86,7 +87,8 @@ export const SellModalContent = ({
   } = security;
   const { holdingId } = useParams();
   const { t } = useModifiedTranslation();
-  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
+  const { selectedContactId } = useGetContractIdData();
+  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo(false, selectedContactId);
   const { portfolioId, setPortfolioId, portfolioOptions } =
     useTradablePortfolioSelect();
 

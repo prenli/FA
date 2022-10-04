@@ -1,6 +1,7 @@
 import { useReducer } from "react";
 import { gql, useQuery } from "@apollo/client";
 import { Option } from "components/Select/Select";
+import { useGetContractIdData } from "providers/ContractIdProvider";
 import { tradableTag } from "services/permissions/trade";
 import { SecurityTypeCode } from "../holdings/types";
 import { useGetContactInfo } from "../initial/useGetContactInfo";
@@ -148,8 +149,9 @@ const filtersOptions = {
 };
 
 export const useGetTradebleSecurities = () => {
+  const { selectedContactId } = useGetContractIdData();
   const { data: { portfoliosCurrency } = { portfoliosCurrency: "EUR" } } =
-    useGetContactInfo();
+    useGetContactInfo(false, selectedContactId);
   const [filters, setFilters] = useReducer(filtersReducer, initialFilters);
 
   const { loading, error, data } = useQuery<TradableSecuritiesQuery>(

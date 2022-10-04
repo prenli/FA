@@ -3,6 +3,7 @@ import { useGetContactInfo } from "api/initial/useGetContactInfo";
 import { useDeposit } from "api/money/useDeposit";
 import { Input, Button } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
+import { useGetContractIdData } from "providers/ContractIdProvider";
 import { CashAccountSelect } from "../components/CashAccountSelect";
 import { usePortfoliosAccountsState } from "../usePortfoliosAccountsState";
 import { useDepositablePortfolioSelect } from "./useDepositablePortfolioSelect";
@@ -17,7 +18,8 @@ export const DepositModalContent = ({
   modalInitialFocusRef,
 }: DepositModalProps) => {
   const { t } = useModifiedTranslation();
-  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
+  const { selectedContactId } = useGetContractIdData();
+  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo(false, selectedContactId);
   const portfolioSelectProps = useDepositablePortfolioSelect();
   const { portfolioId } = portfolioSelectProps;
 

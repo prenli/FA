@@ -46,7 +46,7 @@ export const useGetAllPortfoliosHoldings = () => {
   const { selectedContactId } = useGetContractIdData();
   const { i18n } = useModifiedTranslation();
   const { data: { portfoliosCurrency } = { portfoliosCurrency: "EUR" } } =
-    useGetContactInfo();
+    useGetContactInfo(false, selectedContactId);
   const { loading, error, data } = useQuery<AllPortfoliosHoldingsQuery>(
     HOLDINGS_QUERY,
     {

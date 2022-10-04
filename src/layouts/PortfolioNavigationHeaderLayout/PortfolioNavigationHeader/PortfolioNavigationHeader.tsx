@@ -37,8 +37,8 @@ export const PortfolioNavigationHeader = () => {
   }
 
   return (
-    <div className="z-20 pt-2 bg-white px-2">
-      <div className="container flex items-center justify-between gap-2 mx-auto">
+    <div className="z-20 px-2 pt-2 bg-white">
+      <div className="container flex gap-2 justify-between items-center mx-auto">
         <Logo />
         <div className="flex-auto flex-shrink justify-start w-1/2 sm:min-w-[350px]">
           {portfolioOptions.length > 0 ? (
@@ -54,7 +54,7 @@ export const PortfolioNavigationHeader = () => {
           )}
         </div>
         <div className="flex justify-end">
-          <span className="self-center pl-2 pr-1 text-xl font-bold text-gray-400">{selectedContact.initials}</span>
+          <span className="self-center pr-1 pl-2 text-xl font-bold text-gray-400">{selectedContact.initials}</span>
           <div className="">
             <UserMenu />
           </div>

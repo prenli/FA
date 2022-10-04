@@ -12,6 +12,7 @@ import {
   LabeledDiv,
 } from "components/index";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
+import { useGetContractIdData } from "providers/ContractIdProvider";
 import { useTradablePortfolioSelect } from "../useTradablePortfolioSelect";
 
 export interface BuyModalInitialData {
@@ -74,7 +75,8 @@ export const BuyModalContent = ({
   } = security;
 
   const { t } = useModifiedTranslation();
-  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo();
+  const { selectedContactId } = useGetContractIdData();
+  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo(false, selectedContactId);
   const { portfolioId, setPortfolioId, portfolioOptions } =
     useTradablePortfolioSelect();
   const {

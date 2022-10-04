@@ -2,6 +2,7 @@ import { HoldingPosition, SecurityTypeCode } from "api/holdings/types";
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
 import { Card, GainLoseColoring } from "components";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
+import { useGetContractIdData } from "providers/ContractIdProvider";
 import { DataRow } from "./DataRow";
 import { HoldingHeader } from "./HoldingHeader";
 
@@ -19,8 +20,9 @@ export const HoldingData = ({
   typeCode,
 }: HoldingDataProps) => {
   const { t } = useModifiedTranslation();
-  const { data: { portfoliosCurrency } = { portfoliosCurrency: "EUR" } } =
-    useGetContactInfo();
+  const { selectedContactId } = useGetContractIdData();
+  const { data: { portfoliosCurrency } = { portfoliosCurrency: "EUR" } } = useGetContactInfo(false, selectedContactId);
+
   return (
     <Card
       header={
