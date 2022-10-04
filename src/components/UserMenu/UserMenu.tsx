@@ -216,10 +216,10 @@ const MenuItem = ({ action, label, Icon, selected = false }: MenuItemProps) => {
           onClick={action}
         >
           <Icon className="w-6 h-6" aria-hidden />
-          <div className="flex relative content-between items-center w-full text-left whitespace-nowrap grow">
+          <div className="items-center pr-2 w-full text-left whitespace-nowrap grow">
             <span>{label}</span>
-            <span className="absolute right-0">{selected && <CheckIcon className="mr-2"/>}</span>
           </div>
+          <span className="">{selected && <CheckIcon />}</span>
         </button>
       )}
     </Menu.Item>
