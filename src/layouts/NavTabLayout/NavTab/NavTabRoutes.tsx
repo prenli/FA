@@ -1,5 +1,5 @@
 import { Navigate, useRoutes } from "react-router-dom";
-import { useCanTrade } from "services/permissions/trade";
+import { useCanTrade, canTradeMode } from "services/permissions/trade";
 import { NavTabLayout } from "../NavTabLayout";
 import { NavTabPath } from "./types";
 
@@ -8,7 +8,7 @@ interface NavTabRoutesProps {
 }
 
 export const NavTabRoutes = ({ routes }: NavTabRoutesProps) => {
-  const canTrade = useCanTrade();
+  const canTrade = useCanTrade(canTradeMode.SELECTED_ANY);
 
   const filteredRoutes = routes.filter(
     (route) => canTrade || route.path !== "trading"

@@ -13,7 +13,6 @@ import {
 } from "components/index";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useGetContractIdData } from "providers/ContractIdProvider";
-import { useParams } from "react-router-dom";
 import { round } from "utils/number";
 import { useGetSecurityDetails } from "../../../api/holdings/useGetSecurityDetails";
 import { useTradablePortfolioSelect } from "../useTradablePortfolioSelect";
