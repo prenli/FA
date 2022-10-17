@@ -13,7 +13,6 @@ import {
 } from "components/index";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useGetContractIdData } from "providers/ContractIdProvider";
-import { useParams } from "react-router-dom";
 import { round } from "utils/number";
 import { useGetSecurityDetails } from "../../../api/holdings/useGetSecurityDetails";
 import { useTradablePortfolioSelect } from "../useTradablePortfolioSelect";
@@ -85,7 +84,6 @@ export const SellModalContent = ({
     type: { code: securityType } = {},
     latestMarketData: { price } = { price: 0 },
   } = security;
-  const { holdingId } = useParams();
   const { t } = useModifiedTranslation();
   const { selectedContactId } = useGetContractIdData();
   const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo(false, selectedContactId);
@@ -95,7 +93,7 @@ export const SellModalContent = ({
   const {
     loading,
     data: { marketValue = 0, marketFxRate = 1, amount: units = 0 } = {},
-  } = useGetPortfolioHoldingDetails(portfolioId.toString(), holdingId);
+  } = useGetPortfolioHoldingDetails(portfolioId.toString(), securityId.toString());
   const currentAmount = getCurrentAmount(
     securityType,
     units,

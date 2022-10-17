@@ -1,10 +1,14 @@
-import { ReactNode } from "react";
 import { Portfolio, useGetContactInfo } from "api/initial/useGetContactInfo";
 import { useGetContractIdData } from "providers/ContractIdProvider";
 import { useParams } from "react-router-dom";
 
-export const tradableTag = "Tradeable";
+export enum canTradeMode{
+  ANY,
+  SELECTED,
+  SELECTED_ANY,
+}
 
+export const tradableTag = "Tradeable";
 export const TradePermissionGroup = "CP_TRADING" as const;
 
 export const isPortfolioTradable = (portfolio: Portfolio) =>
@@ -12,24 +16,32 @@ export const isPortfolioTradable = (portfolio: Portfolio) =>
     (group) => group.code === TradePermissionGroup
   );
 
-export const useCanTrade = () => {
+/*
+* Checks if user or portfolio is eligible to trade
+* @param mode: mode to apply when checking if eligible to trade
+* SELECTED - check only if the currently selected portfolio can trade
+* ANY - check if any of the user's portfolios can trade
+* SELECTED_ANY - use SELECTED_ONLY if there is a selected portfolio, else do ANY
+* @return boolean - whether trading is allowed
+*/
+export const useCanTrade = (mode = canTradeMode.SELECTED) => {
   const { portfolioId } = useParams();
   const { selectedContactId } = useGetContractIdData();
   const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo(false, selectedContactId);
+  
+  const isAnyPortfolioTradable = portfolios.some(isPortfolioTradable);
+  const selectedPortfolio = portfolios.filter((portfolio) => portfolioId !== undefined && portfolio.id === parseInt(portfolioId, 10))
+  const isSelectedPortfolioTradable = selectedPortfolio.some(isPortfolioTradable);
 
-  return portfolios
-    .filter(
-      (portfolio) => !portfolioId || portfolio.id === parseInt(portfolioId, 10)
-    )
-    .some(isPortfolioTradable);
-};
-
-interface CanTradeProps {
-  children: ReactNode;
-  fallbackNode?: ReactNode;
-}
-
-export const CanTrade = ({ children, fallbackNode = null }: CanTradeProps) => {
-  const canTrade = useCanTrade();
-  return <>{canTrade ? children : fallbackNode}</>;
+  switch(mode){
+    case(canTradeMode.ANY):
+      return isAnyPortfolioTradable
+    case(canTradeMode.SELECTED):
+      return isSelectedPortfolioTradable
+    case(canTradeMode.SELECTED_ANY):
+      if(portfolioId !== undefined) return isSelectedPortfolioTradable
+      return isAnyPortfolioTradable
+    default:
+      return false
+  }
 };

@@ -105,7 +105,7 @@
     "total": "Total",
     "noTransactions": "No transactions are available\n for this period",
     "noTransactionsInfo": "Try filtering with other dates",
-    "downloadFileButtonLabel": "Download transaction note"
+    "downloadFileButtonLabel": "Download transaction confirmation"
   },
   "documentsPage": {
     "title": "Documents",
