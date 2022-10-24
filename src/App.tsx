@@ -5,11 +5,14 @@ import { InitialLanguageProvider } from "providers/InitialLanguageProvider";
 import { KeycloakProvider } from "providers/KeycloakProvider";
 import { PersistedApolloProvider } from "providers/PersistedApolloProvider";
 import { ServiceWorkerRegistrationProvider } from "providers/ServiceWorkerRegistrationProvider";
+import { IntercomProvider } from 'react-use-intercom';
 import { keycloakService } from "services/keycloakService";
 import { Toast } from "./components";
 import { UserWithLinkedContactRoutes } from "./pages/userWithLinkedContact/routes";
 import "react-toastify/dist/ReactToastify.css";
 import "styles/fonts.css";
+
+const INTERCOM_APP_ID = 'gkgnpk1g';
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
       <ServiceWorkerRegistrationProvider>
         <ErrorBoundary>
           <KeycloakProvider keycloak={keycloakService}>
+          <IntercomProvider 
+            appId={INTERCOM_APP_ID}
+          >
             <DetailProvider>
               <PersistedApolloProvider>
                 <APILanguageProvider>
@@ -26,6 +32,7 @@ function App() {
                 </APILanguageProvider>
               </PersistedApolloProvider>
             </DetailProvider>
+          </IntercomProvider>
           </KeycloakProvider>
           <Toast />
         </ErrorBoundary>
