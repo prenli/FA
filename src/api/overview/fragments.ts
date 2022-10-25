@@ -70,6 +70,7 @@ export const DETAILED_PORTFOLIO_FIELDS = gql`
   fragment DetailedPortfolioFields on Portfolio {
     id
     name
+    shortName
     currency {
       securityCode
     }
@@ -105,6 +106,16 @@ export const DETAILED_PORTFOLIO_FIELDS = gql`
             shareOfTotal
           }
         }
+      }
+    }
+    profile {
+      id
+      attributes {
+        attributeKey
+        stringValue
+        dateValue
+        doubleValue
+        booleanValue
       }
     }
   }

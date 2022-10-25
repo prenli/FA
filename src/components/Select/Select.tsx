@@ -49,7 +49,7 @@ export const Select = <TOption extends Option>({
     ],
   });
   return (
-    <Listbox as="div" value={value} onChange={onChange}>
+    <Listbox as="div" value={value} onChange={onChange} className="z-50">
       {label && (
         <Listbox.Label className="text-sm font-normal">{label}</Listbox.Label>
       )}
@@ -71,13 +71,13 @@ export const Select = <TOption extends Option>({
           leaveFrom="transform scale-100 opacity-100"
           leaveTo="transform scale-95 opacity-0"
         >
-          <Listbox.Options className="py-1 text-base list-none bg-white rounded divide-y divide-gray-100 shadow ">
+          <Listbox.Options className="py-1 text-base list-none bg-white rounded divide-y divide-gray-100 shadow">
             {options.map((option) => (
               <Listbox.Option key={option.id} value={option} as={Fragment}>
                 {({ active, selected }) => (
                   <li
                     className={classNames(
-                      "block py-2 px-4 text-sm text-gray-700 dark:text-gray-200 ",
+                      "block py-2 px-4 text-sm text-gray-700 dark:text-gray-200",
                       {
                         "dark:text-white bg-primary-50 dark:bg-gray-600":
                           active,

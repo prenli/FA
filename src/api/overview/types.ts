@@ -12,6 +12,7 @@ export interface BaseReport {
 interface Summary<TReport extends BaseReport = BaseReport> {
   id: number;
   name: string;
+  shortName: string;
   portfolioReport: TReport;
   isinCode: string;
 }
@@ -45,6 +46,14 @@ export interface AllocationByType {
   };
 }
 
+export interface ProfileAttribute {
+  attributeKey: string;
+  stringValue: string;
+  dateValue: string;
+  doubleValue: number;
+  booleanValue: boolean;
+}
+
 export interface DetailedPortfolio extends DetailedSummary {
   currency: {
     securityCode: string;
@@ -54,6 +63,9 @@ export interface DetailedPortfolio extends DetailedSummary {
       allocationByType: AllocationByType[];
     };
   };
+  profile: {
+    attributes: ProfileAttribute[];
+  }
 }
 
 export interface AllPortfolios extends DetailedSummary {
