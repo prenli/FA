@@ -116,6 +116,19 @@ export const DETAILED_PORTFOLIO_FIELDS = gql`
         dateValue
         doubleValue
         booleanValue
+        intValue
+      }
+    }
+    investmentPlan {
+      id
+      benchmarkPositions {
+        id
+        date
+        security {
+          id
+          name
+        }
+        share
       }
     }
   }

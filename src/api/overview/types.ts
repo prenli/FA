@@ -52,6 +52,16 @@ export interface ProfileAttribute {
   dateValue: string;
   doubleValue: number;
   booleanValue: boolean;
+  intValue: number;
+}
+
+export interface BenchmarkPosition {
+  id: number;
+  date: string;
+  security: {
+    name: string;
+  };
+  share:number;
 }
 
 export interface DetailedPortfolio extends DetailedSummary {
@@ -65,6 +75,9 @@ export interface DetailedPortfolio extends DetailedSummary {
   };
   profile: {
     attributes: ProfileAttribute[];
+  };
+  investmentPlan: {
+    benchmarkPositions: BenchmarkPosition[];
   }
 }
 

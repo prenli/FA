@@ -6,10 +6,9 @@ import { useGetPerformance } from "api/performance/useGetPerformance";
 import { ReactComponent as Spinner } from "assets/spinner.svg";
 import classNames from "classnames";
 import {
-  Button,
   ButtonRadio,
   Card,
-  Center, LabeledDiv,
+  Center,
   LineChart,
   QueryLoadingWrapper,
 } from "components";
@@ -19,10 +18,9 @@ import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useParams } from "react-router-dom";
 import { dateFromYYYYMMDD } from "utils/date";
-import {useModal} from "../../../components/Modal/useModal";
-import {MonthlyInvestmentModal} from "../../../components/MonthlyInvestmentsModal/MonthlyInvestmentModal";
 import { PortfolioInfoCard } from "../../overview/components/PortfolioInfoCard";
 import { ListedSecuritiesCard } from "./components/ListedSecuritiesCard";
+import {MonthlySavingsCard} from "./components/MonthlySavingsCard";
 import { PortfolioSummary } from "./components/PortfolioSummary";
 import { useGetChartData } from "./hooks/useGetChartData";
 import { useSecuritiesSummary } from "./hooks/useSecuritiesSummary";
@@ -97,13 +95,6 @@ const Overview = ({ data }: OverviewProps) => {
   } = useGetPerformance(Number(portfolioId), timeValue.id);
 
   const breakPortfolioInfoCard = useMatchesBreakpoint("md");
-
-  const {
-    Modal,
-    onOpen: onMonthlyInvestmentsModalOpen,
-    modalProps: monthlyInvestmentsModalProps,
-    contentProps: monthlyInvestmentsModalContentProps,
-  } = useModal();
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
@@ -188,36 +179,8 @@ const Overview = ({ data }: OverviewProps) => {
         </Card>
       </div>
       <div>
-        <Card header="Monthly savings">
-            <div className="mx-auto pb-2 pt-4 flex flex-col gap-4 items-stretch grow w-[80%]">
-
-              <div className="grid grid-cols-2 divide-x">
-                <LabeledDiv
-                  label="Next contribution"
-                  className="px-2 text-xl font-semibold text-gray-700"
-                >
-                  100 €
-                </LabeledDiv>
-                <LabeledDiv
-                  label="Due date"
-                  className="px-2 text-xl font-semibold text-gray-700"
-                >
-                  Nov 15
-                </LabeledDiv>
-              </div>
-              <Button
-                  /*disabled={amount === 0 || accountsLoading || !isAmountCorrect}
-                  isLoading={submitting}*/
-                  onClick={onMonthlyInvestmentsModalOpen}
-              >
-                Modify monthly savings
-              </Button>
-          </div>
-        </Card>
+        <MonthlySavingsCard data={data} label={"Monthly savings"} />
       </div>
-      <Modal {...monthlyInvestmentsModalProps} header="Monthly savings">
-        <MonthlyInvestmentModal {...monthlyInvestmentsModalContentProps} portfolioMarketValue={data.portfolioReport.marketValue} portfolio={data} />
-      </Modal>
     </div>
   );
 };
