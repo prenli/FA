@@ -203,13 +203,15 @@ export const TransactionDetails = ({
         </div>
         {/* on lg screens below row ends at 5th grid line (other lines ends at 4)
         to make up the height difference resulting from gap added we set mb-4 */}
+        { extInfo && (
         <div className="lg:col-start-3 lg:row-start-2 lg:row-end-5 lg:mb-4">
           <Card header={t("transactionsPage.description")}>
             <p className="p-2 text-base font-normal">
-              {extInfo || t("messages.notAvailable")}
+              {extInfo}
             </p>
           </Card>
         </div>
+        )}
         {documents.length > 0 && (
           <div className="md:col-start-1 md:row-start-2 lg:row-start-3">
             <Button
