@@ -1,5 +1,5 @@
-import { MutableRefObject } from "react";
-import { SecurityTypeCode } from "api/holdings/types";
+import { MutableRefObject, useState } from "react";
+import { SecurityTypeCode, SecurityTradeType } from "api/holdings/types";
 import { useGetPortfolioHoldingDetails } from "api/holdings/useGetPortfolioHoldingDetails";
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
 import { useTrade } from "api/trading/useTrade";
@@ -8,7 +8,6 @@ import {
   DownloadableDocument,
   Button,
   Input,
-  HorizontalRadio,
   LabeledDiv,
 } from "components/index";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
@@ -27,39 +26,51 @@ interface SellModalProps extends SellModalInitialData {
   onClose: () => void;
 }
 
-const isTransactionAmountDefinedAsUnits = (
+const isSecurityTypeFund = (
   securityType: SecurityTypeCode | undefined
-) => securityType !== "C";
+) => securityType === "C";
 
 const getTradeType = (securityType: SecurityTypeCode | undefined) =>
-  isTransactionAmountDefinedAsUnits(securityType) ? "sell" : "redemption";
+  isSecurityTypeFund(securityType) ? "sell" : "redemption";
 
 const getCurrentAmount = (
-  securityType: SecurityTypeCode | undefined,
+  isTradeInUnits: boolean | undefined,
   amount: number,
   marketValue: number,
   marketFxRate: number
 ) =>
-  isTransactionAmountDefinedAsUnits(securityType)
+  isTradeInUnits
     ? amount
     : round(marketValue * marketFxRate, 2);
 
 const getTradeAmount = (
-  securityType: SecurityTypeCode | undefined,
+  isTradeInUnits: boolean | undefined,
   tradeAmount: number,
   price: number
 ) =>
-  isTransactionAmountDefinedAsUnits(securityType)
+  isTradeInUnits
     ? tradeAmount * price
     : tradeAmount;
 
 const getTradeAmountArgs = (
   amount: number,
-  securityType: SecurityTypeCode | undefined
+  isTradeInUnits: boolean | undefined
 ) =>
-  isTransactionAmountDefinedAsUnits(securityType)
+  isTradeInUnits
     ? { units: amount }
     : { tradeAmount: amount };
+
+const userCanToggleTradeType = (
+  isUnitsDefaultTradeType: boolean,
+  isTradeTypeSpecified: boolean,
+  isUnitsSupported: boolean,
+  isTradeAmountSupported: boolean
+) => {
+  if (!isTradeTypeSpecified) return false
+  if (isUnitsSupported && !isUnitsDefaultTradeType) return true
+  if (isTradeAmountSupported && isUnitsDefaultTradeType) return true
+  return false
+}
 
 export const SellModalContent = ({
   modalInitialFocusRef,
@@ -75,6 +86,7 @@ export const SellModalContent = ({
       fxRate: 1,
       securityCode: "",
       currency: { securityCode: "" },
+      tagsAsSet: []
     },
   } = useGetSecurityDetails(securityId.toString());
   const {
@@ -83,7 +95,19 @@ export const SellModalContent = ({
     url2,
     type: { code: securityType } = {},
     latestMarketData: { price } = { price: 0 },
+    tagsAsSet: securityTags
   } = security;
+
+  const isTradeTypeSpecified = securityTags?.some(tag => tag === SecurityTradeType.units || tag === SecurityTradeType.tradeAmount)
+  const isUnitsSupported = securityTags?.some(tag => tag === SecurityTradeType.units)
+  const isTradeAmountSupported = securityTags?.some(tag => tag === SecurityTradeType.tradeAmount)
+  const isUnitsDefaultTradeType =
+    isTradeTypeSpecified ?
+      isUnitsSupported :
+      !isSecurityTypeFund(securityType)
+  const canToggleTradeType = userCanToggleTradeType(isUnitsDefaultTradeType, isTradeTypeSpecified, isUnitsSupported, isTradeAmountSupported)
+  const [isTradeInUnits, setIsTradeInUnits] = useState(isUnitsDefaultTradeType)
+
   const { t } = useModifiedTranslation();
   const { selectedContactId } = useGetContractIdData();
   const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo(false, selectedContactId);
@@ -95,7 +119,7 @@ export const SellModalContent = ({
     data: { marketValue = 0, marketFxRate = 1, amount: units = 0 } = {},
   } = useGetPortfolioHoldingDetails(portfolioId.toString(), securityId.toString());
   const currentAmount = getCurrentAmount(
-    securityType,
+    isTradeInUnits,
     units,
     marketValue,
     marketFxRate
@@ -111,7 +135,7 @@ export const SellModalContent = ({
     setTradeAmountToAll,
     setTradeAmountToHalf,
     onInputModeChange,
-  } = useTradeAmountInput(currentAmount, currency);
+  } = useTradeAmountInput(currentAmount, currency, isTradeInUnits);
 
   const { handleTrade: handleSell, submitting } = useTrade({
     tradeType: getTradeType(securityType),
@@ -119,7 +143,7 @@ export const SellModalContent = ({
       portfolios.find((portfolio) => portfolio.id === portfolioId) ||
       portfolios[0],
     securityName,
-    ...getTradeAmountArgs(amount, securityType),
+    ...getTradeAmountArgs(amount, isTradeInUnits),
     ...security,
     currency,
   });
@@ -143,7 +167,7 @@ export const SellModalContent = ({
         onChange={(newPortfolio) => setPortfolioId(newPortfolio.id)}
         label={t("tradingModal.portfolio")}
       />
-      {isTransactionAmountDefinedAsUnits(securityType) ? (
+      {isTradeInUnits ? (
         <LabeledDiv
           label={t("tradingModal.currentUnits")}
           className="text-xl font-semibold text-gray-700"
@@ -178,11 +202,11 @@ export const SellModalContent = ({
           });
         }}
         label={
-          isTransactionAmountDefinedAsUnits(securityType)
+          isTradeInUnits
             ? t("tradingModal.unitsInputLabel")
             : t("tradingModal.tradeAmountInputLabel", {
-                currency: inputMode.label,
-              })
+              currency: inputMode.label,
+            })
         }
         type="number"
         error={
@@ -191,12 +215,35 @@ export const SellModalContent = ({
             : undefined
         }
       />
+
+      {canToggleTradeType && (
+        <>
+          <div className="flex overflow-hidden font-medium leading-5 bg-gray-50 rounded-md divide-x ring-1 shadow-sm pointer-events-auto select-none divide-slate-400/20 text-[0.8125rem] ring-slate-700/10">
+
+            <button
+              className={`text-center cursor-pointer py-2 px-4 flex-1 ${isTradeInUnits ? "bg-gray-200" : ""}`}
+              onClick={() => setIsTradeInUnits(true)}
+            >
+              {t("tradingModal.unitsButtonLabel")}
+            </button>
+
+            <button
+              className={`text-center cursor-pointer py-2 px-4 flex-1 ${!isTradeInUnits ? "bg-gray-200" : ""}`}
+              onClick={() => setIsTradeInUnits(false)}
+            >
+              {t("tradingModal.tradeAmountButtonLabel")}
+            </button>
+
+          </div>
+        </>
+      )}
+
       <div className="flex justify-between">
         <div className="flex gap-1 items-center">
           <Button size="xs" variant="Secondary" onClick={setTradeAmountToAll}>
             {t("tradingModal.sellAll")}
           </Button>
-          {!isTransactionAmountDefinedAsUnits(securityType) && (
+          {!isTradeInUnits && (
             <Button
               size="xs"
               variant="Secondary"
@@ -206,12 +253,27 @@ export const SellModalContent = ({
             </Button>
           )}
         </div>
-        {!isTransactionAmountDefinedAsUnits(securityType) && (
-          <HorizontalRadio
-            options={inputModesOptions}
-            value={inputMode}
-            onChange={onInputModeChange}
-          />
+        {!isTradeInUnits && (
+          <div
+            className="flex flex-row gap-1 gap-x-2 p-1 text-sm bg-gray-50 rounded-lg border border-gray-300 select-none w-fit"
+          >
+            {inputModesOptions.map((option) => (
+              <label
+                htmlFor={option.id}
+                key={option.id}
+                className={`cursor-pointer flex flex-row gap-x-1 justify-center items-center px-4 rounded-lg ${inputMode.id === option.id ? "ring-2 ring-primary-600 bg-primary-50" : ""}`}>
+                <span className="text-sm cursor-pointer">{option.label}</span>
+                <input
+                  type={"radio"}
+                  className="absolute opacity-0 cursor-pointer"
+                  id={option.id}
+                  name={option.label}
+                  checked={inputMode.id === option.id}
+                  onChange={() => onInputModeChange({ id: option.id, label: option.label })}
+                />
+              </label>
+            ))}
+          </div>
         )}
       </div>
       <hr className="my-2" />
@@ -222,7 +284,7 @@ export const SellModalContent = ({
           </div>
           {t("numberWithCurrency", {
             value: isTradeAmountCorrect
-              ? getTradeAmount(securityType, amount, price)
+              ? getTradeAmount(isTradeInUnits, amount, price)
               : 0,
             currency,
           })}

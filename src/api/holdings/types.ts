@@ -67,6 +67,13 @@ export type SecurityTypeCode =
   | "C" // Collective investment
   | "CURRENCY";
 
+//Security tags governing whether security can be bought or sold
+//in units and/or units
+export enum SecurityTradeType {
+  units = "Trade type:Units",
+  tradeAmount = "Trade type:Trade amount"
+}
+
 export interface SecurityDetailsPosition {
   id: number;
   name: string;
