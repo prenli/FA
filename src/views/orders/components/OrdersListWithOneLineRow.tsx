@@ -1,28 +1,39 @@
+import { ReactComponent as CancelIcon } from "assets/cancel-circle.svg";
 import { Badge } from "components";
 import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useParams } from "react-router-dom";
+import ReactTooltip from "react-tooltip";
+import {
+  isStatusCancellable,
+  isPortfolioAllowedToCancelOrder,
+} from "services/permissions/cancelOrder";
 import { dateFromYYYYMMDD } from "utils/date";
 import {
   getNameFromBackendTranslations,
   getTransactionColor,
 } from "utils/transactions";
-import { useNavigateToDetails } from "../useNavigateToDetails";
-import { TransactionProps, TransactionsListProps } from "./TransactionsGroup";
+import { TransactionType } from "views/transactionDetails/transactionDetailsView";
+import { useNavigateToDetails } from "views/transactions/useNavigateToDetails";
+import { OrderProps, OrdersListProps } from "./OrdersGroup";
 
-export const TransactionsListWithOneLineRow = ({
-  transactions,
-  type,
-}: TransactionsListProps) => {
+export const OrdersListWithOneLineRow = ({
+  orders,
+  isAnyOrderCancellable,
+  onCancelOrderModalOpen
+}: OrdersListProps) => {
   const { portfolioId } = useParams();
   const showPortfolioLabel = !portfolioId;
   const { t } = useModifiedTranslation();
+
+  const type = "order" as TransactionType
   const navigate = useNavigateToDetails(type);
 
   const isLgVersion = useMatchesBreakpoint("lg");
 
   return (
     <div>
+      <ReactTooltip backgroundColor="white" textColor="black" />
       <table className="w-full table-fixed">
         <thead className="text-sm font-semibold text-gray-500 bg-gray-100 border-t">
           <tr>
@@ -44,15 +55,18 @@ export const TransactionsListWithOneLineRow = ({
             <th className="py-1 px-2 text-right">
               {t("transactionsPage.tradeAmount")}
             </th>
+            {isAnyOrderCancellable && <th></th>}
           </tr>
         </thead>
         <tbody>
-          {transactions.map((transaction) => (
-            <Transaction
-              {...transaction}
-              key={transaction.id}
+          {orders.map((order) => (
+            <Order
+              {...order}
+              key={order.reference || order.id}
               showPortfolioLabel={showPortfolioLabel}
-              onClick={navigate(transaction.id)}
+              onClick={navigate(order.id)}
+              isAnyOrderCancellable={isAnyOrderCancellable}
+              onCancelOrderModalOpen={onCancelOrderModalOpen}
             />
           ))}
         </tbody>
@@ -61,7 +75,10 @@ export const TransactionsListWithOneLineRow = ({
   );
 };
 
-const Transaction = ({
+const Order = ({
+  id,
+  orderStatus,
+  reference,
   transactionDate,
   amount,
   type,
@@ -70,8 +87,13 @@ const Transaction = ({
   parentPortfolio,
   onClick,
   showPortfolioLabel,
-}: TransactionProps) => {
+  isAnyOrderCancellable,
+  onCancelOrderModalOpen
+}: OrderProps) => {
   const { t, i18n } = useModifiedTranslation();
+  const orderCanBeCancelled = isStatusCancellable(orderStatus);
+  const portfolioAllowedToCancel =
+    isPortfolioAllowedToCancelOrder(parentPortfolio);
   const isLgVersion = useMatchesBreakpoint("lg");
 
   const typeTranslated = getNameFromBackendTranslations(
@@ -121,6 +143,32 @@ const Transaction = ({
             currency: parentPortfolio.currency.securityCode,
           })}
         </td>
+        {orderCanBeCancelled && portfolioAllowedToCancel ? (
+          <td className="pr-4 h-full">
+            <div
+              className="ml-auto w-fit"
+              data-tip="Cancel the order"
+            >
+              <CancelIcon
+                className="w-6 h-6 text-primary-600 transition-transform hover:scale-110 hover:cursor-pointer stroke-primary-600"
+                onClick={(event: React.MouseEvent) => {
+                  event.stopPropagation(); //hinders the parent onClick
+                  if (onCancelOrderModalOpen) {
+                    onCancelOrderModalOpen({
+                      orderId: id,
+                      reference: reference,
+                      portfolioName: parentPortfolio.name,
+                      securityName,
+                      transactionDate,
+                      type,
+                    });
+                  }
+                }}
+              />
+            </div>
+          </td>
+        ) : isAnyOrderCancellable && <td></td>
+        }
       </tr>
     </>
   );

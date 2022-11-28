@@ -1,6 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { fallbackLanguage } from "i18n";
 import { useKeycloak } from "providers/KeycloakProvider";
+import { CancelOrderPermissionGroup } from "services/permissions/cancelOrder";
 import {
   DepositPermissionGroup,
   WithdrawalPermissionGroup,
@@ -63,7 +64,8 @@ interface PortfolioGroup {
   code:
     | typeof TradePermissionGroup
     | typeof DepositPermissionGroup
-    | typeof WithdrawalPermissionGroup;
+    | typeof WithdrawalPermissionGroup
+    | typeof CancelOrderPermissionGroup 
 }
 
 export interface Representee {

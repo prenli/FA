@@ -17,11 +17,18 @@ export const TRANSACTION_FIELDS = gql`
     parentPortfolio {
       id
       name
+      shortName
       currency {
         securityCode
       }
+      portfolioGroups {
+        id
+        code
+      }
     }
     reference
+    extId
+    orderStatus
   }
 `;
 
@@ -62,5 +69,6 @@ export const TRANSACTION_DETAILS_FIELDS = gql`
     tradeAmountInSecurityCurrency: tradeAmount
     grossPriceInSecurityCurrency: grossPrice
     grossPriceInAccountCurrency
+    orderStatus
   }
 `;

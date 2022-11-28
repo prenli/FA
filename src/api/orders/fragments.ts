@@ -18,10 +18,16 @@ export const TRADE_ORDERS_DETAILS = gql`
     parentPortfolio {
       id
       name
+      shortName
       currency {
         securityCode
       }
+      portfolioGroups {
+        id
+        code
+      }
     }
     reference
+    extId
   }
 `;

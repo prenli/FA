@@ -6,37 +6,41 @@ import {
   getNameFromBackendTranslations,
   getTransactionColor,
 } from "utils/transactions";
-import { useNavigateToDetails } from "../useNavigateToDetails";
-import { TransactionProps, TransactionsListProps } from "./TransactionsGroup";
+import { TransactionType } from "views/transactionDetails/transactionDetailsView";
+import { useNavigateToDetails } from "views/transactions/useNavigateToDetails";
 
-export const TransactionsListWithTwoLinesRow = ({
-  transactions,
-  type,
-}: TransactionsListProps) => {
+import { OrderProps, OrdersListProps } from "./OrdersGroup";
+
+const type = "order" as TransactionType
+
+
+export const OrdersListWithTwoLinesRow = ({
+  orders,
+}: OrdersListProps) => {
   const navigate = useNavigateToDetails(type);
   return (
     <div className="grid grid-cols-2 items-center">
-      {transactions.map((transaction) => (
-        <Transaction
-          {...transaction}
+      {orders.map((order) => (
+        <Order
+          {...order}
           key={
-            transaction.reference || transaction.id
+            order.reference || order.id
           }
-          onClick={navigate(transaction.id)}
+          onClick={navigate(order.id)}
         />
       ))}
     </div>
   );
 };
 
-const Transaction = ({
+const Order = ({
   transactionDate,
   type: { typeName, cashFlowEffect, amountEffect, typeNamesAsMap },
   tradeAmountInPortfolioCurrency,
   securityName,
   parentPortfolio,
   onClick,
-}: TransactionProps) => {
+}: OrderProps) => {
   const { t, i18n } = useModifiedTranslation();
   const { portfolioId } = useParams();
   const showPortfolioLabel = !portfolioId;
