@@ -90,6 +90,7 @@ class KeycloakService {
   }
 
   init() {
+
     if (!window.navigator.onLine) {
       this.initOffline();
       return;
@@ -148,16 +149,18 @@ class KeycloakService {
       ...this.state,
       initialized: true,
       authenticated: authenticated,
-      error: false,
+      error: false
     };
+
     await this.updateLinkedContact();
-    this.updateState();
+
+    this.updateState()
   };
 
   async updateLinkedContact() {
     if (this.state.authenticated) {
       const profile = await this.keycloak.loadUserProfile();
-      const linkedContact = this.getLinkedContactFromProfile(profile);
+      const linkedContact = await this.getContactIdFromQuery();
       if (linkedContact !== this.state.linkedContact) {
         const lastUsedLinkedContact = getLastUsedLinkedContact();
         if (linkedContact !== lastUsedLinkedContact) {
@@ -191,6 +194,34 @@ class KeycloakService {
   async getToken() {
     await this.keycloak.updateToken(1);
     return this.keycloak.token;
+  }
+
+  async getContactIdFromQuery() {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/graphql`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${await this.getToken()}`
+        },
+        mode: "cors",
+        body: JSON.stringify({
+          query: `
+            query GetContactId{
+              contact{
+                id
+              }
+            }
+          `,
+        })
+      })
+
+      const parsedResponse = await response.json()
+      return parsedResponse?.data?.contact?.id
+
+    } catch {
+      console.error(`Error getting contact id.`)
+    }
   }
 }
 
