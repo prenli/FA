@@ -1,5 +1,6 @@
 import { ReactComponent as CancelIcon } from "assets/cancel-circle.svg";
 import { Badge } from "components";
+import { isLocalOrder } from "hooks/useLocalTradeStorageState";
 import { useMatchesBreakpoint } from "hooks/useMatchesBreakpoint";
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useParams } from "react-router-dom";
@@ -20,13 +21,13 @@ import { OrderProps, OrdersListProps } from "./OrdersGroup";
 export const OrdersListWithOneLineRow = ({
   orders,
   isAnyOrderCancellable,
-  onCancelOrderModalOpen
+  onCancelOrderModalOpen,
 }: OrdersListProps) => {
   const { portfolioId } = useParams();
   const showPortfolioLabel = !portfolioId;
   const { t } = useModifiedTranslation();
 
-  const type = "order" as TransactionType
+  const type = "order" as TransactionType;
   const navigate = useNavigateToDetails(type);
 
   const isLgVersion = useMatchesBreakpoint("lg");
@@ -62,7 +63,7 @@ export const OrdersListWithOneLineRow = ({
           {orders.map((order) => (
             <Order
               {...order}
-              key={order.reference || order.id}
+              key={isLocalOrder(order) ? order.reference : order.id}
               showPortfolioLabel={showPortfolioLabel}
               onClick={navigate(order.id)}
               isAnyOrderCancellable={isAnyOrderCancellable}
@@ -88,7 +89,7 @@ const Order = ({
   onClick,
   showPortfolioLabel,
   isAnyOrderCancellable,
-  onCancelOrderModalOpen
+  onCancelOrderModalOpen,
 }: OrderProps) => {
   const { t, i18n } = useModifiedTranslation();
   const orderCanBeCancelled = isStatusCancellable(orderStatus);
@@ -117,7 +118,10 @@ const Order = ({
 
   return (
     <>
-      <tr onClick={onClick} className="h-12 hover:bg-primary-50 border-t transition-colors cursor-pointer">
+      <tr
+        onClick={onClick}
+        className="h-12 border-t transition-colors cursor-pointer hover:bg-primary-50"
+      >
         <td className="px-2 font-semibold text-left">{securityName}</td>
         {showPortfolioLabel && (
           <td className="px-1 text-sm md:text-base text-left text-gray-500">
@@ -145,12 +149,9 @@ const Order = ({
         </td>
         {orderCanBeCancelled && portfolioAllowedToCancel ? (
           <td className="pr-4 h-full">
-            <div
-              className="ml-auto w-fit"
-              data-tip="Cancel the order"
-            >
+            <div className="ml-auto w-fit" data-tip="Cancel the order">
               <CancelIcon
-                className="w-6 h-6 text-primary-600 transition-transform hover:scale-110 hover:cursor-pointer stroke-primary-600"
+                className="w-6 h-6 transition-transform hover:scale-110 hover:cursor-pointer stroke-primary-600 text-primary-600"
                 onClick={(event: React.MouseEvent) => {
                   event.stopPropagation(); //hinders the parent onClick
                   if (onCancelOrderModalOpen) {
@@ -158,6 +159,7 @@ const Order = ({
                       orderId: id,
                       reference: reference,
                       portfolioName: parentPortfolio.name,
+                      portfolioShortName: parentPortfolio.shortName,
                       securityName,
                       transactionDate,
                       type,
@@ -167,8 +169,9 @@ const Order = ({
               />
             </div>
           </td>
-        ) : isAnyOrderCancellable && <td></td>
-        }
+        ) : (
+          isAnyOrderCancellable && <td></td>
+        )}
       </tr>
     </>
   );

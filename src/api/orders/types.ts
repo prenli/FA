@@ -38,8 +38,12 @@ export interface PortfolioTradeOrdersQuery {
   };
 }
 
-export interface TradeOrderQuery {
+export interface TradeOrderQueryById {
   transaction: TradeOrder
+}
+
+export interface TradeOrderQuery {
+  tradeOrders: TradeOrder[]
 }
 
 interface OrderFromMutation {

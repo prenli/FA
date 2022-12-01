@@ -1,4 +1,5 @@
 import { Badge, Grid } from "components";
+import { isLocalOrder } from "hooks/useLocalTradeStorageState"
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { useParams } from "react-router-dom";
 import { dateFromYYYYMMDD } from "utils/date";
@@ -8,6 +9,7 @@ import {
 } from "utils/transactions";
 import { TransactionType } from "views/transactionDetails/transactionDetailsView";
 import { useNavigateToDetails } from "views/transactions/useNavigateToDetails";
+
 
 import { OrderProps, OrdersListProps } from "./OrdersGroup";
 
@@ -24,7 +26,7 @@ export const OrdersListWithTwoLinesRow = ({
         <Order
           {...order}
           key={
-            order.reference || order.id
+            isLocalOrder(order) ? order.reference : order.id
           }
           onClick={navigate(order.id)}
         />

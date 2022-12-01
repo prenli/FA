@@ -265,6 +265,7 @@ export const TransactionDetails = ({
                 reference,
                 transactionDate,
                 portfolioName: parentPortfolio.name,
+                portfolioShortName: parentPortfolio.shortName,
                 securityName,
                 type,
               })}

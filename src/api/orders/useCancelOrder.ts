@@ -1,17 +1,16 @@
-import { ApolloError, FetchResult, gql, useMutation, useApolloClient } from "@apollo/client";
+import { gql, useMutation, useApolloClient } from "@apollo/client";
 import { OrderMutationResponse } from "api/orders/types"
 import { TRADE_ORDERS_QUERY } from "api/orders/useGetAllTradeOrders";
-import { useGetTradeOrder } from "api/orders/useGetTradeOrderById";
+import { useGetTradeOrder } from "api/orders/useGetTradeOrder";
+import { useGetTradeOrderById } from "api/orders/useGetTradeOrderById";
 import { OrderStatus } from "api/transactions/types";
-//import { OrderStatus } from "api/transactions/types";
 import { TRANSACTION_DETAILS_QUERY } from "api/transactions/useGetTransactionDetails"
 import { useLocalStorageStore } from "hooks/useLocalStorageStore"
 import { useModifiedTranslation } from "hooks/useModifiedTranslation";
 import { toast } from "react-toastify";
 import {
   isPortfolioAllowedToCancelOrder,
-  isTradeOrderCancellable,
-  isTradeOrderCancelled
+  isTradeOrderCancellable
 } from "services/permissions/cancelOrder";
 import { ORDER_STATUS } from "./enums"
 
@@ -31,6 +30,7 @@ const CANCEL_ORDER_MUTATION = gql`
 interface CancelOrderQueryProps {
   orderId: number;
   reference?: string;
+  portfolioShortName: string;
 }
 
 interface CancelOrderQueryVariables {
@@ -59,102 +59,128 @@ export const useCancelOrder = (cancelledTradeOrder: CancelOrderQueryProps) => {
   }
   );
 
-  const { orderId, reference } = cancelledTradeOrder
+  const { orderId, reference, portfolioShortName } = cancelledTradeOrder
 
   const {
-    getData,
-  } = useGetTradeOrder(orderId)
+    getOrderById,
+  } = useGetTradeOrderById(orderId)
+  const {
+    getOrder,
+  } = useGetTradeOrder(reference, portfolioShortName)
 
   const [orders, setOrders] = useLocalStorageStore();
   const apolloClient = useApolloClient()
 
   const handleOrderCancel = async () => {
     try {
+      const isLocalOrder = orderId === -1
+      let faVersionOfTradeOrder = null
+      let localVersionOfTradeOrder = null
 
-      //trade order in FA
-      const faResponse = await getData()
-      const tradeOrderInFA = faResponse.data?.transaction
+      if (isLocalOrder) {
+        //we know it exists in the local tradingStorage
+        //it's possible it has been mutated in FA too
+        //attempt to get latest details about it
+        const faResponse = await getOrder()
+        faVersionOfTradeOrder = faResponse.data?.tradeOrders?.[0]
 
-      //trade order in local storage "tradingStorage"
-      //this is a separate 'cache' where Pending orders are kept (that have not been created in FA yet) 
-      const tradeOrderInTradingStorage = reference && orders.find(order => order.reference === reference)
-      const tradeOrder = tradeOrderInFA ?? tradeOrderInTradingStorage
-
-      if (tradeOrder) {
-
-        if (isTradeOrderCancelled(tradeOrder)) {
-          toast.error(t("messages.orderAlreadyCancelled"), { autoClose: 5000 });
-          await apolloClient.refetchQueries({ include: [TRADE_ORDERS_QUERY, TRANSACTION_DETAILS_QUERY] })
-          return //exit
-        }
-
-        if (
-          !isTradeOrderCancellable(tradeOrder) ||
-          !isPortfolioAllowedToCancelOrder(tradeOrder.parentPortfolio)
-        ) {
-          toast.error(t("messages.orderCancelFailed"), { autoClose: 5000 });
-          await apolloClient.refetchQueries({ include: [TRADE_ORDERS_QUERY, TRANSACTION_DETAILS_QUERY] })
-          return //exit
-        }
-
-        //instruct FA to cancel the order
-        const apiResponse = await cancelOrderInFA({
-          variables: {
-            extId: tradeOrder.extId,
-            reference: tradeOrder.reference,
-            portfolioShortName: tradeOrder.parentPortfolio.shortName,
-          }
-        })
-
-        //this will throw an error if something went bad
-        handleCancelFailed(apiResponse);
-
-        toast.success(t("messages.orderCancelSuccess"), { autoClose: 3000 });
-
-        if (tradeOrderInTradingStorage) {
-          //update its orderStatus in the tradingStorage
-          tradeOrderInTradingStorage.orderStatus = ORDER_STATUS.Cancelled
-          const filteredOrders = orders.filter(order => order.reference !== reference)
-          setOrders([...filteredOrders, tradeOrderInTradingStorage])
-        }
+        //get the version of the order contained in the browser's local storage "tradingStorage"
+        //this is a separate 'cache' where Pending orders are kept (that have not been verified as created in FA yet) 
+        localVersionOfTradeOrder = reference && orders.find(order => order.reference === reference)
 
       } else {
-        //didn't find a trade order to cancel
-        toast.error(t("messages.orderCancelFailed"), { autoClose: 5000 });
-        await apolloClient.refetchQueries({ include: [TRADE_ORDERS_QUERY, TRANSACTION_DETAILS_QUERY] })
+        //we know it existed only in FA (because we have an id other than -1)
+        const faResponse = await getOrderById()
+        faVersionOfTradeOrder = faResponse.data?.transaction
       }
 
+      /**
+       * 1: Order only in FA.
+       * 2: Order both in FA and browser's local tradingStorage.
+       * 3: Order only in browser's local tradingStorage.
+       * 4: Order does not exist in either FA or local tradingStorage.
+       */
+      const scenario =
+        faVersionOfTradeOrder && !localVersionOfTradeOrder ? 1 :
+          faVersionOfTradeOrder && localVersionOfTradeOrder ? 2 :
+            !faVersionOfTradeOrder && localVersionOfTradeOrder ? 3 : 4
+
+      switch (scenario) {
+        case (1):
+          if (
+            faVersionOfTradeOrder && (
+              isTradeOrderCancellable(faVersionOfTradeOrder) &&
+              isPortfolioAllowedToCancelOrder(faVersionOfTradeOrder.parentPortfolio)
+            )
+          ) {
+            await cancelOrderInFA({
+              variables: {
+                extId: faVersionOfTradeOrder.extId,
+                reference: faVersionOfTradeOrder.reference,
+                portfolioShortName: faVersionOfTradeOrder.parentPortfolio.shortName,
+              }
+            })
+          } else {
+            throw new Error("Unable to cancel FA trade order.")
+          }
+          break
+        case (2):
+          if (
+            faVersionOfTradeOrder &&
+            localVersionOfTradeOrder &&
+            (
+              isTradeOrderCancellable(faVersionOfTradeOrder) &&
+              isPortfolioAllowedToCancelOrder(faVersionOfTradeOrder.parentPortfolio)
+            )
+          ) {
+            await cancelOrderInFA({
+              variables: {
+                extId: faVersionOfTradeOrder.extId,
+                reference: faVersionOfTradeOrder.reference,
+                portfolioShortName: faVersionOfTradeOrder.parentPortfolio.shortName,
+              }
+            })
+            //update orderStatus in the tradingStorage
+            localVersionOfTradeOrder.orderStatus = ORDER_STATUS.Cancelled
+            const filteredOrders = orders.filter(order => order.reference !== reference)
+            setOrders([...filteredOrders, localVersionOfTradeOrder])
+          } else {
+            throw new Error("Unable to cancel FA trade order.")
+          }
+          break
+        case (3):
+          if (
+            localVersionOfTradeOrder && (
+              isTradeOrderCancellable(localVersionOfTradeOrder) &&
+              isPortfolioAllowedToCancelOrder(localVersionOfTradeOrder.parentPortfolio)
+            )
+          ) {
+            await cancelOrderInFA({
+              variables: {
+                extId: "",
+                reference: localVersionOfTradeOrder.reference,
+                portfolioShortName: localVersionOfTradeOrder.parentPortfolio.shortName,
+              }
+            })
+            //update its orderStatus in the tradingStorage
+            localVersionOfTradeOrder.orderStatus = ORDER_STATUS.Cancelled
+            const filteredOrders = orders.filter(order => order.reference !== reference)
+            setOrders([...filteredOrders, localVersionOfTradeOrder])
+          } else {
+            throw new Error("Unable to cancel local trade order.")
+          }
+          break
+        case (4):
+          throw new Error("Unable to cancel trade order. It was not found in FA or local tradingStorage.")
+      }
+
+      toast.success(t("messages.orderCancelSuccess"), { autoClose: 3000 });
+
     } catch (e: unknown) {
-      const error = e as Error | ApolloError;
-      toast.error(error.message, {
-        style: { whiteSpace: "pre-line" }
-      });
+      toast.error(t("messages.orderCancelFailed"));
+      await apolloClient.refetchQueries({ include: [TRADE_ORDERS_QUERY, TRANSACTION_DETAILS_QUERY] })
     }
   };
 
   return { handleOrderCancel };
-};
-
-const handleCancelFailed = (
-  apiResponse: FetchResult<
-    OrderMutationResponse,
-    Record<string, unknown>,
-    Record<string, unknown>
-  >
-) => {
-  if (!apiResponse.data || !apiResponse.data.importTradeOrder?.[0]) {
-    throw new Error("Empty response");
-  }
-
-  if (apiResponse.data.importTradeOrder[0].importStatus === "ERROR") {
-    let errorMessage = "Bad request: \n";
-    Object.entries(apiResponse.data.importTradeOrder[0]).forEach(
-      ([key, value]) => {
-        if (value.includes("ERROR") && key !== "importStatus") {
-          errorMessage += `${key}: ${value}; \n`;
-        }
-      }
-    );
-    throw new Error(errorMessage);
-  }
 };

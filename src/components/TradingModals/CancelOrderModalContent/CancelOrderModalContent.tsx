@@ -15,6 +15,7 @@ export interface CancelOrderModalInitialData {
   portfolioName: string;
   securityName: string;
   transactionDate: string;
+  portfolioShortName: string;
   type: TradeOrderType;
 }
 
@@ -31,14 +32,16 @@ export const CancelOrderModalContent = ({
   securityName,
   transactionDate,
   type,
+  portfolioShortName,
   modalInitialFocusRef
 }: CancelOrderModalProps) => {
 
   const [submitting, setSubmitting] = useState(false)
 
   const { handleOrderCancel } = useCancelOrder({
-    orderId: orderId,
-    reference: reference
+    orderId,
+    reference,
+    portfolioShortName
   });
 
   const { t, i18n } = useModifiedTranslation();

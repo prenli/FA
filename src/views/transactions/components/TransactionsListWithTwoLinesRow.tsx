@@ -19,9 +19,7 @@ export const TransactionsListWithTwoLinesRow = ({
       {transactions.map((transaction) => (
         <Transaction
           {...transaction}
-          key={
-            transaction.reference || transaction.id
-          }
+          key={transaction.id}
           onClick={navigate(transaction.id)}
         />
       ))}

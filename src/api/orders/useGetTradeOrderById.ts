@@ -1,8 +1,8 @@
 import { gql, useLazyQuery } from "@apollo/client";
 import { TRADE_ORDERS_DETAILS } from "./fragments";
-import { TradeOrderQuery } from "./types";
+import { TradeOrderQueryById } from "./types";
 
-const TRADE_ORDER_QUERY = gql`
+const TRADE_ORDER_QUERY_BY_ID = gql`
   ${TRADE_ORDERS_DETAILS}
   query GetTradeOrderById(
     $orderId: Long
@@ -15,12 +15,12 @@ const TRADE_ORDER_QUERY = gql`
   }
 `;
 
-export const useGetTradeOrder = (
+export const useGetTradeOrderById = (
   orderId: number | undefined,
 ) => {
 
-  const [getData, { loading, error, data, refetch }] = useLazyQuery<TradeOrderQuery>(
-    TRADE_ORDER_QUERY,
+  const [getOrderById, { loading, error, data, refetch }] = useLazyQuery<TradeOrderQueryById>(
+    TRADE_ORDER_QUERY_BY_ID,
     {
       variables: {
         orderId,
@@ -30,7 +30,7 @@ export const useGetTradeOrder = (
   );
 
   return {
-    getData,
+    getOrderById,
     loading,
     error,
     data: data?.transaction,
