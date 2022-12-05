@@ -17,15 +17,15 @@ function App() {
       <ServiceWorkerRegistrationProvider>
         <ErrorBoundary>
           <KeycloakProvider keycloak={keycloakService}>
-            <DetailProvider>
-              <PersistedApolloProvider>
+            <PersistedApolloProvider>
+               <DetailProvider>
                 <APILanguageProvider>
                   <ServiceWorkerRegistrationProvider>
                     <UserWithLinkedContactRoutes />
                   </ServiceWorkerRegistrationProvider>
                 </APILanguageProvider>
-              </PersistedApolloProvider>
-            </DetailProvider>
+                </DetailProvider>
+            </PersistedApolloProvider>
           </KeycloakProvider>
           <Toast />
         </ErrorBoundary>
