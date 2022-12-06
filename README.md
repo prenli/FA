@@ -8,14 +8,20 @@ Modern and responsive open source portal that allows your clients to access thei
 
 ## Overview
 
-Client Portal is a web application developed with [React](https://reactjs.org/) + [Typescript](https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html). Below listed are some core libraries utilized by the app:
+Client Portal is a web application developed with [React](https://reactjs.org/) and [Typescript](https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html).
 
-- [Keycloak](https://www.keycloak.org/docs/latest/securing_apps/index.html#_javascript_adapter) - handles authentication against FA.
-- [Apollo](https://www.apollographql.com/docs/react/get-started) - fetches and mutates data using FA's graphql APIs, and caches data in the browser.
-- [Tailwindcss](https://tailwindcss.com/docs/installation) - styles the app.
-- [Apexcharts](https://apexcharts.com/docs/react-charts/#) - renders interactable charts in the app.
-- [Formio](https://github.com/formio/react#readme) - renders the ui of processes defined in FA.
-- [Headlessui](https://headlessui.com/) - supplies the app with pre-defined ui components.
+### Core libraries used by the application
+
+- [Keycloak](https://www.keycloak.org/docs/latest/securing_apps/index.html#_javascript_adapter) - Handles authentication against FA.
+- [Apollo](https://www.apollographql.com/docs/react/get-started) - Fetches and mutates data using FA's GraphQL APIs, and caches data in the browser.
+- [Tailwindcss](https://tailwindcss.com/docs/installation) - Styles the app.
+- [Apexcharts](https://apexcharts.com/docs/react-charts/#) - Renders interactable charts in the app.
+- [Formio](https://github.com/formio/react#readme) - Renders the UI of processes defined in FA.
+- [Headlessui](https://headlessui.com/) - Supplies the app with pre-defined UI components.
+
+### Data
+
+The application fetches all its data from FA's GraphQL API. We recommend using [FA's GraphQL playground](https://documentation.fasolutions.com/en/graphql-api-view.html) when implementing new queries and mutations.
 
 ## Getting started
 
