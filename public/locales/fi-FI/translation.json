@@ -35,6 +35,9 @@
     "top3Holdings": "Top performing holdings",
     "worst3Holdings": "Bottom performing holdings",
     "unrealizedProfits": "Unrealised profits",
+    "pieChartLabel": "Security type allocation",
+    "lineChartLabel": "Performance",
+    "lineChartTooltipLabel": "Return",
     "name": "Name"
   },
   "holdingsPage": {
