@@ -90,7 +90,6 @@ class KeycloakService {
   }
 
   init() {
-
     if (!window.navigator.onLine) {
       this.initOffline();
       return;
@@ -132,29 +131,41 @@ class KeycloakService {
     this.updateState();
   };
 
-  onAuthLogout = () => {
+  onAuthLogout = async () => {
     this.state = {
       ...keycloakServiceInitialState,
     };
     this.updateState();
-    this.keycloak.logout();
+    await this.keycloak.logout();
   };
 
   onReady = async (authenticated: boolean) => {
     if (!authenticated) {
+      //redirect to login page
       this.keycloak.login();
-      return;
+    } else {
+      try {
+        const userHasRequiredRole = await this.validateRequiredRole();
+        if (!userHasRequiredRole)
+          throw new Error(
+            "User does not have the required role. Revoking access."
+          );
+
+        this.state = {
+          ...this.state,
+          initialized: true,
+          authenticated: authenticated,
+          error: false,
+        };
+
+        await this.updateLinkedContact();
+
+        this.updateState();
+      } catch (error) {
+        console.error(error);
+        await this.onAuthLogout(); //logout
+      }
     }
-    this.state = {
-      ...this.state,
-      initialized: true,
-      authenticated: authenticated,
-      error: false
-    };
-
-    await this.updateLinkedContact();
-
-    this.updateState()
   };
 
   async updateLinkedContact() {
@@ -191,6 +202,20 @@ class KeycloakService {
     this.notifyStateChanged();
   }
 
+  /**
+   * Gets the /keycloak.json.
+   * @returns parsed keycloak.json.
+   */
+  async getConfigFile() {
+    try {
+      const config = await fetch(`${process.env.PUBLIC_URL}/keycloak.json`);
+      const parsedConfig = await config?.json();
+      return parsedConfig;
+    } catch (error) {
+      console.error("Failed to get keycloak.json.");
+    }
+  }
+
   async getToken() {
     await this.keycloak.updateToken(1);
     return this.keycloak.token;
@@ -202,7 +227,7 @@ class KeycloakService {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${await this.getToken()}`
+          Authorization: `Bearer ${await this.getToken()}`,
         },
         mode: "cors",
         body: JSON.stringify({
@@ -213,15 +238,36 @@ class KeycloakService {
               }
             }
           `,
-        })
-      })
+        }),
+      });
 
-      const parsedResponse = await response.json()
-      return parsedResponse?.data?.contact?.id
-
+      const parsedResponse = await response.json();
+      return parsedResponse?.data?.contact?.id;
     } catch {
-      console.error(`Error getting contact id.`)
+      console.error(`Error getting contact id.`);
     }
+  }
+
+  /**
+   * Checks whether the user has a required-role
+   * (if one has been specified).
+   * @returns true if user has the required role
+   * or if a required role was not configured.
+   */
+  async validateRequiredRole() {
+    const keycloakJson = await this.getConfigFile();
+    //optional field
+    const configuredRequiredRole = keycloakJson?.["required-role"];
+    //required field
+    const configuredClient = keycloakJson?.["resource"];
+
+    //no configured required role -> valid
+    if (!configuredRequiredRole) return true;
+
+    return this.keycloak.hasResourceRole(
+      configuredRequiredRole,
+      configuredClient
+    );
   }
 }
 
