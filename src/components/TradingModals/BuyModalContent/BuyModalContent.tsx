@@ -1,4 +1,4 @@
-import { MutableRefObject, useState } from "react";
+import { MutableRefObject, useState, useEffect } from "react";
 import { SecurityTypeCode, SecurityTradeType } from "api/holdings/types";
 import { useGetSecurityDetails } from "api/holdings/useGetSecurityDetails";
 import { useGetContactInfo } from "api/initial/useGetContactInfo";
@@ -54,18 +54,6 @@ const getTradeAmountArgs = (
     ? { units: amount }
     : { tradeAmount: amount };
 
-const userCanToggleTradeType = (
-  isUnitsDefaultTradeType: boolean,
-  isTradeTypeSpecified: boolean,
-  isUnitsSupported: boolean,
-  isTradeAmountSupported: boolean
-) => {
-  if (!isTradeTypeSpecified) return false
-  if (isUnitsSupported && !isUnitsDefaultTradeType) return true
-  if (isTradeAmountSupported && isUnitsDefaultTradeType) return true
-  return false
-}
-
 export const BuyModalContent = ({
   modalInitialFocusRef,
   onClose,
@@ -92,15 +80,31 @@ export const BuyModalContent = ({
     tagsAsSet: securityTags
   } = security;
 
-  const isTradeTypeSpecified = securityTags?.some(tag => tag === SecurityTradeType.units || tag === SecurityTradeType.tradeAmount)
-  const isUnitsSupported = securityTags?.some(tag => tag === SecurityTradeType.units)
-  const isTradeAmountSupported = securityTags?.some(tag => tag === SecurityTradeType.tradeAmount)
-  const isUnitsDefaultTradeType =
-    isTradeTypeSpecified ?
-      isUnitsSupported :
-      !isSecurityTypeFund(securityType)
-  const canToggleTradeType = userCanToggleTradeType(isUnitsDefaultTradeType, isTradeTypeSpecified, isUnitsSupported, isTradeAmountSupported)
-  const [isTradeInUnits, setIsTradeInUnits] = useState(isUnitsDefaultTradeType)
+  const [isTradeInUnits, setIsTradeInUnits] = useState(true)
+  const [canToggleTradeType, setCanToggleTradeType] = useState(false)
+
+  useEffect(() => {
+    const isTradeTypeSpecified = securityTags?.some(
+      (tag) =>
+        tag === SecurityTradeType.units || tag === SecurityTradeType.tradeAmount
+    );
+    const isUnitsSupported = securityTags?.some(
+      (tag) => tag === SecurityTradeType.units
+    );
+    const isTradeAmountSupported = securityTags?.some(
+      (tag) => tag === SecurityTradeType.tradeAmount
+    );
+    const isUnitsDefaultTradeType = !isSecurityTypeFund(securityType);
+    setCanToggleTradeType(
+      isTradeTypeSpecified && isUnitsSupported && isTradeAmountSupported
+    );
+    setIsTradeInUnits(
+      isTradeTypeSpecified
+        ? isUnitsSupported &&
+            (!isTradeAmountSupported || isUnitsDefaultTradeType)
+        : isUnitsDefaultTradeType
+    );
+  }, [securityTags, securityType]);
 
   const { t } = useModifiedTranslation();
   const { selectedContactId } = useGetContractIdData();
