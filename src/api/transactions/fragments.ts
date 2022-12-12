@@ -18,6 +18,7 @@ export const TRANSACTION_FIELDS = gql`
       id
       name
       shortName
+      status
       currency {
         securityCode
       }

@@ -39,11 +39,11 @@ export interface PortfolioTradeOrdersQuery {
 }
 
 export interface TradeOrderQueryById {
-  transaction: TradeOrder
+  transaction: TradeOrder;
 }
 
 export interface TradeOrderQuery {
-  tradeOrders: TradeOrder[]
+  tradeOrders: TradeOrder[];
 }
 
 interface OrderFromMutation {
@@ -73,7 +73,7 @@ interface OrderFromMutation {
   "o.status": string;
   "o.currency": string;
   "o.fxRate": string;
-  "importStatus": string;
+  importStatus: string;
   "o.reportFxRate": string;
   "o.prefix": string;
   "o.hidden": string;
@@ -98,8 +98,6 @@ interface OrderFromMutation {
 }
 
 export interface OrderMutationResponse {
-  importTradeOrder: [
-    { importStatus: "OK" | "ERROR" },
-    OrderFromMutation
-  ] & unknown[];
+  importTradeOrder: [{ importStatus: "OK" | "ERROR" }, OrderFromMutation] &
+    unknown[];
 }

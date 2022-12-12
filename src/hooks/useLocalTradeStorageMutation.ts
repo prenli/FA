@@ -102,10 +102,11 @@ export const useLocalTradeStorageMutation = () => {
       amount: units,
       parentPortfolio: {
         id: portfolio.id,
+        status: portfolio.status,
         shortName: portfolio.shortName,
         name: portfolio.name,
         currency: { securityCode: currency },
-        portfolioGroups: portfolio.portfolioGroups
+        portfolioGroups: portfolio.portfolioGroups,
       },
       reference,
     });
