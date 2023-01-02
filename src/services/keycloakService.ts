@@ -39,7 +39,7 @@ type FAKeycloakInstance = Omit<
   loadUserProfile(): KeycloakPromise<FAKeycloakProfile, void>;
 };
 
-type SubscribeFunctionType = () => void;
+type SubscribeFunctionType = (state: KeycloakServiceStateType) => void;
 
 export interface KeycloakServiceStateType {
   initialized: boolean;
@@ -54,6 +54,7 @@ export const keycloakServiceInitialState = {
   authenticated: false,
   linkedContact: undefined,
   userProfile: undefined,
+  error: undefined,
 };
 
 class KeycloakService {
@@ -116,7 +117,7 @@ class KeycloakService {
   }
 
   notifyStateChanged() {
-    this.subscribeFunction?.();
+    this.subscribeFunction?.(this.state);
   }
 
   onError = (errorData?: KeycloakError) => {

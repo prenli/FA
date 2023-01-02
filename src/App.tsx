@@ -5,7 +5,6 @@ import { InitialLanguageProvider } from "providers/InitialLanguageProvider";
 import { KeycloakProvider } from "providers/KeycloakProvider";
 import { PersistedApolloProvider } from "providers/PersistedApolloProvider";
 import { ServiceWorkerRegistrationProvider } from "providers/ServiceWorkerRegistrationProvider";
-import { keycloakService } from "services/keycloakService";
 import { Toast } from "./components";
 import { UserWithLinkedContactRoutes } from "./pages/userWithLinkedContact/routes";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,18 +15,16 @@ function App() {
     <InitialLanguageProvider>
       <ServiceWorkerRegistrationProvider>
         <ErrorBoundary>
-          <KeycloakProvider keycloak={keycloakService}>
+          <KeycloakProvider>
             <PersistedApolloProvider>
-               <DetailProvider>
+              <DetailProvider>
                 <APILanguageProvider>
-                  <ServiceWorkerRegistrationProvider>
-                    <UserWithLinkedContactRoutes />
-                  </ServiceWorkerRegistrationProvider>
+                  <UserWithLinkedContactRoutes />
                 </APILanguageProvider>
-                </DetailProvider>
+              </DetailProvider>
             </PersistedApolloProvider>
+            <Toast />
           </KeycloakProvider>
-          <Toast />
         </ErrorBoundary>
       </ServiceWorkerRegistrationProvider>
     </InitialLanguageProvider>
