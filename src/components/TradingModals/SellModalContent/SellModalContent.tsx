@@ -27,7 +27,7 @@ interface SellModalProps extends SellModalInitialData {
 }
 
 const isSecurityTypeFund = (securityType: SecurityTypeCode | undefined) =>
-  securityType === "C";
+  securityType === SecurityTypeCode.COLLECTIVE_INVESTMENT_VEHICLE;
 
 const getTradeType = (securityType: SecurityTypeCode | undefined) =>
   isSecurityTypeFund(securityType) ? "sell" : "redemption";
@@ -90,14 +90,12 @@ export const SellModalContent = ({
     const isTradeAmountSupported = securityTags?.some(
       (tag) => tag === SecurityTradeType.tradeAmount
     );
-    const isUnitsDefaultTradeType = true //always true when selling
+    const isUnitsDefaultTradeType = true; //always true when selling
     setCanToggleTradeType(
       isTradeTypeSpecified && isUnitsSupported && isTradeAmountSupported
     );
     setIsTradeInUnits(
-      isTradeTypeSpecified
-        ? isUnitsSupported
-        : isUnitsDefaultTradeType
+      isTradeTypeSpecified ? isUnitsSupported : isUnitsDefaultTradeType
     );
   }, [securityTags, securityType]);
 
@@ -283,7 +281,7 @@ export const SellModalContent = ({
         )}
       </div>
 
-      <hr/>
+      <hr />
       <div className="flex flex-col gap-4 items-stretch ">
         <div className="text-3xl font-semibold text-center">
           <div className="text-base font-normal">
