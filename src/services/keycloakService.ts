@@ -1,3 +1,4 @@
+import { API_URL } from "config";
 import Keycloak, {
   KeycloakError,
   KeycloakInstance,
@@ -224,7 +225,7 @@ class KeycloakService {
 
   async getContactIdFromQuery() {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/graphql`, {
+      const response = await fetch(`${API_URL}/graphql`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
