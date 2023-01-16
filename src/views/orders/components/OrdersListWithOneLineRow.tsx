@@ -120,7 +120,7 @@ const Order = ({
     <>
       <tr
         onClick={onClick}
-        className="h-12 border-t transition-colors cursor-pointer hover:bg-primary-50"
+        className="h-12 hover:bg-primary-50 border-t transition-colors cursor-pointer"
       >
         <td className="px-2 font-semibold text-left">{securityName}</td>
         {showPortfolioLabel && (
@@ -151,7 +151,7 @@ const Order = ({
           <td className="pr-4 h-full">
             <div className="ml-auto w-fit" data-tip="Cancel the order">
               <CancelIcon
-                className="w-6 h-6 transition-transform hover:scale-110 hover:cursor-pointer stroke-primary-600 text-primary-600"
+                className="w-6 h-6 text-primary-600 transition-transform hover:scale-110 hover:cursor-pointer stroke-primary-600"
                 onClick={(event: React.MouseEvent) => {
                   event.stopPropagation(); //hinders the parent onClick
                   if (onCancelOrderModalOpen) {

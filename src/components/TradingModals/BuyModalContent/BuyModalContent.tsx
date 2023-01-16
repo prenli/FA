@@ -25,34 +25,27 @@ interface BuyModalProps extends BuyModalInitialData {
 }
 
 // buying non-Collective investment should be defined in units instead of trade amount
-const isSecurityTypeFund = (
-  securityType: SecurityTypeCode | undefined
-) => {
-  return securityType === "C";
-}
+const isSecurityTypeFund = (securityType: SecurityTypeCode | undefined) => {
+  return securityType === SecurityTypeCode.COLLECTIVE_INVESTMENT_VEHICLE;
+};
 
-const getTradeType = (
-  securityType: SecurityTypeCode | undefined) => {
-  return securityType !== "C" ? "buy" : "subscription";
-}
+const getTradeType = (securityType: SecurityTypeCode | undefined) => {
+  return securityType !== SecurityTypeCode.COLLECTIVE_INVESTMENT_VEHICLE
+    ? "buy"
+    : "subscription";
+};
 
 const getTradeAmount = (
   amount: number,
   isTradeInUnits: boolean | undefined,
   price = 1,
   fxRate = 1
-) =>
-  isTradeInUnits
-    ? amount * price * fxRate
-    : amount;
+) => (isTradeInUnits ? amount * price * fxRate : amount);
 
 const getTradeAmountArgs = (
   amount: number,
   isTradeInUnits: boolean | undefined
-) =>
-  isTradeInUnits
-    ? { units: amount }
-    : { tradeAmount: amount };
+) => (isTradeInUnits ? { units: amount } : { tradeAmount: amount });
 
 export const BuyModalContent = ({
   modalInitialFocusRef,
@@ -68,7 +61,7 @@ export const BuyModalContent = ({
       fxRate: 1,
       securityCode: "",
       currency: { securityCode: "" },
-      tagsAsSet: []
+      tagsAsSet: [],
     },
   } = useGetSecurityDetails(securityId.toString());
   const {
@@ -77,11 +70,11 @@ export const BuyModalContent = ({
     type: { code: securityType } = {},
     latestMarketData,
     fxRate,
-    tagsAsSet: securityTags
+    tagsAsSet: securityTags,
   } = security;
 
-  const [isTradeInUnits, setIsTradeInUnits] = useState(true)
-  const [canToggleTradeType, setCanToggleTradeType] = useState(false)
+  const [isTradeInUnits, setIsTradeInUnits] = useState(true);
+  const [canToggleTradeType, setCanToggleTradeType] = useState(false);
 
   useEffect(() => {
     const isTradeTypeSpecified = securityTags?.some(
@@ -108,7 +101,10 @@ export const BuyModalContent = ({
 
   const { t } = useModifiedTranslation();
   const { selectedContactId } = useGetContractIdData();
-  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo(false, selectedContactId);
+  const { data: { portfolios } = { portfolios: [] } } = useGetContactInfo(
+    false,
+    selectedContactId
+  );
   const { portfolioId, setPortfolioId, portfolioOptions } =
     useTradablePortfolioSelect();
   const {
@@ -134,7 +130,6 @@ export const BuyModalContent = ({
 
   return (
     <div className="grid gap-2 min-w-[min(84vw,_375px)]">
-
       <LabeledDiv
         label={t("tradingModal.securityName")}
         className="text-2xl font-semibold"
@@ -172,8 +167,8 @@ export const BuyModalContent = ({
           isTradeInUnits
             ? t("tradingModal.unitsInputLabel")
             : t("tradingModal.tradeAmountInputLabel", {
-              currency: portfolioCurrency,
-            })
+                currency: portfolioCurrency,
+              })
         }
         type="number"
         error={
@@ -186,25 +181,26 @@ export const BuyModalContent = ({
       {canToggleTradeType && (
         <>
           <div className="flex overflow-hidden font-medium leading-5 bg-gray-50 rounded-md divide-x ring-1 shadow-sm pointer-events-auto select-none divide-slate-400/20 text-[0.8125rem] ring-slate-700/10">
-
             <button
-              className={`text-center cursor-pointer py-2 px-4 flex-1 ${isTradeInUnits ? "bg-gray-200" : ""}`}
+              className={`text-center cursor-pointer py-2 px-4 flex-1 ${
+                isTradeInUnits ? "bg-gray-200" : ""
+              }`}
               onClick={() => setIsTradeInUnits(true)}
             >
               {t("tradingModal.unitsButtonLabel")}
             </button>
 
             <button
-              className={`text-center cursor-pointer py-2 px-4 flex-1 ${!isTradeInUnits ? "bg-gray-200" : ""}`}
+              className={`text-center cursor-pointer py-2 px-4 flex-1 ${
+                !isTradeInUnits ? "bg-gray-200" : ""
+              }`}
               onClick={() => setIsTradeInUnits(false)}
             >
               {t("tradingModal.tradeAmountButtonLabel")}
             </button>
-
           </div>
         </>
-      )
-      }
+      )}
 
       <hr className="my-2" />
       <div className="flex flex-col gap-4 items-stretch ">
@@ -215,11 +211,11 @@ export const BuyModalContent = ({
           {t("numberWithCurrency", {
             value: isTradeAmountCorrect
               ? getTradeAmount(
-                amount,
-                isTradeInUnits,
-                latestMarketData?.price,
-                fxRate
-              )
+                  amount,
+                  isTradeInUnits,
+                  latestMarketData?.price,
+                  fxRate
+                )
               : 0,
             currency: portfolioCurrency,
           })}
